@@ -1,6 +1,11 @@
 package ar.edu.itba.it.paw.web.servlets;
 
+import java.io.IOException;
+
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * Los usuarios registrados deben poder publicar avisos de venta o alquiler de
@@ -16,6 +21,16 @@ import javax.servlet.http.HttpServlet;
  * @author cris
  * 
  */
+
+@SuppressWarnings("serial")
 public class PublishPage extends HttpServlet {
+
+	@Override
+	protected void doGet(final HttpServletRequest req,
+			final HttpServletResponse resp) throws ServletException,
+			IOException {
+		// TODO Auto-generated method stub
+		super.doGet(req, resp);
+	}
 
 }
