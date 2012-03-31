@@ -5,10 +5,18 @@ import java.util.List;
 
 public class Property implements Entity {
 
+	public enum TYPE {
+		APARTMENT, HOUSE
+	}
+
+	public enum OPERATION {
+		SELL, RENT
+	}
+
 	private Integer ID;
 	private boolean dirty;
-	private String type;
-	private String operation;
+	private TYPE type;
+	private OPERATION operation;
 	private String neighborhood;
 	private String address;
 	private Integer price;
@@ -20,13 +28,12 @@ public class Property implements Entity {
 	private String description;
 	private List<Photo> photos;
 
-	public Property(final Integer iD, final boolean dirty, final String type,
-			final String operation, final String neighborhood,
+	public Property(final Integer iD, final TYPE type,
+			final OPERATION operation, final String neighborhood,
 			final String address, final Integer price, final Integer spaces,
 			final Integer coveredArea, final Integer freeArea,
 			final Integer age, final Services service, final String description) {
 		this.ID = iD;
-		this.dirty = dirty;
 		this.type = type;
 		this.operation = operation;
 		this.neighborhood = neighborhood;
@@ -39,6 +46,7 @@ public class Property implements Entity {
 		this.service = service;
 		this.description = description;
 		this.photos = new ArrayList<Photo>();
+		this.setDirty(false);
 	}
 
 	@Override
@@ -88,21 +96,21 @@ public class Property implements Entity {
 		this.dirty = dirty;
 	}
 
-	public String getType() {
+	public TYPE getType() {
 		return this.type;
 	}
 
-	public void setType(final String type) {
+	public void setType(final TYPE type) {
 		this.type = type;
 		this.setDirty(true);
 	}
 
-	public String getOperation() {
+	public OPERATION getOperation() {
 		return this.operation;
 
 	}
 
-	public void setOperation(final String operation) {
+	public void setOperation(final OPERATION operation) {
 		this.operation = operation;
 		this.setDirty(true);
 	}

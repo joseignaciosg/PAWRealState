@@ -6,15 +6,18 @@ public class ContactRequest implements Entity {
 	private String name;
 	private String email;
 	private String telephone;
+	private Property propRefered;
 	private boolean dirty;
 
 	public ContactRequest(final Integer iD, final String name,
-			final String email, final String telephone) {
+			final String email, final String telephone,
+			final Property propRefered) {
 		super();
 		this.ID = iD;
 		this.name = name;
 		this.email = email;
 		this.telephone = telephone;
+		this.propRefered = propRefered;
 		this.setDirty(false);
 	}
 
@@ -60,6 +63,14 @@ public class ContactRequest implements Entity {
 
 	public void setDirty(final boolean dirty) {
 		this.dirty = dirty;
+	}
+
+	public Property getPropRefered() {
+		return this.propRefered;
+	}
+
+	public void setPropRefered(final Property propRefered) {
+		this.propRefered = propRefered;
 	}
 
 	@Override
