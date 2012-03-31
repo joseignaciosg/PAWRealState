@@ -24,8 +24,7 @@ public class RegisterPage extends HttpServlet {
 	protected void doGet(final HttpServletRequest req,
 			final HttpServletResponse resp) throws ServletException,
 			IOException {
-		// TODO Auto-generated method stub
-		super.doGet(req, resp);
+		resp.getWriter().write(":D");
 	}
 
 	@Override
