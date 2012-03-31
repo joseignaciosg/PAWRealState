@@ -1,6 +1,6 @@
 package ar.edu.itba.it.paw.model.entities;
 
-public class Photo {
+public class Photo implements Entity {
 
 	private byte[] data = null;
 	private String type;
@@ -24,6 +24,21 @@ public class Photo {
 
 	public void setType(final String type) {
 		this.type = type;
+	}
+
+	public boolean isDirty() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public Integer getID() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void setID(final Integer ID) {
+		// TODO Auto-generated method stub
+
 	}
 
 }
