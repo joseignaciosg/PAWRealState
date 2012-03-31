@@ -7,24 +7,46 @@ import ar.edu.itba.it.paw.model.entities.Photo;
 
 public class InMemoryPhotoDao implements PhotoDao {
 
+	List<Photo> photos;
+
+	public InMemoryPhotoDao(final List<Photo> photos) {
+		this.photos = photos;
+	}
+
 	public List<Photo> getAll() {
-		// TODO Auto-generated method stub
+		return this.photos;
+	}
+
+	public Photo getById(final Integer id) {
+
+		for (int i = 0; i < this.photos.size(); i++) {
+			if (id == this.photos.get(i).getID()) {
+				return this.photos.get(i);
+			}
+		}
 		return null;
 	}
 
-	public Photo getById(String id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public boolean delete(Photo obj) {
-		// TODO Auto-generated method stub
+	public boolean delete(final Photo obj) {
+		if (this.photos.contains(obj)) {
+			this.photos.remove(obj);
+			return true;
+		}
 		return false;
 	}
 
-	public boolean saveOrUpdate(Photo obj) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean saveOrUpdate(final Photo obj) {
+
+		if (!this.photos.contains(obj)) {
+			return this.photos.add(obj);
+		} else {
+			if (obj.isDirty()) {
+				this.photos.remove(obj);
+				return this.photos.add(obj);
+			} else {
+				return false;
+			}
+		}
 	}
 
 }

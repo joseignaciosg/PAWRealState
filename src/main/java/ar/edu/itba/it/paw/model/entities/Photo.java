@@ -2,12 +2,16 @@ package ar.edu.itba.it.paw.model.entities;
 
 public class Photo implements Entity {
 
+	private Integer ID;
 	private byte[] data = null;
 	private String type;
+	private boolean dirty;
 
-	public Photo(final byte[] data, final String type) {
+	public Photo(final Integer ID, final byte[] data, final String type) {
+		this.ID = ID;
 		this.data = data;
 		this.type = type;
+		this.dirty = false;
 	}
 
 	public byte[] getData() {
@@ -27,18 +31,19 @@ public class Photo implements Entity {
 	}
 
 	public boolean isDirty() {
-		// TODO Auto-generated method stub
-		return false;
+		return this.dirty;
+	}
+
+	public void setDirty(final boolean dirty) {
+		this.dirty = dirty;
 	}
 
 	public Integer getID() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.ID;
 	}
 
 	public void setID(final Integer ID) {
-		// TODO Auto-generated method stub
-
+		this.ID = ID;
 	}
 
 }
