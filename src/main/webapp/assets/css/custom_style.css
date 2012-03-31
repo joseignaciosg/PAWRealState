@@ -1,0 +1,11 @@
+.container {
+	margin-top: 15px;
+}
+
+.hidden {
+	display:none;
+}
+
+td.name-column {
+	width:66%;
+}
