@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import ar.edu.itba.it.paw.web.utils.HTMLUtils;
+
 /**
  * Los usuarios deben poder registrarse en el sistema indicando su nombre,
  * apellido, email, teléfono, usuario y contraseña. Todos los campos son
@@ -20,18 +22,19 @@ import javax.servlet.http.HttpServletResponse;
 @SuppressWarnings("serial")
 public class RegisterPage extends HttpServlet {
 
+	private String registerPage = "/register/register.jsp";
+
 	@Override
 	protected void doGet(final HttpServletRequest req,
 			final HttpServletResponse resp) throws ServletException,
 			IOException {
-		resp.getWriter().write(":D");
+		HTMLUtils.render(this.registerPage, req, resp);
 	}
 
 	@Override
 	protected void doPost(final HttpServletRequest req,
 			final HttpServletResponse resp) throws ServletException,
 			IOException {
-		// TODO Auto-generated method stub
 		super.doPost(req, resp);
 	}
 }
