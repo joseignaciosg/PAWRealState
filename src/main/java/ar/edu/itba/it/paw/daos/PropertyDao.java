@@ -15,8 +15,6 @@ public class PropertyDao implements Dao<Property> {
 		this.manager = manager;
 		this.connection = manager.getConnection();
 	}
-	
-	
 
 	@Override
 	public List<Property> getAll() {
