@@ -9,9 +9,17 @@
 		<servlet-name>RegisterPage</servlet-name>
 		<servlet-class>ar.edu.itba.it.paw.web.servlets.RegisterPage</servlet-class>
 	</servlet>
+	<servlet>
+		<servlet-name>IndexPage</servlet-name>
+		<servlet-class>ar.edu.itba.it.paw.web.servlets.IndexPage</servlet-class>
+	</servlet>
 	<servlet-mapping>
 		<servlet-name>RegisterPage</servlet-name>
 		<url-pattern>/register</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>IndexPage</servlet-name>
+		<url-pattern>/index</url-pattern>
 	</servlet-mapping>
 
 	<filter>
@@ -26,9 +34,4 @@
 		<filter-name>SessionFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
-
-	<welcome-file-list>
-		<welcome-file>/</welcome-file>
-	</welcome-file-list>
-
-</web-app>
+	</web-app>

@@ -20,7 +20,6 @@ public class HTMLUtils {
 	public static void render(final String jspFile,
 			final HttpServletRequest request, final HttpServletResponse response)
 			throws ServletException, IOException {
-		System.out.println(jspFile);
 
 		request.setAttribute("page", jspFile);
 		request.setAttribute("basePath", request.getContextPath());
