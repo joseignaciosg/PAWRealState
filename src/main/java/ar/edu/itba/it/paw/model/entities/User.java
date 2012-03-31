@@ -1,6 +1,5 @@
 package ar.edu.itba.it.paw.model.entities;
 
-
 public class User implements Entity {
 
 	private Integer ID;

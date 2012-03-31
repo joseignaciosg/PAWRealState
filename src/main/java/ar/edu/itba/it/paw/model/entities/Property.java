@@ -11,20 +11,20 @@ public class Property implements Entity {
 	private String operation;
 	private String neighborhood;
 	private String address;
-	private String price;
-	private String spaces;
-	private String coveredArea;
-	private String freeArea;
-	private String age;
+	private Integer price;
+	private Integer spaces;
+	private Integer coveredArea;
+	private Integer freeArea;
+	private Integer age;
 	private Services service;
 	private String description;
 	private List<Photo> photos;
 
 	public Property(final Integer iD, final boolean dirty, final String type,
 			final String operation, final String neighborhood,
-			final String address, final String price, final String spaces,
-			final String coveredArea, final String freeArea, final String age,
-			final Services service, final String description) {
+			final String address, final Integer price, final Integer spaces,
+			final Integer coveredArea, final Integer freeArea,
+			final Integer age, final Services service, final String description) {
 		this.ID = iD;
 		this.dirty = dirty;
 		this.type = type;
@@ -41,12 +41,43 @@ public class Property implements Entity {
 		this.photos = new ArrayList<Photo>();
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((this.ID == null) ? 0 : this.ID.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (this.getClass() != obj.getClass()) {
+			return false;
+		}
+		final Property other = (Property) obj;
+		if (this.ID == null) {
+			if (other.ID != null) {
+				return false;
+			}
+		} else if (!this.ID.equals(other.ID)) {
+			return false;
+		}
+		return true;
+	}
+
 	public Integer getID() {
 		return this.ID;
 	}
 
 	public void setID(final Integer iD) {
 		this.ID = iD;
+		this.setDirty(true);
 	}
 
 	public boolean isDirty() {
@@ -63,14 +94,17 @@ public class Property implements Entity {
 
 	public void setType(final String type) {
 		this.type = type;
+		this.setDirty(true);
 	}
 
 	public String getOperation() {
 		return this.operation;
+
 	}
 
 	public void setOperation(final String operation) {
 		this.operation = operation;
+		this.setDirty(true);
 	}
 
 	public String getNeighborhood() {
@@ -79,6 +113,7 @@ public class Property implements Entity {
 
 	public void setNeighborhood(final String neighborhood) {
 		this.neighborhood = neighborhood;
+		this.setDirty(true);
 	}
 
 	public String getAddress() {
@@ -87,46 +122,52 @@ public class Property implements Entity {
 
 	public void setAddress(final String address) {
 		this.address = address;
+		this.setDirty(true);
 	}
 
-	public String getPrice() {
+	public Integer getPrice() {
 		return this.price;
 	}
 
-	public void setPrice(final String price) {
+	public void setPrice(final Integer price) {
 		this.price = price;
+		this.setDirty(true);
 	}
 
-	public String getSpaces() {
+	public Integer getSpaces() {
 		return this.spaces;
 	}
 
-	public void setSpaces(final String spaces) {
+	public void setSpaces(final Integer spaces) {
 		this.spaces = spaces;
+		this.setDirty(true);
 	}
 
-	public String getCoveredArea() {
+	public Integer getCoveredArea() {
 		return this.coveredArea;
 	}
 
-	public void setCoveredArea(final String coveredArea) {
+	public void setCoveredArea(final Integer coveredArea) {
 		this.coveredArea = coveredArea;
+		this.setDirty(true);
 	}
 
-	public String getFreeArea() {
+	public Integer getFreeArea() {
 		return this.freeArea;
 	}
 
-	public void setFreeArea(final String freeArea) {
+	public void setFreeArea(final Integer freeArea) {
 		this.freeArea = freeArea;
+		this.setDirty(true);
 	}
 
-	public String getAge() {
+	public Integer getAge() {
 		return this.age;
 	}
 
-	public void setAge(final String age) {
+	public void setAge(final Integer age) {
 		this.age = age;
+		this.setDirty(true);
 	}
 
 	public Services getService() {
@@ -135,6 +176,7 @@ public class Property implements Entity {
 
 	public void setService(final Services service) {
 		this.service = service;
+		this.setDirty(true);
 	}
 
 	public String getDescription() {
@@ -143,6 +185,7 @@ public class Property implements Entity {
 
 	public void setDescription(final String description) {
 		this.description = description;
+		this.setDirty(true);
 	}
 
 	public void addPhoto(final Photo photo) {
@@ -151,77 +194,6 @@ public class Property implements Entity {
 
 	public void removePhoto(final Photo photo) {
 		this.photos.remove(photo);
-	}
-
-	private class Services {
-
-		private boolean cable;
-		private boolean telephone;
-		private boolean swimmingpool;
-		private boolean lobby;
-		private boolean paddle;
-		private boolean quincho;
-
-		public Services(final boolean cable, final boolean telephone,
-				final boolean swimmingpool, final boolean lobby,
-				final boolean paddle, final boolean quincho) {
-			super();
-			this.cable = cable;
-			this.telephone = telephone;
-			this.swimmingpool = swimmingpool;
-			this.lobby = lobby;
-			this.paddle = paddle;
-			this.quincho = quincho;
-		}
-
-		public boolean isCable() {
-			return this.cable;
-		}
-
-		public void setCable(final boolean cable) {
-			this.cable = cable;
-		}
-
-		public boolean isTelephone() {
-			return this.telephone;
-		}
-
-		public void setTelephone(final boolean telephone) {
-			this.telephone = telephone;
-		}
-
-		public boolean isSwimmingpool() {
-			return this.swimmingpool;
-		}
-
-		public void setSwimmingpool(final boolean swimmingpool) {
-			this.swimmingpool = swimmingpool;
-		}
-
-		public boolean isLobby() {
-			return this.lobby;
-		}
-
-		public void setLobby(final boolean lobby) {
-			this.lobby = lobby;
-		}
-
-		public boolean isPaddle() {
-			return this.paddle;
-		}
-
-		public void setPaddle(final boolean paddle) {
-			this.paddle = paddle;
-		}
-
-		public boolean isQuincho() {
-			return this.quincho;
-		}
-
-		public void setQuincho(final boolean quincho) {
-			this.quincho = quincho;
-		}
-
 	}
 
 }
