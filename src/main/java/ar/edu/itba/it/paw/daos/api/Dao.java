@@ -8,7 +8,7 @@ public interface Dao<T extends Entity> {
 
 	public List<T> getAll();
 
-	public T getById(String id);
+	public T getById(Integer id);
 
 	public boolean delete(T obj);
 
