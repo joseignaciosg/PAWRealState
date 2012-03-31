@@ -1,8 +1,8 @@
-package DAOS;
+package ar.edu.itba.it.paw.daos.api;
 
 import java.util.List;
 
-import model.Entity;
+import ar.edu.itba.it.paw.model.entities.Entity;
 
 public interface Dao<T extends Entity> {
 
