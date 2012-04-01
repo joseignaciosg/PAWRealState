@@ -10,6 +10,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 public class SessionFilter implements Filter {
 
@@ -30,9 +31,14 @@ public class SessionFilter implements Filter {
 			return;
 		}
 
+		final HttpServletResponse httpResponse = (HttpServletResponse) response;
+
+		httpResponse.setCharacterEncoding("UTF-8");
+
 		// TODO: Check session and make it work.
 
 		chain.doFilter(request, response);
+
 		// final Manager<User> userResolver = new
 		// SessionUserManager(httpRequest);
 		//
