@@ -45,4 +45,13 @@ public class InMemoryUserDao implements UserDao {
 		return this.users;
 	}
 
+	public User getUser(final String username) {
+		for (final User u : this.users) {
+			if (u.getUsername().equals(username)) {
+				return u;
+			}
+		}
+		return null;
+	}
+
 }
