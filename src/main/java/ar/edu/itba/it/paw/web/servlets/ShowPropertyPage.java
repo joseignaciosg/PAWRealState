@@ -1,11 +1,18 @@
 package ar.edu.itba.it.paw.web.servlets;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import ar.edu.itba.it.paw.model.entities.Property;
+import ar.edu.itba.it.paw.model.services.PropertyService;
+import ar.edu.itba.it.paw.model.services.ServiceProvider;
+import ar.edu.itba.it.paw.web.utils.HTMLUtils;
 
 /*
  * Todos los usuarios, incluyendo los anónimos, deben poder 
@@ -26,7 +33,20 @@ public class ShowPropertyPage extends HttpServlet {
 	protected void doGet(final HttpServletRequest req,
 			final HttpServletResponse resp) throws ServletException,
 			IOException {
-		// TODO Auto-generated method stub
-		super.doGet(req, resp);
+
+		final List<String> errors = new ArrayList<String>();
+		final Integer ID = Integer.valueOf(req.getParameter("ID"));
+		final PropertyService propservice = ServiceProvider
+				.getPropertyService();
+		final Property property = propservice.getPropertyByID(ID, errors);
+		if (property == null) {
+			req.setAttribute("errors", errors);
+			HTMLUtils.render("viewproperty.jsp", req, resp);
+		} else {
+			req.setAttribute("property", property);
+			HTMLUtils.render("viewproperty.jsp", req, resp);
+
+		}
+
 	}
 }

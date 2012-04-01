@@ -169,4 +169,43 @@ public class PropertyServiceTest {
 
 	}
 
+	@Test
+	public void getPropertyByIDTest() {
+
+		final Services service = new Services(true, true, true, true, false,
+				true);
+		final Property prop1 = new Property(Integer.valueOf(1), TYPE.APARTMENT,
+				OPERATION.RENT, "Palermo", "Lavalle 660",
+				Integer.valueOf(1000), Integer.valueOf(3),
+				Integer.valueOf(100), Integer.valueOf(200), Integer.valueOf(5),
+				service, "Descrip1");
+
+		final List<String> errors = new ArrayList<String>();
+
+		// Property that doesn't exist.
+		Assert.assertNull(this.service.getPropertyByID(10, errors));
+
+		// errors has to be with one error message
+		Assert.assertEquals(1, errors.size());
+
+		// remove the element from the list
+		errors.remove(0);
+
+		// Property that exist
+		final Property newProp = this.service.getPropertyByID(1, errors);
+		Assert.assertNotNull(newProp);
+
+		// newProp equals prop1 has to be true
+		Assert.assertEquals(true, newProp.equals(prop1));
+
+		// newProp2 has to be not null
+		final Property newProp2 = this.service.getPropertyByID(2, errors);
+		Assert.assertNotNull(newProp2);
+
+		// newProp2 equals prop1 has to be false
+		Assert.assertEquals(false, newProp2.equals(prop1));
+
+		// The errors list should be empty
+		Assert.assertEquals(0, errors.size());
+	}
 }
