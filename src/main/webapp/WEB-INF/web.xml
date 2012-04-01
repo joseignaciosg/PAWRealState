@@ -13,6 +13,22 @@
 		<servlet-name>IndexPage</servlet-name>
 		<servlet-class>ar.edu.itba.it.paw.web.servlets.IndexPage</servlet-class>
 	</servlet>
+	<servlet>
+		<servlet-name>LoginServlet</servlet-name>
+		<servlet-class>ar.edu.itba.it.paw.web.servlets.LoginServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>LogoutServlet</servlet-name>
+		<servlet-class>ar.edu.itba.it.paw.web.servlets.LogoutServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>LogoutServlet</servlet-name>
+		<url-pattern>/logout</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>LoginServlet</servlet-name>
+		<url-pattern>/login</url-pattern>
+	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>RegisterPage</servlet-name>
 		<url-pattern>/register</url-pattern>
@@ -27,7 +43,7 @@
 		<filter-class>ar.edu.itba.it.paw.web.filters.SessionFilter</filter-class>
 		<init-param>
 			<param-name>excludePatterns</param-name>
-			<param-value>.*/assets/.*</param-value>
+			<param-value>(.*/assets/.*|.*/search(/)?|.*/contact(/)?|.*/property/[0-9]+$|/index(/)?|/register(/)?|/login(/)?)</param-value>
 		</init-param>
 	</filter>
 	<filter-mapping>
