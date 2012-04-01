@@ -72,8 +72,11 @@ public class UserService {
 		return true;
 	}
 
-	public boolean logout() {
-		// TODO cerrar sesion
+	public boolean logout(final UserManager manager) {
+		if (manager.getCurrentUser() == null) {
+			return false;
+		}
+		manager.setCurrentUser(null);
 		return true;
 	}
 }
