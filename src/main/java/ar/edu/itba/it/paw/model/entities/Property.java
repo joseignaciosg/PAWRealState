@@ -27,6 +27,7 @@ public class Property implements Entity {
 	private Services service;
 	private String description;
 	private List<Photo> photos;
+	private Integer userID;
 
 	public Property(final Integer iD, final TYPE type,
 			final OPERATION operation, final String neighborhood,
@@ -47,6 +48,14 @@ public class Property implements Entity {
 		this.description = description;
 		this.photos = new ArrayList<Photo>();
 		this.setDirty(false);
+	}
+
+	public Integer getUserID() {
+		return this.userID;
+	}
+
+	public void setUserID(final Integer userID) {
+		this.userID = userID;
 	}
 
 	@Override
