@@ -1,5 +1,8 @@
 package ar.edu.itba.it.paw.model.entities;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class User implements Entity {
 
 	private Integer ID;
@@ -7,17 +10,38 @@ public class User implements Entity {
 	private String surname;
 	private String mail;
 	private String telephone;
+	private String username;
+	private String password;
 	private boolean dirty;
+	private List<Property> properties;
 
-	public User(final Integer iD, final String name, final String surname,
-			final String mail, final String telephone) {
+	public User(final String name, final String surname, final String mail,
+			final String telephone, final String username, final String password) {
 		super();
-		this.ID = iD;
+		this.properties = new ArrayList<Property>();
 		this.name = name;
 		this.surname = surname;
 		this.mail = mail;
 		this.telephone = telephone;
+		this.username = username;
+		this.password = password;
 		this.setDirty(false);
+	}
+
+	public List<Property> getProperties() {
+		return this.properties;
+	}
+
+	public void addProperty(final Property property) {
+		this.properties.add(property);
+	}
+
+	public String getPassword() {
+		return this.password;
+	}
+
+	public void setPassword(final String password) {
+		this.password = password;
 	}
 
 	public String getTelephone() {
@@ -107,7 +131,16 @@ public class User implements Entity {
 	public String toString() {
 		return "User [ID=" + this.ID + ", name=" + this.name + ", surname="
 				+ this.surname + ", mail=" + this.mail + ", telephone="
-				+ this.telephone + ", dirty=" + this.dirty + "]";
+				+ this.telephone + ", username=" + this.username
+				+ ", password=" + this.password + ", dirty=" + this.dirty + "]";
+	}
+
+	public String getUsername() {
+		return this.username;
+	}
+
+	public void setUsername(final String username) {
+		this.username = username;
 	}
 
 }

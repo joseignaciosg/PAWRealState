@@ -16,6 +16,13 @@ public class IndexPage extends HttpServlet {
 	protected void doGet(final HttpServletRequest req,
 			final HttpServletResponse resp) throws ServletException,
 			IOException {
-		HTMLUtils.render("index/index.php", req, resp);
+		HTMLUtils.render("index/index.jsp", req, resp);
+	}
+
+	@Override
+	protected void doPost(final HttpServletRequest req,
+			final HttpServletResponse resp) throws ServletException,
+			IOException {
+		this.doGet(req, resp);
 	}
 }

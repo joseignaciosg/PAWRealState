@@ -57,11 +57,32 @@ public class DaoProvider {
 		resquests.add(new ContactRequest(3, "Paco de Lucia", "paco@gmail.com",
 				"67384", properties.get(2)));
 
-		users.add(new User(1, "J.P.", "Sartre", "jpsartre@gmail.com",
-				"172839127"));
-		users.add(new User(1, "Thomas", "Mann", "thomas@gmail.com", "3647823"));
-		users.add(new User(1, "Baruch", "Spinoza", "spinoza@gmail.com",
-				"74687364"));
+		User tmp = new User("J.P.", "Sartre", "jpsartre@gmail.com",
+				"172839127", "jpsartre", "jojo");
+
+		tmp.setID(1);
+		tmp.addProperty(properties.get(1));
+		tmp.addProperty(properties.get(2));
+		properties.get(1).setUserID(1);
+		properties.get(2).setUserID(1);
+
+		users.add(tmp);
+
+		tmp = new User("Thomas", "Mann", "thomas@gmail.com", "3647823",
+				"thomas", "abcd");
+
+		tmp.setID(2);
+		tmp.addProperty(properties.get(3));
+		properties.get(3).setUserID(2);
+
+		users.add(tmp);
+
+		tmp = new User("Baruch", "Spinoza", "spinoza@gmail.com", "74687364",
+				"spinoza", "akjasd");
+
+		tmp.setID(3);
+
+		users.add(tmp);
 
 		photos.add(new Photo(1, null, "jpg"));
 		photos.add(new Photo(2, null, "jpg"));
