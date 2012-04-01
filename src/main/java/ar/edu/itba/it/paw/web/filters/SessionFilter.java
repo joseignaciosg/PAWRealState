@@ -38,6 +38,8 @@ public class SessionFilter implements Filter {
 			httpRequest.setAttribute("current_user",
 					userManager.getCurrentUser());
 		}
+
+		httpRequest.setAttribute("userManager", userManager);
 		httpResponse.setCharacterEncoding("UTF-8");
 
 		// Assets and other pages are for anonymous users
