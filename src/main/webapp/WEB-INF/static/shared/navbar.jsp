@@ -31,6 +31,9 @@
 				<li>
 					<a href="${ basePath }/mycontactpetitions"> Mis Peticiones de Contacto </a>
 				</li>
+				<li>
+					<a href="${ basePath }/logout"> Salir </a>
+				</li>
 			</ul>
 		</li>
 	</c:if>
