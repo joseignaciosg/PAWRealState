@@ -54,8 +54,6 @@ public class SessionFilter implements Filter {
 			return;
 		}
 
-		// TODO: Check session and make it work.
-
 		if (userManager.getCurrentUser() != null) {
 			chain.doFilter(request, response);
 		} else {
