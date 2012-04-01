@@ -83,8 +83,15 @@ public class UserServiceTest {
 				"phone", "user", null, "passwd", new ArrayList<String>()));
 		Assert.assertFalse(this.service.register("name", "lastname", "email",
 				"phone", "user", "passwd", null, new ArrayList<String>()));
-		Assert.assertTrue(this.service.register("name", "lastname", "email",
-				"phone", "user", "passwd", "passwd", new ArrayList<String>()));
+		Assert.assertFalse(this.service.register("name", "lastname", "email",
+				"+54116122233", "user", "passwd", "passwd",
+				new ArrayList<String>()));
+		Assert.assertFalse(this.service.register("name", "lastname",
+				"email@email.com", "phone", "user", "passwd", "passwd",
+				new ArrayList<String>()));
+		Assert.assertTrue(this.service.register("name2", "lastname2",
+				"email@email.com", "+5411612233", "user2", "passwd", "passwd",
+				new ArrayList<String>()));
 	}
 
 	@Test
