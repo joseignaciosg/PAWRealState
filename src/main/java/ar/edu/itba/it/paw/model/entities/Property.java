@@ -5,18 +5,36 @@ import java.util.List;
 
 public class Property implements Entity {
 
-	public enum TYPE {
-		APARTMENT, HOUSE
+	public enum Type {
+		APARTMENT, HOUSE;
+
+		public static Type fromString(final String s) {
+			if (s.equals("APARTMENT")) {
+				return APARTMENT;
+			} else if (s.equals("HOUSE")) {
+				return HOUSE;
+			}
+			return null;
+		}
 	}
 
-	public enum OPERATION {
-		SELL, RENT
+	public enum Operation {
+		SELL, RENT;
+
+		public static Operation fromString(final String s) {
+			if (s.equals("RENT")) {
+				return RENT;
+			} else if (s.equals("SELL")) {
+				return SELL;
+			}
+			return null;
+		}
 	}
 
 	private Integer ID;
 	private boolean dirty;
-	private TYPE type;
-	private OPERATION operation;
+	private Type type;
+	private Operation operation;
 	private String neighborhood;
 	private String address;
 	private Integer price;
@@ -29,12 +47,22 @@ public class Property implements Entity {
 	private List<Photo> photos;
 	private Integer userID;
 
-	public Property(final Integer iD, final TYPE type,
-			final OPERATION operation, final String neighborhood,
+	public Property(final Type type, final Operation operation,
+			final String neighborhood, final String address,
+			final Integer price, final Integer spaces,
+			final Integer coveredArea, final Integer freeArea,
+			final Integer age, final Services service, final String description) {
+		this(null, type, operation, neighborhood, address, price, spaces,
+				coveredArea, freeArea, age, service, description);
+		this.setDirty(false);
+	}
+
+	public Property(final Integer ID, final Type type,
+			final Operation operation, final String neighborhood,
 			final String address, final Integer price, final Integer spaces,
 			final Integer coveredArea, final Integer freeArea,
 			final Integer age, final Services service, final String description) {
-		this.ID = iD;
+		this.ID = ID;
 		this.type = type;
 		this.operation = operation;
 		this.neighborhood = neighborhood;
@@ -105,21 +133,21 @@ public class Property implements Entity {
 		this.dirty = dirty;
 	}
 
-	public TYPE getType() {
+	public Type getType() {
 		return this.type;
 	}
 
-	public void setType(final TYPE type) {
+	public void setType(final Type type) {
 		this.type = type;
 		this.setDirty(true);
 	}
 
-	public OPERATION getOperation() {
+	public Operation getOperation() {
 		return this.operation;
 
 	}
 
-	public void setOperation(final OPERATION operation) {
+	public void setOperation(final Operation operation) {
 		this.operation = operation;
 		this.setDirty(true);
 	}

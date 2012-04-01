@@ -7,9 +7,9 @@ import java.util.List;
 
 import ar.edu.itba.it.paw.daos.api.PropertyDao;
 import ar.edu.itba.it.paw.model.entities.Property;
-import ar.edu.itba.it.paw.model.entities.Property.OPERATION;
-import ar.edu.itba.it.paw.model.entities.Property.TYPE;
-import ar.edu.itba.it.paw.model.services.PropertyService.ORDER;
+import ar.edu.itba.it.paw.model.entities.Property.Operation;
+import ar.edu.itba.it.paw.model.entities.Property.Type;
+import ar.edu.itba.it.paw.model.services.PropertyService.Order;
 
 public class InMemoryPropertyDao implements PropertyDao {
 
@@ -55,9 +55,9 @@ public class InMemoryPropertyDao implements PropertyDao {
 		return this.data;
 	}
 
-	public List<Property> getAll(final OPERATION op, final TYPE type,
+	public List<Property> getAll(final Operation op, final Type type,
 			final int pricelow, final int pricehigh, final int page,
-			final int quant, final ORDER order) {
+			final int quant, final Order order) {
 
 		final List<Property> ans = new ArrayList<Property>();
 		final List<Property> oplist = new ArrayList<Property>();
@@ -113,7 +113,7 @@ public class InMemoryPropertyDao implements PropertyDao {
 		}
 
 		// ordering
-		if (order == null || order.equals(ORDER.ASC)) {
+		if (order == null || order.equals(Order.ASC)) {
 			Collections.sort(ans, new PriceASCComparator<Property>());
 		} else {
 			Collections.sort(ans, new PriceDESCComparator<Property>());
