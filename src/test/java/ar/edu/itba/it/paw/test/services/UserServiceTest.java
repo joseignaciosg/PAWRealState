@@ -24,14 +24,15 @@ public class UserServiceTest {
 
 	private UserService service;
 	private UserManager userManager;
+	private User usr;
 
 	@Before
 	public void initService() {
 		final List<User> users = new ArrayList<User>();
-		final User usr = new User("Ben", "Stiller", "ben@gmail.com",
-				"16748376", "BenSti", "B3nSt1");
-		usr.setID(1);
-		users.add(usr);
+		this.usr = new User("Ben", "Stiller", "ben@gmail.com", "16748376",
+				"BenSti", "B3nSt1");
+		this.usr.setID(1);
+		users.add(this.usr);
 		this.service = new UserService(new InMemoryUserDao(users));
 		this.userManager = new UserManager() {
 			private User user;
@@ -82,12 +83,24 @@ public class UserServiceTest {
 				"phone", "user", null, "passwd", new ArrayList<String>()));
 		Assert.assertFalse(this.service.register("name", "lastname", "email",
 				"phone", "user", "passwd", null, new ArrayList<String>()));
-		Assert.assertTrue(this.service.register("name", "lastname", "email",
-				"phone", "user", "passwd", "passwd", new ArrayList<String>()));
+		Assert.assertFalse(this.service.register("name", "lastname", "email",
+				"+54116122233", "user", "passwd", "passwd",
+				new ArrayList<String>()));
+		Assert.assertFalse(this.service.register("name", "lastname",
+				"email@email.com", "phone", "user", "passwd", "passwd",
+				new ArrayList<String>()));
+		Assert.assertTrue(this.service.register("name2", "lastname2",
+				"email@email.com", "+5411612233", "user2", "passwd", "passwd",
+				new ArrayList<String>()));
 	}
 
 	@Test
 	public void logoutTest() {
-		Assert.assertTrue(this.service.logout());
+		this.userManager.setCurrentUser(this.usr);
+		Assert.assertTrue(this.service.logout(this.userManager));
+		Assert.assertNull(this.userManager.getCurrentUser());
+
+		this.userManager.setCurrentUser(null);
+		Assert.assertFalse(this.service.logout(this.userManager));
 	}
 }

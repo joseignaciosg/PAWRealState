@@ -61,6 +61,10 @@ public class DaoProvider {
 				"172839127", "jpsartre", "jojo");
 
 		tmp.setID(1);
+		tmp.addProperty(properties.get(1));
+		tmp.addProperty(properties.get(2));
+		properties.get(1).setUserID(1);
+		properties.get(2).setUserID(1);
 
 		users.add(tmp);
 
@@ -68,6 +72,8 @@ public class DaoProvider {
 				"thomas", "abcd");
 
 		tmp.setID(2);
+		tmp.addProperty(properties.get(3));
+		properties.get(3).setUserID(2);
 
 		users.add(tmp);
 

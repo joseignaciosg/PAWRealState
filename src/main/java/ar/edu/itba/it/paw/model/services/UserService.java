@@ -1,6 +1,7 @@
 package ar.edu.itba.it.paw.model.services;
 
 import java.util.List;
+import java.util.regex.Pattern;
 
 import ar.edu.itba.it.paw.daos.api.UserDao;
 import ar.edu.itba.it.paw.model.entities.User;
@@ -8,7 +9,11 @@ import ar.edu.itba.it.paw.web.session.UserManager;
 
 public class UserService {
 
+	private static final String EMAIL_PATTERN = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+
 	private UserDao dao;
+	private Pattern emailPattern = Pattern.compile(EMAIL_PATTERN);
+	private Pattern phonePattern = Pattern.compile("(\\+)?\\d+");
 
 	public UserService(final UserDao inMemoryUserDao) {
 		this.dao = inMemoryUserDao;
@@ -48,12 +53,12 @@ public class UserService {
 			errors.add("Las contraseñas no coinciden");
 		}
 
-		if (email == null) {
-			errors.add("Su email es un campo requerido");
+		if (email == null || !this.emailPattern.matcher(email).find()) {
+			errors.add("Su email debe ser un email válido");
 		}
 
-		if (phone == null) {
-			errors.add("Su teléfono es un campo requerido");
+		if (phone == null || !this.phonePattern.matcher(phone).find()) {
+			errors.add("Su teléfono debe ser válido");
 		}
 
 		if (username == null || this.dao.getUser(username) != null) {
@@ -72,8 +77,11 @@ public class UserService {
 		return true;
 	}
 
-	public boolean logout() {
-		// TODO cerrar sesion
+	public boolean logout(final UserManager manager) {
+		if (manager.getCurrentUser() == null) {
+			return false;
+		}
+		manager.setCurrentUser(null);
 		return true;
 	}
 }
