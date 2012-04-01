@@ -18,4 +18,11 @@ public class IndexPage extends HttpServlet {
 			IOException {
 		HTMLUtils.render("index/index.jsp", req, resp);
 	}
+
+	@Override
+	protected void doPost(final HttpServletRequest req,
+			final HttpServletResponse resp) throws ServletException,
+			IOException {
+		this.doGet(req, resp);
+	}
 }
