@@ -28,6 +28,7 @@ public class RegisterPage extends HttpServlet {
 	protected void doGet(final HttpServletRequest req,
 			final HttpServletResponse resp) throws ServletException,
 			IOException {
+
 		HTMLUtils.render(this.registerPage, req, resp);
 	}
 
