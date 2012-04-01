@@ -213,4 +213,9 @@ public class Property implements Entity {
 		this.photos.remove(photo);
 	}
 
+	@Override
+	public String toString() {
+		return "Property [ID=" + this.ID + ", price=" + this.price + "]";
+	}
+
 }
