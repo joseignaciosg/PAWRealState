@@ -77,8 +77,8 @@ public class DaoProvider {
 				"thomas", "abcd");
 
 		tmp.setID(2);
-		tmp.addProperty(properties.get(3));
-		properties.get(3).setUserID(2);
+		tmp.addProperty(properties.get(2));
+		properties.get(2).setUserID(2);
 
 		tmp.addProperty(properties.get(2));
 		properties.get(2).setUserID(2);
