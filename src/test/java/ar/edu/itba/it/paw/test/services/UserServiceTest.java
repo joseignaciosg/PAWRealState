@@ -42,9 +42,26 @@ public class UserServiceTest {
 	@Test
 	public void registerTest() {
 		Assert.assertFalse(this.service.register("Ben", "Sti", "ben@gmail.com",
-				"16748376", "BenSti", "B3nSt1"));
+				"16748376", "BenSti", "B3nSt1", "B3nSt1",
+				new ArrayList<String>()));
+		Assert.assertFalse(this.service.register("name", "lastname", "email",
+				"phone", "user", "passwd", "password", new ArrayList<String>()));
+		Assert.assertFalse(this.service.register(null, "lastname", "email",
+				"phone", "user", "passwd", "passwd", new ArrayList<String>()));
+		Assert.assertFalse(this.service.register("name", null, "email",
+				"phone", "user", "passwd", "passwd", new ArrayList<String>()));
+		Assert.assertFalse(this.service.register("name", "lastname", null,
+				"phone", "user", "passwd", "passwd", new ArrayList<String>()));
+		Assert.assertFalse(this.service.register("name", "lastname", "email",
+				null, "user", "passwd", "passwd", new ArrayList<String>()));
+		Assert.assertFalse(this.service.register("name", "lastname", "email",
+				"phone", null, "passwd", "passwd", new ArrayList<String>()));
+		Assert.assertFalse(this.service.register("name", "lastname", "email",
+				"phone", "user", null, "passwd", new ArrayList<String>()));
+		Assert.assertFalse(this.service.register("name", "lastname", "email",
+				"phone", "user", "passwd", null, new ArrayList<String>()));
 		Assert.assertTrue(this.service.register("name", "lastname", "email",
-				"phone", "user", "passwd"));
+				"phone", "user", "passwd", "passwd", new ArrayList<String>()));
 	}
 
 	@Test

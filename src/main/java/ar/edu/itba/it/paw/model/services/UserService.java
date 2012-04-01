@@ -44,6 +44,8 @@ public class UserService {
 
 		if (password == null || repeatedPassword == null) {
 			errors.add("Su contraseña y su confirmación son campos requeridos");
+		} else if (!repeatedPassword.equals(password)) {
+			errors.add("Las contraseñas no coinciden");
 		}
 
 		if (email == null) {
@@ -54,17 +56,8 @@ public class UserService {
 			errors.add("Su teléfono es un campo requerido");
 		}
 
-		if (name == null || lastname == null || email == null || phone == null
-				|| username == null || password == null) {
-			return false;
-		}
-
-		if (this.dao.getUser(username) != null) {
+		if (username == null || this.dao.getUser(username) != null) {
 			errors.add("Ya existe un usuario con el nombre dado");
-		}
-
-		if (!repeatedPassword.equals(password)) {
-			errors.add("Las contraseñas no coinciden");
 		}
 
 		if (errors.size() > 0) {
