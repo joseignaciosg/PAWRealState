@@ -18,8 +18,14 @@ public class UserDaoTest {
 	@Before
 	public void initDB() {
 		final List<User> users = new ArrayList<User>();
-		users.add(new User(1, "Ben", "Stiller", "ben@gmail.com", "16748376"));
-		users.add(new User(2, "Truman", "Capote", "capote@gmail.com", "3728376"));
+		User usr = new User("Ben", "Stiller", "ben@gmail.com", "16748376",
+				"BenSti", "B3nSt1");
+		usr.setID(1);
+		users.add(usr);
+		usr = new User("Truman", "Capote", "capote@gmail.com", "3728376",
+				"TruCa", "TruC4");
+		usr.setID(2);
+		users.add(usr);
 
 		this.dao = new InMemoryUserDao(users);
 	}
@@ -47,8 +53,9 @@ public class UserDaoTest {
 
 	@Test
 	public void saveOrUpdateTest() {
-		final User u1 = new User(3, "Doris", "Day", "dorisgay@gmail.com",
-				"16728376");
+		final User u1 = new User("Doris", "Day", "dorisgay@gmail.com",
+				"16728376", "DorisDa", "D0r1D4");
+		u1.setID(3);
 		Assert.assertTrue(this.dao.saveOrUpdate(u1));
 		Assert.assertFalse(this.dao.saveOrUpdate(u1));
 
