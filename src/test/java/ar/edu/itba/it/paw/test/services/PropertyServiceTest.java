@@ -140,12 +140,10 @@ public class PropertyServiceTest {
 		props = this.service.advancedSearch(null, Type.APARTMENT, -1, -1, 0,
 				10, Order.ASC);
 		Assert.assertTrue(props.size() == 3);
-		System.out.println(props);
 
 		props = this.service.advancedSearch(Operation.RENT, null, -1, -1, 0,
 				10, Order.ASC);
 		Assert.assertTrue(props.size() == 5);
-		System.out.println(props);
 
 		props = this.service.advancedSearch(Operation.RENT, null, -1, -1, 1,
 				10, Order.ASC);
@@ -159,13 +157,11 @@ public class PropertyServiceTest {
 		props = this.service.advancedSearch(null, null, 0, 100000, 0, 10,
 				Order.ASC);
 		Assert.assertTrue(props.size() == 9);
-		System.out.println(props);
 
 		// desc
 		props = this.service.advancedSearch(null, null, 0, 100000, 0, 10,
 				Order.DESC);
 		Assert.assertTrue(props.size() == 9);
-		System.out.println(props);
 
 	}
 

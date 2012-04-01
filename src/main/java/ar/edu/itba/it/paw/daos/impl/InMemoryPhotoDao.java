@@ -42,6 +42,7 @@ public class InMemoryPhotoDao implements PhotoDao {
 		} else {
 			if (obj.isDirty()) {
 				this.photos.remove(obj);
+				obj.setDirty(false);
 				return this.photos.add(obj);
 			} else {
 				return false;

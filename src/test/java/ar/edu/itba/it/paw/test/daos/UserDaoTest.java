@@ -36,6 +36,7 @@ public class UserDaoTest {
 		Assert.assertNotNull(u);
 
 		u = this.dao.getById(1123123);
+
 		Assert.assertNull(u);
 	}
 
