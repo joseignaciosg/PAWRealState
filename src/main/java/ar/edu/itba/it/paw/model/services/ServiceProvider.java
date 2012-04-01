@@ -5,6 +5,7 @@ import ar.edu.itba.it.paw.daos.DaoProvider;
 public class ServiceProvider {
 
 	private static UserService userService;
+	private static PropertyService propertyService;
 
 	private ServiceProvider() {
 	}
@@ -15,6 +16,14 @@ public class ServiceProvider {
 		}
 
 		return userService;
+	}
+
+	public static PropertyService getPropertyService() {
+		if (propertyService == null) {
+			propertyService = new PropertyService(DaoProvider.getPropertyDao());
+		}
+
+		return propertyService;
 	}
 
 }

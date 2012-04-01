@@ -28,4 +28,15 @@ public class PropertyService {
 		return ans;
 	}
 
+	public Property getPropertyByID(final Integer ID, final List<String> errors) {
+
+		Property ans = null;
+		ans = this.dao.getById(ID);
+		if (ID == null || ans == null) {
+			errors.add("No existe la propiedad solicitada");
+			return null;
+		}
+		return ans;
+	}
+
 }
