@@ -25,6 +25,14 @@
 		<servlet-name>MyProperties</servlet-name>
 		<servlet-class>ar.edu.itba.it.paw.web.servlets.MyPropertiesPage</servlet-class>
 	</servlet>
+	<servlet>
+		<servlet-name>NewPropertyPage</servlet-name>
+		<servlet-class>ar.edu.itba.it.paw.web.servlets.NewPropertyPage</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>NewPropertyPage</servlet-name>
+		<url-pattern>/myproperties/new</url-pattern>
+	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>MyProperties</servlet-name>
 		<url-pattern>/myproperties</url-pattern>
