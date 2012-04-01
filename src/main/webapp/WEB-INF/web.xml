@@ -13,6 +13,30 @@
 		<servlet-name>IndexPage</servlet-name>
 		<servlet-class>ar.edu.itba.it.paw.web.servlets.IndexPage</servlet-class>
 	</servlet>
+	<servlet>
+		<servlet-name>LoginServlet</servlet-name>
+		<servlet-class>ar.edu.itba.it.paw.web.servlets.LoginServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>LogoutServlet</servlet-name>
+		<servlet-class>ar.edu.itba.it.paw.web.servlets.LogoutServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>MyProperties</servlet-name>
+		<servlet-class>ar.edu.itba.it.paw.web.servlets.MyPropertiesPage</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>MyProperties</servlet-name>
+		<url-pattern>/myproperties</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>LogoutServlet</servlet-name>
+		<url-pattern>/logout</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>LoginServlet</servlet-name>
+		<url-pattern>/login</url-pattern>
+	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>RegisterPage</servlet-name>
 		<url-pattern>/register</url-pattern>
