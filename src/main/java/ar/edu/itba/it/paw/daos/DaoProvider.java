@@ -66,6 +66,11 @@ public class DaoProvider {
 		properties.get(1).setUserID(1);
 		properties.get(2).setUserID(1);
 
+		tmp.addProperty(properties.get(0));
+		tmp.addProperty(properties.get(1));
+		properties.get(0).setUserID(1);
+		properties.get(1).setUserID(1);
+
 		users.add(tmp);
 
 		tmp = new User("Thomas", "Mann", "thomas@gmail.com", "3647823",
@@ -74,6 +79,9 @@ public class DaoProvider {
 		tmp.setID(2);
 		tmp.addProperty(properties.get(3));
 		properties.get(3).setUserID(2);
+
+		tmp.addProperty(properties.get(2));
+		properties.get(2).setUserID(2);
 
 		users.add(tmp);
 

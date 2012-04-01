@@ -21,6 +21,14 @@
 		<servlet-name>LogoutServlet</servlet-name>
 		<servlet-class>ar.edu.itba.it.paw.web.servlets.LogoutServlet</servlet-class>
 	</servlet>
+	<servlet>
+		<servlet-name>MyProperties</servlet-name>
+		<servlet-class>ar.edu.itba.it.paw.web.servlets.MyPropertiesPage</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>MyProperties</servlet-name>
+		<url-pattern>/myproperties</url-pattern>
+	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>LogoutServlet</servlet-name>
 		<url-pattern>/logout</url-pattern>
