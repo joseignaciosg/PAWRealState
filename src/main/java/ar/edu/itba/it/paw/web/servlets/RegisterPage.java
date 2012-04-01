@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import ar.edu.itba.it.paw.daos.DaoProvider;
+import ar.edu.itba.it.paw.model.services.ServiceProvider;
 import ar.edu.itba.it.paw.model.services.UserService;
 import ar.edu.itba.it.paw.web.utils.HTMLUtils;
 
@@ -41,7 +41,7 @@ public class RegisterPage extends HttpServlet {
 			final HttpServletResponse resp) throws ServletException,
 			IOException {
 
-		final UserService service = new UserService(DaoProvider.getUserDao());
+		final UserService service = ServiceProvider.getUserService();
 
 		final List<String> errors = new ArrayList<String>();
 
@@ -54,7 +54,7 @@ public class RegisterPage extends HttpServlet {
 				req.getParameter("user_password_repeated"), errors);
 
 		if (valid) {
-
+			resp.sendRedirect(req.getContextPath() + "/index");
 		} else {
 			req.setAttribute("errors", errors);
 			this.doGet(req, resp);

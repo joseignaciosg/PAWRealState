@@ -4,22 +4,22 @@ import java.util.List;
 
 import ar.edu.itba.it.paw.daos.api.UserDao;
 import ar.edu.itba.it.paw.model.entities.User;
+import ar.edu.itba.it.paw.web.session.UserManager;
 
 public class UserService {
 
 	private UserDao dao;
 
 	public UserService(final UserDao inMemoryUserDao) {
-
 		this.dao = inMemoryUserDao;
 	}
 
-	public boolean login(final String username, final String password) {
-
+	public boolean login(final String username, final String password,
+			final UserManager manager) {
 		final User usr = this.dao.getUser(username);
 		if (usr != null) {
 			if (usr.getPassword().equals(password)) {
-				// TODO iniciar sesion
+				manager.setCurrentUser(usr);
 				return true;
 			}
 		}
