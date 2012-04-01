@@ -1,5 +1,8 @@
 package ar.edu.itba.it.paw.model.entities;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class User implements Entity {
 
 	private Integer ID;
@@ -10,10 +13,12 @@ public class User implements Entity {
 	private String username;
 	private String password;
 	private boolean dirty;
+	private List<Property> properties;
 
 	public User(final String name, final String surname, final String mail,
 			final String telephone, final String username, final String password) {
 		super();
+		this.properties = new ArrayList<Property>();
 		this.name = name;
 		this.surname = surname;
 		this.mail = mail;
@@ -21,6 +26,14 @@ public class User implements Entity {
 		this.username = username;
 		this.password = password;
 		this.setDirty(false);
+	}
+
+	public List<Property> getProperties() {
+		return this.properties;
+	}
+
+	public void addProperty(final Property property) {
+		this.properties.add(property);
 	}
 
 	public String getPassword() {

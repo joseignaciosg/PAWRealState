@@ -14,8 +14,8 @@ import ar.edu.itba.it.paw.daos.impl.InMemoryUserDao;
 import ar.edu.itba.it.paw.model.entities.ContactRequest;
 import ar.edu.itba.it.paw.model.entities.Photo;
 import ar.edu.itba.it.paw.model.entities.Property;
-import ar.edu.itba.it.paw.model.entities.Property.OPERATION;
-import ar.edu.itba.it.paw.model.entities.Property.TYPE;
+import ar.edu.itba.it.paw.model.entities.Property.Operation;
+import ar.edu.itba.it.paw.model.entities.Property.Type;
 import ar.edu.itba.it.paw.model.entities.Services;
 import ar.edu.itba.it.paw.model.entities.User;
 
@@ -41,12 +41,12 @@ public class DaoProvider {
 				false);
 		final Services ser3 = new Services(false, true, false, true, false,
 				true);
-		properties.add(new Property(1, TYPE.HOUSE, OPERATION.RENT, "Soho",
+		properties.add(new Property(1, Type.HOUSE, Operation.RENT, "Soho",
 				"Soho St. 120", 10000, 4, 1000, 2000, 15, ser1, "Really good"));
-		properties.add(new Property(2, TYPE.APARTMENT, OPERATION.SELL,
+		properties.add(new Property(2, Type.APARTMENT, Operation.SELL,
 				"Caballito", "Novia St.1900", 10000, 4, 1000, 2000, 15, ser2,
 				"Really bad"));
-		properties.add(new Property(3, TYPE.HOUSE, OPERATION.SELL, "BAlbanera",
+		properties.add(new Property(3, Type.HOUSE, Operation.SELL, "BAlbanera",
 				"BAlbanera st. 2736", 10000, 4, 1000, 2000, 15, ser3,
 				"Excellect"));
 
@@ -61,6 +61,15 @@ public class DaoProvider {
 				"172839127", "jpsartre", "jojo");
 
 		tmp.setID(1);
+		tmp.addProperty(properties.get(1));
+		tmp.addProperty(properties.get(2));
+		properties.get(1).setUserID(1);
+		properties.get(2).setUserID(1);
+
+		tmp.addProperty(properties.get(0));
+		tmp.addProperty(properties.get(1));
+		properties.get(0).setUserID(1);
+		properties.get(1).setUserID(1);
 
 		users.add(tmp);
 
@@ -68,6 +77,11 @@ public class DaoProvider {
 				"thomas", "abcd");
 
 		tmp.setID(2);
+		tmp.addProperty(properties.get(2));
+		properties.get(2).setUserID(2);
+
+		tmp.addProperty(properties.get(2));
+		properties.get(2).setUserID(2);
 
 		users.add(tmp);
 

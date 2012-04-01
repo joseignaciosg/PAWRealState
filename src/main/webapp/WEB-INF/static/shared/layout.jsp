@@ -14,11 +14,10 @@
 	type="text/css" />
 <script type="text/javascript" src="${ basePath }/assets/js/jquery.js"></script>
 <script type="text/javascript"
-	src="${ basePath }/assets/js/bootstrap-modal.js"></script>
+	src="${ basePath }/assets/js/bootstrap-dropdown.js"></script>
 <script type="text/javascript">
 	basePath = "${ basePath }";
 </script>
-<script type="text/javascript" src="${ basePath }/assets/js/app.js"></script>
 </head>
 <body>
 	<div class="navbar navbar-fixed-top">

@@ -10,8 +10,8 @@ import org.junit.Test;
 
 import ar.edu.itba.it.paw.daos.impl.InMemoryPropertyDao;
 import ar.edu.itba.it.paw.model.entities.Property;
-import ar.edu.itba.it.paw.model.entities.Property.OPERATION;
-import ar.edu.itba.it.paw.model.entities.Property.TYPE;
+import ar.edu.itba.it.paw.model.entities.Property.Operation;
+import ar.edu.itba.it.paw.model.entities.Property.Type;
 import ar.edu.itba.it.paw.model.entities.Services;
 
 public class PropertyDaoTest {
@@ -25,18 +25,18 @@ public class PropertyDaoTest {
 		final Services service = new Services(true, true, true, true, false,
 				true);
 
-		final Property prop1 = new Property(Integer.valueOf(1), TYPE.APARTMENT,
-				OPERATION.RENT, "Palermo", "Lavalle 660", Integer.valueOf(500),
+		final Property prop1 = new Property(Integer.valueOf(1), Type.APARTMENT,
+				Operation.RENT, "Palermo", "Lavalle 660", Integer.valueOf(500),
 				Integer.valueOf(3), Integer.valueOf(100), Integer.valueOf(200),
 				Integer.valueOf(5), service, "Descrip1");
 
-		final Property prop2 = new Property(Integer.valueOf(2), TYPE.HOUSE,
-				OPERATION.SELL, "BarrioNorte", "Junca 460",
+		final Property prop2 = new Property(Integer.valueOf(2), Type.HOUSE,
+				Operation.SELL, "BarrioNorte", "Junca 460",
 				Integer.valueOf(500), Integer.valueOf(3), Integer.valueOf(100),
 				Integer.valueOf(200), Integer.valueOf(5), service, "Descrip2");
 
-		final Property prop3 = new Property(Integer.valueOf(3), TYPE.HOUSE,
-				OPERATION.SELL, "Palermo", "Alem 110", Integer.valueOf(500),
+		final Property prop3 = new Property(Integer.valueOf(3), Type.HOUSE,
+				Operation.SELL, "Palermo", "Alem 110", Integer.valueOf(500),
 				Integer.valueOf(3), Integer.valueOf(100), Integer.valueOf(200),
 				Integer.valueOf(5), service, "Descrip3");
 
@@ -60,12 +60,12 @@ public class PropertyDaoTest {
 		final Services service = new Services(true, true, true, true, false,
 				true);
 		final Property propTrue = new Property(Integer.valueOf(3),
-				TYPE.APARTMENT, OPERATION.SELL, "Palermo", "Alem 110",
+				Type.APARTMENT, Operation.SELL, "Palermo", "Alem 110",
 				Integer.valueOf(500), Integer.valueOf(3), Integer.valueOf(100),
 				Integer.valueOf(200), Integer.valueOf(5), service, "Descrip3");
 
-		final Property propFalse = new Property(Integer.valueOf(5), TYPE.HOUSE,
-				OPERATION.SELL, "Palermo", "Alem 110", Integer.valueOf(500),
+		final Property propFalse = new Property(Integer.valueOf(5), Type.HOUSE,
+				Operation.SELL, "Palermo", "Alem 110", Integer.valueOf(500),
 				Integer.valueOf(3), Integer.valueOf(100), Integer.valueOf(200),
 				Integer.valueOf(5), service, "Descrip3");
 

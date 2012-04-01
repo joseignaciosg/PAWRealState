@@ -9,6 +9,9 @@ public class Services {
 	private boolean paddle;
 	private boolean quincho;
 
+	public Services() {
+	}
+
 	public Services(final boolean cable, final boolean telephone,
 			final boolean swimmingpool, final boolean lobby,
 			final boolean paddle, final boolean quincho) {
