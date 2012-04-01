@@ -24,14 +24,15 @@ public class UserServiceTest {
 
 	private UserService service;
 	private UserManager userManager;
+	private User usr;
 
 	@Before
 	public void initService() {
 		final List<User> users = new ArrayList<User>();
-		final User usr = new User("Ben", "Stiller", "ben@gmail.com",
-				"16748376", "BenSti", "B3nSt1");
-		usr.setID(1);
-		users.add(usr);
+		this.usr = new User("Ben", "Stiller", "ben@gmail.com", "16748376",
+				"BenSti", "B3nSt1");
+		this.usr.setID(1);
+		users.add(this.usr);
 		this.service = new UserService(new InMemoryUserDao(users));
 		this.userManager = new UserManager() {
 			private User user;
@@ -88,6 +89,11 @@ public class UserServiceTest {
 
 	@Test
 	public void logoutTest() {
-		Assert.assertTrue(this.service.logout());
+		this.userManager.setCurrentUser(this.usr);
+		Assert.assertTrue(this.service.logout(this.userManager));
+		Assert.assertNull(this.userManager.getCurrentUser());
+
+		this.userManager.setCurrentUser(null);
+		Assert.assertFalse(this.service.logout(this.userManager));
 	}
 }
