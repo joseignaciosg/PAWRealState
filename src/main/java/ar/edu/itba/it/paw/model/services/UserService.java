@@ -28,6 +28,11 @@ public class UserService {
 			final String email, final String phone, final String username,
 			final String password) {
 
+		if (name == null || lastname == null || email == null || phone == null
+				|| username == null || password == null) {
+			return false;
+		}
+
 		if (this.dao.getUser(username) != null) {
 			return false;
 		}
