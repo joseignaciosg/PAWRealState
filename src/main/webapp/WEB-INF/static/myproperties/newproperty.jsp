@@ -2,103 +2,103 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 
 <div class="row">
-	<form name="newproperty" class="form-horizontal span8 offset2" action="newproperty" method="POST">
+	<form name="property_newproperty" class="form-horizontal span8 offset2" action="new" method="POST">
 	<fieldset>
 			<legend>Agregar Nueva Propiedad</legend>
 			<div class="control-group">  
-           		<label class="control-label" for="type">Seleccione un tipo de inmueble </label>  
+           		<label class="control-label" for="property_type">Seleccione un tipo de inmueble </label>  
             		<div class="controls">  
-            			<select id="type">  
-               				<option>Departamento</option>  
-               				<option>Casa</option>  
+            			<select id="type" name="property_type">  
+               				<option value="APARTMENT">Departamento</option>  
+               				<option value="HOUSE">Casa</option>  
 						</select>  
 					</div>  
 			</div>
 			<div class="control-group">  
-           		<label class="control-label" for="operation">Seleccione un tipo de operacion </label>  
+           		<label class="control-label" for="property_operation">Seleccione un tipo de operacion </label>  
             		<div class="controls">  
-            			<select id="operation">  
-               				<option>Alquiler</option>  
-               				<option>Venta</option>  
+            			<select id="operation" name="property_operation">  
+               				<option value="RENT">Alquiler</option>  
+               				<option value="SELL">Venta</option>  
 						</select>  
 					</div>  
 			</div>
 			<div class="control-group">
-				<label class="control-label" for="address">Direccion </label>
+				<label class="control-label" for="property_address">Direccion </label>
 				<div class="controls">
-					<input type="text" class="input-xlarge" id="address" name="address"/>
+					<input type="text" class="input-xlarge" id="address" name="property_address"/>
 				</div>
 			</div>
 			<div class="control-group">
-				<label class="control-label" for="neighborhood">Barrio </label>
+				<label class="control-label" for="property_neighborhood">Barrio </label>
 				<div class="controls">
-					<input type="text" class="input-xlarge" id="neighborhood" name="neighborhood"/>
+					<input type="text" class="input-xlarge" id="neighborhood" name="property_neighborhood"/>
 				</div>
 			</div>
 			<div class="control-group">
-				<label class="control-label" for="price">Precio </label>
+				<label class="control-label" for="property_price">Precio </label>
 				<div class="controls">
-					<input type="text" class="input-xlarge" id="price" name="price"/>
+					<input type="text" class="input-xlarge" id="price" name="property_price"/>
 				</div>
 			</div>
 			<div class="control-group">
-				<label class="control-label" for="spaces">Cantidad de ambientes </label>
+				<label class="control-label" for="property_spaces">Cantidad de ambientes </label>
 				<div class="controls">
-					<input type="text" class="input-xlarge" id="spaces" name="spaces"/>
+					<input type="text" class="input-xlarge" id="spaces" name="property_spaces"/>
 				</div>
 			</div>
 			<div class="control-group">
-				<label class="control-label" for="coveredArea">Superficie cubierta </label>
+				<label class="control-label" for="property_coveredArea">Superficie cubierta </label>
 				<div class="controls">
-					<input type="text" class="input-xlarge" id="coveredArea" name="coveredArea"/>
+					<input type="text" class="input-xlarge" id="coveredArea" name="property_coveredArea"/>
 					<p>Metros cuadrados</p>
 				</div>
 			</div>
 			<div class="control-group">
-				<label class="control-label" for="freeArea">Superficie descubierta </label>
+				<label class="control-label" for="property_freeArea">Superficie descubierta </label>
 				<div class="controls">
-					<input type="text" class="input-xlarge" id="freeArea" name="freeArea"/>
+					<input type="text" class="input-xlarge" id="freeArea" name="property_freeArea"/>
 					<p>Metros cuadrados</p>
 				</div>
 			</div>
 			<div class="control-group">
-				<label class="control-label" for="age">Antiguedad </label>
+				<label class="control-label" for="property_age">Antiguedad </label>
 				<div class="controls">
-					<input type="text" class="input-xlarge" id="age" name="age"/>
+					<input type="text" class="input-xlarge" id="age" name="property_age"/>
 					<p>Años</p>
 				</div>
 			</div>
 			<div class="control-group">
-				<label class="control-label" for="description">Descripcion </label>
+				<label class="control-label" for="property_description">Descripcion </label>
 				<div class="controls">
-					<input type="text" class="input-xlarge" id="description" name="description">
+					<input type="text" class="input-xlarge" id="description" name="property_description">
 				</div>
 			</div>
 			<div class="control-group">  
-            <label class="control-label" for="service">Seleccione los servicios disponibles </label>  
+            <label class="control-label" for="property_service">Seleccione los servicios disponibles </label>  
             <div class="controls">  
               <label class="checkbox">  
-                <input type="checkbox" id="service" value="cable">  
+                <input type="checkbox" id="service" value="cable" name="property_cable">  
                 Cable
               </label>
               <label class="checkbox">  
-                <input type="checkbox" id="service" value="telephone">  
+                <input type="checkbox" value="telephone" name="property_telephone">  
                 Telefono
               </label>
               <label class="checkbox">  
-                <input type="checkbox" id="service" value="swimmingpool">  
+                <input type="checkbox" value="swimmingpool"  name="property_swimmingpool">  
                 Pileta
               </label>
               <label class="checkbox">  
-                <input type="checkbox" id="service" value="lobby">  
+                <input type="checkbox" value="lobby"  name="property_lobby">  
                 Salon
               </label>
               <label class="checkbox">  
-                <input type="checkbox" id="service" value="paddle">  
+                <input type="checkbox" value="paddle"  name="property_paddle">  
                 Cancha de paddle
               </label>
               <label class="checkbox">  
-                <input type="checkbox" id="service" value="quincho">  
+                <input type="checkbox" value="quincho"  name="property_quincho">  
                 Quincho
               </label>
             </div>  

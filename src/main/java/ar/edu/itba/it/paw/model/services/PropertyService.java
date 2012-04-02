@@ -3,10 +3,12 @@ package ar.edu.itba.it.paw.model.services;
 import java.util.List;
 
 import ar.edu.itba.it.paw.daos.api.PropertyDao;
+import ar.edu.itba.it.paw.daos.api.UserDao;
 import ar.edu.itba.it.paw.model.entities.Property;
 import ar.edu.itba.it.paw.model.entities.Property.Operation;
 import ar.edu.itba.it.paw.model.entities.Property.Type;
 import ar.edu.itba.it.paw.model.entities.Services;
+import ar.edu.itba.it.paw.model.entities.User;
 import ar.edu.itba.it.paw.model.services.utils.ServiceUtils;
 
 public class PropertyService {
@@ -16,9 +18,11 @@ public class PropertyService {
 	}
 
 	private PropertyDao dao;
+	private UserDao userDao;
 
-	public PropertyService(final PropertyDao dao) {
+	public PropertyService(final PropertyDao dao, final UserDao userDao) {
 		this.dao = dao;
+		this.userDao = userDao;
 	}
 
 	public List<Property> advancedSearch(final Operation op, final Type type,
@@ -46,7 +50,8 @@ public class PropertyService {
 			final String address, final Integer price, final Integer spaces,
 			final Integer coveredArea, final Integer freeArea,
 			final Integer age, final Services service,
-			final String description, final List<String> errors) {
+			final String description, final List<String> errors,
+			final User owner) {
 
 		final Operation operation = Operation.fromString(operationStr);
 		final Type type = Type.fromString(typeStr);
@@ -80,6 +85,12 @@ public class PropertyService {
 				description);
 
 		this.dao.saveOrUpdate(prop);
+
+		prop.setOwner(owner);
+
+		owner.getProperties().add(prop);
+
+		this.userDao.saveOrUpdate(owner);
 
 		return true;
 	}
