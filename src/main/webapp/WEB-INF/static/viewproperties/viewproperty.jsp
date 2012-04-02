@@ -129,12 +129,14 @@
 			<form class="form-vertical">
 				<fieldset>
 					<legend>Contacta al Publicador</legend>
-					<label>Tu Nombre</label> <input type="text" class="span3"
-						placeholder="Requerido…"> <label>Tu Apellido</label> <input
-						type="text" class="span3" placeholder="Requerido…"> <label>Tu
-						e-mail de contacto</label> <input type="text" class="span3"
-						placeholder="Requerido…"> <label>Tu Consulta</label> <input
-						type="text" class="span3" placeholder="Requerido…"><br />
+					<label>Tu Nombre</label> 
+					<input type="text" class="span3" placeholder="Requerido…"> 
+					<label>Tu Apellido</label> 
+					<input type="text" class="span3" placeholder="Requerido…"> 
+					<label>Tu e-mail de contacto</label> 
+					<input type="text" class="span3" placeholder="Requerido…"> 
+					<label>Tu Consulta</label> 
+					<input type="text" class="span3" placeholder="Opcional…"><br />
 					<button type="submit" class="btn btn-primary">Obtener
 						datos del Publicador</button>
 				</fieldset>
