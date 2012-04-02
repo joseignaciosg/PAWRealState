@@ -21,7 +21,7 @@ public class InMemoryPropertyDao implements PropertyDao {
 
 	public Property getById(final Integer id) {
 		for (int i = 0; i < this.data.size(); i++) {
-			if (id == this.data.get(i).getID()) {
+			if (id == this.data.get(i).getId()) {
 				return this.data.get(i);
 			}
 		}
