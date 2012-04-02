@@ -1,5 +1,7 @@
 <%@ page pageEncoding="UTF-8"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page isELIgnored="false"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <div class="row-fluid">
 
@@ -10,8 +12,8 @@
 				<li><a href="#">Compra</a> <span class="divider">/</span></li>
 				<li class="active">Zona Oeste</li>
 			</ul>
-			<h2>Av. de Mayo 3400</h2>
-			<h3>Ituzaingo - Zona Oeste - Buenos Aires</h3>
+			<h2><c:out value=" ${property.address}" /></h2>
+			<h3><c:out value=" ${property.neighborhood}" /> </h3>
 			<br />
 
 			<ul class="thumbnails">
@@ -22,13 +24,13 @@
 				<div class="span5">
 					<dl>
 						<dt>Tipo de Inmueble</dt>
-						<dd>Galpones, depósitos y edificios Depósitos</dd>
+						<dd><c:out value=" ${property.type}" /> </dd>
 						<dt>Direccion</dt>
-						<dd>Av. de Mayo 3400</dd>
+						<dd><c:out value=" ${property.address}" /> </dd>
 						<dt>Superficie Total</dt>
-						<dd>100</dd>
+						<dd><c:out value=" ${property.freeArea}" /> </dd>
 						<dt>Superficie Cubierta</dt>
-						<dd>50</dd>
+						<dd><c:out value=" ${property.coveredArea}" /> </dd>
 					</dl>
 
 				</div>
@@ -61,13 +63,13 @@
 			</thead>
 			<tbody>
 				<tr>
-					<td>Cantidad de Ambientes: 4</td>
+					<td>Cantidad de Ambientes: <c:out value=" ${property.spaces}" /></td>
 				</tr>
 				<tr>
-					<td>Area cubierta: 4mts2</td>
+					<td>Area cubierta: <c:out value=" ${property.coveredArea}" /></td>
 				</tr>
 				<tr>
-					<td>Area Libre: 14mts2</td>
+					<td>Area Libre: <c:out value=" ${property.freeArea}" /></td>
 				</tr>
 				<tr>
 					<td>Luminosidad: Excelente</td>
@@ -107,10 +109,7 @@
 			</thead>
 			<tbody>
 				<tr>
-					<td>Donec id elit non mi porta gravida at eget metus. Fusce
-						dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh,
-						ut fermentum massa justo sit amet risus. Etiam porta sem malesuada
-						magna mollis euismod. Donec sed odio dui.</td>
+					<td><c:out value=" ${property.description}" /></td>
 				</tr>
 			</tbody>
 		</table>

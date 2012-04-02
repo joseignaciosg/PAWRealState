@@ -31,7 +31,7 @@
 		</div>
 		<div class="span2">
 			<p style="color:#27702A; font-size:30px;">$<c:out value=" ${prop.price}" /><p>					
-		 	<a class="btn" href='${ basePath }/properties/view?ID=<c:out value="${prop.id}"/>'>detail</a>
+		 	<a class="btn" href='${ basePath }/properties/view?id=<c:out value="${prop.id}"/>'>detail</a>
 		 </div>
 	 
 	 </div>
