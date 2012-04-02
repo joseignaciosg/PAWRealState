@@ -11,8 +11,8 @@ import org.junit.Test;
 import ar.edu.itba.it.paw.daos.impl.InMemoryContactRequestDao;
 import ar.edu.itba.it.paw.model.entities.ContactRequest;
 import ar.edu.itba.it.paw.model.entities.Property;
-import ar.edu.itba.it.paw.model.entities.Property.OPERATION;
-import ar.edu.itba.it.paw.model.entities.Property.TYPE;
+import ar.edu.itba.it.paw.model.entities.Property.Operation;
+import ar.edu.itba.it.paw.model.entities.Property.Type;
 import ar.edu.itba.it.paw.model.entities.Services;
 
 public class ContactRequestTest {
@@ -25,9 +25,9 @@ public class ContactRequestTest {
 		final Services ser1 = new Services(true, true, true, true, true, true);
 		final Services ser2 = new Services(false, false, true, true, true,
 				false);
-		properties.add(new Property(1, TYPE.HOUSE, OPERATION.RENT, "Soho",
+		properties.add(new Property(1, Type.HOUSE, Operation.RENT, "Soho",
 				"Soho St. 120", 10000, 4, 1000, 2000, 15, ser1, "Really good"));
-		properties.add(new Property(2, TYPE.APARTMENT, OPERATION.SELL,
+		properties.add(new Property(2, Type.APARTMENT, Operation.SELL,
 				"Caballito", "Novia St.1900", 10000, 4, 1000, 2000, 15, ser2,
 				"Really bad"));
 
@@ -64,7 +64,7 @@ public class ContactRequestTest {
 	@Test
 	public void saveOrUpdateTest() {
 		final Services ser1 = new Services(true, true, true, true, true, true);
-		final Property prop = new Property(1, TYPE.HOUSE, OPERATION.RENT,
+		final Property prop = new Property(1, Type.HOUSE, Operation.RENT,
 				"Soho", "Soho St. 120", 10000, 4, 1000, 2000, 15, ser1,
 				"Really good");
 		final ContactRequest c1 = new ContactRequest(3, "Peron",

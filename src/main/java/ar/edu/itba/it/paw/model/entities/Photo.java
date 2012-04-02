@@ -19,6 +19,7 @@ public class Photo implements Entity {
 	}
 
 	public void setData(final byte[] data) {
+		this.setDirty(true);
 		this.data = data;
 	}
 
@@ -27,6 +28,7 @@ public class Photo implements Entity {
 	}
 
 	public void setType(final String type) {
+		this.setDirty(true);
 		this.type = type;
 	}
 
@@ -44,6 +46,36 @@ public class Photo implements Entity {
 
 	public void setID(final Integer ID) {
 		this.ID = ID;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((this.ID == null) ? 0 : this.ID.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (this.getClass() != obj.getClass()) {
+			return false;
+		}
+		final Photo other = (Photo) obj;
+		if (this.ID == null) {
+			if (other.ID != null) {
+				return false;
+			}
+		} else if (!this.ID.equals(other.ID)) {
+			return false;
+		}
+		return true;
 	}
 
 }

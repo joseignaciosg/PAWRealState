@@ -28,6 +28,7 @@ public class InMemoryUserDao implements UserDao {
 
 	public boolean saveOrUpdate(final User obj) {
 		if (!this.users.contains(obj)) {
+			obj.setDirty(false);
 			return this.users.add(obj);
 		} else {
 			if (obj.isDirty()) {
