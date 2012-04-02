@@ -33,17 +33,25 @@
 		<servlet-name>NewPropertyPage</servlet-name>
 		<servlet-class>ar.edu.itba.it.paw.web.servlets.NewPropertyPage</servlet-class>
 	</servlet>
+	<servlet>
+		<servlet-name>EditPropertyPage</servlet-name>
+		<servlet-class>ar.edu.itba.it.paw.web.servlets.EditPropertyPage</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>EditPropertyPage</servlet-name>
+		<url-pattern>/myproperties/edit</url-pattern>
+	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>NewPropertyPage</servlet-name>
 		<url-pattern>/myproperties/new</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
-		<servlet-name>ViewProperty</servlet-name>
-		<url-pattern>/properties/view</url-pattern>	
-	</servlet-mapping>
-	<servlet-mapping>
 		<servlet-name>MyProperties</servlet-name>
 		<url-pattern>/myproperties</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>ViewProperty</servlet-name>
+		<url-pattern>/properties/view</url-pattern>	
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>LogoutServlet</servlet-name>

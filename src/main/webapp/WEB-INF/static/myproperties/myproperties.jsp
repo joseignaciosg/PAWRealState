@@ -1,5 +1,5 @@
 <%@ page pageEncoding="UTF-8"%>
-<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page contentType="text/html; charset=UTF-8"%>
 <%@ page isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
@@ -19,8 +19,15 @@
 			<tr>
 				<td>${ property.neighborhood }</td>
 				<td>${ property.address }</td>
-				<td>${ property.price }</td>
-				<td>Ver publicación - Editar - Dar de baja - Eliminar</td>	
+				<td>$${ property.price }</td>
+				<td>
+					<div class="btn-group">
+						<a href="${ basePath }/properties/view?ID=${ property.id }" class="btn btn-mini">Ver publicación</a>
+						<a href="${ basePath }/myproperties/edit?ID=${ property.id }" class="btn btn-mini">Editar</a>
+						<a href="${ basePath }/myproperties/setDown?ID=${ property.id }" class="btn btn-mini">Dar de baja</a>
+						<a href="${ basePath }/myproperties/delete?ID=${ property.id }" class="btn btn-mini btn-danger">Eliminar</a>
+					</div>
+				</td>
 			</tr>
 		</c:forEach>
 	</tbody>
