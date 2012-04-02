@@ -20,7 +20,7 @@ public class InMemoryPhotoDao implements PhotoDao {
 	public Photo getById(final Integer id) {
 
 		for (int i = 0; i < this.photos.size(); i++) {
-			if (id == this.photos.get(i).getID()) {
+			if (id == this.photos.get(i).getId()) {
 				return this.photos.get(i);
 			}
 		}

@@ -16,6 +16,18 @@ public class Property implements Entity {
 			}
 			return null;
 		}
+
+		@Override
+		public String toString() {
+			switch (this) {
+			case APARTMENT:
+				return "APARTMENT";
+			case HOUSE:
+				return "HOUSE";
+			default:
+				return "";
+			}
+		}
 	}
 
 	public enum Operation {
@@ -28,6 +40,18 @@ public class Property implements Entity {
 				return SELL;
 			}
 			return null;
+		}
+
+		@Override
+		public String toString() {
+			switch (this) {
+			case SELL:
+				return "SELL";
+			case RENT:
+				return "RENT";
+			default:
+				return "";
+			}
 		}
 	}
 
@@ -78,6 +102,14 @@ public class Property implements Entity {
 		this.setDirty(false);
 	}
 
+	public String getPropertyType() {
+		return this.type.toString();
+	}
+
+	public String getOperationType() {
+		return this.operation.toString();
+	}
+
 	public User getOwner() {
 		return this.owner;
 	}
@@ -116,11 +148,11 @@ public class Property implements Entity {
 		return true;
 	}
 
-	public Integer getID() {
+	public Integer getId() {
 		return this.ID;
 	}
 
-	public void setID(final Integer iD) {
+	public void setId(final Integer iD) {
 		this.ID = iD;
 		this.setDirty(true);
 	}

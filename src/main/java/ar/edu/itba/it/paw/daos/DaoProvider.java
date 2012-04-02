@@ -126,7 +126,7 @@ public class DaoProvider {
 
 		properties.addAll(propertyList);
 
-		tmp.setID(1);
+		tmp.setId(1);
 		tmp.getProperties().add(properties.get(1));
 		tmp.getProperties().add(properties.get(2));
 		properties.get(1).setOwner(tmp);
@@ -142,7 +142,7 @@ public class DaoProvider {
 		tmp = new User("Thomas", "Mann", "thomas@gmail.com", "3647823",
 				"thomas", "abcd");
 
-		tmp.setID(2);
+		tmp.setId(2);
 		tmp.getProperties().add(properties.get(2));
 		properties.get(2).setOwner(tmp);
 
@@ -154,7 +154,7 @@ public class DaoProvider {
 		tmp = new User("Baruch", "Spinoza", "spinoza@gmail.com", "74687364",
 				"spinoza", "akjasd");
 
-		tmp.setID(3);
+		tmp.setId(3);
 
 		users.add(tmp);
 
