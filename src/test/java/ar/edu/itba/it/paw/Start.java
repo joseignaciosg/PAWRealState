@@ -15,7 +15,7 @@ public class Start {
 		try {
 			port = Integer.valueOf(System.getenv("PORT"));
 		} catch (final Exception e) {
-			port = 8080;
+			port = 8081;
 		}
 		connector.setPort(port);
 		server.setConnectors(new Connector[] { connector });
