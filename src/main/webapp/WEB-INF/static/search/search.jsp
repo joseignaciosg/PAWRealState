@@ -1,50 +1,52 @@
+<%@ page pageEncoding="UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8"%>
 <form class="form-horizontal" method="post" action="search">  
         <fieldset>  
-          <legend>Properties Advanced Search</legend>  
+          <legend>Búsqueda Avanzada de Propiedades</legend>  
           <div class="control-group">  
-          	<h4>Price Range</h4>
-            <label class="control-label" for="pricelow">From</label>  
+          	<h4>Rango de Precios</h4>
+            <label class="control-label" for="pricelow">Desde</label>  
             <div class="controls">  
               <input type="text" class="input-xlarge" id="pricelow" name="pricelow">  
             </div>  
           
-            <label class="control-label" for="pricehigh">To</label>  
+            <label class="control-label" for="pricehigh">Hasta</label>  
             <div class="controls">  
               <input type="text" class="input-xlarge" id="pricehigh" name="pricehigh">  
             </div>  
           </div>  
           
           <div class="control-group">  
-            <label class="control-label" for="operation">Operation</label>  
+            <label class="control-label" for="operation">Operación</label>  
             <div class="controls">  
               <select id="operation" name="operation"> 
-              	<option>All</option>  
-                <option>Sell</option>  
-                <option>Rent</option>  
+              	<option>Todos</option>  
+                <option>Venta</option>  
+                <option>Alquiler</option>  
               </select>  
             </div>  
           </div>
           <div class="control-group">  
-            <label class="control-label" for="type">Type</label>  
+            <label class="control-label" for="type">Tipo de Propiedad</label>  
             <div class="controls">  
               <select id="type" name="type">  
-               	<option>All</option>  
-                <option>House</option>  
-                <option>Apartment</option>  
+               	<option>Todos</option>  
+                <option>Casa</option>  
+                <option>Departamento</option>  
               </select>  
             </div>  
           </div>  
           <div class="control-group">  
-            <label class="control-label" for="order">Show Order</label>  
+            <label class="control-label" for="order">Órden</label>  
             <div class="controls">  
               <select id="order" name="order">  
-                <option>Asc</option>  
-                <option>Desc</option>  
+                <option>Ascendente</option>  
+                <option>Descendiente</option>  
               </select>  
             </div>  
           </div>   
           <div class="form-actions">  
-            <button type="submit" class="btn btn-primary">Search</button>  
+            <button type="submit" class="btn btn-primary">Buscar</button>  
           </div>  
         </fieldset>  
 </form>

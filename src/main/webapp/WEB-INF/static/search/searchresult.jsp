@@ -1,18 +1,20 @@
+<%@ page pageEncoding="UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8"%>
 <%@ page isELIgnored="false"%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 
 <c:if test="${empty props }">     
-	<legend>No results for the specified search.</legend>   
+	<legend>No hay resultados para la búsqueda realidada.</legend>   
 	<div class="form-actions">
-		<button type="button" class="btn btn-primary"><a href="search">Back</a></button>
+		<button type="button" class="btn btn-primary"><a href="search">Atrás</a></button>
 	</div>                       
 </c:if>
 
 <c:if test="${! empty props  }">     
 
-<legend>Advanced Search Results</legend>   
+<legend>Resultados de la básqueda avanzada.</legend>   
 
 <c:forEach var="prop" items="${props}" varStatus="i">
 	<div class="hero-unit">
@@ -24,21 +26,21 @@
 			<img height="100" width="100" src="http://www.highgrowthpropertyinvestment.co.uk/media/Sell-Property.jpg" alt="house" />
 		</div>
 		<div class="span4">
-				<b>Operation Type:</b> <c:out value=" ${prop.operation}" /><br>
-				<b>Property Type:</b> <c:out value="${prop.type}" /><br>
-				<b>Address:</b> </b><c:out value="${prop.address}" /><br>
-				<b>Neighborhood:</b> <c:out value="${prop.neighborhood}" /><br>
+				<b>Operación:</b> <c:out value=" ${prop.operation}" /><br>
+				<b>Tipo de Propiedad:</b> <c:out value="${prop.type}" /><br>
+				<b>Dirección:</b> </b><c:out value="${prop.address}" /><br>
+				<b>Barrio:</b> <c:out value="${prop.neighborhood}" /><br>
 		</div>
 		<div class="span2">
 			<p style="color:#27702A; font-size:30px;">$<c:out value=" ${prop.price}" /><p>					
-		 	<a class="btn" href='${ basePath }/properties/view?id=<c:out value="${prop.id}"/>'>detail</a>
+		 	<a class="btn" href='${ basePath }/properties/view?id=<c:out value="${prop.id}"/>'>detalle</a>
 		 </div>
 	 
 	 </div>
 	 </div>
 </c:forEach>
 <div class="form-actions">
-		<button type="button" class="btn btn-primary"><a href="search">Back</a></button>
+		<button type="button" class="btn btn-primary"><a href="search">Atrás</a></button>
 </div>
 
 </c:if>
