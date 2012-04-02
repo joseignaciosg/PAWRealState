@@ -39,7 +39,7 @@
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>ViewProperty</servlet-name>
-		<url-pattern>/viewproperty</url-pattern>
+		<url-pattern>/properties/view</url-pattern>	
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>MyProperties</servlet-name>
@@ -67,7 +67,7 @@
 		<filter-class>ar.edu.itba.it.paw.web.filters.SessionFilter</filter-class>
 		<init-param>
 			<param-name>excludePatterns</param-name>
-			<param-value>(.*/assets/.*|.*/search(/)?|.*/contact(/)?|.*/property/[0-9]+$|.*/index(/)?|.*/register(/)?|.*/login(/)?)</param-value>
+			<param-value>(.*/assets/.*|.*/search(/)?|.*/contact(/)?|.*/properties/view(/)?$|.*/index(/)?|.*/register(/)?|.*/login(/)?)</param-value>
 		</init-param>
 	</filter>
 	<filter-mapping>
