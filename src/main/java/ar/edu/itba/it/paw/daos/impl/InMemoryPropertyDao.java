@@ -106,8 +106,9 @@ public class InMemoryPropertyDao implements PropertyDao {
 		}
 
 		for (final Property p : this.data) {
-			if (oplist.contains(p) && typelist.contains(p)
-					&& pricelowlist.contains(p) && pricehighlist.contains(p)) {
+			if ((p.getVisible() == true) && oplist.contains(p)
+					&& typelist.contains(p) && pricelowlist.contains(p)
+					&& pricehighlist.contains(p)) {
 				ans.add(p);
 			}
 
