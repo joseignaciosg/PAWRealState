@@ -6,7 +6,7 @@ CREATE TABLE contact_request
   phone character varying NOT NULL,
   "comment" character varying,
   CONSTRAINT contact_request_pkey PRIMARY KEY (id)
-)
+);
 
 CREATE TABLE property
 (
@@ -30,7 +30,7 @@ CREATE TABLE property
   CONSTRAINT property_pkey PRIMARY KEY (id),
   CONSTRAINT property_transaction_check CHECK (transaction::text = ANY (ARRAY['SELL'::character varying::text, 'RENT'::character varying::text])),
   CONSTRAINT property_type_check CHECK (type::text = ANY (ARRAY['APARTMENT'::character varying::text, 'HOUSE'::character varying::text]))
-)
+);
 
 CREATE TABLE users
 (
@@ -43,4 +43,13 @@ CREATE TABLE users
   "password" character varying NOT NULL,
   CONSTRAINT users_pkey PRIMARY KEY (id),
   CONSTRAINT users_username_key UNIQUE (username)
-)
+);
+
+CREATE TABLE photos
+(
+  id serial NOT NULL,
+  data bytea NOT NULL,
+  type character varying NOT NULL,
+  propertyid integer references property(id),
+  CONSTRAINT photos_pkey PRIMARY KEY (id)
+);
