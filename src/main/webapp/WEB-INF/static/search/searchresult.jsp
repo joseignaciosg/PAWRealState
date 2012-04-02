@@ -2,6 +2,18 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
+
+<c:if test="${empty props }">     
+	<legend>No results for the specified search.</legend>   
+	<div class="form-actions">
+		<button type="button" class="btn btn-primary"><a href="search">Back</a></button>
+	</div>                       
+</c:if>
+
+<c:if test="${! empty props  }">     
+
+<legend>Advanced Search Results</legend>   
+
 <c:forEach var="prop" items="${props}" varStatus="i">
 	<div class="hero-unit">
 	<div class="row">
@@ -25,6 +37,10 @@
 	 </div>
 	 </div>
 </c:forEach>
+<div class="form-actions">
+		<button type="button" class="btn btn-primary"><a href="search">Back</a></button>
+</div>
 
+</c:if>
 		
 

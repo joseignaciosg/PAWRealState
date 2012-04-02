@@ -64,52 +64,52 @@ public class DaoProvider {
 		final Services service = new Services(true, true, true, true, false,
 				true);
 
-		final Property prop1 = new Property(Integer.valueOf(1), Type.APARTMENT,
+		final Property prop1 = new Property(Integer.valueOf(4), Type.APARTMENT,
 				Operation.RENT, "Palermo", "Lavalle 660",
 				Integer.valueOf(1000), Integer.valueOf(3),
 				Integer.valueOf(100), Integer.valueOf(200), Integer.valueOf(5),
 				service, "Descrip1");
 
-		final Property prop2 = new Property(Integer.valueOf(2), Type.HOUSE,
+		final Property prop2 = new Property(Integer.valueOf(5), Type.HOUSE,
 				Operation.RENT, "BarrioNorte", "Junca 460",
 				Integer.valueOf(501), Integer.valueOf(3), Integer.valueOf(100),
 				Integer.valueOf(200), Integer.valueOf(5), service, "Descrip2");
 
-		final Property prop3 = new Property(Integer.valueOf(3), Type.HOUSE,
+		final Property prop3 = new Property(Integer.valueOf(6), Type.HOUSE,
 				Operation.SELL, "Palermo", "Alem 110", Integer.valueOf(500),
 				Integer.valueOf(3), Integer.valueOf(100), Integer.valueOf(200),
 				Integer.valueOf(5), service, "Descrip3");
 
-		final Property prop4 = new Property(Integer.valueOf(4), Type.APARTMENT,
+		final Property prop4 = new Property(Integer.valueOf(7), Type.APARTMENT,
 				Operation.RENT, "Caballito", "Taring 660",
 				Integer.valueOf(5020), Integer.valueOf(3),
 				Integer.valueOf(100), Integer.valueOf(2000),
 				Integer.valueOf(5), service, "Descrip1");
 
-		final Property prop5 = new Property(Integer.valueOf(5), Type.HOUSE,
+		final Property prop5 = new Property(Integer.valueOf(8), Type.HOUSE,
 				Operation.SELL, "BarrioNorte", "Junca 460",
 				Integer.valueOf(5005), Integer.valueOf(3),
 				Integer.valueOf(100), Integer.valueOf(200), Integer.valueOf(5),
 				service, "Descrip2");
 
-		final Property prop6 = new Property(Integer.valueOf(6), Type.HOUSE,
+		final Property prop6 = new Property(Integer.valueOf(9), Type.HOUSE,
 				Operation.RENT, "Palermo", "Alem 110", Integer.valueOf(500),
 				Integer.valueOf(3), Integer.valueOf(100), Integer.valueOf(200),
 				Integer.valueOf(5), service, "Descrip3");
 
-		final Property prop7 = new Property(Integer.valueOf(7), Type.APARTMENT,
-				Operation.RENT, "Palermo", "Lavalle 660",
+		final Property prop7 = new Property(Integer.valueOf(10),
+				Type.APARTMENT, Operation.RENT, "Palermo", "Lavalle 660",
 				Integer.valueOf(50040), Integer.valueOf(3),
 				Integer.valueOf(100), Integer.valueOf(200), Integer.valueOf(5),
 				service, "Descrip1");
 
-		final Property prop8 = new Property(Integer.valueOf(8), Type.HOUSE,
+		final Property prop8 = new Property(Integer.valueOf(11), Type.HOUSE,
 				Operation.SELL, "BarrioNorte", "Junca 460",
 				Integer.valueOf(5002), Integer.valueOf(3),
 				Integer.valueOf(100), Integer.valueOf(200), Integer.valueOf(5),
 				service, "Descrip2");
 
-		final Property prop9 = new Property(Integer.valueOf(9), Type.HOUSE,
+		final Property prop9 = new Property(Integer.valueOf(12), Type.HOUSE,
 				Operation.SELL, "Palermo", "Alem 110", Integer.valueOf(500),
 				Integer.valueOf(3), Integer.valueOf(100), Integer.valueOf(200),
 				Integer.valueOf(5), service, "Descrip3");

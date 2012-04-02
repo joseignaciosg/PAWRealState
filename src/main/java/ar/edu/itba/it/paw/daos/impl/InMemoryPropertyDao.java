@@ -105,9 +105,6 @@ public class InMemoryPropertyDao implements PropertyDao {
 			pricehighlist.addAll(this.data);
 		}
 
-		System.out.println("typelist: " + typelist);
-		System.out.println("oplist: " + oplist);
-
 		for (final Property p : this.data) {
 			if (oplist.contains(p) && typelist.contains(p)
 					&& pricelowlist.contains(p) && pricehighlist.contains(p)) {
