@@ -101,8 +101,8 @@ public class Property implements Entity {
 		this.service = service;
 		this.description = description;
 		this.photos = new ArrayList<Photo>();
-		this.setDirty(false);
 		this.setVisible(true);
+		this.setDirty(false);
 	}
 
 	public String getPropertyType() {
