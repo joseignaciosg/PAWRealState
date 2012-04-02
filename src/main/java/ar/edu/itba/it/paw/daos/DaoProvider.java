@@ -61,15 +61,15 @@ public class DaoProvider {
 				"172839127", "jpsartre", "jojo");
 
 		tmp.setID(1);
-		tmp.addProperty(properties.get(1));
-		tmp.addProperty(properties.get(2));
-		properties.get(1).setUserID(1);
-		properties.get(2).setUserID(1);
+		tmp.getProperties().add(properties.get(1));
+		tmp.getProperties().add(properties.get(2));
+		properties.get(1).setOwner(tmp);
+		properties.get(2).setOwner(tmp);
 
-		tmp.addProperty(properties.get(0));
-		tmp.addProperty(properties.get(1));
-		properties.get(0).setUserID(1);
-		properties.get(1).setUserID(1);
+		tmp.getProperties().add(properties.get(0));
+		tmp.getProperties().add(properties.get(1));
+		properties.get(0).setOwner(tmp);
+		properties.get(1).setOwner(tmp);
 
 		users.add(tmp);
 
@@ -77,11 +77,11 @@ public class DaoProvider {
 				"thomas", "abcd");
 
 		tmp.setID(2);
-		tmp.addProperty(properties.get(2));
-		properties.get(2).setUserID(2);
+		tmp.getProperties().add(properties.get(2));
+		properties.get(2).setOwner(tmp);
 
-		tmp.addProperty(properties.get(2));
-		properties.get(2).setUserID(2);
+		tmp.getProperties().add(properties.get(2));
+		properties.get(2).setOwner(tmp);
 
 		users.add(tmp);
 

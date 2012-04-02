@@ -9,11 +9,14 @@ import org.junit.Before;
 import org.junit.Test;
 
 import ar.edu.itba.it.paw.daos.api.PropertyDao;
+import ar.edu.itba.it.paw.daos.api.UserDao;
 import ar.edu.itba.it.paw.daos.impl.InMemoryPropertyDao;
+import ar.edu.itba.it.paw.daos.impl.InMemoryUserDao;
 import ar.edu.itba.it.paw.model.entities.Property;
 import ar.edu.itba.it.paw.model.entities.Property.Operation;
 import ar.edu.itba.it.paw.model.entities.Property.Type;
 import ar.edu.itba.it.paw.model.entities.Services;
+import ar.edu.itba.it.paw.model.entities.User;
 import ar.edu.itba.it.paw.model.services.PropertyService;
 import ar.edu.itba.it.paw.model.services.PropertyService.Order;
 
@@ -31,13 +34,21 @@ import ar.edu.itba.it.paw.model.services.PropertyService.Order;
 
 public class PropertyServiceTest {
 
+	private User owner;
 	private PropertyService service;
 
 	@Before
 	public void initService() {
 		final List<Property> propertyList = new ArrayList<Property>();
+		final List<User> userList = new ArrayList<User>();
+
 		final Services service = new Services(true, true, true, true, false,
 				true);
+
+		this.owner = new User("cris", "apellido", "Email", "telefono", "cris",
+				"asd");
+
+		userList.add(this.owner);
 
 		// new Property(iD, Type, Operation, neighborhood, address, price,
 		// spaces, coveredArea, freeArea, age, service, description)
@@ -103,7 +114,8 @@ public class PropertyServiceTest {
 		propertyList.add(prop9);
 
 		final PropertyDao dao = new InMemoryPropertyDao(propertyList);
-		this.service = new PropertyService(dao);
+		final UserDao userDao = new InMemoryUserDao(userList);
+		this.service = new PropertyService(dao, userDao);
 
 	}
 
@@ -209,7 +221,8 @@ public class PropertyServiceTest {
 		final List<String> errors = new ArrayList<String>();
 		Assert.assertTrue(this.service.saveProperty("SELL", "APARTMENT",
 				"Flores", "La casa del chino 123", 123400, 5, 40, 3, 30,
-				new Services(), "", errors));
+				new Services(), "", errors, this.owner));
+		Assert.assertTrue(this.owner.getProperties().size() == 1);
 		Assert.assertTrue(errors.size() == 0);
 	}
 

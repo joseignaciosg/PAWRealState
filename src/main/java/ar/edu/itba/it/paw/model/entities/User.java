@@ -32,10 +32,6 @@ public class User implements Entity {
 		return this.properties;
 	}
 
-	public void addProperty(final Property property) {
-		this.properties.add(property);
-	}
-
 	public String getPassword() {
 		return this.password;
 	}

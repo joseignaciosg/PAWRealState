@@ -45,7 +45,7 @@ public class Property implements Entity {
 	private Services service;
 	private String description;
 	private List<Photo> photos;
-	private Integer userID;
+	private User owner;
 
 	public Property(final Type type, final Operation operation,
 			final String neighborhood, final String address,
@@ -78,12 +78,12 @@ public class Property implements Entity {
 		this.setDirty(false);
 	}
 
-	public Integer getUserID() {
-		return this.userID;
+	public User getOwner() {
+		return this.owner;
 	}
 
-	public void setUserID(final Integer userID) {
-		this.userID = userID;
+	public void setOwner(final User user) {
+		this.owner = user;
 	}
 
 	@Override

@@ -20,7 +20,8 @@ public class ServiceProvider {
 
 	public static PropertyService getPropertyService() {
 		if (propertyService == null) {
-			propertyService = new PropertyService(DaoProvider.getPropertyDao());
+			propertyService = new PropertyService(DaoProvider.getPropertyDao(),
+					DaoProvider.getUserDao());
 		}
 
 		return propertyService;
