@@ -22,7 +22,7 @@
 				<td>$${ property.price }</td>
 				<td>
 					<div class="btn-group">
-						<a href="${ basePath }/properties/view?ID=${ property.id }" class="btn btn-mini">Ver publicación</a>
+						<a href="${ basePath }/properties/view?id=${ property.id }" class="btn btn-mini">Ver publicación</a>
 						<a href="${ basePath }/myproperties/edit?ID=${ property.id }" class="btn btn-mini">Editar</a>
 						<a href="${ basePath }/myproperties/setDown?ID=${ property.id }" class="btn btn-mini">Dar de baja</a>
 						<a href="${ basePath }/myproperties/delete?ID=${ property.id }" class="btn btn-mini btn-danger">Eliminar</a>
