@@ -56,7 +56,7 @@
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>ViewProperty</servlet-name>
-		<url-pattern>/properties/view</url-pattern>	
+		<url-pattern>/properties/view</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>LogoutServlet</servlet-name>
