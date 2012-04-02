@@ -60,6 +60,72 @@ public class DaoProvider {
 		User tmp = new User("J.P.", "Sartre", "jpsartre@gmail.com",
 				"172839127", "jpsartre", "jojo");
 
+		final List<Property> propertyList = new ArrayList<Property>();
+		final Services service = new Services(true, true, true, true, false,
+				true);
+
+		final Property prop1 = new Property(Integer.valueOf(1), Type.APARTMENT,
+				Operation.RENT, "Palermo", "Lavalle 660",
+				Integer.valueOf(1000), Integer.valueOf(3),
+				Integer.valueOf(100), Integer.valueOf(200), Integer.valueOf(5),
+				service, "Descrip1");
+
+		final Property prop2 = new Property(Integer.valueOf(2), Type.HOUSE,
+				Operation.RENT, "BarrioNorte", "Junca 460",
+				Integer.valueOf(501), Integer.valueOf(3), Integer.valueOf(100),
+				Integer.valueOf(200), Integer.valueOf(5), service, "Descrip2");
+
+		final Property prop3 = new Property(Integer.valueOf(3), Type.HOUSE,
+				Operation.SELL, "Palermo", "Alem 110", Integer.valueOf(500),
+				Integer.valueOf(3), Integer.valueOf(100), Integer.valueOf(200),
+				Integer.valueOf(5), service, "Descrip3");
+
+		final Property prop4 = new Property(Integer.valueOf(4), Type.APARTMENT,
+				Operation.RENT, "Caballito", "Taring 660",
+				Integer.valueOf(5020), Integer.valueOf(3),
+				Integer.valueOf(100), Integer.valueOf(2000),
+				Integer.valueOf(5), service, "Descrip1");
+
+		final Property prop5 = new Property(Integer.valueOf(5), Type.HOUSE,
+				Operation.SELL, "BarrioNorte", "Junca 460",
+				Integer.valueOf(5005), Integer.valueOf(3),
+				Integer.valueOf(100), Integer.valueOf(200), Integer.valueOf(5),
+				service, "Descrip2");
+
+		final Property prop6 = new Property(Integer.valueOf(6), Type.HOUSE,
+				Operation.RENT, "Palermo", "Alem 110", Integer.valueOf(500),
+				Integer.valueOf(3), Integer.valueOf(100), Integer.valueOf(200),
+				Integer.valueOf(5), service, "Descrip3");
+
+		final Property prop7 = new Property(Integer.valueOf(7), Type.APARTMENT,
+				Operation.RENT, "Palermo", "Lavalle 660",
+				Integer.valueOf(50040), Integer.valueOf(3),
+				Integer.valueOf(100), Integer.valueOf(200), Integer.valueOf(5),
+				service, "Descrip1");
+
+		final Property prop8 = new Property(Integer.valueOf(8), Type.HOUSE,
+				Operation.SELL, "BarrioNorte", "Junca 460",
+				Integer.valueOf(5002), Integer.valueOf(3),
+				Integer.valueOf(100), Integer.valueOf(200), Integer.valueOf(5),
+				service, "Descrip2");
+
+		final Property prop9 = new Property(Integer.valueOf(9), Type.HOUSE,
+				Operation.SELL, "Palermo", "Alem 110", Integer.valueOf(500),
+				Integer.valueOf(3), Integer.valueOf(100), Integer.valueOf(200),
+				Integer.valueOf(5), service, "Descrip3");
+
+		propertyList.add(prop1);
+		propertyList.add(prop2);
+		propertyList.add(prop3);
+		propertyList.add(prop4);
+		propertyList.add(prop5);
+		propertyList.add(prop6);
+		propertyList.add(prop7);
+		propertyList.add(prop8);
+		propertyList.add(prop9);
+
+		properties.addAll(propertyList);
+
 		tmp.setID(1);
 		tmp.getProperties().add(properties.get(1));
 		tmp.getProperties().add(properties.get(2));

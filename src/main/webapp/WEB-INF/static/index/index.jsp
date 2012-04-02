@@ -7,7 +7,7 @@
 	<br/>
 	<p>Su proxima casa puede ser oriental</p>
 	<p>
-		<a class="btn btn-primary btn-large"> Buscar propiedades </a>
+		<a class="btn btn-primary btn-large" href="search"> Buscar propiedades </a>
 	</p>
 </div>
 

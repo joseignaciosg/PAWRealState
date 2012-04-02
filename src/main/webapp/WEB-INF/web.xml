@@ -1,3 +1,4 @@
+
 <!DOCTYPE web-app PUBLIC
  "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
  "http://java.sun.com/dtd/web-app_2_3.dtd" >
@@ -33,6 +34,10 @@
 		<servlet-name>NewPropertyPage</servlet-name>
 		<servlet-class>ar.edu.itba.it.paw.web.servlets.NewPropertyPage</servlet-class>
 	</servlet>
+	<servlet>
+		<servlet-name>AdvancedSearchPage</servlet-name>
+		<servlet-class>ar.edu.itba.it.paw.web.servlets.AdvancedSearchPage</servlet-class>
+	</servlet>
 	<servlet-mapping>
 		<servlet-name>NewPropertyPage</servlet-name>
 		<url-pattern>/myproperties/new</url-pattern>
@@ -60,6 +65,10 @@
 	<servlet-mapping>
 		<servlet-name>IndexPage</servlet-name>
 		<url-pattern>/index</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>AdvancedSearchPage</servlet-name>
+		<url-pattern>/search</url-pattern>
 	</servlet-mapping>
 
 	<filter>
