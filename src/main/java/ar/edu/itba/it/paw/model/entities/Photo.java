@@ -40,11 +40,11 @@ public class Photo implements Entity {
 		this.dirty = dirty;
 	}
 
-	public Integer getID() {
+	public Integer getId() {
 		return this.ID;
 	}
 
-	public void setID(final Integer ID) {
+	public void setId(final Integer ID) {
 		this.ID = ID;
 	}
 

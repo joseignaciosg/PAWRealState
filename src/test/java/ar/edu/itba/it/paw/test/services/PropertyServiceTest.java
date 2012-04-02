@@ -221,7 +221,7 @@ public class PropertyServiceTest {
 		final List<String> errors = new ArrayList<String>();
 		Assert.assertTrue(this.service.saveProperty("SELL", "APARTMENT",
 				"Flores", "La casa del chino 123", 123400, 5, 40, 3, 30,
-				new Services(), "", errors, this.owner));
+				new Services(), "", errors, this.owner, null));
 		Assert.assertTrue(this.owner.getProperties().size() == 1);
 		Assert.assertTrue(errors.size() == 0);
 	}

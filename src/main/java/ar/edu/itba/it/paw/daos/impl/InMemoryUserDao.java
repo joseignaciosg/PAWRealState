@@ -15,7 +15,7 @@ public class InMemoryUserDao implements UserDao {
 
 	public User getById(final Integer id) {
 		for (final User u : this.users) {
-			if (u.getID().equals(id)) {
+			if (u.getId().equals(id)) {
 				return u;
 			}
 		}

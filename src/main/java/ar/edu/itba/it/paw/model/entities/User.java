@@ -53,11 +53,11 @@ public class User implements Entity {
 		this.dirty = dirty;
 	}
 
-	public Integer getID() {
+	public Integer getId() {
 		return this.ID;
 	}
 
-	public void setID(final Integer iD) {
+	public void setId(final Integer iD) {
 		this.ID = iD;
 		this.setDirty(true);
 	}

@@ -4,8 +4,8 @@ public interface Entity {
 
 	public boolean isDirty();
 
-	public Integer getID();
+	public Integer getId();
 
-	public void setID(Integer ID);
+	public void setId(Integer ID);
 
 }
