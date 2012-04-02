@@ -17,11 +17,11 @@ public class PropertyService {
 		ASC, DESC
 	}
 
-	private PropertyDao dao;
+	private PropertyDao propertyDao;
 	private UserDao userDao;
 
 	public PropertyService(final PropertyDao dao, final UserDao userDao) {
-		this.dao = dao;
+		this.propertyDao = dao;
 		this.userDao = userDao;
 	}
 
@@ -29,15 +29,15 @@ public class PropertyService {
 			final int pricelow, final int pricehigh, final int page,
 			final int quant, final Order order) {
 		List<Property> ans = null;
-		ans = this.dao
-				.getAll(op, type, pricelow, pricehigh, page, quant, order);
+		ans = this.propertyDao.getAll(op, type, pricelow, pricehigh, page,
+				quant, order);
 		return ans;
 	}
 
 	public Property getPropertyByID(final Integer ID, final List<String> errors) {
 
 		Property ans = null;
-		ans = this.dao.getById(ID);
+		ans = this.propertyDao.getById(ID);
 		if (ID == null || ans == null) {
 			errors.add("No existe la propiedad solicitada");
 			return null;
@@ -52,6 +52,18 @@ public class PropertyService {
 			final Integer age, final Services service,
 			final String description, final List<String> errors,
 			final User owner) {
+		return this.saveProperty(operationStr, typeStr, neighborhood, address,
+				price, spaces, coveredArea, freeArea, age, service,
+				description, errors, owner, null);
+	}
+
+	public boolean saveProperty(final String operationStr,
+			final String typeStr, final String neighborhood,
+			final String address, final Integer price, final Integer spaces,
+			final Integer coveredArea, final Integer freeArea,
+			final Integer age, final Services service,
+			final String description, final List<String> errors,
+			final User owner, final Integer id) {
 
 		final Operation operation = Operation.fromString(operationStr);
 		final Type type = Type.fromString(typeStr);
@@ -80,19 +92,39 @@ public class PropertyService {
 			return false;
 		}
 
-		final Property prop = new Property(type, operation, neighborhood,
-				address, price, spaces, coveredArea, freeArea, age, service,
-				description);
+		Property prop = null;
+		if (id == null) {
+			prop = new Property(type, operation, neighborhood, address, price,
+					spaces, coveredArea, freeArea, age, service, description);
+			prop.setOwner(owner);
+		} else {
+			prop = this.propertyDao.getById(id);
 
-		this.dao.saveOrUpdate(prop);
+			// TODO: Check id integrity
 
-		prop.setOwner(owner);
+			prop.setType(type);
+			prop.setOperation(operation);
+			prop.setNeighborhood(neighborhood);
+			prop.setAddress(address);
+			prop.setPrice(price);
+			prop.setSpaces(spaces);
+			prop.setCoveredArea(coveredArea);
+			prop.setFreeArea(freeArea);
+			prop.setAge(age);
+			prop.setService(service);
+			prop.setDescription(description);
 
-		owner.getProperties().add(prop);
+			prop.setDirty(true); // TODO: This should be dynamic
+		}
+
+		this.propertyDao.saveOrUpdate(prop);
+
+		if (!owner.getProperties().contains(prop)) {
+			owner.getProperties().add(prop);
+		}
 
 		this.userDao.saveOrUpdate(owner);
 
 		return true;
 	}
-
 }
