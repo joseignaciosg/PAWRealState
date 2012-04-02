@@ -20,9 +20,9 @@
             <label class="control-label" for="operation">Operación</label>  
             <div class="controls">  
               <select id="operation" name="operation"> 
-              	<option>Todos</option>  
-                <option>Venta</option>  
-                <option>Alquiler</option>  
+              	<option value="All" >Todos</option>  
+                <option value="Sell" >Venta</option>  
+                <option value="Rent" >Alquiler</option>  
               </select>  
             </div>  
           </div>
@@ -30,9 +30,9 @@
             <label class="control-label" for="type">Tipo de Propiedad</label>  
             <div class="controls">  
               <select id="type" name="type">  
-               	<option>Todos</option>  
-                <option>Casa</option>  
-                <option>Departamento</option>  
+               	<option value="All" >Todos</option>  
+                <option value="House" >Casa</option>  
+                <option value="Apartment">Departamento</option>  
               </select>  
             </div>  
           </div>  
@@ -40,8 +40,8 @@
             <label class="control-label" for="order">Órden</label>  
             <div class="controls">  
               <select id="order" name="order">  
-                <option>Ascendente</option>  
-                <option>Descendiente</option>  
+                <option value="Asc">Ascendente</option>  
+                <option value="Desc">Descendiente</option>  
               </select>  
             </div>  
           </div>   
