@@ -49,7 +49,7 @@ public class AdvancedSearchPage extends HttpServlet {
 		Type type = null;
 		if (req.getParameter("type").equals("House")) {
 			type = Type.HOUSE;
-		} else if (req.getParameter("type").equals("Apartament")) {
+		} else if (req.getParameter("type").equals("Apartment")) {
 			type = Type.APARTMENT;
 		}
 		Order order = null;
@@ -81,7 +81,7 @@ public class AdvancedSearchPage extends HttpServlet {
 		System.out.println("pricelow: " + pricelow);
 		System.out.println("pricehigh: " + pricehigh);
 		System.out.println("order: " + order);
-		System.out.println(props);
+		System.out.println("servlet: " + props);
 		req.setAttribute("props", props);
 		HTMLUtils.render("search/searchresult.jsp", req, resp);
 

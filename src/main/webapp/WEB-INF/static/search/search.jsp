@@ -30,7 +30,7 @@
               <select id="type" name="type">  
                	<option>All</option>  
                 <option>House</option>  
-                <option>Apartament</option>  
+                <option>Apartment</option>  
               </select>  
             </div>  
           </div>  

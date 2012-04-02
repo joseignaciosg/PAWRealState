@@ -55,7 +55,7 @@ public class Property implements Entity {
 		}
 	}
 
-	private Integer ID;
+	private Integer id;
 	private boolean dirty;
 	private Type type;
 	private Operation operation;
@@ -81,12 +81,12 @@ public class Property implements Entity {
 		this.setDirty(false);
 	}
 
-	public Property(final Integer ID, final Type type,
+	public Property(final Integer id, final Type type,
 			final Operation operation, final String neighborhood,
 			final String address, final Integer price, final Integer spaces,
 			final Integer coveredArea, final Integer freeArea,
 			final Integer age, final Services service, final String description) {
-		this.ID = ID;
+		this.id = id;
 		this.type = type;
 		this.operation = operation;
 		this.neighborhood = neighborhood;
@@ -122,7 +122,7 @@ public class Property implements Entity {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((this.ID == null) ? 0 : this.ID.hashCode());
+		result = prime * result + ((this.id == null) ? 0 : this.id.hashCode());
 		return result;
 	}
 
@@ -138,22 +138,22 @@ public class Property implements Entity {
 			return false;
 		}
 		final Property other = (Property) obj;
-		if (this.ID == null) {
-			if (other.ID != null) {
+		if (this.id == null) {
+			if (other.id != null) {
 				return false;
 			}
-		} else if (!this.ID.equals(other.ID)) {
+		} else if (!this.id.equals(other.id)) {
 			return false;
 		}
 		return true;
 	}
 
 	public Integer getId() {
-		return this.ID;
+		return this.id;
 	}
 
-	public void setId(final Integer iD) {
-		this.ID = iD;
+	public void setId(final Integer id) {
+		this.id = id;
 		this.setDirty(true);
 	}
 
@@ -275,7 +275,9 @@ public class Property implements Entity {
 
 	@Override
 	public String toString() {
-		return "Property [ID=" + this.ID + ", price=" + this.price + "]";
+		return "Property [ID=" + this.id + ", type=" + this.type
+				+ ", operation=" + this.operation + ", price=" + this.price
+				+ "]";
 	}
 
 }

@@ -175,6 +175,11 @@ public class PropertyServiceTest {
 				Order.DESC);
 		Assert.assertTrue(props.size() == 9);
 
+		props = this.service.advancedSearch(Operation.SELL, null, 0, 100000, 0,
+				10, Order.ASC);
+
+		Assert.assertTrue(props.size() == 4);
+
 	}
 
 	@Test
