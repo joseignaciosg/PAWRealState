@@ -70,6 +70,7 @@ public class Property implements Entity {
 	private String description;
 	private List<Photo> photos;
 	private User owner;
+	private boolean visible;
 
 	public Property(final Type type, final Operation operation,
 			final String neighborhood, final String address,
@@ -79,6 +80,7 @@ public class Property implements Entity {
 		this(null, type, operation, neighborhood, address, price, spaces,
 				coveredArea, freeArea, age, service, description);
 		this.setDirty(false);
+		this.setVisible(true);
 	}
 
 	public Property(final Integer id, final Type type,
@@ -100,6 +102,7 @@ public class Property implements Entity {
 		this.description = description;
 		this.photos = new ArrayList<Photo>();
 		this.setDirty(false);
+		this.setVisible(true);
 	}
 
 	public String getPropertyType() {
@@ -271,6 +274,15 @@ public class Property implements Entity {
 
 	public void removePhoto(final Photo photo) {
 		this.photos.remove(photo);
+	}
+
+	public boolean getVisible() {
+		return this.visible;
+	}
+
+	public void setVisible(final boolean visible) {
+		this.visible = visible;
+		this.setDirty(true);
 	}
 
 	@Override
