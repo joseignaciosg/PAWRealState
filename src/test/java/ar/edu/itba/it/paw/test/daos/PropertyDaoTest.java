@@ -4,7 +4,6 @@ import java.util.List;
 
 import junit.framework.Assert;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import ar.edu.itba.it.paw.daos.api.PropertyDao;
@@ -160,7 +159,6 @@ public abstract class PropertyDaoTest extends TransactionalTest {
 		Assert.assertEquals(3, this.propertyDao.getAll().size());
 	}
 
-	@Ignore
 	@Test
 	public void getAllFilteredTest() {
 		this.prepareFilterDao();
@@ -174,52 +172,50 @@ public abstract class PropertyDaoTest extends TransactionalTest {
 
 		// I want the houses which cost is 1000 - only one
 		List<Property> props = this.propertyDao.getAll(null, null, 1000, 1000,
-				0, 3, Order.ASC);
+				0, 3, Order.ASC, true);
 		Assert.assertTrue(props.size() == 1);
 		Assert.assertEquals(props.get(0), prop1);
 
 		props = this.propertyDao.getAll(null, Type.HOUSE, -1, -1, 0, 3,
-				Order.ASC);
+				Order.ASC, true);
 		Assert.assertTrue(props.size() == 3);
 
 		List<Property> props2 = this.propertyDao.getAll(null, Type.HOUSE, -1,
-				-1, 0, 3, Order.ASC);
+				-1, 0, 3, Order.ASC, true);
 		Assert.assertEquals(props, props2);
 
 		props = this.propertyDao.getAll(null, Type.HOUSE, -1, -1, 1, 3,
-				Order.ASC);
+				Order.ASC, true);
 		props2 = this.propertyDao.getAll(null, Type.HOUSE, -1, -1, 1, 3,
-				Order.ASC);
+				Order.ASC, true);
 		Assert.assertEquals(props, props2);
 
 		props = this.propertyDao.getAll(null, Type.APARTMENT, -1, -1, 0, 10,
-				Order.ASC);
+				Order.ASC, true);
 		Assert.assertTrue(props.size() == 3);
 
 		props = this.propertyDao.getAll(Operation.RENT, null, -1, -1, 0, 10,
-				Order.ASC);
+				Order.ASC, true);
 		Assert.assertTrue(props.size() == 5);
 
 		props = this.propertyDao.getAll(Operation.RENT, null, -1, -1, 1, 10,
-				Order.ASC);
+				Order.ASC, true);
 		Assert.assertTrue(props.size() == 0);
 
 		props = this.propertyDao.getAll(Operation.RENT, Type.APARTMENT, -1, -1,
-				0, 10, Order.ASC);
+				0, 10, Order.ASC, true);
 		Assert.assertTrue(props.size() == 3);
 
-		// asc
 		props = this.propertyDao
-				.getAll(null, null, 0, 100000, 0, 10, Order.ASC);
+				.getAll(null, null, 0, 100000, 0, 10, Order.ASC, true);
 		Assert.assertTrue(props.size() == 9);
 
-		// desc
 		props = this.propertyDao.getAll(null, null, 0, 100000, 0, 10,
-				Order.DESC);
+				Order.DESC, true);
 		Assert.assertTrue(props.size() == 9);
 
 		props = this.propertyDao.getAll(Operation.SELL, null, 0, 100000, 0, 10,
-				Order.ASC);
+				Order.ASC, true);
 
 		Assert.assertTrue(props.size() == 4);
 	}

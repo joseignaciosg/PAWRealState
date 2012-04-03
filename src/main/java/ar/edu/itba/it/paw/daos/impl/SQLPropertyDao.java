@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
+
 import ar.edu.itba.it.paw.daos.api.PropertyDao;
 import ar.edu.itba.it.paw.db.ConnectionProvider;
 import ar.edu.itba.it.paw.model.entities.Property;
@@ -74,8 +76,8 @@ public class SQLPropertyDao implements PropertyDao {
 								"INSERT INTO PROPERTIES(\"type\", \"transaction\", "
 										+ "address, neighborhood, price, rooms, csqm, usqm, age, "
 										+ "has_cable, has_phone, has_swimmingpool, has_salon, "
-										+ "has_paddle, has_quincho, description) VALUES (?, ?, ?, "
-										+ "?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+										+ "has_paddle, has_quincho, description, visible) VALUES (?, ?, ?, "
+										+ "?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
 								PreparedStatement.RETURN_GENERATED_KEYS);
 
 				this.makePropertyStatement(property, statement);
@@ -100,11 +102,12 @@ public class SQLPropertyDao implements PropertyDao {
 						+ "age = ?, has_cable = ?, "
 						+ "has_phone = ?, has_swimmingpool = ?, "
 						+ "has_salon = ?, has_paddle = ?, "
-						+ "has_quincho = ?, description = ? " + "WHERE id = ?");
+						+ "has_quincho = ?, description = ?, visible = ?"
+						+ "WHERE id = ?");
 
 				this.makePropertyStatement(property, statement);
 
-				statement.setInt(17, property.getId());
+				statement.setInt(18, property.getId());
 
 				statement.execute();
 
@@ -148,12 +151,12 @@ public class SQLPropertyDao implements PropertyDao {
 
 	public List<Property> getAll(final Operation op, final Type type,
 			final int pricelow, final int pricehigh, final int page,
-			final int quant, final Order order) {
+			final int quant, final Order order, final Boolean visible) {
 		final List<Property> properties = new ArrayList<Property>();
 
 		try {
 			final boolean searching = (pricehigh != -1 || pricelow != -1
-					|| type != null || op != null);
+					|| type != null || op != null || visible != null);
 			final Connection conn = this.provider.getConnection();
 
 			final StringBuilder query = new StringBuilder(
@@ -181,18 +184,65 @@ public class SQLPropertyDao implements PropertyDao {
 				commands.add(" \"type\" LIKE ? ");
 			}
 
-			// final PreparedStatement statement = conn.prepareStatement();
+			if (visible != null) {
+				commands.add(" \"visible\" LIKE ? ");
+			}
 
-			// statement.execute();
+			query.append(StringUtils.join(commands, " AND "));
 
-			// final ResultSet result = statement.getResultSet();
-			//
-			// while (result.next() && !result.isAfterLast()) {
-			// final Property property = this
-			// .readPropertyFromResultSet(result);
-			//
-			// properties.add(property);
-			// }
+			if (order != null) {
+				switch (order) {
+				case DESC:
+					query.append(" ORDER BY price DESC ");
+					break;
+				case ASC:
+					query.append(" ORDER BY price ASC ");
+					break;
+				}
+			}
+
+			if (quant != -1) {
+				query.append(" LIMIT ").append(quant).append(" ");
+			}
+
+			if (page != -1 && quant != -1) {
+				query.append(" OFFSET ").append(quant * page).append(" ");
+			}
+
+			final PreparedStatement statement = conn.prepareStatement(query
+					.toString());
+
+			int paramIndex = 1;
+
+			if (pricehigh != -1) {
+				statement.setInt(paramIndex++, pricehigh);
+			}
+
+			if (pricelow != -1) {
+				statement.setInt(paramIndex++, pricelow);
+			}
+
+			if (op != null) {
+				statement.setString(paramIndex++, op.toString());
+			}
+
+			if (type != null) {
+				statement.setString(paramIndex++, type.toString());
+			}
+
+			if (visible != null) {
+				statement.setBoolean(paramIndex++, visible);
+			}
+
+			statement.execute();
+
+			final ResultSet result = statement.getResultSet();
+
+			while (result.next() && !result.isAfterLast()) {
+				final Property property = this
+						.readPropertyFromResultSet(result);
+				properties.add(property);
+			}
 
 			return properties;
 		} catch (final Exception e) {
@@ -252,6 +302,7 @@ public class SQLPropertyDao implements PropertyDao {
 		statement.setBoolean(14, property.getService().isPaddle());
 		statement.setBoolean(15, property.getService().isQuincho());
 		statement.setString(16, property.getDescription());
+		statement.setBoolean(17, property.getVisible());
 	}
 
 }

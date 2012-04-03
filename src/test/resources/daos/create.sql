@@ -27,6 +27,7 @@ CREATE TABLE properties
   has_salon boolean NOT NULL,
   has_paddle boolean NOT NULL,
   has_quincho boolean NOT NULL,
+  visible boolean NOT NULL,
   description character varying
 );
 

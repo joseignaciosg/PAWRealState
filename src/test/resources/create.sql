@@ -27,6 +27,7 @@ CREATE TABLE properties
   has_paddle boolean NOT NULL,
   has_quincho boolean NOT NULL,
   description character varying,
+  visible boolean NOT NULL,
   CONSTRAINT property_pkey PRIMARY KEY (id),
   CONSTRAINT property_transaction_check CHECK (transaction::text = ANY (ARRAY['SELL'::character varying::text, 'RENT'::character varying::text])),
   CONSTRAINT property_type_check CHECK (type::text = ANY (ARRAY['APARTMENT'::character varying::text, 'HOUSE'::character varying::text]))
