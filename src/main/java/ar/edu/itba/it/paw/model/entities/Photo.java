@@ -1,5 +1,6 @@
 package ar.edu.itba.it.paw.model.entities;
 
+
 public class Photo implements Entity {
 
 	private Integer id;
@@ -96,6 +97,11 @@ public class Photo implements Entity {
 
 	public void setNew(final boolean isnew) {
 		this.isnew = isnew;
+	}
+
+	@Override
+	public String toString() {
+		return "Photo [id=" + this.id + "]";
 	}
 
 }

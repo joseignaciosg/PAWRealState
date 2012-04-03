@@ -7,7 +7,7 @@ import ar.edu.itba.it.paw.db.ConnectionProvider;
 /**
  * Kind of test that rollbacks the connection to the base state after each test
  */
-public class TransactionalTest {
+public abstract class TransactionalTest {
 
 	private ConnectionProvider provider;
 
