@@ -48,7 +48,7 @@ public class InMemorySQLiteConnectionManager implements ConnectionManager {
 
 			this.conn.setAutoCommit(false);
 			try {
-				final File f = new File("src/test/resources/0.tables.sql");
+				final File f = new File("src/test/resources/daos/create.sql");
 				final BufferedReader reader = new BufferedReader(
 						new FileReader(f));
 				StringBuilder command = new StringBuilder();

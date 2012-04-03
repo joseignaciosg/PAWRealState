@@ -30,9 +30,9 @@ public class SQLPhotoDao implements PhotoDao {
 	public List<Photo> getByPropertyId(final Integer id) throws Exception {
 		final List<Photo> photos = new ArrayList<Photo>();
 
-		final ConnectionFactory factory = ConnectionFactory.getDispatcher();
+		final ConnectionFactory factory = ConnectionFactory.getTestDispatcher();
 		final Connection conn = factory.getConnection();
-		final String query = "select * from photos where property id=?";
+		final String query = "select * from photos where property_id=?";
 		final PreparedStatement ps = conn.prepareStatement(query);
 		ps.setString(1, String.valueOf(id));
 		ps.execute();

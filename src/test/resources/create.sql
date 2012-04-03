@@ -50,6 +50,6 @@ CREATE TABLE photos
   id serial NOT NULL,
   data bytea NOT NULL,
   type character varying NOT NULL,
-  propertyid integer references property(id),
+  property_id integer references property(id),
   CONSTRAINT photos_pkey PRIMARY KEY (id)
 );
