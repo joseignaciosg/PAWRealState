@@ -7,12 +7,14 @@ public class Photo implements Entity {
 	private String type;
 	private boolean dirty;
 	private Integer propertyid;
+	private boolean isnew;
 
 	public Photo(final Integer id, final byte[] data, final String type) {
 		this.id = id;
 		this.data = data;
 		this.type = type;
 		this.dirty = false;
+		this.isnew = true;
 	}
 
 	public byte[] getData() {
@@ -86,6 +88,14 @@ public class Photo implements Entity {
 			return false;
 		}
 		return true;
+	}
+
+	public boolean isNew() {
+		return this.isnew;
+	}
+
+	public void setNew(final boolean isnew) {
+		this.isnew = isnew;
 	}
 
 }

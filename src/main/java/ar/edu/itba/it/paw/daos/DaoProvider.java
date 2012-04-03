@@ -11,6 +11,8 @@ import ar.edu.itba.it.paw.daos.impl.InMemoryContactRequestDao;
 import ar.edu.itba.it.paw.daos.impl.InMemoryPhotoDao;
 import ar.edu.itba.it.paw.daos.impl.InMemoryPropertyDao;
 import ar.edu.itba.it.paw.daos.impl.InMemoryUserDao;
+import ar.edu.itba.it.paw.daos.impl.SQLPropertyDao;
+import ar.edu.itba.it.paw.db.ConnectionProvider;
 import ar.edu.itba.it.paw.model.entities.ContactRequest;
 import ar.edu.itba.it.paw.model.entities.Photo;
 import ar.edu.itba.it.paw.model.entities.Property;
@@ -25,6 +27,11 @@ public class DaoProvider {
 	private static ContactRequestDao contactrequestDao;
 	private static PhotoDao photoDao;
 	private static UserDao userDao;
+
+	private static PropertyDao propertyTestDao;
+	private static ContactRequestDao contactRequestTestDao;
+	private static PhotoDao photoTestDao;
+	private static UserDao usertestDao;
 
 	private DaoProvider() {
 
@@ -166,6 +173,39 @@ public class DaoProvider {
 		photoDao = new InMemoryPhotoDao(photos);
 		userDao = new InMemoryUserDao(users);
 
+	}
+
+	private static void setupTest() {
+		propertyTestDao = new SQLPropertyDao(
+				ConnectionProvider.getTestProvider());
+	}
+
+	public static UserDao getUserTestDao() {
+		if (userDao == null) {
+			setupTest();
+		}
+		return userDao;
+	}
+
+	public static ContactRequestDao getContactRequestTestDao() {
+		if (contactrequestDao == null) {
+			setupTest();
+		}
+		return contactrequestDao;
+	}
+
+	public static PropertyDao getPropertyTestDao() {
+		if (propertyDao == null) {
+			setupTest();
+		}
+		return propertyDao;
+	}
+
+	public static PhotoDao getPhotoTestDao() {
+		if (photoDao == null) {
+			setupTest();
+		}
+		return photoDao;
 	}
 
 	public static UserDao getUserDao() {

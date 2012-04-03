@@ -14,6 +14,7 @@ public class User implements Entity {
 	private String password;
 	private boolean dirty;
 	private List<Property> properties;
+	private boolean isnew;
 
 	public User(final String name, final String surname, final String mail,
 			final String telephone, final String username, final String password) {
@@ -26,6 +27,7 @@ public class User implements Entity {
 		this.username = username;
 		this.password = password;
 		this.setDirty(false);
+		this.isnew = true;
 	}
 
 	public List<Property> getProperties() {
@@ -137,6 +139,14 @@ public class User implements Entity {
 
 	public void setUsername(final String username) {
 		this.username = username;
+	}
+
+	public boolean isNew() {
+		return this.isnew;
+	}
+
+	public void setNew(final boolean isnew) {
+		this.isnew = isnew;
 	}
 
 }

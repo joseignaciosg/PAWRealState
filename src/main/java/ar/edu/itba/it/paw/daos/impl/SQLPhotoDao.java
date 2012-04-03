@@ -7,10 +7,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ar.edu.itba.it.paw.daos.api.PhotoDao;
-import ar.edu.itba.it.paw.db.ConnectionFactory;
+import ar.edu.itba.it.paw.db.ConnectionProvider;
 import ar.edu.itba.it.paw.model.entities.Photo;
 
 public class SQLPhotoDao implements PhotoDao {
+
+	private Connection conn;
 
 	public Photo getById(final Integer id) {
 		// TODO Auto-generated method stub
@@ -30,7 +32,7 @@ public class SQLPhotoDao implements PhotoDao {
 	public List<Photo> getByPropertyId(final Integer id) throws Exception {
 		final List<Photo> photos = new ArrayList<Photo>();
 
-		final ConnectionFactory factory = ConnectionFactory.getTestDispatcher();
+		final ConnectionProvider factory = ConnectionProvider.getTestProvider();
 		final Connection conn = factory.getConnection();
 		final String query = "select * from photos where property_id=?";
 		final PreparedStatement ps = conn.prepareStatement(query);

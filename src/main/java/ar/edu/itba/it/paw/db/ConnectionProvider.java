@@ -10,11 +10,11 @@ import ar.edu.itba.it.paw.db.managers.PostgreConnectionManager;
  * 
  * @author cris
  */
-public class ConnectionFactory {
+public class ConnectionProvider {
 
 	private ConnectionManager manager;
 
-	private ConnectionFactory() {
+	private ConnectionProvider() {
 
 	}
 
@@ -23,8 +23,8 @@ public class ConnectionFactory {
 	 * 
 	 * @return ConnectionDispatcher for production
 	 */
-	public static ConnectionFactory getDispatcher() {
-		final ConnectionFactory myDispatcher = new ConnectionFactory();
+	public static ConnectionProvider getProvider() {
+		final ConnectionProvider myDispatcher = new ConnectionProvider();
 		myDispatcher.manager = new PostgreConnectionManager();
 		return myDispatcher;
 	}
@@ -34,8 +34,8 @@ public class ConnectionFactory {
 	 * 
 	 * @return ConnectionDispatcher for test
 	 */
-	public static ConnectionFactory getTestDispatcher() {
-		final ConnectionFactory myDispatcher = new ConnectionFactory();
+	public static ConnectionProvider getTestProvider() {
+		final ConnectionProvider myDispatcher = new ConnectionProvider();
 		myDispatcher.manager = InMemorySQLiteConnectionManager
 				.getConnectionManager();
 

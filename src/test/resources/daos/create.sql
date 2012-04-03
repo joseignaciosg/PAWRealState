@@ -1,6 +1,6 @@
 -- SQLITE SCHEMA
 
-CREATE TABLE contact_request
+CREATE TABLE contact_requests
 (
   id INTEGER PRIMARY KEY,
   username character varying NOT NULL,
@@ -9,7 +9,7 @@ CREATE TABLE contact_request
   "comment" character varying
 );
 
-CREATE TABLE property
+CREATE TABLE properties
 (
   id INTEGER PRIMARY KEY,
   "type" character varying NOT NULL,
