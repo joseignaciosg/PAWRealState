@@ -1,63 +1,31 @@
 package ar.edu.itba.it.paw.test.daos;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.util.List;
-
-import junit.framework.Assert;
-
-import org.junit.Before;
-import org.junit.Test;
-
+import ar.edu.itba.it.paw.daos.api.PhotoDao;
+import ar.edu.itba.it.paw.daos.api.PropertyDao;
 import ar.edu.itba.it.paw.daos.impl.SQLPhotoDao;
-import ar.edu.itba.it.paw.model.entities.Photo;
-import ar.edu.itba.it.paw.test.TransactionalTest;
+import ar.edu.itba.it.paw.daos.impl.SQLPropertyDao;
 
-public class SQLPhotoDaoTest extends TransactionalTest {
+public class SQLPhotoDaoTest extends PhotoDaoTest {
 
-	SQLPhotoDao dao;
+	private PhotoDao photodao;
+	private PropertyDao propdao;
 
-	@Before
-	public void prepareData() throws Exception {
-		final Connection conn = this.getProvider().getConnection();
-
-		// inserting the photo
-		final File file = new File("src/test/photos/prop1.jpg");
-		final InputStream is = new FileInputStream(file);
-		final StringBuilder builder = new StringBuilder();
-		int b = 0;
-		while ((b = is.read()) != -1) {
-			builder.append((char) b);
+	@Override
+	public PhotoDao getPhotoDao() {
+		if (this.photodao == null) {
+			this.photodao = new SQLPhotoDao(this.getProvider());
 		}
 
-		final byte[] byteData = builder.toString().getBytes();
-
-		final PreparedStatement ps = conn
-				.prepareStatement("INSERT INTO photos (data, type, property_id)"
-						+ " VALUES (?,?,1)");
-		ps.setBytes(1, byteData);
-		ps.setString(2, file.getName());
-		ps.executeUpdate();
-
-		this.dao = new SQLPhotoDao();
+		return this.photodao;
 	}
 
-	@Test
-	public void getByPropertyIdTest() {
-
-		// gets all the photos of property with id 1
-		List<Photo> photos = null;
-		try {
-			photos = this.dao.getByPropertyId(1);
-			Assert.assertTrue(photos.size() == 1);
-			System.out.println(photos);
-		} catch (final Exception e) {
-			e.printStackTrace();
+	@Override
+	public PropertyDao getProperyDao() {
+		if (this.propdao == null) {
+			this.propdao = new SQLPropertyDao(this.getProvider());
 		}
 
+		return this.propdao;
 	}
 
 }
