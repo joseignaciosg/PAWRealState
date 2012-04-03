@@ -76,8 +76,8 @@ public class SQLPropertyDao implements PropertyDao {
 								"INSERT INTO PROPERTIES(\"type\", \"transaction\", "
 										+ "address, neighborhood, price, rooms, csqm, usqm, age, "
 										+ "has_cable, has_phone, has_swimmingpool, has_salon, "
-										+ "has_paddle, has_quincho, description) VALUES (?, ?, ?, "
-										+ "?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+										+ "has_paddle, has_quincho, description, visible) VALUES (?, ?, ?, "
+										+ "?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
 								PreparedStatement.RETURN_GENERATED_KEYS);
 
 				this.makePropertyStatement(property, statement);
@@ -102,11 +102,12 @@ public class SQLPropertyDao implements PropertyDao {
 						+ "age = ?, has_cable = ?, "
 						+ "has_phone = ?, has_swimmingpool = ?, "
 						+ "has_salon = ?, has_paddle = ?, "
-						+ "has_quincho = ?, description = ? " + "WHERE id = ?");
+						+ "has_quincho = ?, description = ?, visible = ?"
+						+ "WHERE id = ?");
 
 				this.makePropertyStatement(property, statement);
 
-				statement.setInt(17, property.getId());
+				statement.setInt(18, property.getId());
 
 				statement.execute();
 
@@ -150,12 +151,12 @@ public class SQLPropertyDao implements PropertyDao {
 
 	public List<Property> getAll(final Operation op, final Type type,
 			final int pricelow, final int pricehigh, final int page,
-			final int quant, final Order order) {
+			final int quant, final Order order, final Boolean visible) {
 		final List<Property> properties = new ArrayList<Property>();
 
 		try {
 			final boolean searching = (pricehigh != -1 || pricelow != -1
-					|| type != null || op != null);
+					|| type != null || op != null || visible != null);
 			final Connection conn = this.provider.getConnection();
 
 			final StringBuilder query = new StringBuilder(
@@ -181,6 +182,10 @@ public class SQLPropertyDao implements PropertyDao {
 
 			if (type != null) {
 				commands.add(" \"type\" LIKE ? ");
+			}
+
+			if (visible != null) {
+				commands.add(" \"visible\" LIKE ? ");
 			}
 
 			query.append(StringUtils.join(commands, " AND "));
@@ -223,6 +228,10 @@ public class SQLPropertyDao implements PropertyDao {
 
 			if (type != null) {
 				statement.setString(paramIndex++, type.toString());
+			}
+
+			if (visible != null) {
+				statement.setBoolean(paramIndex++, visible);
 			}
 
 			statement.execute();
@@ -293,6 +302,7 @@ public class SQLPropertyDao implements PropertyDao {
 		statement.setBoolean(14, property.getService().isPaddle());
 		statement.setBoolean(15, property.getService().isQuincho());
 		statement.setString(16, property.getDescription());
+		statement.setBoolean(17, property.getVisible());
 	}
 
 }
