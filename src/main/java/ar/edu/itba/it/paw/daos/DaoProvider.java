@@ -51,11 +51,11 @@ public class DaoProvider {
 				"Excellect"));
 
 		resquests.add(new ContactRequest(1, "Bin Laden", "binladen@gmail.com",
-				"76873627", properties.get(0)));
+				"76873627", "desc1", properties.get(0)));
 		resquests.add(new ContactRequest(2, "Fredy Mercury", "yanni@gmail.com",
-				"126738", properties.get(1)));
+				"126738", "Desc2", properties.get(1)));
 		resquests.add(new ContactRequest(3, "Paco de Lucia", "paco@gmail.com",
-				"67384", properties.get(2)));
+				"67384", "DESC3", properties.get(2)));
 
 		User tmp = new User("J.P.", "Sartre", "jpsartre@gmail.com",
 				"172839127", "jpsartre", "jojo");
