@@ -2,6 +2,7 @@ package ar.edu.itba.it.paw.db;
 
 import java.sql.Connection;
 
+import ar.edu.itba.it.paw.db.managers.InMemorySQLiteConnectionManager;
 import ar.edu.itba.it.paw.db.managers.PostgreConnectionManager;
 
 /**
@@ -35,7 +36,8 @@ public class ConnectionFactory {
 	 */
 	public static ConnectionFactory getTestDispatcher() {
 		final ConnectionFactory myDispatcher = new ConnectionFactory();
-		myDispatcher.manager = PostgreConnectionManager.getConnectionManager();
+		myDispatcher.manager = InMemorySQLiteConnectionManager
+				.getConnectionManager();
 
 		return myDispatcher;
 	}
