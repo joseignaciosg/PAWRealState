@@ -57,7 +57,7 @@ public class InMemoryPropertyDao implements PropertyDao {
 
 	public List<Property> getAll(final Operation op, final Type type,
 			final int pricelow, final int pricehigh, final int page,
-			final int quant, final Order order) {
+			final int quant, final Order order, final Boolean visible) {
 
 		final List<Property> ans = new ArrayList<Property>();
 		final List<Property> oplist = new ArrayList<Property>();
@@ -106,9 +106,9 @@ public class InMemoryPropertyDao implements PropertyDao {
 		}
 
 		for (final Property p : this.data) {
-			if ((p.getVisible() == true) && oplist.contains(p)
-					&& typelist.contains(p) && pricelowlist.contains(p)
-					&& pricehighlist.contains(p)) {
+			if ((p.getVisible() == visible || visible == null)
+					&& oplist.contains(p) && typelist.contains(p)
+					&& pricelowlist.contains(p) && pricehighlist.contains(p)) {
 				ans.add(p);
 			}
 

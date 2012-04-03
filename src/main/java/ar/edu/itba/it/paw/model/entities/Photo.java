@@ -2,16 +2,19 @@ package ar.edu.itba.it.paw.model.entities;
 
 public class Photo implements Entity {
 
-	private Integer ID;
+	private Integer id;
 	private byte[] data = null;
 	private String type;
 	private boolean dirty;
+	private Integer propertyid;
+	private boolean isnew;
 
-	public Photo(final Integer ID, final byte[] data, final String type) {
-		this.ID = ID;
+	public Photo(final Integer id, final byte[] data, final String type) {
+		this.id = id;
 		this.data = data;
 		this.type = type;
 		this.dirty = false;
+		this.isnew = true;
 	}
 
 	public byte[] getData() {
@@ -25,6 +28,15 @@ public class Photo implements Entity {
 
 	public String getType() {
 		return this.type;
+	}
+
+	public Integer getPropertyid() {
+		return this.propertyid;
+	}
+
+	public void setPropertyid(final Integer propertyid) {
+		this.setDirty(true);
+		this.propertyid = propertyid;
 	}
 
 	public void setType(final String type) {
@@ -41,18 +53,18 @@ public class Photo implements Entity {
 	}
 
 	public Integer getId() {
-		return this.ID;
+		return this.id;
 	}
 
-	public void setId(final Integer ID) {
-		this.ID = ID;
+	public void setId(final Integer id) {
+		this.id = id;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((this.ID == null) ? 0 : this.ID.hashCode());
+		result = prime * result + ((this.id == null) ? 0 : this.id.hashCode());
 		return result;
 	}
 
@@ -68,14 +80,22 @@ public class Photo implements Entity {
 			return false;
 		}
 		final Photo other = (Photo) obj;
-		if (this.ID == null) {
-			if (other.ID != null) {
+		if (this.id == null) {
+			if (other.id != null) {
 				return false;
 			}
-		} else if (!this.ID.equals(other.ID)) {
+		} else if (!this.id.equals(other.id)) {
 			return false;
 		}
 		return true;
+	}
+
+	public boolean isNew() {
+		return this.isnew;
+	}
+
+	public void setNew(final boolean isnew) {
+		this.isnew = isnew;
 	}
 
 }

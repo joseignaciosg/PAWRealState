@@ -30,7 +30,7 @@ public class PropertyService {
 			final int quant, final Order order) {
 		List<Property> ans = null;
 		ans = this.propertyDao.getAll(op, type, pricelow, pricehigh, page,
-				quant, order);
+				quant, order, true);
 		return ans;
 	}
 

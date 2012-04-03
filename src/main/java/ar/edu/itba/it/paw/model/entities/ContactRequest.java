@@ -8,6 +8,7 @@ public class ContactRequest implements Entity {
 	private String telephone;
 	private Property propRefered;
 	private boolean dirty;
+	private boolean isnew;
 
 	public ContactRequest(final Integer iD, final String name,
 			final String email, final String telephone,
@@ -19,6 +20,7 @@ public class ContactRequest implements Entity {
 		this.telephone = telephone;
 		this.propRefered = propRefered;
 		this.setDirty(false);
+		this.isnew = true;
 	}
 
 	public String getName() {
@@ -108,6 +110,14 @@ public class ContactRequest implements Entity {
 		return "ContactRequest [ID=" + this.ID + ", name=" + this.name
 				+ ", email=" + this.email + ", telephone=" + this.telephone
 				+ ", dirty=" + this.dirty + "]";
+	}
+
+	public boolean isNew() {
+		return this.isnew;
+	}
+
+	public void setNew(final boolean isnew) {
+		this.isnew = isnew;
 	}
 
 }
