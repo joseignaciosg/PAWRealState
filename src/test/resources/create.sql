@@ -1,4 +1,4 @@
-CREATE TABLE contact_request
+CREATE TABLE contact_requests
 (
   id serial NOT NULL,
   username character varying NOT NULL,
@@ -8,7 +8,7 @@ CREATE TABLE contact_request
   CONSTRAINT contact_request_pkey PRIMARY KEY (id)
 );
 
-CREATE TABLE property
+CREATE TABLE properties
 (
   id serial NOT NULL,
   "type" character varying NOT NULL,

@@ -43,7 +43,7 @@ public class InMemorySQLiteConnectionManager implements ConnectionManager {
 	 * test/resources folder
 	 */
 	public Connection getConnection() throws SQLException {
-		if (this.conn == null) {
+		if (this.conn == null || this.conn.isClosed()) {
 			this.conn = DriverManager.getConnection("jdbc:sqlite::memory:");
 
 			this.conn.setAutoCommit(false);
@@ -75,7 +75,6 @@ public class InMemorySQLiteConnectionManager implements ConnectionManager {
 			}
 
 		}
-
 		return this.conn;
 	}
 }

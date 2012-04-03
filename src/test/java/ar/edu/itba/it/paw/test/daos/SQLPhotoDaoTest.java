@@ -22,19 +22,7 @@ public class SQLPhotoDaoTest extends TransactionalTest {
 
 	@Before
 	public void prepareData() throws Exception {
-		final Connection conn = this.getDispatcher().getConnection();
-
-		// inserting the property
-		final String query = "insert into property  "
-				+ "(type, 'transaction', address,neighborhood,"
-				+ "price, rooms, csqm, usqm, age, has_cable, "
-				+ "has_phone, has_swimmingpool, has_salon,"
-				+ "has_paddle, has_quincho, description ) VALUES "
-				+ "('HOUSE', 'SELL', 'Marcelo T. 1270', "
-				+ "'Recoleta', 100000, 3, 200, 300, 15, 'true', "
-				+ "'true', 'true', 'true', 'true', 'true', 'true');";
-		final PreparedStatement st = conn.prepareStatement(query);
-		st.execute();
+		final Connection conn = this.getProvider().getConnection();
 
 		// inserting the photo
 		final File file = new File("src/test/photos/prop1.jpg");
