@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
+
 import ar.edu.itba.it.paw.daos.api.PropertyDao;
 import ar.edu.itba.it.paw.db.ConnectionProvider;
 import ar.edu.itba.it.paw.model.entities.Property;
@@ -181,18 +183,57 @@ public class SQLPropertyDao implements PropertyDao {
 				commands.add(" \"type\" LIKE ? ");
 			}
 
-			// final PreparedStatement statement = conn.prepareStatement();
+			query.append(StringUtils.join(commands, " AND "));
 
-			// statement.execute();
+			if (order != null) {
+				switch (order) {
+				case DESC:
+					query.append(" ORDER BY price DESC ");
+					break;
+				case ASC:
+					query.append(" ORDER BY price ASC ");
+					break;
+				}
+			}
 
-			// final ResultSet result = statement.getResultSet();
-			//
-			// while (result.next() && !result.isAfterLast()) {
-			// final Property property = this
-			// .readPropertyFromResultSet(result);
-			//
-			// properties.add(property);
-			// }
+			if (quant != -1) {
+				query.append(" LIMIT ").append(quant).append(" ");
+			}
+
+			if (page != -1 && quant != -1) {
+				query.append(" OFFSET ").append(quant * page).append(" ");
+			}
+
+			final PreparedStatement statement = conn.prepareStatement(query
+					.toString());
+
+			int paramIndex = 1;
+
+			if (pricehigh != -1) {
+				statement.setInt(paramIndex++, pricehigh);
+			}
+
+			if (pricelow != -1) {
+				statement.setInt(paramIndex++, pricelow);
+			}
+
+			if (op != null) {
+				statement.setString(paramIndex++, op.toString());
+			}
+
+			if (type != null) {
+				statement.setString(paramIndex++, type.toString());
+			}
+
+			statement.execute();
+
+			final ResultSet result = statement.getResultSet();
+
+			while (result.next() && !result.isAfterLast()) {
+				final Property property = this
+						.readPropertyFromResultSet(result);
+				properties.add(property);
+			}
 
 			return properties;
 		} catch (final Exception e) {

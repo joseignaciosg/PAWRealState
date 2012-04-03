@@ -4,7 +4,6 @@ import java.util.List;
 
 import junit.framework.Assert;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import ar.edu.itba.it.paw.daos.api.PropertyDao;
@@ -160,7 +159,6 @@ public abstract class PropertyDaoTest extends TransactionalTest {
 		Assert.assertEquals(3, this.propertyDao.getAll().size());
 	}
 
-	@Ignore
 	@Test
 	public void getAllFilteredTest() {
 		this.prepareFilterDao();
@@ -208,12 +206,10 @@ public abstract class PropertyDaoTest extends TransactionalTest {
 				0, 10, Order.ASC);
 		Assert.assertTrue(props.size() == 3);
 
-		// asc
 		props = this.propertyDao
 				.getAll(null, null, 0, 100000, 0, 10, Order.ASC);
 		Assert.assertTrue(props.size() == 9);
 
-		// desc
 		props = this.propertyDao.getAll(null, null, 0, 100000, 0, 10,
 				Order.DESC);
 		Assert.assertTrue(props.size() == 9);
