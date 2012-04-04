@@ -46,7 +46,7 @@ CREATE TABLE users
 CREATE TABLE photos
 (
   id INTEGER PRIMARY KEY,
-  data bytea NOT NULL,
+  data blob NOT NULL,
   type character varying NOT NULL,
   property_id integer references property(id)
 );
