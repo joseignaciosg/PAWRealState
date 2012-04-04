@@ -1,5 +1,6 @@
 package ar.edu.itba.it.paw.daos.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ar.edu.itba.it.paw.daos.api.PhotoDao;
@@ -51,8 +52,13 @@ public class InMemoryPhotoDao implements PhotoDao {
 	}
 
 	public List<Photo> getByPropertyId(final Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		final List<Photo> ans = new ArrayList<Photo>();
+		for (final Photo p : this.photos) {
+			if (p.getPropertyid() == id) {
+				ans.add(p);
+			}
+		}
+		return ans;
 	}
 
 }
