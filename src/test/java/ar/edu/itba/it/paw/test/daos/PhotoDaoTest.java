@@ -149,6 +149,7 @@ public abstract class PhotoDaoTest extends TransactionalTest {
 		Assert.assertEquals(true, this.photoDao.saveOrUpdate(photo1));
 		Assert.assertEquals(true, this.photoDao.saveOrUpdate(photo2));
 		Assert.assertEquals(true, this.photoDao.saveOrUpdate(photo3));
+
 		Assert.assertEquals(false, this.photoDao.saveOrUpdate(photo3));
 		photo3.setPropertyid(1);
 		Assert.assertEquals(true, this.photoDao.saveOrUpdate(photo3));
