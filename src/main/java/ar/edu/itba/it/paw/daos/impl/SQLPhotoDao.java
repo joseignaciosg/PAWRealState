@@ -26,14 +26,17 @@ public class SQLPhotoDao implements PhotoDao {
 			conn = this.provider.getConnection();
 			final String query = "SELECT * FROM PHOTOS WHERE id=?";
 			final PreparedStatement ps = conn.prepareStatement(query);
-			ps.setString(1, String.valueOf(id));
+			ps.setInt(1, id);
 			ps.execute();
+
 			final ResultSet cursor = ps.getResultSet();
 			System.out.println(cursor);
-			cursor.next();
-			photo = new Photo(Integer.valueOf(cursor.getString("id")), cursor
-					.getString("data").getBytes("UTF-16"),
-					cursor.getString("type"));
+			while (cursor.next()) {
+				photo = new Photo(Integer.valueOf(cursor.getString("id")),
+						cursor.getString("data").getBytes("UTF-16"),
+						cursor.getString("type"), Integer.valueOf(cursor
+								.getString("property_id")));
+			}
 		} catch (final Exception e) {
 			e.printStackTrace();
 		}
@@ -48,12 +51,12 @@ public class SQLPhotoDao implements PhotoDao {
 			final String query = "DELETE FROM PHOTOS WHERE id=?";
 			final PreparedStatement ps = conn.prepareStatement(query);
 			ps.setString(1, String.valueOf(obj.getId()));
-			ps.execute();
+			final int rows = ps.executeUpdate();
+			return rows == 1;
 		} catch (final Exception e) {
 			e.printStackTrace();
 			return false;
 		}
-		return true;
 	}
 
 	public boolean saveOrUpdate(final Photo obj) {
@@ -78,6 +81,7 @@ public class SQLPhotoDao implements PhotoDao {
 				} catch (final Exception e) {
 					obj.setId(set.getInt(1));
 				}
+				obj.setNew(false);
 			} else if (obj.isDirty()) {
 				ps = conn
 						.prepareStatement("UPDATE PHOTOS SET data = ?, type = ?, property_id = ? WHERE id = ?");
@@ -96,24 +100,31 @@ public class SQLPhotoDao implements PhotoDao {
 		}
 
 		obj.setDirty(false);
-		return false;
+		return true;
 	}
 
-	public List<Integer> getByPropertyId(final Integer id) throws Exception {
-		final List<Integer> photos = new ArrayList<Integer>();
+	public List<Photo> getByPropertyId(final Integer id) {
+		final List<Photo> photos = new ArrayList<Photo>();
 
-		final Connection conn = this.provider.getConnection();
-		final String query = "select id from photos where property_id=?";
-		final PreparedStatement ps = conn.prepareStatement(query);
-		ps.setString(1, String.valueOf(id));
-		ps.execute();
-		final ResultSet cursor = ps.getResultSet();
-		System.out.println(cursor);
-		while (cursor.next()) {
-			final Integer ph = Integer.valueOf(cursor.getString("id"));
-			photos.add(ph);
+		try {
+			final Connection conn = this.provider.getConnection();
+			final String query = "SELECT * FROM PHOTOS WHERE property_id=?";
+			final PreparedStatement ps = conn.prepareStatement(query);
+			ps.setString(1, String.valueOf(id));
+			ps.execute();
+			final ResultSet cursor = ps.getResultSet();
+			System.out.println(cursor);
+			while (cursor.next()) {
+				final Photo photo = new Photo(Integer.valueOf(cursor
+						.getString("id")), null, null, Integer.valueOf(cursor
+						.getString("property_id")));
+				photos.add(photo);
 
+			}
+			return photos;
+		} catch (final Exception e) {
+			e.printStackTrace();
+			return null;
 		}
-		return photos;
 	}
 }
