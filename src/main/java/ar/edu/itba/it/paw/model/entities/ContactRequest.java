@@ -6,21 +6,31 @@ public class ContactRequest implements Entity {
 	private String name;
 	private String email;
 	private String telephone;
+	private String description;
 	private Property propRefered;
 	private boolean dirty;
 	private boolean isnew;
 
 	public ContactRequest(final Integer iD, final String name,
 			final String email, final String telephone,
-			final Property propRefered) {
+			final String description, final Property propRefered) {
 		super();
 		this.ID = iD;
 		this.name = name;
 		this.email = email;
 		this.telephone = telephone;
+		this.description = description;
 		this.propRefered = propRefered;
 		this.setDirty(false);
 		this.isnew = true;
+	}
+
+	public String getDescription() {
+		return this.description;
+	}
+
+	public void setDescription(final String description) {
+		this.description = description;
 	}
 
 	public String getName() {

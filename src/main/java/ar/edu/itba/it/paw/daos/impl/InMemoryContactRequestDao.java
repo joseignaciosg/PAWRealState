@@ -29,6 +29,7 @@ public class InMemoryContactRequestDao implements ContactRequestDao {
 
 	public boolean saveOrUpdate(final ContactRequest obj) {
 		if (!this.contactrequests.contains(obj)) {
+			obj.setDirty(false);
 			return this.contactrequests.add(obj);
 		} else {
 			if (obj.isDirty()) {

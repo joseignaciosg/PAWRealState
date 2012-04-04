@@ -11,8 +11,8 @@
 				<li><a href="#">Compra</a> <span class="divider">/</span></li>
 				<li class="active">Zona Oeste</li>
 			</ul>-->
-			<h2><c:out value=" ${property.address}" /></h2>
-			<h3><c:out value=" ${property.neighborhood}" /> </h3>
+			<h1><c:out value=" ${property.address}" /></h1>
+			<h2><c:out value=" ${property.neighborhood}" /> </h2>
 			<br />
 			<ul class="thumbnails">
 				<li class="span4"><a href="#" class="thumbnail"> <img height="360" width="268" src="http://www.highgrowthpropertyinvestment.co.uk/media/Sell-Property.jpg" alt="house" />
@@ -20,23 +20,23 @@
 
 				<div class="span4">
 					<dl>
-						<dt>Tipo de Inmueble</dt>
+						<dt><h4>Tipo de Inmueble</h4></dt>
 						<c:if test = "${property.type == 'HOUSE'}">   
 							<dd>Casa</dd>
 						</c:if>
 						<c:if test = "${property.type == 'APARTMENT'}">   
 							<dd>Departamento</dd>
 						</c:if>
-						<dt>Direccion</dt>
+						<dt><h4>Direccion</h4></dt>
 						<dd><c:out value=" ${property.address}" /> </dd>
-						<dt>Estado</dt>
+						<dt><h4>Estado</h4></dt>
 						<c:if test = "${property.operation == 'SELL'}">   
 							<dd>En Venta</dd>
 						</c:if>
 						<c:if test = "${property.operation == 'RENT'}">   
 							<dd>En Alquiler</dd>
 						</c:if>
-						<dt>Precio</dt>
+						<dt><h4>Precio</h4></dt>
 						<dd>$<c:out value=" ${property.price}" /> </dd>
 						
 					</dl>
@@ -126,8 +126,9 @@
 		</div>
 		<div class="span3">
 
-			<form class="form-vertical">
-				<fieldset>
+		<form name="contactrequest" class="form-vertical" action="/contactrequest" method="POST">
+		
+				<!--<fieldset>
 					<legend>Contacta al Publicador</legend>
 					<label>Tu Nombre</label> 
 					<input type="text" class="span3" placeholder="Requerido…"> 
@@ -139,7 +140,45 @@
 					<input type="text" class="span3" placeholder="Opcional…"><br />
 					<button type="submit" class="btn btn-primary">Obtener
 						datos del Publicador</button>
-				</fieldset>
+				</fieldset>-->
+				
+		<fieldset>
+			<legend>Contacta al Publicador</legend>
+			
+			<div class="control-group">
+				<label class="control-label" for="first_name">Nombre</label>
+				<div class="controls">
+					<input type="text" class="input-xlarge" id="first_name" name="first_name">
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="last_name">Apellido</label>
+				<div class="controls">
+					<input type="text" class="input-xlarge" id="last_name" name="last_name">
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="email">Email</label>
+				<div class="controls">
+					<input type="text" class="input-xlarge" id="telephone" name="email">
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="phone">Teléfono</label>
+				<div class="controls">
+					<input type="text" class="input-xlarge" id="phone" name="phone">
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="phone">Descripcion</label>
+				<div class="controls">
+					<input type="text" class="input-xlarge" id="description" name="description">
+				</div>
+			</div>
+			<button type="submit" class="btn btn-primary">Obtener
+						datos del Publicador</button>
+		</fieldset>
+	
 			</form>
 		</div>
 	</div>

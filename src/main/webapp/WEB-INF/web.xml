@@ -46,6 +46,14 @@
 		<servlet-name>ChangeVisibility</servlet-name>
 		<servlet-class>ar.edu.itba.it.paw.web.servlets.ChangeVisibility</servlet-class>
 	</servlet>
+	<servlet>
+		<servlet-name>ContactRequest</servlet-name>
+		<servlet-class>ar.edu.itba.it.paw.web.servlets.ContactRequestPage</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ContactRequest</servlet-name>
+		<url-pattern>/contactrequest</url-pattern>
+	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>EditPropertyPage</servlet-name>
 		<url-pattern>/myproperties/edit</url-pattern>

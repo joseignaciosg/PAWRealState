@@ -19,7 +19,6 @@ public class SQLUserDao implements UserDao {
 		this.provider = provider;
 	}
 
-	@Override
 	public User getById(final Integer id) {
 		User user = null;
 		try {
@@ -43,7 +42,6 @@ public class SQLUserDao implements UserDao {
 		return user;
 	}
 
-	@Override
 	public boolean delete(final User obj) {
 		try {
 
@@ -63,7 +61,6 @@ public class SQLUserDao implements UserDao {
 
 	}
 
-	@Override
 	public boolean saveOrUpdate(final User user) {
 		try {
 			final Connection conn = this.provider.getConnection();
@@ -115,7 +112,6 @@ public class SQLUserDao implements UserDao {
 
 	}
 
-	@Override
 	public List<User> getAll() {
 		final List<User> users = new ArrayList<User>();
 		try {
@@ -142,7 +138,6 @@ public class SQLUserDao implements UserDao {
 		}
 	}
 
-	@Override
 	public User getUser(final String username) {
 		User user = null;
 		try {
