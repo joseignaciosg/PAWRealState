@@ -67,12 +67,10 @@ public class User implements Entity {
 		this.dirty = dirty;
 	}
 
-	@Override
 	public Integer getId() {
 		return this.ID;
 	}
 
-	@Override
 	public void setId(final Integer iD) {
 		this.ID = iD;
 		this.setDirty(true);
@@ -105,7 +103,6 @@ public class User implements Entity {
 		this.setDirty(true);
 	}
 
-	@Override
 	public boolean isDirty() {
 		return (this.dirty == false) ? false : true;
 	}
@@ -156,7 +153,6 @@ public class User implements Entity {
 		this.username = username;
 	}
 
-	@Override
 	public boolean isNew() {
 		return this.isnew;
 	}
