@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import ar.edu.itba.it.paw.model.entities.Property;
 import ar.edu.itba.it.paw.model.entities.User;
 import ar.edu.itba.it.paw.model.services.ContactRequestService;
+import ar.edu.itba.it.paw.model.services.EmailService;
 import ar.edu.itba.it.paw.model.services.PropertyService;
 import ar.edu.itba.it.paw.model.services.ServiceProvider;
 import ar.edu.itba.it.paw.web.utils.HTMLUtils;
@@ -62,6 +63,8 @@ public class ContactRequestPage extends HttpServlet {
 
 		if (valid) {
 			final User user = prop.getOwner();
+			final EmailService notification = ServiceProvider.getEmailService();
+			notification.sendEmail(user, prop);
 			req.setAttribute("user", user);
 			req.setAttribute("property", prop);
 			HTMLUtils.render("/contactrequest/contactRequest.jsp", req, resp);

@@ -7,6 +7,7 @@ public class ServiceProvider {
 	private static UserService userService;
 	private static PropertyService propertyService;
 	private static ContactRequestService contactRequest;
+	private static EmailService emailService;
 
 	private ServiceProvider() {
 	}
@@ -36,6 +37,13 @@ public class ServiceProvider {
 		}
 
 		return contactRequest;
+	}
+
+	public static EmailService getEmailService() {
+		if (emailService == null) {
+			emailService = new EmailService();
+		}
+		return emailService;
 	}
 
 }
