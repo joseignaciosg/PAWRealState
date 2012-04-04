@@ -8,12 +8,16 @@ import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import ar.edu.itba.it.paw.daos.api.UserDao;
 import ar.edu.itba.it.paw.daos.impl.InMemoryUserDao;
 import ar.edu.itba.it.paw.model.entities.User;
+import ar.edu.itba.it.paw.test.TransactionalTest;
 
-public class UserDaoTest {
+public abstract class UserDaoTest extends TransactionalTest {
 
 	private InMemoryUserDao dao;
+
+	public abstract UserDao getDao();
 
 	@Before
 	public void initDB() {

@@ -165,8 +165,8 @@ public class DaoProvider {
 
 		users.add(tmp);
 
-		photos.add(new Photo(1, null, "jpg"));
-		photos.add(new Photo(2, null, "jpg"));
+		photos.add(new Photo(1, null, "jpg", 1));
+		photos.add(new Photo(2, null, "jpg", 1));
 
 		propertyDao = new InMemoryPropertyDao(properties);
 		contactrequestDao = new InMemoryContactRequestDao(resquests);

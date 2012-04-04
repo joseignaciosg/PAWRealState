@@ -1,6 +1,5 @@
 package ar.edu.itba.it.paw.model.entities;
 
-
 public class Photo implements Entity {
 
 	private Integer id;
@@ -10,10 +9,12 @@ public class Photo implements Entity {
 	private Integer propertyid;
 	private boolean isnew;
 
-	public Photo(final Integer id, final byte[] data, final String type) {
+	public Photo(final Integer id, final byte[] data, final String type,
+			final int propertyid) {
 		this.id = id;
 		this.data = data;
 		this.type = type;
+		this.propertyid = propertyid;
 		this.dirty = false;
 		this.isnew = true;
 	}
