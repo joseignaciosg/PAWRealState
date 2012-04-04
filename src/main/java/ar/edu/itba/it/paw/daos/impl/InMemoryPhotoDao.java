@@ -50,4 +50,9 @@ public class InMemoryPhotoDao implements PhotoDao {
 		}
 	}
 
+	public List<Photo> getByPropertyId(final Integer id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

@@ -14,10 +14,19 @@ public class User implements Entity {
 	private String password;
 	private boolean dirty;
 	private List<Property> properties;
+	private boolean isnew;
 
 	public User(final String name, final String surname, final String mail,
 			final String telephone, final String username, final String password) {
-		super();
+		// super();
+		this(null, name, surname, mail, telephone, username, password);
+		this.setDirty(false);
+		this.setVisible(true);
+	}
+
+	public User(final Integer userId, final String name, final String surname,
+			final String mail, final String telephone, final String username,
+			final String password) {
 		this.properties = new ArrayList<Property>();
 		this.name = name;
 		this.surname = surname;
@@ -26,6 +35,11 @@ public class User implements Entity {
 		this.username = username;
 		this.password = password;
 		this.setDirty(false);
+		this.isnew = true;
+	}
+
+	public void setVisible(final boolean isnew) {
+		this.isnew = isnew;
 	}
 
 	public List<Property> getProperties() {
@@ -137,6 +151,14 @@ public class User implements Entity {
 
 	public void setUsername(final String username) {
 		this.username = username;
+	}
+
+	public boolean isNew() {
+		return this.isnew;
+	}
+
+	public void setNew(final boolean isnew) {
+		this.isnew = isnew;
 	}
 
 }

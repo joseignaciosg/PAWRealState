@@ -18,18 +18,27 @@ public class PostgreConnectionManager implements ConnectionManager {
 
 	private String connectionString;
 
+	private static ConnectionManager instance = null;
+
 	private Connection conn;
 
 	private Driver driver = new org.postgresql.Driver();
 
-	private String username = "cris";
-	private String password = "holahola";
+	private String username = "postgres";
+	private String password = "teta";
 
 	public PostgreConnectionManager(final String connectionString,
 			final String username, final String password) {
 		this.connectionString = connectionString;
 		this.username = username;
 		this.password = password;
+	}
+
+	public static ConnectionManager getConnectionManager() {
+		if (instance == null) {
+			instance = new PostgreConnectionManager();
+		}
+		return instance;
 	}
 
 	public PostgreConnectionManager(final String connectionString) {
@@ -63,7 +72,7 @@ public class PostgreConnectionManager implements ConnectionManager {
 		}
 
 		if (this.connectionString == null) {
-			this.connectionString = "￼￼jdbc:postgresql://localhost:5432/hotelapp";
+			this.connectionString = "￼￼jdbc:postgresql://localhost:5432/Chinuprop";
 		}
 	}
 

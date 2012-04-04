@@ -71,6 +71,7 @@ public class Property implements Entity {
 	private List<Photo> photos;
 	private User owner;
 	private boolean visible;
+	private boolean isnew;
 
 	public Property(final Type type, final Operation operation,
 			final String neighborhood, final String address,
@@ -103,6 +104,7 @@ public class Property implements Entity {
 		this.photos = new ArrayList<Photo>();
 		this.setVisible(true);
 		this.setDirty(false);
+		this.isnew = true;
 	}
 
 	public String getPropertyType() {
@@ -292,4 +294,11 @@ public class Property implements Entity {
 				+ "]";
 	}
 
+	public boolean isNew() {
+		return this.isnew;
+	}
+
+	public void setNew(final boolean isnew) {
+		this.isnew = isnew;
+	}
 }
