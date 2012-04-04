@@ -19,7 +19,7 @@ import ar.edu.itba.it.paw.model.entities.Property.Type;
 import ar.edu.itba.it.paw.model.entities.Services;
 import ar.edu.itba.it.paw.model.services.ContactRequestService;
 
-public class ContactRequestTest {
+public class ContactRequestServiceTest {
 
 	ContactRequestService contact;
 
@@ -50,7 +50,7 @@ public class ContactRequestTest {
 		final ContactRequestDao contactDao = new InMemoryContactRequestDao(data);
 		final PropertyDao dao = new InMemoryPropertyDao(propertyList);
 
-		this.contact = new ContactRequestService(dao, contactDao);
+		this.contact = new ContactRequestService(contactDao);
 
 	}
 

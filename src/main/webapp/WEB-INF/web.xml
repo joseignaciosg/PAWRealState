@@ -41,7 +41,7 @@
 	<servlet>
 		<servlet-name>EditPropertyPage</servlet-name>
 		<servlet-class>ar.edu.itba.it.paw.web.servlets.EditPropertyPage</servlet-class>
-	</servlet>ChangeVisibility
+	</servlet>
 	<servlet>
 		<servlet-name>ChangeVisibility</servlet-name>
 		<servlet-class>ar.edu.itba.it.paw.web.servlets.ChangeVisibility</servlet-class>
@@ -50,6 +50,14 @@
 		<servlet-name>ContactRequest</servlet-name>
 		<servlet-class>ar.edu.itba.it.paw.web.servlets.ContactRequestPage</servlet-class>
 	</servlet>
+	<servlet>
+		<servlet-name>PhotoAddPage</servlet-name>
+		<servlet-class>ar.edu.itba.it.paw.web.servlets.PhotoAddPage</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>PhotoAddPage</servlet-name>
+		<url-pattern>/photos/add</url-pattern>
+	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>ContactRequest</servlet-name>
 		<url-pattern>/contactrequest</url-pattern>

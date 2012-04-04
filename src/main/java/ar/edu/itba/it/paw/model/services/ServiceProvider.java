@@ -6,7 +6,8 @@ public class ServiceProvider {
 
 	private static UserService userService;
 	private static PropertyService propertyService;
-	private static ContactRequestService contactRequest;
+	private static ContactRequestService contactRequestService;
+	private static PhotoService photoService;
 
 	private ServiceProvider() {
 	}
@@ -28,14 +29,22 @@ public class ServiceProvider {
 		return propertyService;
 	}
 
+	public static PhotoService getPhotoService() {
+		if (photoService == null) {
+			photoService = new PhotoService(DaoProvider.getPhotoDao());
+
+		}
+
+		return photoService;
+	}
+
 	public static ContactRequestService getContactRequestService() {
-		if (contactRequest == null) {
-			contactRequest = new ContactRequestService(
-					DaoProvider.getPropertyDao(),
+		if (contactRequestService == null) {
+			contactRequestService = new ContactRequestService(
 					DaoProvider.getContactRequestDao());
 		}
 
-		return contactRequest;
+		return contactRequestService;
 	}
 
 }
