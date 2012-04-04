@@ -18,7 +18,15 @@ public class User implements Entity {
 
 	public User(final String name, final String surname, final String mail,
 			final String telephone, final String username, final String password) {
-		super();
+		// super();
+		this(null, name, surname, mail, telephone, username, password);
+		this.setDirty(false);
+		this.setVisible(true);
+	}
+
+	public User(final Integer userId, final String name, final String surname,
+			final String mail, final String telephone, final String username,
+			final String password) {
 		this.properties = new ArrayList<Property>();
 		this.name = name;
 		this.surname = surname;
@@ -28,6 +36,10 @@ public class User implements Entity {
 		this.password = password;
 		this.setDirty(false);
 		this.isnew = true;
+	}
+
+	public void setVisible(final boolean isnew) {
+		this.isnew = isnew;
 	}
 
 	public List<Property> getProperties() {
@@ -55,10 +67,12 @@ public class User implements Entity {
 		this.dirty = dirty;
 	}
 
+	@Override
 	public Integer getId() {
 		return this.ID;
 	}
 
+	@Override
 	public void setId(final Integer iD) {
 		this.ID = iD;
 		this.setDirty(true);
@@ -91,6 +105,7 @@ public class User implements Entity {
 		this.setDirty(true);
 	}
 
+	@Override
 	public boolean isDirty() {
 		return (this.dirty == false) ? false : true;
 	}
@@ -141,6 +156,7 @@ public class User implements Entity {
 		this.username = username;
 	}
 
+	@Override
 	public boolean isNew() {
 		return this.isnew;
 	}
