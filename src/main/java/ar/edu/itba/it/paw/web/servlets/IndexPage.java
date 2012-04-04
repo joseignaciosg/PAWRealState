@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import ar.edu.itba.it.paw.web.cookies.CookiesManager;
 import ar.edu.itba.it.paw.web.utils.HTMLUtils;
 
 public class IndexPage extends HttpServlet {
@@ -16,6 +17,9 @@ public class IndexPage extends HttpServlet {
 	protected void doGet(final HttpServletRequest req,
 			final HttpServletResponse resp) throws ServletException,
 			IOException {
+		final CookiesManager manager = new CookiesManager(req, resp);
+
+		req.setAttribute("user_cookie_username", manager.getName());
 		HTMLUtils.render("index/index.jsp", req, resp);
 	}
 
