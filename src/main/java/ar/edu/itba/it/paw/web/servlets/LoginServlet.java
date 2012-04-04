@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import ar.edu.itba.it.paw.model.services.ServiceProvider;
 import ar.edu.itba.it.paw.model.services.UserService;
+import ar.edu.itba.it.paw.web.cookies.CookiesManager;
 import ar.edu.itba.it.paw.web.session.UserManager;
 
 public class LoginServlet extends HttpServlet {
@@ -22,6 +23,7 @@ public class LoginServlet extends HttpServlet {
 			IOException {
 		final String username = req.getParameter("user_username");
 		final String password = req.getParameter("user_password");
+
 		final UserManager manager = (UserManager) req
 				.getAttribute("userManager");
 
@@ -30,8 +32,10 @@ public class LoginServlet extends HttpServlet {
 		final boolean loginValid = service.login(username, password, manager);
 
 		if (loginValid) {
+			final CookiesManager cookman = new CookiesManager(req, resp);
+			cookman.setUser(username, password);
 			String backPage = null;
-			if (req.getHeader("Referer") == null) {
+			if (req.getHeader("Origin") == null) {
 				backPage = "/index";
 			} else {
 				backPage = req.getHeader("Origin");
