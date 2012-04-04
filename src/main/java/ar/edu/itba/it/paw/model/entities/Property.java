@@ -16,6 +16,18 @@ public class Property implements Entity {
 			}
 			return null;
 		}
+
+		@Override
+		public String toString() {
+			switch (this) {
+			case APARTMENT:
+				return "APARTMENT";
+			case HOUSE:
+				return "HOUSE";
+			default:
+				return "";
+			}
+		}
 	}
 
 	public enum Operation {
@@ -29,9 +41,21 @@ public class Property implements Entity {
 			}
 			return null;
 		}
+
+		@Override
+		public String toString() {
+			switch (this) {
+			case SELL:
+				return "SELL";
+			case RENT:
+				return "RENT";
+			default:
+				return "";
+			}
+		}
 	}
 
-	private Integer ID;
+	private Integer id;
 	private boolean dirty;
 	private Type type;
 	private Operation operation;
@@ -45,7 +69,9 @@ public class Property implements Entity {
 	private Services service;
 	private String description;
 	private List<Photo> photos;
-	private Integer userID;
+	private User owner;
+	private boolean visible;
+	private boolean isnew;
 
 	public Property(final Type type, final Operation operation,
 			final String neighborhood, final String address,
@@ -55,14 +81,15 @@ public class Property implements Entity {
 		this(null, type, operation, neighborhood, address, price, spaces,
 				coveredArea, freeArea, age, service, description);
 		this.setDirty(false);
+		this.setVisible(true);
 	}
 
-	public Property(final Integer ID, final Type type,
+	public Property(final Integer id, final Type type,
 			final Operation operation, final String neighborhood,
 			final String address, final Integer price, final Integer spaces,
 			final Integer coveredArea, final Integer freeArea,
 			final Integer age, final Services service, final String description) {
-		this.ID = ID;
+		this.id = id;
 		this.type = type;
 		this.operation = operation;
 		this.neighborhood = neighborhood;
@@ -75,22 +102,32 @@ public class Property implements Entity {
 		this.service = service;
 		this.description = description;
 		this.photos = new ArrayList<Photo>();
+		this.setVisible(true);
 		this.setDirty(false);
+		this.isnew = true;
 	}
 
-	public Integer getUserID() {
-		return this.userID;
+	public String getPropertyType() {
+		return this.type.toString();
 	}
 
-	public void setUserID(final Integer userID) {
-		this.userID = userID;
+	public String getOperationType() {
+		return this.operation.toString();
+	}
+
+	public User getOwner() {
+		return this.owner;
+	}
+
+	public void setOwner(final User user) {
+		this.owner = user;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((this.ID == null) ? 0 : this.ID.hashCode());
+		result = prime * result + ((this.id == null) ? 0 : this.id.hashCode());
 		return result;
 	}
 
@@ -106,22 +143,22 @@ public class Property implements Entity {
 			return false;
 		}
 		final Property other = (Property) obj;
-		if (this.ID == null) {
-			if (other.ID != null) {
+		if (this.id == null) {
+			if (other.id != null) {
 				return false;
 			}
-		} else if (!this.ID.equals(other.ID)) {
+		} else if (!this.id.equals(other.id)) {
 			return false;
 		}
 		return true;
 	}
 
-	public Integer getID() {
-		return this.ID;
+	public Integer getId() {
+		return this.id;
 	}
 
-	public void setID(final Integer iD) {
-		this.ID = iD;
+	public void setId(final Integer id) {
+		this.id = id;
 		this.setDirty(true);
 	}
 
@@ -241,9 +278,27 @@ public class Property implements Entity {
 		this.photos.remove(photo);
 	}
 
-	@Override
-	public String toString() {
-		return "Property [ID=" + this.ID + ", price=" + this.price + "]";
+	public boolean getVisible() {
+		return this.visible;
 	}
 
+	public void setVisible(final boolean visible) {
+		this.visible = visible;
+		this.setDirty(true);
+	}
+
+	@Override
+	public String toString() {
+		return "Property [ID=" + this.id + ", type=" + this.type
+				+ ", operation=" + this.operation + ", price=" + this.price
+				+ "]";
+	}
+
+	public boolean isNew() {
+		return this.isnew;
+	}
+
+	public void setNew(final boolean isnew) {
+		this.isnew = isnew;
+	}
 }

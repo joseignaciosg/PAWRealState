@@ -1,124 +1,214 @@
 <%@ page pageEncoding="UTF-8"%>
-<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page isELIgnored="false"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-    <div class="row-fluid">
-    
-        <div class="span12">
-          	<div class="span9">
-				<ul class="breadcrumb">
-				  <li>
-				    <a href="#">Inmuebles</a> <span class="divider">/</span>
-				  </li>
-				  <li>
-				    <a href="#">Compra</a> <span class="divider">/</span>
-				  </li>
-				  <li class="active">Zona Oeste</li>
-				</ul>
-	        	<h2>Av. de Mayo 3400</h2>
-				<h3>Ituzaingo - Zona Oeste - Buenos Aires</h3><br/>
-			
-				<ul class="thumbnails">
-			 		<li class="span4">
-			    		<a href="#" class="thumbnail">
-			      			<img src="http://placehold.it/360x268" alt="">
-			    		</a>
-			  		</li>
+
+<div class="row-fluid">
+	<div class="span12">
+		<div class="span8">
+			<!--<ul class="breadcrumb">
+				<li><a href="#">Inmuebles</a> <span class="divider">/</span></li>
+				<li><a href="#">Compra</a> <span class="divider">/</span></li>
+				<li class="active">Zona Oeste</li>
+			</ul>-->
+			<h1><c:out value=" ${property.address}" /></h1>
+			<h2><c:out value=" ${property.neighborhood}" /> </h2>
+			<br />
+			<ul class="thumbnails">
+				<li class="span4"><a href="#" class="thumbnail"> <img height="360" width="268" src="http://www.highgrowthpropertyinvestment.co.uk/media/Sell-Property.jpg" alt="house" />
+				</a></li>
+
+				<div class="span4">
+					<dl>
+						<dt><h4>Tipo de Inmueble</h4></dt>
+						<c:if test = "${property.type == 'HOUSE'}">   
+							<dd>Casa</dd>
+						</c:if>
+						<c:if test = "${property.type == 'APARTMENT'}">   
+							<dd>Departamento</dd>
+						</c:if>
+						<dt><h4>Direccion</h4></dt>
+						<dd><c:out value=" ${property.address}" /> </dd>
+						<dt><h4>Estado</h4></dt>
+						<c:if test = "${property.operation == 'SELL'}">   
+							<dd>En Venta</dd>
+						</c:if>
+						<c:if test = "${property.operation == 'RENT'}">   
+							<dd>En Alquiler</dd>
+						</c:if>
+						<dt><h4>Precio</h4></dt>
+						<dd>$<c:out value=" ${property.price}" /> </dd>
+						
+					</dl>
+
+				</div>
+			</ul>
+			<div class="span5"  style="margin: 0px;">
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>Caracteristicas Generales</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Cantidad de Ambientes: <c:out value=" ${property.spaces}" /></td>
+				</tr>
+				<tr>
+					<td>Area cubierta: <c:out value=" ${property.coveredArea}" /></td>
+				</tr>
+				<tr>
+					<td>Area Libre: <c:out value=" ${property.freeArea}" /></td>
+				</tr>
+				<tr>
+					<td>Antiguedad: <c:out value=" ${property.age}"/></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div class="span2" >
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>Servicios</th>
+				</tr>
+			</thead>
+			<tbody>
+				<c:if test = "${property.service.telephone == 'true'}">   
+					<tr>
+						<td>Telefono</td>
+					</tr>
+				</c:if>
+				<c:if test = "${property.service.swimmingpool == 'true'}">   
+					<tr>
+						<td>Pileta</td>
+					</tr>
+				</c:if>
+				<c:if test = "${property.service.paddle == 'true'}">   
+					<tr>
+						<td>Paddle</td>
+					</tr>
+				</c:if>
+				<c:if test = "${property.service.lobby == 'true'}">   
+					<tr>
+						<td>Lobby</td>
+					</tr>
+				</c:if>
+				<c:if test = "${property.service.cable == 'true'}">   
+					<tr>
+						<td>Cable</td>
+					</tr>
+				</c:if>
+				<c:if test = "${property.service.quincho == 'true'}">   
+					<tr>
+						<td>Quincho</td>
+					</tr>
+				</c:if>
 				
-				<div class="span5">
-					<dl >
-						<dt>Tipo de Inmueble</dt>
-						<dd>Galpones, depósitos y edificios
-						Depósitos</dd>
-						<dt>Direccion</dt>
-						<dd>Av. de Mayo 3400</dd>
-						<dt>Superficie Total</dt>
-						<dd>100</dd>
-						<dt>Superficie Cubierta</dt>
-						<dd>50</dd>
-						</dl>
-	           
-	         </div>
-	</ul>
-	       </div>
-			<div class="span3">
-        		
-				<form class="form-vertical">
-				  <fieldset>
-				    <legend>Contacta al Publicador</legend>
-				    <label>Tu Nombre</label>
-					  <input type="text" class="span3" placeholder="Requerido…">
-					<label>Tu Apellido</label>
-					  <input type="text" class="span3" placeholder="Requerido…">
-					<label>Tu e-mail de contacto</label>
-					  <input type="text" class="span3" placeholder="Requerido…">
-					<label>Tu Consulta</label>
-					  <input type="text" class="span3" placeholder="Requerido…"><br/>
-					 <button type="submit" class="btn btn-primary">Obtener datos del Publicador</button>
-				  </fieldset>
-				</form>
-			</div> 
-        </div>
-	
-		<div class="span6">
-			<table class="table table-striped">
-				<thead>
-				    <tr>
-				      <th>Caracteristicas Generales</th>  
-				    </tr>
-				  </thead>
-				<tbody>
-				    <tr>
-				      <td>Cantidad de Ambientes: 4</td>
-				    </tr>
-					<tr>
-				      <td>Area cubierta: 4mts2</td>
-				    </tr>
-					<tr>
-				      <td>Area Libre: 14mts2</td>
-				    </tr>
-					<tr>
-				      <td>Luminosidad: Excelente</td>
-				    </tr>
-				  </tbody>
-			</table>
+			</tbody>
+		</table>
+	</div>
+	<div class="span8"  style="margin: 0px;">
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>Descripción</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td><c:out value=" ${property.description}" /></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+			
+		</div>
+		<div class="span3">
+
+		<form name="contactrequest" class="form-vertical" action="/contactrequest" method="POST">
+		
+				<!--<fieldset>
+					<legend>Contacta al Publicador</legend>
+					<label>Tu Nombre</label> 
+					<input type="text" class="span3" placeholder="Requerido…"> 
+					<label>Tu Apellido</label> 
+					<input type="text" class="span3" placeholder="Requerido…"> 
+					<label>Tu e-mail de contacto</label> 
+					<input type="text" class="span3" placeholder="Requerido…"> 
+					<label>Tu Consulta</label> 
+					<input type="text" class="span3" placeholder="Opcional…"><br />
+					<button type="submit" class="btn btn-primary">Obtener
+						datos del Publicador</button>
+				</fieldset>-->
+				
+		<fieldset>
+			<legend>Contacta al Publicador</legend>
+			
+			<div class="control-group">
+				<label class="control-label" for="first_name">Nombre</label>
+				<div class="controls">
+					<input type="text" class="input-xlarge" id="first_name" name="first_name">
+				</div>
 			</div>
-			<div class="span3">
+			<div class="control-group">
+				<label class="control-label" for="last_name">Apellido</label>
+				<div class="controls">
+					<input type="text" class="input-xlarge" id="last_name" name="last_name">
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="email">Email</label>
+				<div class="controls">
+					<input type="text" class="input-xlarge" id="telephone" name="email">
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="phone">Teléfono</label>
+				<div class="controls">
+					<input type="text" class="input-xlarge" id="phone" name="phone">
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="phone">Descripcion</label>
+				<div class="controls">
+					<input type="text" class="input-xlarge" id="description" name="description">
+				</div>
+			</div>
+			<button type="submit" class="btn btn-primary">Obtener
+						datos del Publicador</button>
+		</fieldset>
+	
+			</form>
 				<table class="table table-striped">
 					<thead>
 					    <tr>
-					      <th>Servicos</th>
+					      <th>Ubicacion Geografica</th>  
 					    </tr>
 					  </thead>
 					<tbody>
-					    <tr>
-					      <td>Luz</td>
-					    </tr>
 						<tr>
-					      <td>Agua</td>
-					    </tr>
-						<tr>
-					      <td>Gas</td>
-					    </tr>
-						<tr>
-					      <td>TV-Cable</td>
-					    </tr>
+					    <td>
+								<script type="text/javascript">
+	  $(document).ready(function () {
+		options = 
+		{ markers: [
+		                            { address: "<c:out value=" ${property.address}" />, <c:out value=" ${property.neighborhood}" />, Buenos Aires, Argentina",
+		                              html: "<c:out value=" ${property.address}" /> - <c:out value=" ${property.neighborhood}" /> <br/> Buenos Aires, Argentina" },],
+		                  address: "<c:out value=" ${property.address}" />, <c:out value=" ${property.neighborhood}" />, Buenos Aires, Argentina",
+		                  zoom: 15 }
+	  	$("#map").gMap(options);
+	});
+	  </script>
+							<div id="map"  style="height:380px; width:270px;"></div>	
+						</td>
+						</tr>
 					  </tbody>
 				</table>
-				</div>
-					<div class="span9">
-						<table class="table table-striped">
-							<thead>
-							    <tr>
-							      <th>Descripción</th>  
-							    </tr>
-							  </thead>
-							<tbody>
-							    <tr>
-							      <td>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.</td>
-							    </tr>
-							  </tbody>
-						</table>
-						</div>
-				
 		</div>
-      </div>
+	</div>
+
+	
+</div>
+</div>

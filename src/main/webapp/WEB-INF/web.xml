@@ -1,3 +1,4 @@
+
 <!DOCTYPE web-app PUBLIC
  "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
  "http://java.sun.com/dtd/web-app_2_3.dtd" >
@@ -33,17 +34,45 @@
 		<servlet-name>NewPropertyPage</servlet-name>
 		<servlet-class>ar.edu.itba.it.paw.web.servlets.NewPropertyPage</servlet-class>
 	</servlet>
+	<servlet>
+		<servlet-name>AdvancedSearchPage</servlet-name>
+		<servlet-class>ar.edu.itba.it.paw.web.servlets.AdvancedSearchPage</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>EditPropertyPage</servlet-name>
+		<servlet-class>ar.edu.itba.it.paw.web.servlets.EditPropertyPage</servlet-class>
+	</servlet>ChangeVisibility
+	<servlet>
+		<servlet-name>ChangeVisibility</servlet-name>
+		<servlet-class>ar.edu.itba.it.paw.web.servlets.ChangeVisibility</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>ContactRequest</servlet-name>
+		<servlet-class>ar.edu.itba.it.paw.web.servlets.ContactRequestPage</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ContactRequest</servlet-name>
+		<url-pattern>/contactrequest</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>EditPropertyPage</servlet-name>
+		<url-pattern>/myproperties/edit</url-pattern>
+	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>NewPropertyPage</servlet-name>
 		<url-pattern>/myproperties/new</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
-		<servlet-name>ViewProperty</servlet-name>
-		<url-pattern>/viewproperty</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
 		<servlet-name>MyProperties</servlet-name>
 		<url-pattern>/myproperties</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>ViewProperty</servlet-name>
+		<url-pattern>/properties/view</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>ChangeVisibility</servlet-name>
+		<url-pattern>/myproperties/changevisibility</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>LogoutServlet</servlet-name>
@@ -61,13 +90,17 @@
 		<servlet-name>IndexPage</servlet-name>
 		<url-pattern>/index</url-pattern>
 	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>AdvancedSearchPage</servlet-name>
+		<url-pattern>/search</url-pattern>
+	</servlet-mapping>
 
 	<filter>
 		<filter-name>SessionFilter</filter-name>
 		<filter-class>ar.edu.itba.it.paw.web.filters.SessionFilter</filter-class>
 		<init-param>
 			<param-name>excludePatterns</param-name>
-			<param-value>(.*/assets/.*|.*/search(/)?|.*/contact(/)?|.*/property/[0-9]+$|.*/index(/)?|.*/register(/)?|.*/login(/)?)</param-value>
+			<param-value>(.*/assets/.*|.*/search(/)?|.*/contact(/)?|.*/properties/view(/)?$|.*/index(/)?|.*/register(/)?|.*/login(/)?)</param-value>
 		</init-param>
 	</filter>
 	<filter-mapping>

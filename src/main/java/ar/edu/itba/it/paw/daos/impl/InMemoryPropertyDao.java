@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import org.apache.commons.collections.comparators.ReverseComparator;
+
 import ar.edu.itba.it.paw.daos.api.PropertyDao;
 import ar.edu.itba.it.paw.model.entities.Property;
 import ar.edu.itba.it.paw.model.entities.Property.Operation;
@@ -21,7 +23,7 @@ public class InMemoryPropertyDao implements PropertyDao {
 
 	public Property getById(final Integer id) {
 		for (int i = 0; i < this.data.size(); i++) {
-			if (id == this.data.get(i).getID()) {
+			if (id == this.data.get(i).getId()) {
 				return this.data.get(i);
 			}
 		}
@@ -55,9 +57,10 @@ public class InMemoryPropertyDao implements PropertyDao {
 		return this.data;
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<Property> getAll(final Operation op, final Type type,
 			final int pricelow, final int pricehigh, final int page,
-			final int quant, final Order order) {
+			final int quant, final Order order, final Boolean visible) {
 
 		final List<Property> ans = new ArrayList<Property>();
 		final List<Property> oplist = new ArrayList<Property>();
@@ -106,17 +109,20 @@ public class InMemoryPropertyDao implements PropertyDao {
 		}
 
 		for (final Property p : this.data) {
-			if (oplist.contains(p) && typelist.contains(p)
+			if ((p.getVisible() == visible || visible == null)
+					&& oplist.contains(p) && typelist.contains(p)
 					&& pricelowlist.contains(p) && pricehighlist.contains(p)) {
 				ans.add(p);
 			}
+
 		}
 
 		// ordering
 		if (order == null || order.equals(Order.ASC)) {
-			Collections.sort(ans, new PriceASCComparator<Property>());
+			Collections.sort(ans, new PriceASCComparator());
 		} else {
-			Collections.sort(ans, new PriceDESCComparator<Property>());
+			Collections.sort(ans, new ReverseComparator(
+					new PriceASCComparator()));
 		}
 
 		// pagination
@@ -130,37 +136,16 @@ public class InMemoryPropertyDao implements PropertyDao {
 	}
 }
 
-class PriceASCComparator<Property> implements Comparator<Property> {
+class PriceASCComparator implements Comparator<Property> {
 
-	public int compare(final Object p1, final Object p2) {
+	public int compare(final Property p1, final Property p2) {
 
-		final int price1 = ((ar.edu.itba.it.paw.model.entities.Property) p1)
-				.getPrice();
-		final int price2 = ((ar.edu.itba.it.paw.model.entities.Property) p2)
-				.getPrice();
+		final int price1 = p1.getPrice();
+		final int price2 = p2.getPrice();
 
 		if (price1 > price2) {
 			return 1;
 		} else if (price1 < price2) {
-			return -1;
-		} else {
-			return 0;
-		}
-	}
-}
-
-class PriceDESCComparator<Property> implements Comparator<Property> {
-
-	public int compare(final Object p1, final Object p2) {
-
-		final int price1 = ((ar.edu.itba.it.paw.model.entities.Property) p1)
-				.getPrice();
-		final int price2 = ((ar.edu.itba.it.paw.model.entities.Property) p2)
-				.getPrice();
-
-		if (price1 < price2) {
-			return 1;
-		} else if (price1 > price2) {
 			return -1;
 		} else {
 			return 0;

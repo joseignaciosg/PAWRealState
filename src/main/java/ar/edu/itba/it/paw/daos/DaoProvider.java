@@ -11,6 +11,8 @@ import ar.edu.itba.it.paw.daos.impl.InMemoryContactRequestDao;
 import ar.edu.itba.it.paw.daos.impl.InMemoryPhotoDao;
 import ar.edu.itba.it.paw.daos.impl.InMemoryPropertyDao;
 import ar.edu.itba.it.paw.daos.impl.InMemoryUserDao;
+import ar.edu.itba.it.paw.daos.impl.SQLPropertyDao;
+import ar.edu.itba.it.paw.db.ConnectionProvider;
 import ar.edu.itba.it.paw.model.entities.ContactRequest;
 import ar.edu.itba.it.paw.model.entities.Photo;
 import ar.edu.itba.it.paw.model.entities.Property;
@@ -25,6 +27,11 @@ public class DaoProvider {
 	private static ContactRequestDao contactrequestDao;
 	private static PhotoDao photoDao;
 	private static UserDao userDao;
+
+	private static PropertyDao propertyTestDao;
+	private static ContactRequestDao contactRequestTestDao;
+	private static PhotoDao photoTestDao;
+	private static UserDao usertestDao;
 
 	private DaoProvider() {
 
@@ -51,55 +58,154 @@ public class DaoProvider {
 				"Excellect"));
 
 		resquests.add(new ContactRequest(1, "Bin Laden", "binladen@gmail.com",
-				"76873627", properties.get(0)));
+				"76873627", "desc1", properties.get(0)));
 		resquests.add(new ContactRequest(2, "Fredy Mercury", "yanni@gmail.com",
-				"126738", properties.get(1)));
+				"126738", "Desc2", properties.get(1)));
 		resquests.add(new ContactRequest(3, "Paco de Lucia", "paco@gmail.com",
-				"67384", properties.get(2)));
+				"67384", "DESC3", properties.get(2)));
 
 		User tmp = new User("J.P.", "Sartre", "jpsartre@gmail.com",
 				"172839127", "jpsartre", "jojo");
 
-		tmp.setID(1);
-		tmp.addProperty(properties.get(1));
-		tmp.addProperty(properties.get(2));
-		properties.get(1).setUserID(1);
-		properties.get(2).setUserID(1);
+		final List<Property> propertyList = new ArrayList<Property>();
+		final Services service = new Services(true, true, true, true, false,
+				true);
 
-		tmp.addProperty(properties.get(0));
-		tmp.addProperty(properties.get(1));
-		properties.get(0).setUserID(1);
-		properties.get(1).setUserID(1);
+		final Property prop1 = new Property(Integer.valueOf(4), Type.APARTMENT,
+				Operation.RENT, "Palermo", "Lavalle 660",
+				Integer.valueOf(1000), Integer.valueOf(3),
+				Integer.valueOf(100), Integer.valueOf(200), Integer.valueOf(5),
+				service, "Descrip1");
+
+		final Property prop2 = new Property(Integer.valueOf(5), Type.HOUSE,
+				Operation.RENT, "BarrioNorte", "Junca 460",
+				Integer.valueOf(501), Integer.valueOf(3), Integer.valueOf(100),
+				Integer.valueOf(200), Integer.valueOf(5), service, "Descrip2");
+
+		final Property prop3 = new Property(Integer.valueOf(6), Type.HOUSE,
+				Operation.SELL, "Palermo", "Alem 110", Integer.valueOf(500),
+				Integer.valueOf(3), Integer.valueOf(100), Integer.valueOf(200),
+				Integer.valueOf(5), service, "Descrip3");
+
+		final Property prop4 = new Property(Integer.valueOf(7), Type.APARTMENT,
+				Operation.RENT, "Caballito", "Taring 660",
+				Integer.valueOf(5020), Integer.valueOf(3),
+				Integer.valueOf(100), Integer.valueOf(2000),
+				Integer.valueOf(5), service, "Descrip1");
+
+		final Property prop5 = new Property(Integer.valueOf(8), Type.HOUSE,
+				Operation.SELL, "BarrioNorte", "Junca 460",
+				Integer.valueOf(5005), Integer.valueOf(3),
+				Integer.valueOf(100), Integer.valueOf(200), Integer.valueOf(5),
+				service, "Descrip2");
+
+		final Property prop6 = new Property(Integer.valueOf(9), Type.HOUSE,
+				Operation.RENT, "Palermo", "Alem 110", Integer.valueOf(500),
+				Integer.valueOf(3), Integer.valueOf(100), Integer.valueOf(200),
+				Integer.valueOf(5), service, "Descrip3");
+
+		final Property prop7 = new Property(Integer.valueOf(10),
+				Type.APARTMENT, Operation.RENT, "Palermo", "Lavalle 660",
+				Integer.valueOf(50040), Integer.valueOf(3),
+				Integer.valueOf(100), Integer.valueOf(200), Integer.valueOf(5),
+				service, "Descrip1");
+
+		final Property prop8 = new Property(Integer.valueOf(11), Type.HOUSE,
+				Operation.SELL, "BarrioNorte", "Junca 460",
+				Integer.valueOf(5002), Integer.valueOf(3),
+				Integer.valueOf(100), Integer.valueOf(200), Integer.valueOf(5),
+				service, "Descrip2");
+
+		final Property prop9 = new Property(Integer.valueOf(12), Type.HOUSE,
+				Operation.SELL, "Palermo", "Alem 110", Integer.valueOf(500),
+				Integer.valueOf(3), Integer.valueOf(100), Integer.valueOf(200),
+				Integer.valueOf(5), service, "Descrip3");
+
+		propertyList.add(prop1);
+		propertyList.add(prop2);
+		propertyList.add(prop3);
+		propertyList.add(prop4);
+		propertyList.add(prop5);
+		propertyList.add(prop6);
+		propertyList.add(prop7);
+		propertyList.add(prop8);
+		propertyList.add(prop9);
+
+		properties.addAll(propertyList);
+
+		tmp.setId(1);
+		tmp.getProperties().add(properties.get(1));
+		tmp.getProperties().add(properties.get(2));
+		properties.get(1).setOwner(tmp);
+		properties.get(2).setOwner(tmp);
+
+		tmp.getProperties().add(properties.get(0));
+		tmp.getProperties().add(properties.get(1));
+		properties.get(0).setOwner(tmp);
+		properties.get(1).setOwner(tmp);
 
 		users.add(tmp);
 
 		tmp = new User("Thomas", "Mann", "thomas@gmail.com", "3647823",
 				"thomas", "abcd");
 
-		tmp.setID(2);
-		tmp.addProperty(properties.get(2));
-		properties.get(2).setUserID(2);
+		tmp.setId(2);
+		tmp.getProperties().add(properties.get(2));
+		properties.get(2).setOwner(tmp);
 
-		tmp.addProperty(properties.get(2));
-		properties.get(2).setUserID(2);
+		tmp.getProperties().add(properties.get(2));
+		properties.get(2).setOwner(tmp);
 
 		users.add(tmp);
 
 		tmp = new User("Baruch", "Spinoza", "spinoza@gmail.com", "74687364",
 				"spinoza", "akjasd");
 
-		tmp.setID(3);
+		tmp.setId(3);
 
 		users.add(tmp);
 
-		photos.add(new Photo(1, null, "jpg"));
-		photos.add(new Photo(2, null, "jpg"));
+		photos.add(new Photo(1, null, "jpg", 1));
+		photos.add(new Photo(2, null, "jpg", 1));
 
 		propertyDao = new InMemoryPropertyDao(properties);
 		contactrequestDao = new InMemoryContactRequestDao(resquests);
 		photoDao = new InMemoryPhotoDao(photos);
 		userDao = new InMemoryUserDao(users);
 
+	}
+
+	private static void setupTest() {
+		propertyTestDao = new SQLPropertyDao(
+				ConnectionProvider.getTestProvider());
+	}
+
+	public static UserDao getUserTestDao() {
+		if (userDao == null) {
+			setupTest();
+		}
+		return userDao;
+	}
+
+	public static ContactRequestDao getContactRequestTestDao() {
+		if (contactrequestDao == null) {
+			setupTest();
+		}
+		return contactrequestDao;
+	}
+
+	public static PropertyDao getPropertyTestDao() {
+		if (propertyDao == null) {
+			setupTest();
+		}
+		return propertyDao;
+	}
+
+	public static PhotoDao getPhotoTestDao() {
+		if (photoDao == null) {
+			setupTest();
+		}
+		return photoDao;
 	}
 
 	public static UserDao getUserDao() {

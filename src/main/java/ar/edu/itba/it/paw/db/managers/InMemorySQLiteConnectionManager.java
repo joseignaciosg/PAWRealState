@@ -43,12 +43,12 @@ public class InMemorySQLiteConnectionManager implements ConnectionManager {
 	 * test/resources folder
 	 */
 	public Connection getConnection() throws SQLException {
-		if (this.conn == null) {
+		if (this.conn == null || this.conn.isClosed()) {
 			this.conn = DriverManager.getConnection("jdbc:sqlite::memory:");
 
 			this.conn.setAutoCommit(false);
 			try {
-				final File f = new File("src/test/resources/0.tables.sql");
+				final File f = new File("src/test/resources/daos/create.sql");
 				final BufferedReader reader = new BufferedReader(
 						new FileReader(f));
 				StringBuilder command = new StringBuilder();
@@ -75,7 +75,6 @@ public class InMemorySQLiteConnectionManager implements ConnectionManager {
 			}
 
 		}
-
 		return this.conn;
 	}
 }

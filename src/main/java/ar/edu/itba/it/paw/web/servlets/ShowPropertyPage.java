@@ -35,16 +35,17 @@ public class ShowPropertyPage extends HttpServlet {
 			IOException {
 
 		final List<String> errors = new ArrayList<String>();
-		final Integer ID = Integer.valueOf(req.getParameter("ID"));
+		final Integer ID = Integer.valueOf(req.getParameter("id"));
+		System.out.println("id :" + ID);
 		final PropertyService propservice = ServiceProvider
 				.getPropertyService();
 		final Property property = propservice.getPropertyByID(ID, errors);
 		if (property == null) {
 			req.setAttribute("errors", errors);
-			HTMLUtils.render("viewproperty.jsp", req, resp);
+			HTMLUtils.render("/viewproperties/viewproperty.jsp", req, resp);
 		} else {
 			req.setAttribute("property", property);
-			HTMLUtils.render("viewproperty.jsp", req, resp);
+			HTMLUtils.render("/viewproperties/viewproperty.jsp", req, resp);
 
 		}
 

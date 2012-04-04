@@ -31,7 +31,7 @@ public class UserServiceTest {
 		final List<User> users = new ArrayList<User>();
 		this.usr = new User("Ben", "Stiller", "ben@gmail.com", "16748376",
 				"BenSti", "B3nSt1");
-		this.usr.setID(1);
+		this.usr.setId(1);
 		users.add(this.usr);
 		this.service = new UserService(new InMemoryUserDao(users));
 		this.userManager = new UserManager() {

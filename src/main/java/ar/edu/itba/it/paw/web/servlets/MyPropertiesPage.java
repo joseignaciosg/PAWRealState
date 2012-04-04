@@ -33,4 +33,5 @@ public class MyPropertiesPage extends HttpServlet {
 			IOException {
 		HTMLUtils.render("myproperties/myproperties.jsp", req, resp);
 	}
+
 }

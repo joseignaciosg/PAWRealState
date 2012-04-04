@@ -3,10 +3,12 @@ package ar.edu.itba.it.paw.model.services;
 import java.util.List;
 
 import ar.edu.itba.it.paw.daos.api.PropertyDao;
+import ar.edu.itba.it.paw.daos.api.UserDao;
 import ar.edu.itba.it.paw.model.entities.Property;
 import ar.edu.itba.it.paw.model.entities.Property.Operation;
 import ar.edu.itba.it.paw.model.entities.Property.Type;
 import ar.edu.itba.it.paw.model.entities.Services;
+import ar.edu.itba.it.paw.model.entities.User;
 import ar.edu.itba.it.paw.model.services.utils.ServiceUtils;
 
 public class PropertyService {
@@ -15,25 +17,27 @@ public class PropertyService {
 		ASC, DESC
 	}
 
-	private PropertyDao dao;
+	private PropertyDao propertyDao;
+	private UserDao userDao;
 
-	public PropertyService(final PropertyDao dao) {
-		this.dao = dao;
+	public PropertyService(final PropertyDao dao, final UserDao userDao) {
+		this.propertyDao = dao;
+		this.userDao = userDao;
 	}
 
 	public List<Property> advancedSearch(final Operation op, final Type type,
 			final int pricelow, final int pricehigh, final int page,
 			final int quant, final Order order) {
 		List<Property> ans = null;
-		ans = this.dao
-				.getAll(op, type, pricelow, pricehigh, page, quant, order);
+		ans = this.propertyDao.getAll(op, type, pricelow, pricehigh, page,
+				quant, order, true);
 		return ans;
 	}
 
 	public Property getPropertyByID(final Integer ID, final List<String> errors) {
 
 		Property ans = null;
-		ans = this.dao.getById(ID);
+		ans = this.propertyDao.getById(ID);
 		if (ID == null || ans == null) {
 			errors.add("No existe la propiedad solicitada");
 			return null;
@@ -46,7 +50,20 @@ public class PropertyService {
 			final String address, final Integer price, final Integer spaces,
 			final Integer coveredArea, final Integer freeArea,
 			final Integer age, final Services service,
-			final String description, final List<String> errors) {
+			final String description, final List<String> errors,
+			final User owner) {
+		return this.saveProperty(operationStr, typeStr, neighborhood, address,
+				price, spaces, coveredArea, freeArea, age, service,
+				description, errors, owner, null);
+	}
+
+	public boolean saveProperty(final String operationStr,
+			final String typeStr, final String neighborhood,
+			final String address, final Integer price, final Integer spaces,
+			final Integer coveredArea, final Integer freeArea,
+			final Integer age, final Services service,
+			final String description, final List<String> errors,
+			final User owner, final Integer id) {
 
 		final Operation operation = Operation.fromString(operationStr);
 		final Type type = Type.fromString(typeStr);
@@ -75,13 +92,39 @@ public class PropertyService {
 			return false;
 		}
 
-		final Property prop = new Property(type, operation, neighborhood,
-				address, price, spaces, coveredArea, freeArea, age, service,
-				description);
+		Property prop = null;
+		if (id == null) {
+			prop = new Property(type, operation, neighborhood, address, price,
+					spaces, coveredArea, freeArea, age, service, description);
+			prop.setOwner(owner);
+		} else {
+			prop = this.propertyDao.getById(id);
 
-		this.dao.saveOrUpdate(prop);
+			// TODO: Check id integrity
+
+			prop.setType(type);
+			prop.setOperation(operation);
+			prop.setNeighborhood(neighborhood);
+			prop.setAddress(address);
+			prop.setPrice(price);
+			prop.setSpaces(spaces);
+			prop.setCoveredArea(coveredArea);
+			prop.setFreeArea(freeArea);
+			prop.setAge(age);
+			prop.setService(service);
+			prop.setDescription(description);
+
+			prop.setDirty(true); // TODO: This should be dynamic
+		}
+
+		this.propertyDao.saveOrUpdate(prop);
+
+		if (!owner.getProperties().contains(prop)) {
+			owner.getProperties().add(prop);
+		}
+
+		this.userDao.saveOrUpdate(owner);
 
 		return true;
 	}
-
 }

@@ -8,23 +8,27 @@ import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import ar.edu.itba.it.paw.daos.api.UserDao;
 import ar.edu.itba.it.paw.daos.impl.InMemoryUserDao;
 import ar.edu.itba.it.paw.model.entities.User;
+import ar.edu.itba.it.paw.test.TransactionalTest;
 
-public class UserDaoTest {
+public abstract class UserDaoTest extends TransactionalTest {
 
 	private InMemoryUserDao dao;
+
+	public abstract UserDao getDao();
 
 	@Before
 	public void initDB() {
 		final List<User> users = new ArrayList<User>();
 		User usr = new User("Ben", "Stiller", "ben@gmail.com", "16748376",
 				"BenSti", "B3nSt1");
-		usr.setID(1);
+		usr.setId(1);
 		users.add(usr);
 		usr = new User("Truman", "Capote", "capote@gmail.com", "3728376",
 				"TruCa", "TruC4");
-		usr.setID(2);
+		usr.setId(2);
 		users.add(usr);
 
 		this.dao = new InMemoryUserDao(users);
@@ -56,7 +60,7 @@ public class UserDaoTest {
 	public void saveOrUpdateTest() {
 		final User u1 = new User("Doris", "Day", "dorisgay@gmail.com",
 				"16728376", "DorisDa", "D0r1D4");
-		u1.setID(3);
+		u1.setId(3);
 		Assert.assertTrue(this.dao.saveOrUpdate(u1));
 		Assert.assertFalse(this.dao.saveOrUpdate(u1));
 

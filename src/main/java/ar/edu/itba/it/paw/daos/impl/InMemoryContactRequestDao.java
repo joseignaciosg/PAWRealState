@@ -16,7 +16,7 @@ public class InMemoryContactRequestDao implements ContactRequestDao {
 
 	public ContactRequest getById(final Integer id) {
 		for (final ContactRequest c : this.contactrequests) {
-			if (c.getID().equals(id)) {
+			if (c.getId().equals(id)) {
 				return c;
 			}
 		}
@@ -29,6 +29,7 @@ public class InMemoryContactRequestDao implements ContactRequestDao {
 
 	public boolean saveOrUpdate(final ContactRequest obj) {
 		if (!this.contactrequests.contains(obj)) {
+			obj.setDirty(false);
 			return this.contactrequests.add(obj);
 		} else {
 			if (obj.isDirty()) {

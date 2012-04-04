@@ -6,6 +6,7 @@ public class ServiceProvider {
 
 	private static UserService userService;
 	private static PropertyService propertyService;
+	private static ContactRequestService contactRequest;
 
 	private ServiceProvider() {
 	}
@@ -20,10 +21,21 @@ public class ServiceProvider {
 
 	public static PropertyService getPropertyService() {
 		if (propertyService == null) {
-			propertyService = new PropertyService(DaoProvider.getPropertyDao());
+			propertyService = new PropertyService(DaoProvider.getPropertyDao(),
+					DaoProvider.getUserDao());
 		}
 
 		return propertyService;
+	}
+
+	public static ContactRequestService getContactRequestService() {
+		if (contactRequest == null) {
+			contactRequest = new ContactRequestService(
+					DaoProvider.getPropertyDao(),
+					DaoProvider.getContactRequestDao());
+		}
+
+		return contactRequest;
 	}
 
 }

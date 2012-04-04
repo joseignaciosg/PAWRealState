@@ -8,16 +8,26 @@ import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import ar.edu.itba.it.paw.daos.api.ContactRequestDao;
 import ar.edu.itba.it.paw.daos.impl.InMemoryContactRequestDao;
 import ar.edu.itba.it.paw.model.entities.ContactRequest;
 import ar.edu.itba.it.paw.model.entities.Property;
 import ar.edu.itba.it.paw.model.entities.Property.Operation;
 import ar.edu.itba.it.paw.model.entities.Property.Type;
 import ar.edu.itba.it.paw.model.entities.Services;
+import ar.edu.itba.it.paw.test.TransactionalTest;
 
-public class ContactRequestTest {
+public abstract class ContactRequestTest extends TransactionalTest {
 
-	private InMemoryContactRequestDao dao;
+	// private InMemoryContactRequestDao dao;
+
+	private ContactRequestDao dao;
+
+	public abstract ContactRequestDao getDao();
+
+	public ContactRequestTest() {
+		this.dao = this.getDao();
+	}
 
 	@Before
 	public void initDB() {
@@ -33,9 +43,9 @@ public class ContactRequestTest {
 
 		final List<ContactRequest> contacts = new ArrayList<ContactRequest>();
 		contacts.add(new ContactRequest(1, "Spinoza", "spinoza@hotmail.com",
-				"1267383", properties.get(0)));
+				"1267383", "Desc1", properties.get(0)));
 		contacts.add(new ContactRequest(2, "Marx", "marx@hotmail.com",
-				"1227383", properties.get(1)));
+				"1227383", "desc3", properties.get(1)));
 
 		this.dao = new InMemoryContactRequestDao(contacts);
 	}
@@ -68,7 +78,7 @@ public class ContactRequestTest {
 				"Soho", "Soho St. 120", 10000, 4, 1000, 2000, 15, ser1,
 				"Really good");
 		final ContactRequest c1 = new ContactRequest(3, "Peron",
-				"peron@hotmail.com", "3427383", prop);
+				"peron@hotmail.com", "3427383", "desc3", prop);
 		Assert.assertTrue(this.dao.saveOrUpdate(c1));
 		Assert.assertFalse(this.dao.saveOrUpdate(c1));
 
