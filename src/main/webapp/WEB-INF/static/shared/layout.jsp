@@ -13,11 +13,16 @@
 <link href="${ basePath }/assets/css/custom_style.css" rel="stylesheet"
 	type="text/css" />
 <script type="text/javascript" src="${ basePath }/assets/js/jquery.js"></script>
-<script type="text/javascript"
+<script type="text/javascript" src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=AIzaSyBUU88FRtPaYJqd6RHpeLKqUEIvbTc5GC4"></script>
+	<script type="text/javascript" src="${ basePath }/assets/js/jquery.gmap-1.1.0-min.js"></script>
+
+	  <script type="text/javascript"
 	src="${ basePath }/assets/js/bootstrap-dropdown.js"></script>
 <script type="text/javascript">
 	basePath = "${ basePath }";
 </script>
+
+
 </head>
 <body>
 	<div class="navbar navbar-fixed-top">
