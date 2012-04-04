@@ -68,13 +68,11 @@ public abstract class PhotoDaoTest extends TransactionalTest {
 		try {
 			for (int readNum; (readNum = fis.read(buf)) != -1;) {
 				bos.write(buf, 0, readNum);
-				// System.out.println("read " + readNum + " bytes,");
 			}
 		} catch (final IOException ex) {
-			System.err.println(ex.getMessage());
+			ex.printStackTrace();
 		}
 		byteData1 = bos.toByteArray();
-		System.out.println("persisting: " + byteData1.length);
 
 		final Photo photo1 = new Photo(1, byteData1, "jpg", 1);
 		final Photo photo2 = new Photo(2, byteData1, "jpg", 1);
@@ -92,8 +90,6 @@ public abstract class PhotoDaoTest extends TransactionalTest {
 		Assert.assertTrue(list.size() == 0);
 		list = this.photoDao.getByPropertyId(1);
 		Assert.assertTrue(list.size() == 2);
-
-		System.out.println(list);
 
 	}
 
@@ -153,6 +149,7 @@ public abstract class PhotoDaoTest extends TransactionalTest {
 		Assert.assertEquals(true, this.photoDao.saveOrUpdate(photo1));
 		Assert.assertEquals(true, this.photoDao.saveOrUpdate(photo2));
 		Assert.assertEquals(true, this.photoDao.saveOrUpdate(photo3));
+
 		Assert.assertEquals(false, this.photoDao.saveOrUpdate(photo3));
 		photo3.setPropertyid(1);
 		Assert.assertEquals(true, this.photoDao.saveOrUpdate(photo3));
@@ -178,10 +175,9 @@ public abstract class PhotoDaoTest extends TransactionalTest {
 		try {
 			for (int readNum; (readNum = fis.read(buf)) != -1;) {
 				bos.write(buf, 0, readNum);
-				// System.out.println("read " + readNum + " bytes,");
 			}
 		} catch (final IOException ex) {
-			System.err.println(ex.getMessage());
+			ex.printStackTrace();
 		}
 		byteData1 = bos.toByteArray();
 
@@ -190,9 +186,6 @@ public abstract class PhotoDaoTest extends TransactionalTest {
 		this.preparedaos();
 		photo1 = this.photoDao.getById(1);
 		Assert.assertTrue(photo1.getId() == 1);
-		System.out.println("persited:" + photo1.getData().length);
-		System.out.println("not persited:" + byteData1.length);
-		// Assert.assertTrue(photo1.getData().length == byteData1.length);
 
 	}
 }
