@@ -3,6 +3,7 @@
 <%@ page isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
+
 <div class="row-fluid">
 	<div class="span12">
 		<div class="span8">
@@ -180,6 +181,31 @@
 		</fieldset>
 	
 			</form>
+				<table class="table table-striped">
+					<thead>
+					    <tr>
+					      <th>Ubicacion Geografica</th>  
+					    </tr>
+					  </thead>
+					<tbody>
+						<tr>
+					    <td>
+								<script type="text/javascript">
+	  $(document).ready(function () {
+		options = 
+		{ markers: [
+		                            { address: "<c:out value=" ${property.address}" />, <c:out value=" ${property.neighborhood}" />, Buenos Aires, Argentina",
+		                              html: "<c:out value=" ${property.address}" /> - <c:out value=" ${property.neighborhood}" /> <br/> Buenos Aires, Argentina" },],
+		                  address: "<c:out value=" ${property.address}" />, <c:out value=" ${property.neighborhood}" />, Buenos Aires, Argentina",
+		                  zoom: 15 }
+	  	$("#map").gMap(options);
+	});
+	  </script>
+							<div id="map"  style="height:380px; width:270px;"></div>	
+						</td>
+						</tr>
+					  </tbody>
+				</table>
 		</div>
 	</div>
 
