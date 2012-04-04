@@ -8,16 +8,26 @@ import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import ar.edu.itba.it.paw.daos.api.ContactRequestDao;
 import ar.edu.itba.it.paw.daos.impl.InMemoryContactRequestDao;
 import ar.edu.itba.it.paw.model.entities.ContactRequest;
 import ar.edu.itba.it.paw.model.entities.Property;
 import ar.edu.itba.it.paw.model.entities.Property.Operation;
 import ar.edu.itba.it.paw.model.entities.Property.Type;
 import ar.edu.itba.it.paw.model.entities.Services;
+import ar.edu.itba.it.paw.test.TransactionalTest;
 
-public class ContactRequestTest {
+public abstract class ContactRequestTest extends TransactionalTest {
 
-	private InMemoryContactRequestDao dao;
+	// private InMemoryContactRequestDao dao;
+
+	private ContactRequestDao dao;
+
+	public abstract ContactRequestDao getDao();
+
+	public ContactRequestTest() {
+		this.dao = this.getDao();
+	}
 
 	@Before
 	public void initDB() {
