@@ -13,6 +13,7 @@
 <link href="${ basePath }/assets/css/custom_style.css" rel="stylesheet"
 	type="text/css" />
 <script type="text/javascript" src="${ basePath }/assets/js/jquery.js"></script>
+<script type="text/javascript" src="${ basePath }/assets/js/bootstrap-collapse.js"></script>
 <script type="text/javascript" src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=AIzaSyBUU88FRtPaYJqd6RHpeLKqUEIvbTc5GC4"></script>
 	<script type="text/javascript" src="${ basePath }/assets/js/jquery.gmap-1.1.0-min.js"></script>
 
