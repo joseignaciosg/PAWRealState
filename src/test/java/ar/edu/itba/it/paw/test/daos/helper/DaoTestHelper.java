@@ -22,6 +22,7 @@ import ar.edu.itba.it.paw.model.entities.User;
  * 
  * @author cris
  */
+@SuppressWarnings("unused")
 public class DaoTestHelper {
 
 	private PhotoDao photoDao;

@@ -17,10 +17,6 @@ public abstract class PropertyDaoTest extends DaoTest {
 
 	private PropertyDao propertyDao;
 
-	public PropertyDaoTest() {
-
-	}
-
 	private void preparedao() {
 
 		this.propertyDao = this.getDaoProvider().getPropertyDao();
@@ -31,8 +27,8 @@ public abstract class PropertyDaoTest extends DaoTest {
 		final Property prop1 = new Property(Integer.valueOf(1), Type.APARTMENT,
 				Operation.RENT, "Palermo", "Lavalle 660", Integer.valueOf(500),
 				Integer.valueOf(3), Integer.valueOf(100), Integer.valueOf(200),
-				Integer.valueOf(5), service, "Descrip1",
-				this.getHelper().defaultUser());
+				Integer.valueOf(5), service, "Descrip1", this.getHelper()
+						.defaultUser());
 
 		final Property prop2 = new Property(Integer.valueOf(2), Type.HOUSE,
 				Operation.SELL, "BarrioNorte", "Junca 460",
@@ -43,8 +39,8 @@ public abstract class PropertyDaoTest extends DaoTest {
 		final Property prop3 = new Property(Integer.valueOf(3), Type.HOUSE,
 				Operation.SELL, "Palermo", "Alem 110", Integer.valueOf(500),
 				Integer.valueOf(3), Integer.valueOf(100), Integer.valueOf(200),
-				Integer.valueOf(5), service, "Descrip3",
-				this.getHelper().defaultUser());
+				Integer.valueOf(5), service, "Descrip3", this.getHelper()
+						.defaultUser());
 
 		this.propertyDao.saveOrUpdate(prop1);
 		this.propertyDao.saveOrUpdate(prop2);
@@ -74,15 +70,15 @@ public abstract class PropertyDaoTest extends DaoTest {
 		final Property prop3 = new Property(Integer.valueOf(3), Type.HOUSE,
 				Operation.SELL, "Palermo", "Alem 110", Integer.valueOf(500),
 				Integer.valueOf(3), Integer.valueOf(100), Integer.valueOf(200),
-				Integer.valueOf(5), service, "Descrip3",
-				this.getHelper().defaultUser());
+				Integer.valueOf(5), service, "Descrip3", this.getHelper()
+						.defaultUser());
 
 		final Property prop4 = new Property(Integer.valueOf(4), Type.APARTMENT,
 				Operation.RENT, "Caballito", "Taring 660",
 				Integer.valueOf(5020), Integer.valueOf(3),
 				Integer.valueOf(100), Integer.valueOf(2000),
-				Integer.valueOf(5), service, "Descrip1",
-				this.getHelper().defaultUser());
+				Integer.valueOf(5), service, "Descrip1", this.getHelper()
+						.defaultUser());
 
 		final Property prop5 = new Property(Integer.valueOf(5), Type.HOUSE,
 				Operation.SELL, "BarrioNorte", "Junca 460",
@@ -93,8 +89,8 @@ public abstract class PropertyDaoTest extends DaoTest {
 		final Property prop6 = new Property(Integer.valueOf(6), Type.HOUSE,
 				Operation.RENT, "Palermo", "Alem 110", Integer.valueOf(500),
 				Integer.valueOf(3), Integer.valueOf(100), Integer.valueOf(200),
-				Integer.valueOf(5), service, "Descrip3",
-				this.getHelper().defaultUser());
+				Integer.valueOf(5), service, "Descrip3", this.getHelper()
+						.defaultUser());
 
 		final Property prop7 = new Property(Integer.valueOf(7), Type.APARTMENT,
 				Operation.RENT, "Palermo", "Lavalle 660",
@@ -111,8 +107,8 @@ public abstract class PropertyDaoTest extends DaoTest {
 		final Property prop9 = new Property(Integer.valueOf(9), Type.HOUSE,
 				Operation.SELL, "Palermo", "Alem 110", Integer.valueOf(500),
 				Integer.valueOf(3), Integer.valueOf(100), Integer.valueOf(200),
-				Integer.valueOf(5), service, "Descrip3",
-				this.getHelper().defaultUser());
+				Integer.valueOf(5), service, "Descrip3", this.getHelper()
+						.defaultUser());
 
 		this.propertyDao.saveOrUpdate(prop1);
 		this.propertyDao.saveOrUpdate(prop2);
@@ -163,7 +159,8 @@ public abstract class PropertyDaoTest extends DaoTest {
 		final Property defaultProp = this.propertyDao.getById(this.getHelper()
 				.defaultProperty().getId());
 
-		Assert.assertEquals(this.getHelper().defaultUser(), defaultProp.getOwner());
+		Assert.assertEquals(this.getHelper().defaultUser(),
+				defaultProp.getOwner());
 	}
 
 	@Test

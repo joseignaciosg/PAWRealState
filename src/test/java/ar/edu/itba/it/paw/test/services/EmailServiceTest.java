@@ -45,7 +45,7 @@ public class EmailServiceTest {
 				Operation.RENT, "Palermo", "Lavalle 660",
 				Integer.valueOf(1000), Integer.valueOf(3),
 				Integer.valueOf(100), Integer.valueOf(200), Integer.valueOf(5),
-				service, "Descrip1");
+				service, "Descrip1", this.owner);
 		this.service = new EmailService(this.messageSender);
 	}
 
