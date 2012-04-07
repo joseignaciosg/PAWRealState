@@ -1,6 +1,7 @@
 package ar.edu.itba.it.paw.model.services;
 
 import ar.edu.itba.it.paw.daos.DaoProvider;
+import ar.edu.itba.it.paw.model.services.utils.EmailMessageSender;
 
 public class ServiceProvider {
 
@@ -35,7 +36,6 @@ public class ServiceProvider {
 			photoService = new PhotoService(DaoProvider.getDefaultPhotoDao());
 
 		}
-
 		return photoService;
 	}
 
@@ -50,7 +50,7 @@ public class ServiceProvider {
 
 	public static EmailService getEmailService() {
 		if (emailService == null) {
-			emailService = new EmailService();
+			emailService = new EmailService(new EmailMessageSender());
 		}
 		return emailService;
 	}

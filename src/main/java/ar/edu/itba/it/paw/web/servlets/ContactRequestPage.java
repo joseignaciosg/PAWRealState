@@ -54,19 +54,18 @@ public class ContactRequestPage extends HttpServlet {
 		final String email = req.getParameter("email");
 		final String telephone = req.getParameter("phone");
 		final String description = req.getParameter("description");
-		final Integer propID = Integer.valueOf("6");
-		// req.getParameter("propID");
-		final Property prop = PropService.getPropertyByID(propID, errors);
+		final Integer propID = Integer.valueOf(req.getParameter("property_id"));
+		final Property property = PropService.getPropertyByID(propID, errors);
 
 		final boolean valid = service.saveContactRequest(null, name, email,
-				telephone, description, prop, errors);
+				telephone, description, property, errors);
 
 		if (valid) {
-			final User user = prop.getOwner();
+			final User user = (User) req.getAttribute("current_user");
 			final EmailService notification = ServiceProvider.getEmailService();
-			notification.sendEmail(user, prop);
+			notification.sendMail(user, property, errors);
 			req.setAttribute("user", user);
-			req.setAttribute("property", prop);
+			req.setAttribute("property", property);
 			HTMLUtils.render("/contactrequest/contactRequest.jsp", req, resp);
 		} else {
 			req.setAttribute("errors", errors);

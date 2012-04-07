@@ -132,12 +132,14 @@
   		$(".js-contact-button").on("click", function() {
   			$(this).parent().hide();
   		});
-  	});
+  	 });
   	</script>
 		<form name="contactrequest" class="form-vertical" action="/contactrequest" method="POST">
 		<fieldset>
 			<legend>Contacta al Publicador</legend>
+			<input type="hidden" class="input-xlarge" id="property_id" name="property_id" value="${ property.id }">
 			<div id="hiddenform" class="collapse" >
+			
 			<div class="control-group">
 				<label class="control-label" for="first_name">Nombre</label>
 				<div class="controls">
