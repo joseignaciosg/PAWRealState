@@ -43,11 +43,9 @@ public class ContactRequestService {
 		final ContactRequest contact;
 
 		if (iD == null) {
-			System.out.println("new contact");
 			contact = new ContactRequest(iD, name, email, telephone,
 					description, propRefered);
 		} else {
-			System.out.println("existing contact");
 			contact = this.contactDao.getById(iD);
 			contact.setName(name);
 			contact.setEmail(email);

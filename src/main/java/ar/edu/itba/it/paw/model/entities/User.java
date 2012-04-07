@@ -16,6 +16,9 @@ public class User implements Entity {
 	private List<Property> properties;
 	private boolean isnew;
 
+	protected User() {
+	}
+
 	public User(final String name, final String surname, final String mail,
 			final String telephone, final String username, final String password) {
 		// super();
@@ -34,6 +37,7 @@ public class User implements Entity {
 		this.telephone = telephone;
 		this.username = username;
 		this.password = password;
+		this.ID = userId;
 		this.setDirty(false);
 		this.isnew = true;
 	}
@@ -121,9 +125,6 @@ public class User implements Entity {
 			return true;
 		}
 		if (obj == null) {
-			return false;
-		}
-		if (this.getClass() != obj.getClass()) {
 			return false;
 		}
 		final User other = (User) obj;

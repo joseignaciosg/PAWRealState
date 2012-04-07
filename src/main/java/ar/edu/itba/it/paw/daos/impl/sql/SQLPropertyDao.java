@@ -1,4 +1,4 @@
-package ar.edu.itba.it.paw.daos.impl;
+package ar.edu.itba.it.paw.daos.impl.sql;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,7 +10,10 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 
 import ar.edu.itba.it.paw.daos.api.PropertyDao;
+import ar.edu.itba.it.paw.daos.api.UserDao;
+import ar.edu.itba.it.paw.daos.impl.sql.factories.UserFactory;
 import ar.edu.itba.it.paw.db.ConnectionProvider;
+import ar.edu.itba.it.paw.model.entities.LazyUser;
 import ar.edu.itba.it.paw.model.entities.Property;
 import ar.edu.itba.it.paw.model.entities.Property.Operation;
 import ar.edu.itba.it.paw.model.entities.Property.Type;
@@ -20,9 +23,12 @@ import ar.edu.itba.it.paw.model.services.PropertyService.Order;
 public class SQLPropertyDao implements PropertyDao {
 
 	private ConnectionProvider provider;
+	private UserDao userDao;
 
-	public SQLPropertyDao(final ConnectionProvider provider) {
+	public SQLPropertyDao(final ConnectionProvider provider,
+			final UserDao userDao) {
 		this.provider = provider;
+		this.userDao = userDao;
 	}
 
 	public Property getById(final Integer id) {
@@ -76,8 +82,8 @@ public class SQLPropertyDao implements PropertyDao {
 								"INSERT INTO PROPERTIES(\"type\", \"transaction\", "
 										+ "address, neighborhood, price, rooms, csqm, usqm, age, "
 										+ "has_cable, has_phone, has_swimmingpool, has_salon, "
-										+ "has_paddle, has_quincho, description, visible) VALUES (?, ?, ?, "
-										+ "?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+										+ "has_paddle, has_quincho, description, visible, user_id) VALUES (?, ?, ?, "
+										+ "?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
 								PreparedStatement.RETURN_GENERATED_KEYS);
 
 				this.makePropertyStatement(property, statement);
@@ -95,19 +101,21 @@ public class SQLPropertyDao implements PropertyDao {
 				}
 
 			} else if (property.isDirty()) {
-				statement = conn.prepareStatement("UPDATE PROPERTIES "
-						+ "SET \"type\" = ?, \"transaction\" = ?, "
-						+ "address = ?, neighborhood = ?, "
-						+ "price = ?, rooms = ?, " + "csqm = ?, usqm = ?, "
-						+ "age = ?, has_cable = ?, "
-						+ "has_phone = ?, has_swimmingpool = ?, "
-						+ "has_salon = ?, has_paddle = ?, "
-						+ "has_quincho = ?, description = ?, visible = ?"
-						+ "WHERE id = ?");
+				statement = conn
+						.prepareStatement("UPDATE PROPERTIES "
+								+ "SET \"type\" = ?, \"transaction\" = ?, "
+								+ "address = ?, neighborhood = ?, "
+								+ "price = ?, rooms = ?, "
+								+ "csqm = ?, usqm = ?, "
+								+ "age = ?, has_cable = ?, "
+								+ "has_phone = ?, has_swimmingpool = ?, "
+								+ "has_salon = ?, has_paddle = ?, "
+								+ "has_quincho = ?, description = ?, visible = ?, user_id = ? "
+								+ "WHERE id = ?");
 
 				this.makePropertyStatement(property, statement);
 
-				statement.setInt(18, property.getId());
+				statement.setInt(19, property.getId());
 
 				statement.execute();
 
@@ -209,7 +217,6 @@ public class SQLPropertyDao implements PropertyDao {
 				query.append(" OFFSET ").append(quant * page).append(" ");
 			}
 
-			System.out.println("PREPARIN QUERY: " + query);
 			final PreparedStatement statement = conn.prepareStatement(query
 					.toString());
 
@@ -266,6 +273,7 @@ public class SQLPropertyDao implements PropertyDao {
 		final Integer uncoveredArea = result.getInt("usqm");
 		final Integer age = result.getInt("age");
 		final String description = result.getString("description");
+		final Integer userId = result.getInt("user_id");
 
 		final Services service = new Services();
 
@@ -279,7 +287,8 @@ public class SQLPropertyDao implements PropertyDao {
 		property = new Property(propertyId, Type.fromString(typeStr),
 				Operation.fromString(transactionStr), neighborhood, address,
 				price, rooms, coveredArea, uncoveredArea, age, service,
-				description);
+				description, new LazyUser(
+						new UserFactory(this.userDao, userId), userId));
 
 		property.setNew(false);
 		return property;
@@ -304,6 +313,7 @@ public class SQLPropertyDao implements PropertyDao {
 		statement.setBoolean(15, property.getService().isQuincho());
 		statement.setString(16, property.getDescription());
 		statement.setBoolean(17, property.getVisible());
+		statement.setInt(18, property.getOwner().getId());
 	}
 
 }

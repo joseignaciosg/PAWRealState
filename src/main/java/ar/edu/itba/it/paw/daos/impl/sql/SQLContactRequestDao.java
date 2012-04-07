@@ -1,4 +1,4 @@
-package ar.edu.itba.it.paw.daos.impl;
+package ar.edu.itba.it.paw.daos.impl.sql;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -7,8 +7,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import ar.edu.itba.it.paw.daos.DaoProvider;
 import ar.edu.itba.it.paw.daos.api.ContactRequestDao;
+import ar.edu.itba.it.paw.daos.api.PropertyDao;
 import ar.edu.itba.it.paw.db.ConnectionProvider;
 import ar.edu.itba.it.paw.model.entities.ContactRequest;
 import ar.edu.itba.it.paw.model.entities.Property;
@@ -16,10 +16,12 @@ import ar.edu.itba.it.paw.model.entities.Property;
 public class SQLContactRequestDao implements ContactRequestDao {
 
 	private ConnectionProvider provider;
+	private PropertyDao propertyDao;
 
-	public SQLContactRequestDao(final ConnectionProvider provider) {
+	public SQLContactRequestDao(final ConnectionProvider provider,
+			final PropertyDao propertyDao) {
 		this.provider = provider;
-
+		this.propertyDao = propertyDao;
 	}
 
 	public ContactRequest getById(final Integer id) {
@@ -72,7 +74,7 @@ public class SQLContactRequestDao implements ContactRequestDao {
 			final PreparedStatement ps;
 			if (obj.isNew()) {
 				ps = conn
-						.prepareStatement("INSERT INTO contact_requests (username, email,phone,comment,propId)"
+						.prepareStatement("INSERT INTO contact_requests (username, email,phone,comment, prop_id)"
 								+ " VALUES (?,?,?,?,?)");
 				ps.setString(1, obj.getName());
 				ps.setString(2, obj.getEmail());
@@ -91,10 +93,10 @@ public class SQLContactRequestDao implements ContactRequestDao {
 				} catch (final Exception e) {
 					obj.setId(set.getInt(1));
 				}
-				obj.setNew(false);
+
 			} else if (obj.isDirty()) {
 				ps = conn
-						.prepareStatement("UPDATE PHOTOS SET username = ?, email = ?, phone = ?, comment = ? ,propId = ? WHERE id = ?");
+						.prepareStatement("UPDATE contact_requests SET username = ?, email = ?, phone = ?, comment = ? ,prop_id = ? WHERE id = ?");
 				ps.setString(1, obj.getName());
 				ps.setString(2, obj.getEmail());
 				ps.setString(3, obj.getTelephone());
@@ -110,7 +112,7 @@ public class SQLContactRequestDao implements ContactRequestDao {
 			e.printStackTrace();
 			return false;
 		}
-
+		obj.setNew(false);
 		obj.setDirty(false);
 		return true;
 	}
@@ -148,12 +150,12 @@ public class SQLContactRequestDao implements ContactRequestDao {
 		ContactRequest contact;
 
 		final Integer ID = result.getInt("id");
-		final Integer propID = result.getInt("propId");
+		final Integer propID = result.getInt("prop_id");
 		final String name = result.getString("username");
 		final String email = result.getString("email");
 		final String telephone = result.getString("phone");
 		final String description = result.getString("comment");
-		final Property prop = DaoProvider.getPropertyDao().getById(propID);
+		final Property prop = this.propertyDao.getById(propID);
 
 		contact = new ContactRequest(ID, name, email, telephone, description,
 				prop);

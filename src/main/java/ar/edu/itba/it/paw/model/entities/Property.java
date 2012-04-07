@@ -86,9 +86,10 @@ public class Property implements Entity {
 			final String neighborhood, final String address,
 			final Integer price, final Integer spaces,
 			final Integer coveredArea, final Integer freeArea,
-			final Integer age, final Services service, final String description) {
+			final Integer age, final Services service,
+			final String description, final User owner) {
 		this(null, type, operation, neighborhood, address, price, spaces,
-				coveredArea, freeArea, age, service, description);
+				coveredArea, freeArea, age, service, description, owner);
 		this.setDirty(false);
 		this.setVisible(true);
 	}
@@ -97,7 +98,8 @@ public class Property implements Entity {
 			final Operation operation, final String neighborhood,
 			final String address, final Integer price, final Integer spaces,
 			final Integer coveredArea, final Integer freeArea,
-			final Integer age, final Services service, final String description) {
+			final Integer age, final Services service,
+			final String description, final User owner) {
 		this.id = id;
 		this.type = type;
 		this.operation = operation;
@@ -111,6 +113,7 @@ public class Property implements Entity {
 		this.service = service;
 		this.description = description;
 		this.photos = new ArrayList<Photo>();
+		this.setOwner(owner);
 		this.setVisible(true);
 		this.setDirty(false);
 		this.isnew = true;

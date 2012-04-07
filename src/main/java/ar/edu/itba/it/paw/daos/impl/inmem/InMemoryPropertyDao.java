@@ -1,4 +1,4 @@
-package ar.edu.itba.it.paw.daos.impl;
+package ar.edu.itba.it.paw.daos.impl.inmem;
 
 import java.util.ArrayList;
 import java.util.Collections;

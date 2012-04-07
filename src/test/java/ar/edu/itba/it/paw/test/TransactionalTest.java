@@ -18,7 +18,7 @@ public abstract class TransactionalTest {
 	/**
 	 * Must be used as a dispatcher for the connections of each test
 	 */
-	public ConnectionProvider getProvider() {
+	public ConnectionProvider getConnectionProvider() {
 		return this.provider;
 	}
 

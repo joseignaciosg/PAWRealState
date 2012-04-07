@@ -32,11 +32,11 @@ public class Photo implements Entity {
 		return this.type;
 	}
 
-	public Integer getPropertyid() {
+	public Integer getPropertyId() {
 		return this.propertyid;
 	}
 
-	public void setPropertyid(final Integer propertyid) {
+	public void setPropertyId(final Integer propertyid) {
 		this.setDirty(true);
 		this.propertyid = propertyid;
 	}

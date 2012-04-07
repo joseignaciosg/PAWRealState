@@ -5,6 +5,7 @@ CREATE TABLE contact_requests
   email character varying NOT NULL,
   phone character varying NOT NULL,
   "comment" character varying,
+  prop_id integer references properties(id),
   CONSTRAINT contact_request_pkey PRIMARY KEY (id)
 );
 
@@ -28,6 +29,7 @@ CREATE TABLE properties
   has_quincho boolean NOT NULL,
   description character varying,
   visible boolean NOT NULL,
+  user_id integer references users(id),
   CONSTRAINT property_pkey PRIMARY KEY (id),
   CONSTRAINT property_transaction_check CHECK (transaction::text = ANY (ARRAY['SELL'::character varying::text, 'RENT'::character varying::text])),
   CONSTRAINT property_type_check CHECK (type::text = ANY (ARRAY['APARTMENT'::character varying::text, 'HOUSE'::character varying::text]))

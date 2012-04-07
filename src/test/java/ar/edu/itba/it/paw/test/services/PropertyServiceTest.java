@@ -10,8 +10,8 @@ import org.junit.Test;
 
 import ar.edu.itba.it.paw.daos.api.PropertyDao;
 import ar.edu.itba.it.paw.daos.api.UserDao;
-import ar.edu.itba.it.paw.daos.impl.InMemoryPropertyDao;
-import ar.edu.itba.it.paw.daos.impl.InMemoryUserDao;
+import ar.edu.itba.it.paw.daos.impl.inmem.InMemoryPropertyDao;
+import ar.edu.itba.it.paw.daos.impl.inmem.InMemoryUserDao;
 import ar.edu.itba.it.paw.model.entities.Property;
 import ar.edu.itba.it.paw.model.entities.Property.Operation;
 import ar.edu.itba.it.paw.model.entities.Property.Type;
@@ -57,51 +57,51 @@ public class PropertyServiceTest {
 				Operation.RENT, "Palermo", "Lavalle 660",
 				Integer.valueOf(1000), Integer.valueOf(3),
 				Integer.valueOf(100), Integer.valueOf(200), Integer.valueOf(5),
-				service, "Descrip1");
+				service, "Descrip1", null);
 
 		final Property prop2 = new Property(Integer.valueOf(2), Type.HOUSE,
 				Operation.RENT, "BarrioNorte", "Junca 460",
 				Integer.valueOf(501), Integer.valueOf(3), Integer.valueOf(100),
-				Integer.valueOf(200), Integer.valueOf(5), service, "Descrip2");
+				Integer.valueOf(200), Integer.valueOf(5), service, "Descrip2", null);
 
 		final Property prop3 = new Property(Integer.valueOf(3), Type.HOUSE,
 				Operation.SELL, "Palermo", "Alem 110", Integer.valueOf(500),
 				Integer.valueOf(3), Integer.valueOf(100), Integer.valueOf(200),
-				Integer.valueOf(5), service, "Descrip3");
+				Integer.valueOf(5), service, "Descrip3", null);
 
 		final Property prop4 = new Property(Integer.valueOf(4), Type.APARTMENT,
 				Operation.RENT, "Caballito", "Taring 660",
 				Integer.valueOf(5020), Integer.valueOf(3),
 				Integer.valueOf(100), Integer.valueOf(2000),
-				Integer.valueOf(5), service, "Descrip1");
+				Integer.valueOf(5), service, "Descrip1", null);
 
 		final Property prop5 = new Property(Integer.valueOf(5), Type.HOUSE,
 				Operation.SELL, "BarrioNorte", "Junca 460",
 				Integer.valueOf(5005), Integer.valueOf(3),
 				Integer.valueOf(100), Integer.valueOf(200), Integer.valueOf(5),
-				service, "Descrip2");
+				service, "Descrip2", null);
 
 		final Property prop6 = new Property(Integer.valueOf(6), Type.HOUSE,
 				Operation.RENT, "Palermo", "Alem 110", Integer.valueOf(500),
 				Integer.valueOf(3), Integer.valueOf(100), Integer.valueOf(200),
-				Integer.valueOf(5), service, "Descrip3");
+				Integer.valueOf(5), service, "Descrip3", null);
 
 		final Property prop7 = new Property(Integer.valueOf(7), Type.APARTMENT,
 				Operation.RENT, "Palermo", "Lavalle 660",
 				Integer.valueOf(50040), Integer.valueOf(3),
 				Integer.valueOf(100), Integer.valueOf(200), Integer.valueOf(5),
-				service, "Descrip1");
+				service, "Descrip1", null);
 
 		final Property prop8 = new Property(Integer.valueOf(8), Type.HOUSE,
 				Operation.SELL, "BarrioNorte", "Junca 460",
 				Integer.valueOf(5002), Integer.valueOf(3),
 				Integer.valueOf(100), Integer.valueOf(200), Integer.valueOf(5),
-				service, "Descrip2");
+				service, "Descrip2", null);
 
 		final Property prop9 = new Property(Integer.valueOf(9), Type.HOUSE,
 				Operation.SELL, "Palermo", "Alem 110", Integer.valueOf(500),
 				Integer.valueOf(3), Integer.valueOf(100), Integer.valueOf(200),
-				Integer.valueOf(5), service, "Descrip3");
+				Integer.valueOf(5), service, "Descrip3", null);
 		propertyList.add(prop1);
 		propertyList.add(prop2);
 		propertyList.add(prop3);
@@ -126,7 +126,7 @@ public class PropertyServiceTest {
 				Operation.RENT, "Palermo", "Lavalle 660",
 				Integer.valueOf(1000), Integer.valueOf(3),
 				Integer.valueOf(100), Integer.valueOf(200), Integer.valueOf(5),
-				service, "Descrip1");
+				service, "Descrip1", null);
 
 		// I want the houses which cost is 1000 - only one
 		List<Property> props = this.service.advancedSearch(null, null, 1000,

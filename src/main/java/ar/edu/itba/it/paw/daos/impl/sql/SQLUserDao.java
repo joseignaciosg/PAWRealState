@@ -1,4 +1,4 @@
-package ar.edu.itba.it.paw.daos.impl;
+package ar.edu.itba.it.paw.daos.impl.sql;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -88,6 +88,8 @@ public class SQLUserDao implements UserDao {
 					user.setId(set.getInt(1));
 				}
 
+				user.setNew(false);
+
 			} else if (user.isDirty()) {
 				statement = conn.prepareStatement("UPDATE USERS "
 						+ "SET firstname = ?, lastname = ?, "
@@ -98,6 +100,8 @@ public class SQLUserDao implements UserDao {
 				statement.setInt(7, user.getId());
 
 				statement.execute();
+
+				user.setDirty(false);
 
 			} else {
 				return false;

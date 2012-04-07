@@ -1,4 +1,4 @@
-package ar.edu.itba.it.paw.daos.impl;
+package ar.edu.itba.it.paw.daos.impl.sql;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -30,7 +30,6 @@ public class SQLPhotoDao implements PhotoDao {
 			ps.execute();
 
 			final ResultSet cursor = ps.getResultSet();
-			System.out.println(cursor);
 			while (cursor.next()) {
 				photo = new Photo(Integer.valueOf(cursor.getString("id")),
 						cursor.getString("data").getBytes("UTF-16"),
@@ -70,7 +69,7 @@ public class SQLPhotoDao implements PhotoDao {
 						PreparedStatement.RETURN_GENERATED_KEYS);
 				ps.setBytes(1, obj.getData());
 				ps.setString(2, obj.getType());
-				ps.setInt(3, obj.getPropertyid());
+				ps.setInt(3, obj.getPropertyId());
 				ps.execute();
 
 				final ResultSet set = ps.getGeneratedKeys();
@@ -82,13 +81,12 @@ public class SQLPhotoDao implements PhotoDao {
 				} catch (final Exception e) {
 					obj.setId(set.getInt(1));
 				}
-				obj.setNew(false);
 			} else if (obj.isDirty()) {
 				ps = conn
 						.prepareStatement("UPDATE PHOTOS SET data = ?, type = ?, property_id = ? WHERE id = ?");
 				ps.setBytes(1, obj.getData());
 				ps.setString(2, obj.getType());
-				ps.setInt(3, obj.getPropertyid());
+				ps.setInt(3, obj.getPropertyId());
 				ps.setInt(4, obj.getId());
 
 				ps.execute();
@@ -100,6 +98,7 @@ public class SQLPhotoDao implements PhotoDao {
 			return false;
 		}
 
+		obj.setNew(false);
 		obj.setDirty(false);
 		return true;
 	}
@@ -114,7 +113,7 @@ public class SQLPhotoDao implements PhotoDao {
 			ps.setString(1, String.valueOf(id));
 			ps.execute();
 			final ResultSet cursor = ps.getResultSet();
-			System.out.println(cursor);
+
 			while (cursor.next()) {
 				final Photo photo = new Photo(Integer.valueOf(cursor
 						.getString("id")), null, null, Integer.valueOf(cursor

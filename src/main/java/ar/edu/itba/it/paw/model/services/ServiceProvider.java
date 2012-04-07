@@ -15,7 +15,7 @@ public class ServiceProvider {
 
 	public static UserService getUserService() {
 		if (userService == null) {
-			userService = new UserService(DaoProvider.getUserDao());
+			userService = new UserService(DaoProvider.getDefaultUserDao());
 		}
 
 		return userService;
@@ -23,8 +23,8 @@ public class ServiceProvider {
 
 	public static PropertyService getPropertyService() {
 		if (propertyService == null) {
-			propertyService = new PropertyService(DaoProvider.getPropertyDao(),
-					DaoProvider.getUserDao());
+			propertyService = new PropertyService(DaoProvider.getDefaultPropertyDao(),
+					DaoProvider.getDefaultUserDao());
 		}
 
 		return propertyService;
@@ -32,7 +32,7 @@ public class ServiceProvider {
 
 	public static PhotoService getPhotoService() {
 		if (photoService == null) {
-			photoService = new PhotoService(DaoProvider.getPhotoDao());
+			photoService = new PhotoService(DaoProvider.getDefaultPhotoDao());
 
 		}
 
@@ -42,7 +42,7 @@ public class ServiceProvider {
 	public static ContactRequestService getContactRequestService() {
 		if (contactRequestService == null) {
 			contactRequestService = new ContactRequestService(
-					DaoProvider.getContactRequestDao());
+					DaoProvider.getDefaultContactRequestDao());
 		}
 
 		return contactRequestService;

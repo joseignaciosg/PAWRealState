@@ -1,4 +1,4 @@
-package ar.edu.itba.it.paw.test.daos;
+package ar.edu.itba.it.paw.test.daos.base;
 
 import java.util.List;
 
@@ -12,19 +12,18 @@ import ar.edu.itba.it.paw.model.entities.Property.Operation;
 import ar.edu.itba.it.paw.model.entities.Property.Type;
 import ar.edu.itba.it.paw.model.entities.Services;
 import ar.edu.itba.it.paw.model.services.PropertyService.Order;
-import ar.edu.itba.it.paw.test.TransactionalTest;
 
-public abstract class PropertyDaoTest extends TransactionalTest {
+public abstract class PropertyDaoTest extends DaoTest {
 
 	private PropertyDao propertyDao;
 
-	public abstract PropertyDao getDao();
-
 	public PropertyDaoTest() {
-		this.propertyDao = this.getDao();
+
 	}
 
 	private void preparedao() {
+
+		this.propertyDao = this.getDaoProvider().getPropertyDao();
 
 		final Services service = new Services(true, true, true, true, false,
 				true);
@@ -32,17 +31,20 @@ public abstract class PropertyDaoTest extends TransactionalTest {
 		final Property prop1 = new Property(Integer.valueOf(1), Type.APARTMENT,
 				Operation.RENT, "Palermo", "Lavalle 660", Integer.valueOf(500),
 				Integer.valueOf(3), Integer.valueOf(100), Integer.valueOf(200),
-				Integer.valueOf(5), service, "Descrip1");
+				Integer.valueOf(5), service, "Descrip1",
+				this.getHelper().defaultUser());
 
 		final Property prop2 = new Property(Integer.valueOf(2), Type.HOUSE,
 				Operation.SELL, "BarrioNorte", "Junca 460",
 				Integer.valueOf(500), Integer.valueOf(3), Integer.valueOf(100),
-				Integer.valueOf(200), Integer.valueOf(5), service, "Descrip2");
+				Integer.valueOf(200), Integer.valueOf(5), service, "Descrip2",
+				this.getHelper().defaultUser());
 
 		final Property prop3 = new Property(Integer.valueOf(3), Type.HOUSE,
 				Operation.SELL, "Palermo", "Alem 110", Integer.valueOf(500),
 				Integer.valueOf(3), Integer.valueOf(100), Integer.valueOf(200),
-				Integer.valueOf(5), service, "Descrip3");
+				Integer.valueOf(5), service, "Descrip3",
+				this.getHelper().defaultUser());
 
 		this.propertyDao.saveOrUpdate(prop1);
 		this.propertyDao.saveOrUpdate(prop2);
@@ -51,6 +53,9 @@ public abstract class PropertyDaoTest extends TransactionalTest {
 	}
 
 	public void prepareFilterDao() {
+
+		this.propertyDao = this.getDaoProvider().getPropertyDao();
+
 		final Services service = new Services(true, true, true, true, false,
 				true);
 
@@ -58,51 +63,56 @@ public abstract class PropertyDaoTest extends TransactionalTest {
 				Operation.RENT, "Palermo", "Lavalle 660",
 				Integer.valueOf(1000), Integer.valueOf(3),
 				Integer.valueOf(100), Integer.valueOf(200), Integer.valueOf(5),
-				service, "Descrip1");
+				service, "Descrip1", this.getHelper().defaultUser());
 
 		final Property prop2 = new Property(Integer.valueOf(2), Type.HOUSE,
 				Operation.RENT, "BarrioNorte", "Junca 460",
 				Integer.valueOf(501), Integer.valueOf(3), Integer.valueOf(100),
-				Integer.valueOf(200), Integer.valueOf(5), service, "Descrip2");
+				Integer.valueOf(200), Integer.valueOf(5), service, "Descrip2",
+				this.getHelper().defaultUser());
 
 		final Property prop3 = new Property(Integer.valueOf(3), Type.HOUSE,
 				Operation.SELL, "Palermo", "Alem 110", Integer.valueOf(500),
 				Integer.valueOf(3), Integer.valueOf(100), Integer.valueOf(200),
-				Integer.valueOf(5), service, "Descrip3");
+				Integer.valueOf(5), service, "Descrip3",
+				this.getHelper().defaultUser());
 
 		final Property prop4 = new Property(Integer.valueOf(4), Type.APARTMENT,
 				Operation.RENT, "Caballito", "Taring 660",
 				Integer.valueOf(5020), Integer.valueOf(3),
 				Integer.valueOf(100), Integer.valueOf(2000),
-				Integer.valueOf(5), service, "Descrip1");
+				Integer.valueOf(5), service, "Descrip1",
+				this.getHelper().defaultUser());
 
 		final Property prop5 = new Property(Integer.valueOf(5), Type.HOUSE,
 				Operation.SELL, "BarrioNorte", "Junca 460",
 				Integer.valueOf(5005), Integer.valueOf(3),
 				Integer.valueOf(100), Integer.valueOf(200), Integer.valueOf(5),
-				service, "Descrip2");
+				service, "Descrip2", this.getHelper().defaultUser());
 
 		final Property prop6 = new Property(Integer.valueOf(6), Type.HOUSE,
 				Operation.RENT, "Palermo", "Alem 110", Integer.valueOf(500),
 				Integer.valueOf(3), Integer.valueOf(100), Integer.valueOf(200),
-				Integer.valueOf(5), service, "Descrip3");
+				Integer.valueOf(5), service, "Descrip3",
+				this.getHelper().defaultUser());
 
 		final Property prop7 = new Property(Integer.valueOf(7), Type.APARTMENT,
 				Operation.RENT, "Palermo", "Lavalle 660",
 				Integer.valueOf(50040), Integer.valueOf(3),
 				Integer.valueOf(100), Integer.valueOf(200), Integer.valueOf(5),
-				service, "Descrip1");
+				service, "Descrip1", this.getHelper().defaultUser());
 
 		final Property prop8 = new Property(Integer.valueOf(8), Type.HOUSE,
 				Operation.SELL, "BarrioNorte", "Junca 460",
 				Integer.valueOf(5002), Integer.valueOf(3),
 				Integer.valueOf(100), Integer.valueOf(200), Integer.valueOf(5),
-				service, "Descrip2");
+				service, "Descrip2", this.getHelper().defaultUser());
 
 		final Property prop9 = new Property(Integer.valueOf(9), Type.HOUSE,
 				Operation.SELL, "Palermo", "Alem 110", Integer.valueOf(500),
 				Integer.valueOf(3), Integer.valueOf(100), Integer.valueOf(200),
-				Integer.valueOf(5), service, "Descrip3");
+				Integer.valueOf(5), service, "Descrip3",
+				this.getHelper().defaultUser());
 
 		this.propertyDao.saveOrUpdate(prop1);
 		this.propertyDao.saveOrUpdate(prop2);
@@ -130,16 +140,30 @@ public abstract class PropertyDaoTest extends TransactionalTest {
 		final Property propTrue = new Property(Integer.valueOf(3),
 				Type.APARTMENT, Operation.SELL, "Palermo", "Alem 110",
 				Integer.valueOf(500), Integer.valueOf(3), Integer.valueOf(100),
-				Integer.valueOf(200), Integer.valueOf(5), service, "Descrip3");
+				Integer.valueOf(200), Integer.valueOf(5), service, "Descrip3",
+				null);
 
 		final Property propFalse = new Property(Integer.valueOf(5), Type.HOUSE,
 				Operation.SELL, "Palermo", "Alem 110", Integer.valueOf(500),
 				Integer.valueOf(3), Integer.valueOf(100), Integer.valueOf(200),
-				Integer.valueOf(5), service, "Descrip3");
+				Integer.valueOf(5), service, "Descrip3", null);
 
 		Assert.assertEquals(true, this.propertyDao.delete(propTrue));
 		Assert.assertEquals(false, this.propertyDao.delete(propFalse));
 
+	}
+
+	/**
+	 * Tests that once you get a Property instance back the owner is the same.
+	 */
+	@Test
+	public void ownershipRelationTest() {
+		this.propertyDao = this.getDaoProvider().getPropertyDao();
+
+		final Property defaultProp = this.propertyDao.getById(this.getHelper()
+				.defaultProperty().getId());
+
+		Assert.assertEquals(this.getHelper().defaultUser(), defaultProp.getOwner());
 	}
 
 	@Test
@@ -168,7 +192,7 @@ public abstract class PropertyDaoTest extends TransactionalTest {
 				Operation.RENT, "Palermo", "Lavalle 660",
 				Integer.valueOf(1000), Integer.valueOf(3),
 				Integer.valueOf(100), Integer.valueOf(200), Integer.valueOf(5),
-				service, "Descrip1");
+				service, "Descrip1", null);
 
 		// I want the houses which cost is 1000 - only one
 		List<Property> props = this.propertyDao.getAll(null, null, 1000, 1000,
@@ -206,8 +230,8 @@ public abstract class PropertyDaoTest extends TransactionalTest {
 				0, 10, Order.ASC, true);
 		Assert.assertTrue(props.size() == 3);
 
-		props = this.propertyDao
-				.getAll(null, null, 0, 100000, 0, 10, Order.ASC, true);
+		props = this.propertyDao.getAll(null, null, 0, 100000, 0, 10,
+				Order.ASC, true);
 		Assert.assertTrue(props.size() == 9);
 
 		props = this.propertyDao.getAll(null, null, 0, 100000, 0, 10,

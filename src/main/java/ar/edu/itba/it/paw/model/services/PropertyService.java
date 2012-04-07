@@ -95,8 +95,8 @@ public class PropertyService {
 		Property prop = null;
 		if (id == null) {
 			prop = new Property(type, operation, neighborhood, address, price,
-					spaces, coveredArea, freeArea, age, service, description);
-			prop.setOwner(owner);
+					spaces, coveredArea, freeArea, age, service, description,
+					owner);
 		} else {
 			prop = this.propertyDao.getById(id);
 

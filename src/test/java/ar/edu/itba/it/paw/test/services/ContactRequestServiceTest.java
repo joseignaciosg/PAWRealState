@@ -10,8 +10,8 @@ import org.junit.Test;
 
 import ar.edu.itba.it.paw.daos.api.ContactRequestDao;
 import ar.edu.itba.it.paw.daos.api.PropertyDao;
-import ar.edu.itba.it.paw.daos.impl.InMemoryContactRequestDao;
-import ar.edu.itba.it.paw.daos.impl.InMemoryPropertyDao;
+import ar.edu.itba.it.paw.daos.impl.inmem.InMemoryContactRequestDao;
+import ar.edu.itba.it.paw.daos.impl.inmem.InMemoryPropertyDao;
 import ar.edu.itba.it.paw.model.entities.ContactRequest;
 import ar.edu.itba.it.paw.model.entities.Property;
 import ar.edu.itba.it.paw.model.entities.Property.Operation;
@@ -35,7 +35,7 @@ public class ContactRequestServiceTest {
 		final Property prop9 = new Property(Integer.valueOf(1), Type.HOUSE,
 				Operation.SELL, "Palermo", "Alem 110", Integer.valueOf(500),
 				Integer.valueOf(3), Integer.valueOf(100), Integer.valueOf(200),
-				Integer.valueOf(5), service, "Descrip3");
+				Integer.valueOf(5), service, "Descrip3", null);
 
 		final ContactRequest contact1 = new ContactRequest(10, "Nicolas",
 				"asd@asd.com", "44450322", "descrip1", prop9);
@@ -65,12 +65,12 @@ public class ContactRequestServiceTest {
 		final Property prop9 = new Property(Integer.valueOf(1), Type.HOUSE,
 				Operation.SELL, "Palermo", "Alem 110", Integer.valueOf(500),
 				Integer.valueOf(3), Integer.valueOf(100), Integer.valueOf(200),
-				Integer.valueOf(5), service, "Descrip3");
+				Integer.valueOf(5), service, "Descrip3", null);
 
 		final Property prop10 = new Property(Integer.valueOf(10), Type.HOUSE,
 				Operation.SELL, "Palermo", "Alem 110", Integer.valueOf(500),
 				Integer.valueOf(3), Integer.valueOf(100), Integer.valueOf(200),
-				Integer.valueOf(5), service, "Descrip3");
+				Integer.valueOf(5), service, "Descrip3", null);
 
 		Assert.assertEquals(true, this.contact.saveContactRequest(null,
 				"Pedro Perez", "nico@hotmail.com", "4442-3232", "desc1",
