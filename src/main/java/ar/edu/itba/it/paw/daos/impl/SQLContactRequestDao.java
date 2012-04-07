@@ -52,7 +52,7 @@ public class SQLContactRequestDao implements ContactRequestDao {
 
 			final Connection conn = this.provider.getConnection();
 			final PreparedStatement statement = conn
-					.prepareStatement("DELETE FROM contact_request WHERE id = ?");
+					.prepareStatement("DELETE FROM contact_requests WHERE id = ?");
 
 			statement.setInt(1, obj.getId());
 
@@ -72,7 +72,7 @@ public class SQLContactRequestDao implements ContactRequestDao {
 			final PreparedStatement ps;
 			if (obj.isNew()) {
 				ps = conn
-						.prepareStatement("INSERT INTO contact_request (name, email,phone,comment,propId)"
+						.prepareStatement("INSERT INTO contact_requests (username, email,phone,comment,propId)"
 								+ " VALUES (?,?,?,?,?)");
 				ps.setString(1, obj.getName());
 				ps.setString(2, obj.getEmail());
@@ -94,7 +94,7 @@ public class SQLContactRequestDao implements ContactRequestDao {
 				obj.setNew(false);
 			} else if (obj.isDirty()) {
 				ps = conn
-						.prepareStatement("UPDATE PHOTOS SET name = ?, email = ?, phone = ?, comment = ? ,propId = ? WHERE id = ?");
+						.prepareStatement("UPDATE PHOTOS SET username = ?, email = ?, phone = ?, comment = ? ,propId = ? WHERE id = ?");
 				ps.setString(1, obj.getName());
 				ps.setString(2, obj.getEmail());
 				ps.setString(3, obj.getTelephone());
@@ -122,7 +122,7 @@ public class SQLContactRequestDao implements ContactRequestDao {
 
 			final Connection conn = this.provider.getConnection();
 			final PreparedStatement statement = conn
-					.prepareStatement("SELECT * FROM contact_request");
+					.prepareStatement("SELECT * FROM contact_requests");
 
 			statement.execute();
 
