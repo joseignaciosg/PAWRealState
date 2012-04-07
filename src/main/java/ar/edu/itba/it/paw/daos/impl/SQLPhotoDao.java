@@ -64,9 +64,10 @@ public class SQLPhotoDao implements PhotoDao {
 			final Connection conn = this.provider.getConnection();
 			final PreparedStatement ps;
 			if (obj.isNew()) {
-				ps = conn
-						.prepareStatement("INSERT INTO PHOTOS (data, type, property_id)"
-								+ " VALUES (?,?,?)");
+				ps = conn.prepareStatement(
+						"INSERT INTO PHOTOS (data, type, property_id)"
+								+ " VALUES (?,?,?)",
+						PreparedStatement.RETURN_GENERATED_KEYS);
 				ps.setBytes(1, obj.getData());
 				ps.setString(2, obj.getType());
 				ps.setInt(3, obj.getPropertyid());

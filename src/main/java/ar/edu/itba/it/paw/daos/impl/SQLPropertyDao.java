@@ -185,7 +185,7 @@ public class SQLPropertyDao implements PropertyDao {
 			}
 
 			if (visible != null) {
-				commands.add(" \"visible\" LIKE ? ");
+				commands.add(" \"visible\" = ? ");
 			}
 
 			query.append(StringUtils.join(commands, " AND "));
@@ -209,6 +209,7 @@ public class SQLPropertyDao implements PropertyDao {
 				query.append(" OFFSET ").append(quant * page).append(" ");
 			}
 
+			System.out.println("PREPARIN QUERY: " + query);
 			final PreparedStatement statement = conn.prepareStatement(query
 					.toString());
 
@@ -231,7 +232,7 @@ public class SQLPropertyDao implements PropertyDao {
 			}
 
 			if (visible != null) {
-				statement.setBoolean(paramIndex++, visible);
+				statement.setBoolean(paramIndex++, visible.booleanValue());
 			}
 
 			statement.execute();
