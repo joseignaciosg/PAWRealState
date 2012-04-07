@@ -55,7 +55,7 @@ public class PhotoAddPage extends HttpServlet {
 		if (errors.size() > 0) {
 			resp.sendRedirect(req.getContextPath() + "/index");
 		} else {
-			HTMLUtils.render("myproperties/addphoto.jsp", req, resp);
+			HTMLUtils.render("myproperties/newphoto.jsp", req, resp);
 		}
 	}
 

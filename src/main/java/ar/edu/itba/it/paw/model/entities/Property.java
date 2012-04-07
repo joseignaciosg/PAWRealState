@@ -69,6 +69,15 @@ public class Property implements Entity {
 	private Services service;
 	private String description;
 	private List<Photo> photos;
+
+	public List<Photo> getPhotos() {
+		return this.photos;
+	}
+
+	public void setPhotos(final List<Photo> photos) {
+		this.photos = photos;
+	}
+
 	private User owner;
 	private boolean visible;
 	private boolean isnew;
@@ -268,14 +277,6 @@ public class Property implements Entity {
 	public void setDescription(final String description) {
 		this.description = description;
 		this.setDirty(true);
-	}
-
-	public void addPhoto(final Photo photo) {
-		this.photos.add(photo);
-	}
-
-	public void removePhoto(final Photo photo) {
-		this.photos.remove(photo);
 	}
 
 	public boolean getVisible() {

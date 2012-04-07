@@ -21,7 +21,6 @@ public class PhotoServlet extends HttpServlet {
 	protected void doGet(final HttpServletRequest req,
 			final HttpServletResponse resp) throws ServletException,
 			IOException {
-
 		try {
 			final PhotoService service = ServiceProvider.getPhotoService();
 			final List<String> errors = new ArrayList<String>();
@@ -29,7 +28,16 @@ public class PhotoServlet extends HttpServlet {
 			final Photo p = service.getPhotoById(
 					Integer.valueOf(req.getParameter("ID")), errors);
 
+			if (p == null) {
+				resp.setStatus(404);
+				return;
+			}
+
+			resp.setHeader("Content-Type", "image/jpeg");
+			resp.getOutputStream().write(p.getData());
+
 		} catch (final Exception e) {
+			e.printStackTrace();
 
 		}
 

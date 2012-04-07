@@ -38,7 +38,7 @@ public class PhotoService {
 			return false;
 		}
 
-		final Photo p = new Photo(null, data, "jpeg", propertyId);
+		final Photo p = new Photo(1, data, "jpeg", propertyId);
 
 		this.photoDao.saveOrUpdate(p);
 
