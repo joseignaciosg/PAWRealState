@@ -5,6 +5,7 @@ import ar.edu.itba.it.paw.daos.api.ContactRequestDao;
 import ar.edu.itba.it.paw.daos.api.PhotoDao;
 import ar.edu.itba.it.paw.daos.api.PropertyDao;
 import ar.edu.itba.it.paw.daos.api.UserDao;
+import ar.edu.itba.it.paw.model.entities.Photo;
 import ar.edu.itba.it.paw.model.entities.Property;
 import ar.edu.itba.it.paw.model.entities.Property.Operation;
 import ar.edu.itba.it.paw.model.entities.Property.Type;
@@ -32,6 +33,7 @@ public class DaoTestHelper {
 
 	User defaultUser = null;
 	Property defaultProperty = null;
+	Photo defaultPhoto = null;
 
 	public DaoTestHelper(final DaoProvider provider) {
 		this.photoDao = provider.getPhotoDao();
@@ -41,7 +43,21 @@ public class DaoTestHelper {
 	}
 
 	/**
-	 * Gets a default test property
+	 * Gets a default test Photo, loading it's property and user if necessary,
+	 * persisted int he dao
+	 */
+	public Photo defaultPhoto() {
+		final Property prop = this.defaultProperty();
+		if ((this.defaultPhoto = this.photoDao.getById(1)) == null) {
+			this.defaultPhoto = new Photo(1, new byte[] {}, "jpg", prop.getId());
+			this.photoDao.saveOrUpdate(this.defaultPhoto);
+		}
+		return this.defaultPhoto;
+	}
+
+	/**
+	 * Gets a default test property, loading it's owner if necessary, persisted
+	 * in the dao
 	 */
 	public Property defaultProperty() {
 		if ((this.defaultProperty = this.propertyDao.getById(1)) == null) {
@@ -60,7 +76,7 @@ public class DaoTestHelper {
 	}
 
 	/**
-	 * Gets a default test user
+	 * Gets a default test user, persisted in the dao
 	 */
 	public User defaultUser() {
 		if ((this.defaultUser = this.userDao.getById(1)) == null) {

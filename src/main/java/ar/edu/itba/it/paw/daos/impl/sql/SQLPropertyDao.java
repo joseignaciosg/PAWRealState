@@ -5,30 +5,38 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 
+import ar.edu.itba.it.paw.daos.api.PhotoDao;
 import ar.edu.itba.it.paw.daos.api.PropertyDao;
 import ar.edu.itba.it.paw.daos.api.UserDao;
+import ar.edu.itba.it.paw.daos.impl.sql.factories.PhotoCollectionFactory;
 import ar.edu.itba.it.paw.daos.impl.sql.factories.UserFactory;
 import ar.edu.itba.it.paw.db.ConnectionProvider;
 import ar.edu.itba.it.paw.model.entities.LazyUser;
+import ar.edu.itba.it.paw.model.entities.Photo;
 import ar.edu.itba.it.paw.model.entities.Property;
 import ar.edu.itba.it.paw.model.entities.Property.Operation;
 import ar.edu.itba.it.paw.model.entities.Property.Type;
 import ar.edu.itba.it.paw.model.entities.Services;
 import ar.edu.itba.it.paw.model.services.PropertyService.Order;
+import ar.edu.itba.it.paw.utils.collections.CollectionWithMemory;
+import ar.edu.itba.it.paw.utils.collections.LazyCollection;
 
 public class SQLPropertyDao implements PropertyDao {
 
 	private ConnectionProvider provider;
 	private UserDao userDao;
+	private PhotoDao photoDao;
 
 	public SQLPropertyDao(final ConnectionProvider provider,
-			final UserDao userDao) {
+			final UserDao userDao, final PhotoDao photoDao) {
 		this.provider = provider;
 		this.userDao = userDao;
+		this.photoDao = photoDao;
 	}
 
 	public Property getById(final Integer id) {
@@ -53,6 +61,35 @@ public class SQLPropertyDao implements PropertyDao {
 		return property;
 	}
 
+	public List<Property> getByUserId(final int id) {
+		final List<Property> properties = new ArrayList<Property>();
+		try {
+
+			final Connection conn = this.provider.getConnection();
+			final PreparedStatement statement = conn
+					.prepareStatement("SELECT * FROM PROPERTIES WHERE user_id = ?");
+
+			statement.setInt(1, id);
+
+			statement.execute();
+
+			final ResultSet result = statement.getResultSet();
+
+			while (result.next() && !result.isAfterLast()) {
+				final Property property = this
+						.readPropertyFromResultSet(result);
+
+				properties.add(property);
+			}
+
+			return properties;
+		} catch (final Exception e) {
+			e.printStackTrace();
+			return Collections.emptyList();
+		}
+
+	}
+
 	public boolean delete(final Property obj) {
 		try {
 
@@ -75,6 +112,9 @@ public class SQLPropertyDao implements PropertyDao {
 		try {
 			final Connection conn = this.provider.getConnection();
 			PreparedStatement statement;
+
+			boolean doneSomething = false;
+
 			if (property.isNew()) {
 
 				statement = conn
@@ -99,7 +139,7 @@ public class SQLPropertyDao implements PropertyDao {
 				} catch (final Exception e) {
 					property.setId(set.getInt(1));
 				}
-
+				doneSomething = true;
 			} else if (property.isDirty()) {
 				statement = conn
 						.prepareStatement("UPDATE PROPERTIES "
@@ -119,9 +159,29 @@ public class SQLPropertyDao implements PropertyDao {
 
 				statement.execute();
 
-			} else {
+				doneSomething = true;
+			}
+
+			final CollectionWithMemory<Photo> photosWithDeletions = (CollectionWithMemory<Photo>) property
+					.getPhotos();
+
+			if (photosWithDeletions.isModified()) {
+				for (final Photo photo : photosWithDeletions) {
+					this.photoDao.saveOrUpdate(photo);
+				}
+
+				for (final Photo photo : photosWithDeletions.getDeletedItems()) {
+					this.photoDao.delete(photo);
+				}
+				photosWithDeletions.getDeletedItems().clear();
+				photosWithDeletions.setModified(false);
+				doneSomething = true;
+			}
+
+			if (!doneSomething) {
 				return false;
 			}
+
 		} catch (final Exception e) {
 			e.printStackTrace();
 			return false;
@@ -153,7 +213,7 @@ public class SQLPropertyDao implements PropertyDao {
 			return properties;
 		} catch (final Exception e) {
 			e.printStackTrace();
-			return new ArrayList<Property>();
+			return Collections.emptyList();
 		}
 	}
 
@@ -289,6 +349,10 @@ public class SQLPropertyDao implements PropertyDao {
 				price, rooms, coveredArea, uncoveredArea, age, service,
 				description, new LazyUser(
 						new UserFactory(this.userDao, userId), userId));
+
+		property.setPhotos(new CollectionWithMemory<Photo>(
+				new LazyCollection<Photo>(new PhotoCollectionFactory(
+						this.photoDao, property))));
 
 		property.setNew(false);
 		return property;

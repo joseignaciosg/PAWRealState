@@ -11,17 +11,17 @@
 
 	<hr />
 	<p>
-		<c:if test="${ empty property.photos }">
+		<c:if test="${ not empty property.photos }">
 			<ul class="thumbnails">
 				<c:forEach var="photo" items="${ property.photos }">
 					<li class="span2"><a href="#" class="thumbnail"> <img
 							height="120" width="160"
-							src="${ basePath }/photos?ID=${ photo }" alt=""/>
+							src="${ basePath }/photos?ID=${ photo.id }" alt=""/>
 					</a></li>
 				</c:forEach>
 			</ul>
 		</c:if>
-		<c:if test="${ not empty property.photos }">
+		<c:if test="${ empty property.photos }">
 			La propiedad no tiene fotos
 		</c:if>
 	</p>

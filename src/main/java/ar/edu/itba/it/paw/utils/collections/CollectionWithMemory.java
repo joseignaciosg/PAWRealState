@@ -13,16 +13,25 @@ import java.util.List;
  * @param <T>
  *            The kind of item to remember after deletion
  */
-public class DeletionMemoryCollection<T> implements Collection<T> {
+public class CollectionWithMemory<T> implements Collection<T> {
 
 	private Collection<T> deletedItems;
 	private Collection<T> collection;
+	private boolean isModified = false;
+
+	public boolean isModified() {
+		return this.isModified;
+	}
+
+	public void setModified(final boolean isModified) {
+		this.isModified = isModified;
+	}
 
 	/**
 	 * @param actualCollection
 	 *            Collection to have deletion memory on
 	 */
-	public DeletionMemoryCollection(final Collection<T> actualCollection) {
+	public CollectionWithMemory(final Collection<T> actualCollection) {
 		this.deletedItems = new ArrayList<T>();
 		this.collection = actualCollection;
 	}
@@ -32,10 +41,12 @@ public class DeletionMemoryCollection<T> implements Collection<T> {
 	}
 
 	public boolean add(final T e) {
+		this.isModified = true;
 		return this.getCollection().add(e);
 	}
 
 	public boolean addAll(final Collection<? extends T> c) {
+		this.isModified = true;
 		return this.getCollection().addAll(c);
 	}
 
@@ -64,6 +75,7 @@ public class DeletionMemoryCollection<T> implements Collection<T> {
 	 */
 	@SuppressWarnings("unchecked")
 	public boolean remove(final Object o) {
+		this.isModified = true;
 		this.getDeletedItems().add((T) o);
 		return this.getCollection().remove(o);
 	}

@@ -7,15 +7,21 @@ import java.util.List;
 
 import org.apache.commons.collections.comparators.ReverseComparator;
 
+import ar.edu.itba.it.paw.daos.api.PhotoDao;
 import ar.edu.itba.it.paw.daos.api.PropertyDao;
+import ar.edu.itba.it.paw.daos.api.UserDao;
+import ar.edu.itba.it.paw.model.entities.Photo;
 import ar.edu.itba.it.paw.model.entities.Property;
 import ar.edu.itba.it.paw.model.entities.Property.Operation;
 import ar.edu.itba.it.paw.model.entities.Property.Type;
 import ar.edu.itba.it.paw.model.services.PropertyService.Order;
+import ar.edu.itba.it.paw.utils.collections.CollectionWithMemory;
 
 public class InMemoryPropertyDao implements PropertyDao {
 
-	List<Property> data;
+	private List<Property> data;
+	private PhotoDao photoDao;
+	private UserDao userDao;
 
 	public InMemoryPropertyDao(final List<Property> data) {
 		this.data = data;
@@ -31,6 +37,10 @@ public class InMemoryPropertyDao implements PropertyDao {
 	}
 
 	public boolean delete(final Property obj) {
+		if (obj.getOwner().getProperties().contains(obj)) {
+			obj.getOwner().getProperties().remove(obj);
+		}
+
 		if (this.data.contains(obj)) {
 			this.data.remove(obj);
 			return true;
@@ -39,6 +49,9 @@ public class InMemoryPropertyDao implements PropertyDao {
 	}
 
 	public boolean saveOrUpdate(final Property obj) {
+
+		this.updateReferences(obj);
+
 		if (!this.data.contains(obj)) {
 			obj.setDirty(false);
 			return this.data.add(obj);
@@ -46,11 +59,34 @@ public class InMemoryPropertyDao implements PropertyDao {
 			if (obj.isDirty()) {
 				this.data.remove(obj);
 				obj.setDirty(false);
+
 				return this.data.add(obj);
 			} else {
 				return false;
 			}
 		}
+	}
+
+	private void updateReferences(final Property obj) {
+		final CollectionWithMemory<Photo> photosWithDeletions = (CollectionWithMemory<Photo>) obj
+				.getPhotos();
+
+		if (photosWithDeletions.isModified()) {
+			for (final Photo photo : photosWithDeletions) {
+				this.photoDao.saveOrUpdate(photo);
+			}
+
+			for (final Photo photo : photosWithDeletions.getDeletedItems()) {
+				this.photoDao.delete(photo);
+			}
+			photosWithDeletions.getDeletedItems().clear();
+			photosWithDeletions.setModified(false);
+		}
+
+		if (!obj.getOwner().getProperties().contains(obj)) {
+			obj.getOwner().getProperties().add(obj);
+		}
+
 	}
 
 	public List<Property> getAll() {
@@ -133,6 +169,25 @@ public class InMemoryPropertyDao implements PropertyDao {
 		ans.subList(end, size).clear();
 
 		return ans;
+	}
+
+	public void setPhotoDao(final PhotoDao photoDao) {
+		this.photoDao = photoDao;
+	}
+
+	public List<Property> getByUserId(final int userId) {
+		final List<Property> props = new ArrayList<Property>();
+
+		for (final Property property : this.data) {
+			if (property.getOwner().getId().equals(Integer.valueOf(userId))) {
+				props.add(property);
+			}
+		}
+		return props;
+	}
+
+	public void setUserDao(final UserDao userDao) {
+		this.userDao = userDao;
 	}
 }
 

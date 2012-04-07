@@ -1,7 +1,9 @@
 package ar.edu.itba.it.paw.model.entities;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
+
+import ar.edu.itba.it.paw.utils.collections.CollectionWithMemory;
 
 public class Property implements Entity {
 
@@ -68,13 +70,13 @@ public class Property implements Entity {
 	private Integer age;
 	private Services service;
 	private String description;
-	private List<Photo> photos;
+	private Collection<Photo> photos;
 
-	public List<Photo> getPhotos() {
+	public Collection<Photo> getPhotos() {
 		return this.photos;
 	}
 
-	public void setPhotos(final List<Photo> photos) {
+	public void setPhotos(final Collection<Photo> photos) {
 		this.photos = photos;
 	}
 
@@ -112,7 +114,7 @@ public class Property implements Entity {
 		this.age = age;
 		this.service = service;
 		this.description = description;
-		this.photos = new ArrayList<Photo>();
+		this.photos = new CollectionWithMemory<Photo>(new ArrayList<Photo>());
 		this.setOwner(owner);
 		this.setVisible(true);
 		this.setDirty(false);

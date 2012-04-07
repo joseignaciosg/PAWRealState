@@ -4,6 +4,11 @@ import ar.edu.itba.it.paw.daos.api.UserDao;
 import ar.edu.itba.it.paw.model.entities.User;
 import ar.edu.itba.it.paw.utils.Factory;
 
+/**
+ * Generates a user from a given ID and it's dao, used for lazy implementations
+ * 
+ * @author cris
+ */
 public class UserFactory implements Factory<User> {
 
 	private UserDao dao;

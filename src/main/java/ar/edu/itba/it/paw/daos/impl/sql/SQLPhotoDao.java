@@ -32,9 +32,9 @@ public class SQLPhotoDao implements PhotoDao {
 			final ResultSet cursor = ps.getResultSet();
 			while (cursor.next()) {
 				photo = new Photo(Integer.valueOf(cursor.getString("id")),
-						cursor.getString("data").getBytes("UTF-16"),
-						cursor.getString("type"), Integer.valueOf(cursor
-								.getString("property_id")));
+						cursor.getBytes("data"), cursor.getString("type"),
+						Integer.valueOf(cursor.getString("property_id")));
+				photo.setNew(false);
 			}
 		} catch (final Exception e) {
 			e.printStackTrace();
@@ -110,7 +110,7 @@ public class SQLPhotoDao implements PhotoDao {
 			final Connection conn = this.provider.getConnection();
 			final String query = "SELECT * FROM PHOTOS WHERE property_id=?";
 			final PreparedStatement ps = conn.prepareStatement(query);
-			ps.setString(1, String.valueOf(id));
+			ps.setInt(1, Integer.valueOf(id));
 			ps.execute();
 			final ResultSet cursor = ps.getResultSet();
 
@@ -119,6 +119,7 @@ public class SQLPhotoDao implements PhotoDao {
 						.getString("id")), null, null, Integer.valueOf(cursor
 						.getString("property_id")));
 				photos.add(photo);
+				photo.setNew(false);
 
 			}
 			return photos;

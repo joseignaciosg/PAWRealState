@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import ar.edu.itba.it.paw.daos.api.UserDao;
+import ar.edu.itba.it.paw.model.entities.Property;
 import ar.edu.itba.it.paw.model.entities.User;
 
 public abstract class UserDaoTest extends DaoTest {
@@ -41,6 +42,20 @@ public abstract class UserDaoTest extends DaoTest {
 		u = this.userDao.getById(1123123);
 
 		Assert.assertNull(u);
+	}
+
+	@Test
+	public void propertiesRelationShipTest() {
+		this.userDao = this.getDaoProvider().getUserDao();
+
+		final Property defProp = this.getHelper().defaultProperty();
+		User defUser = this.getHelper().defaultUser();
+
+		defUser = this.userDao.getById(defUser.getId());
+		Assert.assertTrue(defUser.getProperties().size() == 1);
+		Assert.assertTrue(defUser.getProperties().iterator().next()
+				.equals(defProp));
+
 	}
 
 	@Test

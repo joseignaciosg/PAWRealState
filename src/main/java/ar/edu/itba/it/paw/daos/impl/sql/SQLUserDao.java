@@ -7,13 +7,19 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import ar.edu.itba.it.paw.daos.api.PropertyDao;
 import ar.edu.itba.it.paw.daos.api.UserDao;
+import ar.edu.itba.it.paw.daos.impl.sql.factories.PropertyCollectionFactory;
 import ar.edu.itba.it.paw.db.ConnectionProvider;
+import ar.edu.itba.it.paw.model.entities.Property;
 import ar.edu.itba.it.paw.model.entities.User;
+import ar.edu.itba.it.paw.utils.collections.CollectionWithMemory;
+import ar.edu.itba.it.paw.utils.collections.LazyCollection;
 
 public class SQLUserDao implements UserDao {
 
 	private ConnectionProvider provider;
+	private PropertyDao propertyDao;
 
 	public SQLUserDao(final ConnectionProvider provider) {
 		this.provider = provider;
@@ -178,6 +184,9 @@ public class SQLUserDao implements UserDao {
 		user = new User(userId, firstnameStr, lastnameStr, email, phone,
 				username, password);
 
+		user.setProperties(new CollectionWithMemory<Property>(
+				new LazyCollection<Property>(new PropertyCollectionFactory(
+						this.propertyDao, user))));
 		user.setNew(false);
 		return user;
 	}
@@ -190,6 +199,10 @@ public class SQLUserDao implements UserDao {
 		statement.setString(4, user.getTelephone());
 		statement.setString(5, user.getUsername());
 		statement.setString(6, user.getPassword());
+	}
+
+	public void setPropertyDao(final PropertyDao propertyDao) {
+		this.propertyDao = propertyDao;
 	}
 
 }

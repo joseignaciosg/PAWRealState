@@ -8,10 +8,9 @@ import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import ar.edu.itba.it.paw.daos.DaoProvider;
 import ar.edu.itba.it.paw.daos.api.PropertyDao;
 import ar.edu.itba.it.paw.daos.api.UserDao;
-import ar.edu.itba.it.paw.daos.impl.inmem.InMemoryPropertyDao;
-import ar.edu.itba.it.paw.daos.impl.inmem.InMemoryUserDao;
 import ar.edu.itba.it.paw.model.entities.Property;
 import ar.edu.itba.it.paw.model.entities.Property.Operation;
 import ar.edu.itba.it.paw.model.entities.Property.Type;
@@ -19,6 +18,7 @@ import ar.edu.itba.it.paw.model.entities.Services;
 import ar.edu.itba.it.paw.model.entities.User;
 import ar.edu.itba.it.paw.model.services.PropertyService;
 import ar.edu.itba.it.paw.model.services.PropertyService.Order;
+import ar.edu.itba.it.paw.test.daos.helper.DaoTestHelper;
 
 /*
  * Todos los usuarios, incluyendo usuarios anónimos, deben poder consultar el listado
@@ -37,85 +37,91 @@ public class PropertyServiceTest {
 	private User owner;
 	private PropertyService service;
 
+	private DaoTestHelper helper;
+
 	@Before
 	public void initService() {
-		final List<Property> propertyList = new ArrayList<Property>();
-		final List<User> userList = new ArrayList<User>();
 
 		final Services service = new Services(true, true, true, true, false,
 				true);
 
+		this.helper = new DaoTestHelper(DaoProvider.getInMemoryProvider());
+
+		final PropertyDao dao = DaoProvider.getInMemoryProvider()
+				.getPropertyDao();
+		final UserDao userDao = DaoProvider.getInMemoryProvider().getUserDao();
+
 		this.owner = new User("cris", "apellido", "Email", "telefono", "cris",
 				"asd");
 
-		userList.add(this.owner);
-
-		// new Property(iD, Type, Operation, neighborhood, address, price,
-		// spaces, coveredArea, freeArea, age, service, description)
+		userDao.saveOrUpdate(this.owner);
 
 		final Property prop1 = new Property(Integer.valueOf(1), Type.APARTMENT,
 				Operation.RENT, "Palermo", "Lavalle 660",
 				Integer.valueOf(1000), Integer.valueOf(3),
 				Integer.valueOf(100), Integer.valueOf(200), Integer.valueOf(5),
-				service, "Descrip1", null);
+				service, "Descrip1", this.helper.defaultUser());
 
 		final Property prop2 = new Property(Integer.valueOf(2), Type.HOUSE,
 				Operation.RENT, "BarrioNorte", "Junca 460",
 				Integer.valueOf(501), Integer.valueOf(3), Integer.valueOf(100),
-				Integer.valueOf(200), Integer.valueOf(5), service, "Descrip2", null);
+				Integer.valueOf(200), Integer.valueOf(5), service, "Descrip2",
+				this.helper.defaultUser());
 
 		final Property prop3 = new Property(Integer.valueOf(3), Type.HOUSE,
 				Operation.SELL, "Palermo", "Alem 110", Integer.valueOf(500),
 				Integer.valueOf(3), Integer.valueOf(100), Integer.valueOf(200),
-				Integer.valueOf(5), service, "Descrip3", null);
+				Integer.valueOf(5), service, "Descrip3",
+				this.helper.defaultUser());
 
 		final Property prop4 = new Property(Integer.valueOf(4), Type.APARTMENT,
 				Operation.RENT, "Caballito", "Taring 660",
 				Integer.valueOf(5020), Integer.valueOf(3),
 				Integer.valueOf(100), Integer.valueOf(2000),
-				Integer.valueOf(5), service, "Descrip1", null);
+				Integer.valueOf(5), service, "Descrip1",
+				this.helper.defaultUser());
 
 		final Property prop5 = new Property(Integer.valueOf(5), Type.HOUSE,
 				Operation.SELL, "BarrioNorte", "Junca 460",
 				Integer.valueOf(5005), Integer.valueOf(3),
 				Integer.valueOf(100), Integer.valueOf(200), Integer.valueOf(5),
-				service, "Descrip2", null);
+				service, "Descrip2", this.helper.defaultUser());
 
 		final Property prop6 = new Property(Integer.valueOf(6), Type.HOUSE,
 				Operation.RENT, "Palermo", "Alem 110", Integer.valueOf(500),
 				Integer.valueOf(3), Integer.valueOf(100), Integer.valueOf(200),
-				Integer.valueOf(5), service, "Descrip3", null);
+				Integer.valueOf(5), service, "Descrip3",
+				this.helper.defaultUser());
 
 		final Property prop7 = new Property(Integer.valueOf(7), Type.APARTMENT,
 				Operation.RENT, "Palermo", "Lavalle 660",
 				Integer.valueOf(50040), Integer.valueOf(3),
 				Integer.valueOf(100), Integer.valueOf(200), Integer.valueOf(5),
-				service, "Descrip1", null);
+				service, "Descrip1", this.helper.defaultUser());
 
 		final Property prop8 = new Property(Integer.valueOf(8), Type.HOUSE,
 				Operation.SELL, "BarrioNorte", "Junca 460",
 				Integer.valueOf(5002), Integer.valueOf(3),
 				Integer.valueOf(100), Integer.valueOf(200), Integer.valueOf(5),
-				service, "Descrip2", null);
+				service, "Descrip2", this.helper.defaultUser());
 
 		final Property prop9 = new Property(Integer.valueOf(9), Type.HOUSE,
 				Operation.SELL, "Palermo", "Alem 110", Integer.valueOf(500),
 				Integer.valueOf(3), Integer.valueOf(100), Integer.valueOf(200),
-				Integer.valueOf(5), service, "Descrip3", null);
-		propertyList.add(prop1);
-		propertyList.add(prop2);
-		propertyList.add(prop3);
-		propertyList.add(prop4);
-		propertyList.add(prop5);
-		propertyList.add(prop6);
-		propertyList.add(prop7);
-		propertyList.add(prop8);
-		propertyList.add(prop9);
+				Integer.valueOf(5), service, "Descrip3",
+				this.helper.defaultUser());
 
-		final PropertyDao dao = new InMemoryPropertyDao(propertyList);
-		final UserDao userDao = new InMemoryUserDao(userList);
+		dao.saveOrUpdate(prop1);
+		dao.saveOrUpdate(prop2);
+		dao.saveOrUpdate(prop3);
+		dao.saveOrUpdate(prop4);
+		dao.saveOrUpdate(prop5);
+		dao.saveOrUpdate(prop6);
+		dao.saveOrUpdate(prop7);
+		dao.saveOrUpdate(prop8);
+		dao.saveOrUpdate(prop9);
+
 		this.service = new PropertyService(dao, userDao);
-
 	}
 
 	@Test

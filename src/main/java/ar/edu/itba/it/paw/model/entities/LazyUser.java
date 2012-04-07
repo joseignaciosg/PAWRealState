@@ -1,6 +1,6 @@
 package ar.edu.itba.it.paw.model.entities;
 
-import java.util.List;
+import java.util.Collection;
 
 import ar.edu.itba.it.paw.daos.impl.sql.factories.UserFactory;
 
@@ -37,7 +37,12 @@ public class LazyUser extends User {
 	}
 
 	@Override
-	public List<Property> getProperties() {
+	public void setProperties(final Collection<Property> properties) {
+		this.getUser().getProperties();
+	}
+
+	@Override
+	public Collection<Property> getProperties() {
 		return this.getUser().getProperties();
 	}
 

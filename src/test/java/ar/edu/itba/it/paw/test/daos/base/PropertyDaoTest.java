@@ -7,10 +7,12 @@ import junit.framework.Assert;
 import org.junit.Test;
 
 import ar.edu.itba.it.paw.daos.api.PropertyDao;
+import ar.edu.itba.it.paw.model.entities.Photo;
 import ar.edu.itba.it.paw.model.entities.Property;
 import ar.edu.itba.it.paw.model.entities.Property.Operation;
 import ar.edu.itba.it.paw.model.entities.Property.Type;
 import ar.edu.itba.it.paw.model.entities.Services;
+import ar.edu.itba.it.paw.model.entities.User;
 import ar.edu.itba.it.paw.model.services.PropertyService.Order;
 
 public abstract class PropertyDaoTest extends DaoTest {
@@ -122,6 +124,22 @@ public abstract class PropertyDaoTest extends DaoTest {
 	}
 
 	@Test
+	public void getByUserIdTest() {
+		this.propertyDao = this.getDaoProvider().getPropertyDao();
+
+		final User defaultUser = this.getHelper().defaultUser();
+
+		Assert.assertEquals(0, this.propertyDao
+				.getByUserId(defaultUser.getId()).size());
+
+		this.getHelper().defaultProperty();
+
+		Assert.assertEquals(1, this.propertyDao
+				.getByUserId(defaultUser.getId()).size());
+
+	}
+
+	@Test
 	public void getByIdTest() {
 		this.preparedao();
 		Assert.assertNull(this.propertyDao.getById(4));
@@ -137,12 +155,13 @@ public abstract class PropertyDaoTest extends DaoTest {
 				Type.APARTMENT, Operation.SELL, "Palermo", "Alem 110",
 				Integer.valueOf(500), Integer.valueOf(3), Integer.valueOf(100),
 				Integer.valueOf(200), Integer.valueOf(5), service, "Descrip3",
-				null);
+				this.getHelper().defaultUser());
 
 		final Property propFalse = new Property(Integer.valueOf(5), Type.HOUSE,
 				Operation.SELL, "Palermo", "Alem 110", Integer.valueOf(500),
 				Integer.valueOf(3), Integer.valueOf(100), Integer.valueOf(200),
-				Integer.valueOf(5), service, "Descrip3", null);
+				Integer.valueOf(5), service, "Descrip3", this.getHelper()
+						.defaultUser());
 
 		Assert.assertEquals(true, this.propertyDao.delete(propTrue));
 		Assert.assertEquals(false, this.propertyDao.delete(propFalse));
@@ -154,13 +173,72 @@ public abstract class PropertyDaoTest extends DaoTest {
 	 */
 	@Test
 	public void ownershipRelationTest() {
+		/**
+		 * Once we have a property setup
+		 */
 		this.propertyDao = this.getDaoProvider().getPropertyDao();
 
 		final Property defaultProp = this.propertyDao.getById(this.getHelper()
 				.defaultProperty().getId());
 
+		/**
+		 * The dao should returnt he reference to the owner, which can or not be
+		 * lazy.
+		 */
 		Assert.assertEquals(this.getHelper().defaultUser(),
 				defaultProp.getOwner());
+	}
+
+	@Test
+	public void photosRelationTest() {
+
+		/**
+		 * First we load the photo and property.
+		 */
+
+		this.propertyDao = this.getDaoProvider().getPropertyDao();
+
+		this.getHelper().defaultPhoto();
+
+		Property defaultProp = this.propertyDao.getById(this.getHelper()
+				.defaultProperty().getId());
+
+		/**
+		 * It should have only one photo loaded
+		 */
+		Assert.assertTrue(defaultProp.getPhotos().size() == 1);
+
+		/**
+		 * Once we add a new photo, it must be resolver correctly by the dao
+		 */
+		final Photo photo2 = new Photo(2, new byte[] {}, "jpg", 1);
+
+		defaultProp.getPhotos().add(photo2);
+
+		this.propertyDao.saveOrUpdate(defaultProp);
+
+		defaultProp = this.propertyDao.getById(this.getHelper()
+				.defaultProperty().getId());
+
+		/**
+		 * Like this.
+		 */
+		Assert.assertTrue(defaultProp.getPhotos().size() == 2);
+
+		/**
+		 * Same happens with removal
+		 */
+		defaultProp.getPhotos().remove(photo2);
+
+		this.propertyDao.saveOrUpdate(defaultProp);
+
+		defaultProp = this.propertyDao.getById(this.getHelper()
+				.defaultProperty().getId());
+
+		/**
+		 * Like this.
+		 */
+		Assert.assertTrue(defaultProp.getPhotos().size() == 1);
 	}
 
 	@Test

@@ -3,7 +3,7 @@ package ar.edu.itba.it.paw.utils.collections;
 import java.util.Collection;
 import java.util.Iterator;
 
-import org.apache.commons.collections.Factory;
+import ar.edu.itba.it.paw.utils.Factory;
 
 /**
  * <pre>
@@ -18,20 +18,19 @@ import org.apache.commons.collections.Factory;
 public class LazyCollection<T> implements Collection<T> {
 
 	private Collection<T> original;
-	private Factory collectionFactory;
+	private Factory<Collection<T>> collectionFactory;
 
 	/**
 	 * @param fact
 	 *            Factory which should return a Collection<T>
 	 */
-	public LazyCollection(final Factory fact) {
+	public LazyCollection(final Factory<Collection<T>> fact) {
 		this.collectionFactory = fact;
 	}
 
-	@SuppressWarnings("unchecked")
 	private Collection<T> getCollection() {
 		if (this.original == null) {
-			this.original = ((Collection<T>) this.collectionFactory.create());
+			this.original = this.collectionFactory.create();
 		}
 
 		return this.original;

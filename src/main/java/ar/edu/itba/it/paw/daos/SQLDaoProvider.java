@@ -13,10 +13,15 @@ public class SQLDaoProvider extends DaoProvider {
 
 	public SQLDaoProvider(final ConnectionProvider provider) {
 		this.userDao = new SQLUserDao(provider);
-		this.propertyDao = new SQLPropertyDao(provider, this.userDao);
+		this.photoDao = new SQLPhotoDao(provider);
+		this.propertyDao = new SQLPropertyDao(provider, this.userDao,
+				this.photoDao);
+
+		this.photoDao = new SQLPhotoDao(provider);
 		this.contactrequestDao = new SQLContactRequestDao(provider,
 				this.propertyDao);
-		this.photoDao = new SQLPhotoDao(provider);
+
+		((SQLUserDao) this.userDao).setPropertyDao(this.propertyDao);
 
 	}
 }

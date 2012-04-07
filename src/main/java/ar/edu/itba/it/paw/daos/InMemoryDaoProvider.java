@@ -21,7 +21,10 @@ public class InMemoryDaoProvider extends DaoProvider {
 		this.propertyDao = new InMemoryPropertyDao(new ArrayList<Property>());
 		this.contactrequestDao = new InMemoryContactRequestDao(
 				new ArrayList<ContactRequest>());
-		this.photoDao = new InMemoryPhotoDao(new ArrayList<Photo>());
+		this.photoDao = new InMemoryPhotoDao(new ArrayList<Photo>(),
+				this.propertyDao);
+
+		((InMemoryPropertyDao) this.propertyDao).setPhotoDao(this.photoDao);
 		this.userDao = new InMemoryUserDao(new ArrayList<User>());
 	}
 }
