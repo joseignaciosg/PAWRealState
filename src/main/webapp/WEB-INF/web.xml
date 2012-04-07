@@ -41,7 +41,7 @@
 	<servlet>
 		<servlet-name>EditPropertyPage</servlet-name>
 		<servlet-class>ar.edu.itba.it.paw.web.servlets.EditPropertyPage</servlet-class>
-	</servlet>ChangeVisibility
+	</servlet>
 	<servlet>
 		<servlet-name>ChangeVisibility</servlet-name>
 		<servlet-class>ar.edu.itba.it.paw.web.servlets.ChangeVisibility</servlet-class>
@@ -50,6 +50,26 @@
 		<servlet-name>ContactRequest</servlet-name>
 		<servlet-class>ar.edu.itba.it.paw.web.servlets.ContactRequestPage</servlet-class>
 	</servlet>
+	<servlet>
+		<servlet-name>PhotoAddPage</servlet-name>
+		<servlet-class>ar.edu.itba.it.paw.web.servlets.PhotoAddPage</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>PhotoServlet</servlet-name>
+		<servlet-class>ar.edu.itba.it.paw.web.servlets.PhotoServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>PhotoListPage</servlet-name>
+		<servlet-class>ar.edu.itba.it.paw.web.servlets.PhotoListPage</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>PhotoListPage</servlet-name>
+		<url-pattern>/myproperties/myphotos</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>PhotoAddPage</servlet-name>
+		<url-pattern>/myproperties/newphoto</url-pattern>
+	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>ContactRequest</servlet-name>
 		<url-pattern>/contactrequest</url-pattern>
@@ -100,7 +120,7 @@
 		<filter-class>ar.edu.itba.it.paw.web.filters.SessionFilter</filter-class>
 		<init-param>
 			<param-name>excludePatterns</param-name>
-			<param-value>(.*/assets/.*|.*/search(/)?|.*/contact(/)?|.*/properties/view(/)?$|.*/index(/)?|.*/register(/)?|.*/login(/)?)</param-value>
+			<param-value>(.*/assets/.*|.*/search(/)?|.*/contact(/)?|.*/properties/view(/)?$|.*/index(/)?|.*/register(/)?|.*/login(/)?|.*/photos.*(/)?)</param-value>
 		</init-param>
 	</filter>
 	<filter-mapping>
