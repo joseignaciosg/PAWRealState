@@ -16,10 +16,9 @@
 			<h2><c:out value=" ${property.neighborhood}" /> </h2>
 			<br />
 			<ul class="thumbnails">
-				<li class="span4"><a href="#" class="thumbnail"> <img height="360" width="268" src="http://www.highgrowthpropertyinvestment.co.uk/media/Sell-Property.jpg" alt="house" />
-				</a></li>
+				
 
-				<div class="span4">
+				<div class="span3">
 					<dl>
 						<dt><h4>Tipo de Inmueble</h4></dt>
 						<c:if test = "${property.type == 'HOUSE'}">   
@@ -43,6 +42,8 @@
 					</dl>
 
 				</div>
+				<li class="span5"><a href="#" class="thumbnail"> <img height="360" width="268" src="http://www.highgrowthpropertyinvestment.co.uk/media/Sell-Property.jpg" alt="house" />
+				</a></li>
 			</ul>
 			<div class="span5"  style="margin: 0px;">
 		<table class="table table-striped">
@@ -126,26 +127,17 @@
 			
 		</div>
 		<div class="span3">
-
+	<script type="text/javascript">
+	 $(document).ready(function () {
+  		$(".js-contact-button").on("click", function() {
+  			$(this).parent().hide();
+  		});
+  	});
+  	</script>
 		<form name="contactrequest" class="form-vertical" action="/contactrequest" method="POST">
-		
-				<!--<fieldset>
-					<legend>Contacta al Publicador</legend>
-					<label>Tu Nombre</label> 
-					<input type="text" class="span3" placeholder="Requerido…"> 
-					<label>Tu Apellido</label> 
-					<input type="text" class="span3" placeholder="Requerido…"> 
-					<label>Tu e-mail de contacto</label> 
-					<input type="text" class="span3" placeholder="Requerido…"> 
-					<label>Tu Consulta</label> 
-					<input type="text" class="span3" placeholder="Opcional…"><br />
-					<button type="submit" class="btn btn-primary">Obtener
-						datos del Publicador</button>
-				</fieldset>-->
-				
 		<fieldset>
 			<legend>Contacta al Publicador</legend>
-			
+			<div id="hiddenform" class="collapse" >
 			<div class="control-group">
 				<label class="control-label" for="first_name">Nombre</label>
 				<div class="controls">
@@ -176,11 +168,17 @@
 					<input type="text" class="input-xlarge" id="description" name="description">
 				</div>
 			</div>
+			
 			<button type="submit" class="btn btn-primary">Obtener
 						datos del Publicador</button>
+			
+			</div>
 		</fieldset>
 	
 			</form>
+			<div class="form-actions" style="width:230px;">
+            <button class="btn js-contact-button"  data-toggle="collapse" data-target="#hiddenform">Mostrar Formulario</button>
+         	</div>
 				<table class="table table-striped">
 					<thead>
 					    <tr>
@@ -201,7 +199,7 @@
 	  	$("#map").gMap(options);
 	});
 	  </script>
-							<div id="map"  style="height:380px; width:270px;"></div>	
+							<div id="map"  style="height:380px; width:260px;"></div>	
 						</td>
 						</tr>
 					  </tbody>

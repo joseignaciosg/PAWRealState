@@ -8,6 +8,7 @@ public class ServiceProvider {
 	private static PropertyService propertyService;
 	private static ContactRequestService contactRequestService;
 	private static PhotoService photoService;
+	private static EmailService emailService;
 
 	private ServiceProvider() {
 	}
@@ -45,6 +46,13 @@ public class ServiceProvider {
 		}
 
 		return contactRequestService;
+	}
+
+	public static EmailService getEmailService() {
+		if (emailService == null) {
+			emailService = new EmailService();
+		}
+		return emailService;
 	}
 
 }
