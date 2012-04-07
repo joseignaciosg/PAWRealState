@@ -1,7 +1,9 @@
 package ar.edu.itba.it.paw.model.entities;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
+
+import ar.edu.itba.it.paw.utils.collections.CollectionWithMemory;
 
 public class User implements Entity {
 
@@ -13,12 +15,19 @@ public class User implements Entity {
 	private String username;
 	private String password;
 	private boolean dirty;
-	private List<Property> properties;
+	private Collection<Property> properties;
+
+	public void setProperties(final Collection<Property> properties) {
+		this.properties = properties;
+	}
+
 	private boolean isnew;
+
+	protected User() {
+	}
 
 	public User(final String name, final String surname, final String mail,
 			final String telephone, final String username, final String password) {
-		// super();
 		this(null, name, surname, mail, telephone, username, password);
 		this.setDirty(false);
 		this.setVisible(true);
@@ -27,13 +36,15 @@ public class User implements Entity {
 	public User(final Integer userId, final String name, final String surname,
 			final String mail, final String telephone, final String username,
 			final String password) {
-		this.properties = new ArrayList<Property>();
+		this.properties = new CollectionWithMemory<Property>(
+				new ArrayList<Property>());
 		this.name = name;
 		this.surname = surname;
 		this.mail = mail;
 		this.telephone = telephone;
 		this.username = username;
 		this.password = password;
+		this.ID = userId;
 		this.setDirty(false);
 		this.isnew = true;
 	}
@@ -42,7 +53,7 @@ public class User implements Entity {
 		this.isnew = isnew;
 	}
 
-	public List<Property> getProperties() {
+	public Collection<Property> getProperties() {
 		return this.properties;
 	}
 
@@ -121,9 +132,6 @@ public class User implements Entity {
 			return true;
 		}
 		if (obj == null) {
-			return false;
-		}
-		if (this.getClass() != obj.getClass()) {
 			return false;
 		}
 		final User other = (User) obj;

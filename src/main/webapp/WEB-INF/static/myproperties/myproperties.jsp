@@ -34,6 +34,7 @@
 					<div class="btn-group">
 						<a href="${ basePath }/properties/view?id=${ property.id }" class="btn btn-mini">Ver publicación</a>
 						<a href="${ basePath }/myproperties/edit?ID=${ property.id }" class="btn btn-mini">Editar</a>
+						<a href="${ basePath }/myproperties/myphotos?propertyId=${ property.id }" class="btn btn-mini">Fotos</a>
 						<a href="${ basePath }/myproperties/changevisibility?id=${ property.id }" class="btn btn-mini">Cambiar visibilidad</a>
 						<a href="${ basePath }/myproperties/delete?ID=${ property.id }" class="btn btn-mini btn-danger">Eliminar</a>
 					</div>

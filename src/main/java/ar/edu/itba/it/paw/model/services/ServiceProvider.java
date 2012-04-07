@@ -1,12 +1,14 @@
 package ar.edu.itba.it.paw.model.services;
 
 import ar.edu.itba.it.paw.daos.DaoProvider;
+import ar.edu.itba.it.paw.model.services.utils.EmailMessageSender;
 
 public class ServiceProvider {
 
 	private static UserService userService;
 	private static PropertyService propertyService;
-	private static ContactRequestService contactRequest;
+	private static ContactRequestService contactRequestService;
+	private static PhotoService photoService;
 	private static EmailService emailService;
 
 	private ServiceProvider() {
@@ -14,7 +16,7 @@ public class ServiceProvider {
 
 	public static UserService getUserService() {
 		if (userService == null) {
-			userService = new UserService(DaoProvider.getUserDao());
+			userService = new UserService(DaoProvider.getDefaultUserDao());
 		}
 
 		return userService;
@@ -22,26 +24,33 @@ public class ServiceProvider {
 
 	public static PropertyService getPropertyService() {
 		if (propertyService == null) {
-			propertyService = new PropertyService(DaoProvider.getPropertyDao(),
-					DaoProvider.getUserDao());
+			propertyService = new PropertyService(DaoProvider.getDefaultPropertyDao(),
+					DaoProvider.getDefaultUserDao());
 		}
 
 		return propertyService;
 	}
 
+	public static PhotoService getPhotoService() {
+		if (photoService == null) {
+			photoService = new PhotoService(DaoProvider.getDefaultPhotoDao());
+
+		}
+		return photoService;
+	}
+
 	public static ContactRequestService getContactRequestService() {
-		if (contactRequest == null) {
-			contactRequest = new ContactRequestService(
-					DaoProvider.getPropertyDao(),
-					DaoProvider.getContactRequestDao());
+		if (contactRequestService == null) {
+			contactRequestService = new ContactRequestService(
+					DaoProvider.getDefaultContactRequestDao());
 		}
 
-		return contactRequest;
+		return contactRequestService;
 	}
 
 	public static EmailService getEmailService() {
 		if (emailService == null) {
-			emailService = new EmailService();
+			emailService = new EmailService(new EmailMessageSender());
 		}
 		return emailService;
 	}
