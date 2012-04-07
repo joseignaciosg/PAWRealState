@@ -16,6 +16,11 @@ import ar.edu.itba.it.paw.web.utils.HTMLUtils;
 
 public class PhotoListPage extends HttpServlet {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Override
 	protected void doGet(final HttpServletRequest req,
 			final HttpServletResponse resp) throws ServletException,

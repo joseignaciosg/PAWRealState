@@ -73,6 +73,9 @@ public class PhotoAddPage extends HttpServlet {
 				service.savePhoto(photo.getData(), photo.getPropertyid(), null,
 						new ArrayList<String>());
 
+				resp.sendRedirect(req.getContextPath()
+						+ "/myproperties/myphotos?propertyId="
+						+ photo.getPropertyid());
 			} else {
 				resp.sendRedirect(req.getContextPath() + "/index");
 			}
