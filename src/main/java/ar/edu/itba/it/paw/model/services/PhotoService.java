@@ -4,6 +4,7 @@ import java.util.List;
 
 import ar.edu.itba.it.paw.daos.api.PhotoDao;
 import ar.edu.itba.it.paw.model.entities.Photo;
+import ar.edu.itba.it.paw.model.entities.Property;
 import ar.edu.itba.it.paw.model.entities.User;
 import ar.edu.itba.it.paw.model.services.utils.ServiceUtils;
 
@@ -32,7 +33,16 @@ public class PhotoService {
 		ServiceUtils.validateNotNull(data, "EL ID de la propiedad es inválida",
 				errors);
 
-		// TODO: Validate ownership of propertyId
+		boolean owned = false;
+		for (final Property prop : user.getProperties()) {
+			if (prop.getId().equals(Integer.valueOf(propertyId))) {
+				owned = true;
+			}
+		}
+
+		if (!owned) {
+			errors.add("El usuario actual no tiene la propiedad dada");
+		}
 
 		if (errors.size() > 0) {
 			return false;

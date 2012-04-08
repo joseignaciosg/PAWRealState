@@ -44,7 +44,7 @@
 	background-image: -webkit-linear-gradient(top, whiteSmoke 0%, #EEE 100%);
 	background-image: -ms-linear-gradient(top, whiteSmoke 0%, #EEE 100%);
 	background-image: -o-linear-gradient(top, whiteSmoke 0%, #EEE 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient(   startColorstr='#f5f5f5',
+	filter: progid:DXImageTransform.Microsoft.gradient(    startColorstr='#f5f5f5',
 		endColorstr='#eeeeee', GradientType=0 );
 	background-image: linear-gradient(top, whiteSmoke 0%, #EEE 100%);
 	border: 1px solid #E5E5E5;
@@ -53,10 +53,38 @@
 	border-radius: 4px;
 }
 
-.subnavbottom{
-  position: fixed;
-  bottom: 0px;
-  margin-right: auto;
-  margin-left: auto;
-  background: white;
+.subnav h6 {
+	margin-top: 11px;
+	margin-right: 2px;
+}
+
+.subnavbottom {
+	position: fixed;
+	bottom: 0px;
+	margin-right: auto;
+	margin-left: auto;
+	background: white;
+}
+
+.subnav .divider-vertical {
+	height: 37px;
+	width: 1px;
+	margin: 0 9px;
+	overflow: hidden;
+	background-color: #eee;
+	border-right: 1px solid #ddd;
+}
+
+.subnav select {
+	height: 24px;
+	margin-top: 8px;
+}
+
+h3.property-title {
+	margin-bottom: 5px;
+}
+	
+
+h3.search-result {
+	margin: 30px 0;
 }

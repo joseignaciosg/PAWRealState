@@ -100,8 +100,6 @@ public class PropertyService {
 		} else {
 			prop = this.propertyDao.getById(id);
 
-			// TODO: Check id integrity
-
 			prop.setType(type);
 			prop.setOperation(operation);
 			prop.setNeighborhood(neighborhood);
@@ -114,16 +112,10 @@ public class PropertyService {
 			prop.setService(service);
 			prop.setDescription(description);
 
-			prop.setDirty(true); // TODO: This should be dynamic
+			prop.setDirty(true);
 		}
 
 		this.propertyDao.saveOrUpdate(prop);
-
-		if (!owner.getProperties().contains(prop)) {
-			owner.getProperties().add(prop);
-		}
-
-		this.userDao.saveOrUpdate(owner);
 
 		return true;
 	}

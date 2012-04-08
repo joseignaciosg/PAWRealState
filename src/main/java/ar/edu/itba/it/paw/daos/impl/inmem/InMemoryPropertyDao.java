@@ -9,7 +9,6 @@ import org.apache.commons.collections.comparators.ReverseComparator;
 
 import ar.edu.itba.it.paw.daos.api.PhotoDao;
 import ar.edu.itba.it.paw.daos.api.PropertyDao;
-import ar.edu.itba.it.paw.daos.api.UserDao;
 import ar.edu.itba.it.paw.model.entities.Photo;
 import ar.edu.itba.it.paw.model.entities.Property;
 import ar.edu.itba.it.paw.model.entities.Property.Operation;
@@ -21,7 +20,6 @@ public class InMemoryPropertyDao implements PropertyDao {
 
 	private List<Property> data;
 	private PhotoDao photoDao;
-	private UserDao userDao;
 
 	public InMemoryPropertyDao(final List<Property> data) {
 		this.data = data;
@@ -184,10 +182,6 @@ public class InMemoryPropertyDao implements PropertyDao {
 			}
 		}
 		return props;
-	}
-
-	public void setUserDao(final UserDao userDao) {
-		this.userDao = userDao;
 	}
 }
 

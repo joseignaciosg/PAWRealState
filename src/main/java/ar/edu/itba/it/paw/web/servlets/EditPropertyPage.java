@@ -32,9 +32,6 @@ public class EditPropertyPage extends HttpServlet {
 	protected void doGet(final HttpServletRequest req,
 			final HttpServletResponse resp) throws ServletException,
 			IOException {
-
-		// TODO: Check integrity of owner!
-
 		final PropertyService service = ServiceProvider.getPropertyService();
 
 		final List<String> errors = new ArrayList<String>();

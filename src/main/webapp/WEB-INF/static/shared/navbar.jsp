@@ -8,7 +8,7 @@
 				method="POST">
 				<input type="text" name="user_username" class="span2" value="${ user_cookie_username }" 
 					placeholder="Usuario" /> <input type="password"
-					name="user_password" class="span2" placeholder="Contraseï¿½a" /> <input
+					name="user_password" class="span2" placeholder="Contraseña" /> <input
 					type="submit" class="btn btn-primary" value="Entrar" />
 			</form>
 		</li>

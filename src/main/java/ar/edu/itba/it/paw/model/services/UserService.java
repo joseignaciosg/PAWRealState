@@ -31,9 +31,6 @@ public class UserService {
 		return false;
 	}
 
-	// TODO: Validate numeric telephone
-	// TODO: Validate email format
-	// Hint: Clase "Pattern"
 	public boolean register(final String name, final String lastname,
 			final String email, final String phone, final String username,
 			final String password, final String repeatedPassword,

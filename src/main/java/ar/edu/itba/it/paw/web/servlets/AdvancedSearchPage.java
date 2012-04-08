@@ -100,7 +100,7 @@ public class AdvancedSearchPage extends HttpServlet {
 		req.setAttribute("pricelow", req.getParameter("pricelow"));
 		req.setAttribute("pricehigh", req.getParameter("pricehigh"));
 		req.setAttribute("order", req.getParameter("order"));
-		HTMLUtils.render("search/neosearch.jsp", req, resp);
+		HTMLUtils.render("search/search.jsp", req, resp);
 
 	}
 }
