@@ -7,6 +7,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class HTMLUtils {
+	public static void redirectBack(final HttpServletRequest req,
+			final HttpServletResponse resp) throws IOException {
+		String backPage = null;
+		if (req.getHeader("Referer") == null) {
+			if (req.getHeader("Origin") == null) {
+				backPage = "/index";
+			} else {
+				backPage = req.getHeader("Origin");
+			}
+		} else {
+			backPage = req.getHeader("Referer");
+		}
+
+		resp.sendRedirect(backPage);
+	}
+
 	/**
 	 * Loads a jsp file from with the parameters given.
 	 * 

@@ -26,12 +26,44 @@ public class PhotoService {
 		return this.photoDao.getById(id);
 	}
 
+	public boolean deletePhoto(final int photoId, final User user,
+			final List<String> errors) {
+
+		ServiceUtils.validateNotNull(photoId, "EL ID de la foto es inválida",
+				errors);
+
+		if (errors.size() > 0) {
+			return false;
+		}
+
+		final Photo p = this.photoDao.getById(photoId);
+
+		boolean owned = false;
+		for (final Property prop : user.getProperties()) {
+			if (prop.getId().equals(Integer.valueOf(p.getPropertyId()))) {
+				owned = true;
+			}
+		}
+
+		if (!owned) {
+			errors.add("El usuario actual no tiene la propiedad dada");
+		}
+
+		if (errors.size() > 0) {
+			return false;
+		}
+
+		this.photoDao.delete(p);
+
+		return !p.isNew();
+	}
+
 	public boolean savePhoto(final byte[] data, final int propertyId,
 			final User user, final List<String> errors) {
 		ServiceUtils.validateNotNull(data, "Se debe adjuntar una imágen",
 				errors);
-		ServiceUtils.validateNotNull(data, "EL ID de la propiedad es inválida",
-				errors);
+		ServiceUtils.validateNotNull(propertyId,
+				"EL ID de la propiedad es inválida", errors);
 
 		boolean owned = false;
 		for (final Property prop : user.getProperties()) {

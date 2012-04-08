@@ -42,8 +42,13 @@ public class AdvancedSearchPage extends HttpServlet {
 	protected void doPost(final HttpServletRequest req,
 			final HttpServletResponse resp) throws ServletException,
 			IOException {
-		final Integer page = Integer.valueOf(req.getParameter("page"));
-		System.out.println("post: " + req.getParameter("operation"));
+
+		Integer page;
+		try {
+			page = Integer.valueOf(req.getParameter("page"));
+		} catch (final Exception e) {
+			page = 0;
+		}
 		Operation op = null;
 		if (req.getParameter("operation") != null
 				&& req.getParameter("operation").equals("Sell")) {
@@ -86,12 +91,6 @@ public class AdvancedSearchPage extends HttpServlet {
 		final PropertyService serv = ServiceProvider.getPropertyService();
 		final List<Property> props = serv.advancedSearch(op, type, pricelow,
 				pricehigh, Integer.valueOf(page), 5, order);
-		System.out.println("operation:" + op);
-		System.out.println("type: " + type);
-		System.out.println("pricelow: " + pricelow);
-		System.out.println("pricehigh: " + pricehigh);
-		System.out.println("order: " + order);
-		System.out.println("servlet: " + props);
 
 		req.setAttribute("props", props);
 		req.setAttribute("pagenum", page);

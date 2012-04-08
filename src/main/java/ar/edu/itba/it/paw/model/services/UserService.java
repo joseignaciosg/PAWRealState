@@ -19,6 +19,10 @@ public class UserService {
 		this.dao = inMemoryUserDao;
 	}
 
+	public User getById(final Integer id) {
+		return this.dao.getById(id);
+	}
+
 	public boolean login(final String username, final String password,
 			final UserManager manager) {
 		final User usr = this.dao.getUser(username);

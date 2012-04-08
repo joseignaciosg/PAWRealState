@@ -13,6 +13,7 @@ import ar.edu.itba.it.paw.model.services.ServiceProvider;
 import ar.edu.itba.it.paw.model.services.UserService;
 import ar.edu.itba.it.paw.web.cookies.CookiesManager;
 import ar.edu.itba.it.paw.web.session.UserManager;
+import ar.edu.itba.it.paw.web.utils.HTMLUtils;
 
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = -5309533354100266135L;
@@ -34,15 +35,7 @@ public class LoginServlet extends HttpServlet {
 		if (loginValid) {
 			final CookiesManager cookman = new CookiesManager(req, resp);
 			cookman.setUser(username, password);
-			String backPage = null;
-			if (req.getHeader("Origin") == null) {
-				backPage = "/index";
-			} else {
-				backPage = req.getHeader("Origin");
-			}
-
-			resp.sendRedirect(backPage);
-
+			HTMLUtils.redirectBack(req, resp);
 		} else {
 			final List<String> errors = new ArrayList<String>();
 
@@ -53,4 +46,5 @@ public class LoginServlet extends HttpServlet {
 			req.getRequestDispatcher("/index").forward(req, resp);
 		}
 	}
+
 }

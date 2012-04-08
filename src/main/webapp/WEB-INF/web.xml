@@ -63,6 +63,11 @@
 		<servlet-class>ar.edu.itba.it.paw.web.servlets.PhotoListPage</servlet-class>
 	</servlet>
 	
+	<servlet>
+		<servlet-name>PhotoDeletePage</servlet-name>
+		<servlet-class>ar.edu.itba.it.paw.web.servlets.PhotoDeletePage</servlet-class>
+	</servlet>
+	
 	<servlet-mapping>
 		<servlet-name>PhotoServlet</servlet-name>
 		<url-pattern>/photos</url-pattern>
@@ -70,6 +75,10 @@
 	<servlet-mapping>
 		<servlet-name>PhotoListPage</servlet-name>
 		<url-pattern>/myproperties/myphotos</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>PhotoDeletePage</servlet-name>
+		<url-pattern>/myproperties/myphotos/delete</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>PhotoAddPage</servlet-name>

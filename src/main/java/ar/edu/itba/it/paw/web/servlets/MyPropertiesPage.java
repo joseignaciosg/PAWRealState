@@ -7,6 +7,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import ar.edu.itba.it.paw.model.services.ServiceProvider;
+import ar.edu.itba.it.paw.model.services.UserService;
+import ar.edu.itba.it.paw.web.session.UserManager;
 import ar.edu.itba.it.paw.web.utils.HTMLUtils;
 
 /**
@@ -31,7 +34,15 @@ public class MyPropertiesPage extends HttpServlet {
 	protected void doGet(final HttpServletRequest req,
 			final HttpServletResponse resp) throws ServletException,
 			IOException {
+
+		final UserManager userManager = (UserManager) req
+				.getAttribute("userManager");
+		final UserService service = ServiceProvider.getUserService();
+
+		req.removeAttribute("current_user");
+		req.setAttribute("current_user",
+				service.getById(userManager.getCurrentUser().getId()));
+
 		HTMLUtils.render("myproperties/myproperties.jsp", req, resp);
 	}
-
 }

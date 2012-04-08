@@ -334,6 +334,7 @@ public class SQLPropertyDao implements PropertyDao {
 		final Integer age = result.getInt("age");
 		final String description = result.getString("description");
 		final Integer userId = result.getInt("user_id");
+		final Boolean visible = result.getBoolean("visible");
 
 		final Services service = new Services();
 
@@ -350,11 +351,14 @@ public class SQLPropertyDao implements PropertyDao {
 				description, new LazyUser(
 						new UserFactory(this.userDao, userId), userId));
 
+		property.setVisible(visible);
+
 		property.setPhotos(new CollectionWithMemory<Photo>(
 				new LazyCollection<Photo>(new PhotoCollectionFactory(
 						this.photoDao, property))));
 
 		property.setNew(false);
+		property.setDirty(false);
 		return property;
 	}
 

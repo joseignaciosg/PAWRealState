@@ -45,6 +45,29 @@ public class PropertyService {
 		return ans;
 	}
 
+	public boolean toggleVisibility(final Integer propertyId,
+			final List<String> errors) {
+
+		ServiceUtils.validateNotNull(propertyId, "El ID debe ser no nulo",
+				errors);
+
+		if (errors.size() > 0) {
+			return false;
+		}
+
+		final Property prop = this.propertyDao.getById(propertyId);
+
+		ServiceUtils.validateNotNull(prop, "La propiedad debe existir", errors);
+
+		if (errors.size() > 0) {
+			return false;
+		}
+
+		prop.setVisible(!prop.getVisible());
+
+		return this.propertyDao.saveOrUpdate(prop);
+	}
+
 	public boolean saveProperty(final String operationStr,
 			final String typeStr, final String neighborhood,
 			final String address, final Integer price, final Integer spaces,

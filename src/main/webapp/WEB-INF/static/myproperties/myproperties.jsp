@@ -25,7 +25,7 @@
 					<c:if test="${ property.visible }">
 						Visible
 					</c:if>
-					<c:if test="${ !property.visible }">
+					<c:if test="${ ! property.visible }">
 						No visible
 					</c:if>
 				</td>

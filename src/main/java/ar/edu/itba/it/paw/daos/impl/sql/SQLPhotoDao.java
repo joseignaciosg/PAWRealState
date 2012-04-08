@@ -49,7 +49,7 @@ public class SQLPhotoDao implements PhotoDao {
 			conn = this.provider.getConnection();
 			final String query = "DELETE FROM PHOTOS WHERE id=?";
 			final PreparedStatement ps = conn.prepareStatement(query);
-			ps.setString(1, String.valueOf(obj.getId()));
+			ps.setInt(1, Integer.valueOf(obj.getId()));
 			final int rows = ps.executeUpdate();
 			return rows == 1;
 		} catch (final Exception e) {

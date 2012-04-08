@@ -17,7 +17,11 @@
 					<li class="span2"><a href="#" class="thumbnail"> <img
 							height="120" width="160"
 							src="${ basePath }/photos?ID=${ photo.id }" alt=""/>
-					</a></li>
+					</a>
+					<form method="POST" action="${ basePath }/myproperties/myphotos/delete" class="centered">
+						<input type="hidden" name="photoId" value="${ photo.id }"/>
+						<input type="submit" class="btn btn-danger" value="Eliminar"/>
+					</form></li>
 				</c:forEach>
 			</ul>
 		</c:if>
@@ -25,7 +29,7 @@
 			La propiedad no tiene fotos
 		</c:if>
 	</p>
-	<div style="text-align: center">
+	<div class="centered">
 		<a href="${ basePath }/myproperties/newphoto?propertyId=${ property.id }" class="btn btn-primary btn-large">Agregar foto</a>
 	</div>
 </div>

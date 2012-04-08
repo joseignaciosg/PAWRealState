@@ -16,6 +16,7 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 import ar.edu.itba.it.paw.model.entities.Photo;
 import ar.edu.itba.it.paw.model.entities.Property;
+import ar.edu.itba.it.paw.model.entities.User;
 import ar.edu.itba.it.paw.model.services.PhotoService;
 import ar.edu.itba.it.paw.model.services.PropertyService;
 import ar.edu.itba.it.paw.model.services.ServiceProvider;
@@ -70,8 +71,11 @@ public class PhotoAddPage extends HttpServlet {
 
 				final PhotoService service = ServiceProvider.getPhotoService();
 
-				service.savePhoto(photo.getData(), photo.getPropertyId(), null,
-						new ArrayList<String>());
+				final User currentUser = (User) req
+						.getAttribute("current_user");
+
+				service.savePhoto(photo.getData(), photo.getPropertyId(),
+						currentUser, new ArrayList<String>());
 
 				resp.sendRedirect(req.getContextPath()
 						+ "/myproperties/myphotos?propertyId="
