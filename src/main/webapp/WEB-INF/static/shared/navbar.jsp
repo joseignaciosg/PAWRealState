@@ -29,9 +29,6 @@
 					<a href="${ basePath }/myproperties/new"> Crear Propiedad </a>
 				</li>
 				<li>
-					<a href="${ basePath }/mycontactpetitions"> Mis Peticiones de Contacto </a>
-				</li>
-				<li>
 					<a href="${ basePath }/logout"> Salir </a>
 				</li>
 			</ul>
