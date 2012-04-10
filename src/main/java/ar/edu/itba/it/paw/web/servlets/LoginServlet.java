@@ -24,6 +24,8 @@ public class LoginServlet extends HttpServlet {
 			IOException {
 		final String username = req.getParameter("user_username");
 		final String password = req.getParameter("user_password");
+		final String remember = req.getParameter("remember");
+		System.out.println("remember: " + remember);
 
 		final UserManager manager = (UserManager) req
 				.getAttribute("userManager");
@@ -34,7 +36,7 @@ public class LoginServlet extends HttpServlet {
 
 		if (loginValid) {
 			final CookiesManager cookman = new CookiesManager(req, resp);
-			cookman.setUser(username, password);
+			cookman.setUser(username, password, remember);
 			HTMLUtils.redirectBack(req, resp);
 		} else {
 			final List<String> errors = new ArrayList<String>();

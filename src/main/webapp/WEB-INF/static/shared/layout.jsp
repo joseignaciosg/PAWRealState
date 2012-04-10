@@ -21,6 +21,8 @@
 	<script type="text/javascript" src="${ basePath }/assets/js/bootstrap-modal.js"></script>
 	<script type="text/javascript" src="${ basePath }/assets/js/bootstrap-transition.js"></script>
 	<script type="text/javascript" src="${ basePath }/assets/js/bootstrap-dropdown.js"></script>
+	<script type="text/javascript" src="${ basePath }/assets/js/bootstrap-button.js"></script>
+	
 	<script type="text/javascript">
 		basePath = "${ basePath }";
 	</script>
