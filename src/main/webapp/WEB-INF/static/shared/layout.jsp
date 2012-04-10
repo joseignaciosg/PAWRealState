@@ -40,5 +40,6 @@
 	<div class="container" id="main">
 		<jsp:include page="../${ page }"></jsp:include>
 	</div>
+	
 </body>
 </html>
