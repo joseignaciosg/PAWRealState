@@ -72,9 +72,10 @@ public class SQLContactRequestDao implements ContactRequestDao {
 			final Connection conn = this.provider.getConnection();
 			final PreparedStatement ps;
 			if (obj.isNew()) {
-				ps = conn
-						.prepareStatement("INSERT INTO contact_requests (username, email,phone,comment, prop_id)"
-								+ " VALUES (?,?,?,?,?)");
+				ps = conn.prepareStatement(
+						"INSERT INTO contact_requests (username, email,phone,comment, prop_id)"
+								+ " VALUES (?,?,?,?,?)",
+						PreparedStatement.RETURN_GENERATED_KEYS);
 				ps.setString(1, obj.getName());
 				ps.setString(2, obj.getEmail());
 				ps.setString(3, obj.getTelephone());

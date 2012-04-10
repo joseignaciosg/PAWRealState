@@ -4,6 +4,7 @@ import java.util.List;
 
 import ar.edu.itba.it.paw.daos.api.ContactRequestDao;
 import ar.edu.itba.it.paw.model.entities.ContactRequest;
+import ar.edu.itba.it.paw.model.entities.utils.EntityUtils;
 
 public class InMemoryContactRequestDao implements ContactRequestDao {
 
@@ -24,16 +25,16 @@ public class InMemoryContactRequestDao implements ContactRequestDao {
 	}
 
 	public boolean delete(final ContactRequest obj) {
-		return this.contactrequests.remove(obj);
+		return EntityUtils.remove(this.contactrequests, obj);
 	}
 
 	public boolean saveOrUpdate(final ContactRequest obj) {
-		if (!this.contactrequests.contains(obj)) {
+		if (!EntityUtils.contains(this.contactrequests, obj)) {
 			obj.setDirty(false);
 			return this.contactrequests.add(obj);
 		} else {
 			if (obj.isDirty()) {
-				this.contactrequests.remove(obj);
+				EntityUtils.remove(this.contactrequests, obj);
 				obj.setDirty(false);
 				return this.contactrequests.add(obj);
 			} else {

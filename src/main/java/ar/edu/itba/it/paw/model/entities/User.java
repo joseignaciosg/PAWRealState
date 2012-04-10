@@ -122,7 +122,20 @@ public class User implements Entity {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((this.ID == null) ? 0 : this.ID.hashCode());
+		result = prime * result
+				+ ((this.mail == null) ? 0 : this.mail.hashCode());
+		result = prime * result
+				+ ((this.name == null) ? 0 : this.name.hashCode());
+		result = prime * result
+				+ ((this.password == null) ? 0 : this.password.hashCode());
+		result = prime * result
+				+ ((this.properties == null) ? 0 : this.properties.hashCode());
+		result = prime * result
+				+ ((this.surname == null) ? 0 : this.surname.hashCode());
+		result = prime * result
+				+ ((this.telephone == null) ? 0 : this.telephone.hashCode());
+		result = prime * result
+				+ ((this.username == null) ? 0 : this.username.hashCode());
 		return result;
 	}
 
@@ -134,12 +147,57 @@ public class User implements Entity {
 		if (obj == null) {
 			return false;
 		}
+		if (this.getClass() != obj.getClass()) {
+			return false;
+		}
 		final User other = (User) obj;
-		if (this.ID == null) {
-			if (other.ID != null) {
+		if (this.mail == null) {
+			if (other.mail != null) {
 				return false;
 			}
-		} else if (!this.ID.equals(other.ID)) {
+		} else if (!this.mail.equals(other.mail)) {
+			return false;
+		}
+		if (this.name == null) {
+			if (other.name != null) {
+				return false;
+			}
+		} else if (!this.name.equals(other.name)) {
+			return false;
+		}
+		if (this.password == null) {
+			if (other.password != null) {
+				return false;
+			}
+		} else if (!this.password.equals(other.password)) {
+			return false;
+		}
+		if (this.properties == null) {
+			if (other.properties != null) {
+				return false;
+			}
+		} else if (!this.properties.equals(other.properties)) {
+			return false;
+		}
+		if (this.surname == null) {
+			if (other.surname != null) {
+				return false;
+			}
+		} else if (!this.surname.equals(other.surname)) {
+			return false;
+		}
+		if (this.telephone == null) {
+			if (other.telephone != null) {
+				return false;
+			}
+		} else if (!this.telephone.equals(other.telephone)) {
+			return false;
+		}
+		if (this.username == null) {
+			if (other.username != null) {
+				return false;
+			}
+		} else if (!this.username.equals(other.username)) {
 			return false;
 		}
 		return true;

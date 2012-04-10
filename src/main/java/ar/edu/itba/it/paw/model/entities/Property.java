@@ -141,7 +141,33 @@ public class Property implements Entity {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((this.id == null) ? 0 : this.id.hashCode());
+		result = prime * result
+				+ ((this.address == null) ? 0 : this.address.hashCode());
+		result = prime * result
+				+ ((this.age == null) ? 0 : this.age.hashCode());
+		result = prime
+				* result
+				+ ((this.coveredArea == null) ? 0 : this.coveredArea.hashCode());
+		result = prime
+				* result
+				+ ((this.description == null) ? 0 : this.description.hashCode());
+		result = prime * result
+				+ ((this.freeArea == null) ? 0 : this.freeArea.hashCode());
+		result = prime
+				* result
+				+ ((this.neighborhood == null) ? 0 : this.neighborhood
+						.hashCode());
+		result = prime * result
+				+ ((this.operation == null) ? 0 : this.operation.hashCode());
+		result = prime * result
+				+ ((this.price == null) ? 0 : this.price.hashCode());
+		result = prime * result
+				+ ((this.service == null) ? 0 : this.service.hashCode());
+		result = prime * result
+				+ ((this.spaces == null) ? 0 : this.spaces.hashCode());
+		result = prime * result
+				+ ((this.type == null) ? 0 : this.type.hashCode());
+		result = prime * result + (this.visible ? 1231 : 1237);
 		return result;
 	}
 
@@ -157,11 +183,76 @@ public class Property implements Entity {
 			return false;
 		}
 		final Property other = (Property) obj;
-		if (this.id == null) {
-			if (other.id != null) {
+		if (this.address == null) {
+			if (other.address != null) {
 				return false;
 			}
-		} else if (!this.id.equals(other.id)) {
+		} else if (!this.address.equals(other.address)) {
+			return false;
+		}
+		if (this.age == null) {
+			if (other.age != null) {
+				return false;
+			}
+		} else if (!this.age.equals(other.age)) {
+			return false;
+		}
+		if (this.coveredArea == null) {
+			if (other.coveredArea != null) {
+				return false;
+			}
+		} else if (!this.coveredArea.equals(other.coveredArea)) {
+			return false;
+		}
+		if (this.description == null) {
+			if (other.description != null) {
+				return false;
+			}
+		} else if (!this.description.equals(other.description)) {
+			return false;
+		}
+		if (this.freeArea == null) {
+			if (other.freeArea != null) {
+				return false;
+			}
+		} else if (!this.freeArea.equals(other.freeArea)) {
+			return false;
+		}
+		if (this.neighborhood == null) {
+			if (other.neighborhood != null) {
+				return false;
+			}
+		} else if (!this.neighborhood.equals(other.neighborhood)) {
+			return false;
+		}
+		if (this.operation != other.operation) {
+			return false;
+		}
+		if (this.price == null) {
+			if (other.price != null) {
+				return false;
+			}
+		} else if (!this.price.equals(other.price)) {
+			return false;
+		}
+		if (this.service == null) {
+			if (other.service != null) {
+				return false;
+			}
+		} else if (!this.service.equals(other.service)) {
+			return false;
+		}
+		if (this.spaces == null) {
+			if (other.spaces != null) {
+				return false;
+			}
+		} else if (!this.spaces.equals(other.spaces)) {
+			return false;
+		}
+		if (this.type != other.type) {
+			return false;
+		}
+		if (this.visible != other.visible) {
 			return false;
 		}
 		return true;
