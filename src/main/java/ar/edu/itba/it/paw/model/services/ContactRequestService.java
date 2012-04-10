@@ -27,10 +27,9 @@ public class ContactRequestService {
 		return ans;
 	}
 
-	public boolean saveContactRequest(final Integer iD, final String name,
-			final String email, final String telephone,
-			final String description, final Property propRefered,
-			final List<String> errors) {
+	public boolean saveContactRequest(final String name, final String email,
+			final String telephone, final String description,
+			final Property propRefered, final List<String> errors) {
 
 		ServiceUtils.validateNotNull(name, "Tipo inválido", errors);
 		ServiceUtils.validateNotNull(email, "Debe ingresar el barrio", errors);
@@ -42,18 +41,8 @@ public class ContactRequestService {
 		}
 		final ContactRequest contact;
 
-		if (iD == null) {
-			contact = new ContactRequest(iD, name, email, telephone,
-					description, propRefered);
-		} else {
-			contact = this.contactDao.getById(iD);
-			contact.setName(name);
-			contact.setEmail(email);
-			contact.setTelephone(telephone);
-			contact.setDescription(description);
-			contact.setPropRefered(propRefered);
-			contact.setDirty(true);
-		}
+		contact = new ContactRequest(name, email, telephone, description,
+				propRefered);
 
 		this.contactDao.saveOrUpdate(contact);
 

@@ -134,7 +134,7 @@
 		<filter-class>ar.edu.itba.it.paw.web.filters.SessionFilter</filter-class>
 		<init-param>
 			<param-name>excludePatterns</param-name>
-			<param-value>(.*/assets/.*|.*/search(/)?|.*/contact(/)?|.*/properties/view(/)?$|.*/index(/)?|.*/register(/)?|.*/login(/)?|.*/photos.*(/)?)</param-value>
+			<param-value>(.*/assets/.*|.*/search(/)?|.*/contactrequest(/)?|.*/properties/view(/)?$|.*/index(/)?|.*/register(/)?|.*/login(/)?|.*/photos.*(/)?)</param-value>
 		</init-param>
 	</filter>
 	<filter-mapping>

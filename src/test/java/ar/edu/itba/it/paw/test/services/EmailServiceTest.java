@@ -55,7 +55,8 @@ public class EmailServiceTest {
 		final List<String> errors = new ArrayList<String>();
 
 		final Message mess = (Message) new NotificationMimeMessageFactory(
-				this.owner, this.property).create();
+				this.owner, this.property, "Cristian", "Pereyra",
+				"criis.pereyra@gmail.com", "19203213", "").create();
 
 		this.service.sendMail(mess, errors);
 

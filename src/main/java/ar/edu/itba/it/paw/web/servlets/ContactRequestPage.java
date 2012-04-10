@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import ar.edu.itba.it.paw.model.entities.Property;
-import ar.edu.itba.it.paw.model.entities.User;
 import ar.edu.itba.it.paw.model.services.ContactRequestService;
 import ar.edu.itba.it.paw.model.services.EmailService;
 import ar.edu.itba.it.paw.model.services.PropertyService;
@@ -49,22 +48,22 @@ public class ContactRequestPage extends HttpServlet {
 
 		final List<String> errors = new ArrayList<String>();
 
-		final String name = req.getParameter("first_name")
-				+ req.getParameter("last_name");
+		final String firstName = req.getParameter("first_name");
+		final String lastName = req.getParameter("last_name");
 		final String email = req.getParameter("email");
 		final String telephone = req.getParameter("phone");
 		final String description = req.getParameter("description");
 		final Integer propID = Integer.valueOf(req.getParameter("property_id"));
 		final Property property = PropService.getPropertyByID(propID, errors);
 
-		final boolean valid = service.saveContactRequest(null, name, email,
-				telephone, description, property, errors);
+		final boolean valid = service.saveContactRequest(firstName + " "
+				+ lastName, email, telephone, description, property, errors);
 
 		if (valid) {
-			final User user = (User) req.getAttribute("current_user");
 			final EmailService notification = ServiceProvider.getEmailService();
-			notification.sendMail(user, property, errors);
-			req.setAttribute("user", user);
+			notification.sendMail(property.getOwner(), property, errors,
+					firstName, lastName, email, telephone, description);
+			req.setAttribute("user", property.getOwner());
 			req.setAttribute("property", property);
 			HTMLUtils.render("/contactrequest/contactRequest.jsp", req, resp);
 		} else {

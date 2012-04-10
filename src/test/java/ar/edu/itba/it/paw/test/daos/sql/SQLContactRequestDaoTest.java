@@ -1,9 +1,9 @@
 package ar.edu.itba.it.paw.test.daos.sql;
 
 import ar.edu.itba.it.paw.daos.DaoProvider;
-import ar.edu.itba.it.paw.test.daos.base.ContactRequestTest;
+import ar.edu.itba.it.paw.test.daos.base.ContactRequestDaoTest;
 
-public class SQLContactRequestDaoTest extends ContactRequestTest {
+public class SQLContactRequestDaoTest extends ContactRequestDaoTest {
 
 	private DaoProvider provider;
 

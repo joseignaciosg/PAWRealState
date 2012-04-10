@@ -11,6 +11,12 @@ public class ContactRequest implements Entity {
 	private boolean dirty;
 	private boolean isnew;
 
+	public ContactRequest(final String name, final String email,
+			final String telephone, final String description,
+			final Property propRefered) {
+		this(null, name, email, telephone, description, propRefered);
+	}
+
 	public ContactRequest(final Integer iD, final String name,
 			final String email, final String telephone,
 			final String description, final Property propRefered) {

@@ -4,9 +4,9 @@ import org.junit.After;
 
 import ar.edu.itba.it.paw.daos.DaoProvider;
 import ar.edu.itba.it.paw.daos.InMemoryDaoProvider;
-import ar.edu.itba.it.paw.test.daos.base.ContactRequestTest;
+import ar.edu.itba.it.paw.test.daos.base.ContactRequestDaoTest;
 
-public class InMemoryContactRequestTest extends ContactRequestTest {
+public class InMemoryContactRequestDaoTest extends ContactRequestDaoTest {
 	private DaoProvider provider;
 
 	@Override

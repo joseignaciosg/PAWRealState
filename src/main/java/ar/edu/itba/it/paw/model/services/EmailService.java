@@ -30,10 +30,23 @@ public class EmailService {
 	}
 
 	public boolean sendMail(final User user, final Property property,
-			final List<String> errors) {
+			final List<String> errors, final String firstName,
+			final String lastName, final String email, final String phone,
+			final String description) {
+
+		ServiceUtils.validateNotNull(firstName, "Debe ingresar su nombre",
+				errors);
+
+		ServiceUtils.validateNotNull(lastName, "Debe ingresar su apellido",
+				errors);
+
+		if (email == null && phone == null) {
+			errors.add("Debe ingresar su teléfono o su email");
+		}
 
 		final Message m = (Message) new NotificationMimeMessageFactory(user,
-				property).create();
+				property, firstName, lastName, email, phone, description)
+				.create();
 
 		return this.sendMail(m, errors);
 	}

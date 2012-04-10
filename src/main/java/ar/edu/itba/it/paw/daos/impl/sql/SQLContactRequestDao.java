@@ -156,8 +156,9 @@ public class SQLContactRequestDao implements ContactRequestDao {
 		final String description = result.getString("comment");
 		final Property prop = this.propertyDao.getById(propID);
 
-		contact = new ContactRequest(ID, name, email, telephone, description,
-				prop);
+		contact = new ContactRequest(name, email, telephone, description, prop);
+
+		contact.setId(ID);
 
 		contact.setNew(false);
 

@@ -17,11 +17,23 @@ public class NotificationMimeMessageFactory implements Factory {
 
 	private User user;
 	private Property property;
+	private String firstName;
+	private String lastName;
+	private String email;
+	private String phone;
+	private String description;
 
 	public NotificationMimeMessageFactory(final User user,
-			final Property property) {
+			final Property property, final String firstName,
+			final String lastName, final String email, final String phone,
+			final String description) {
 		this.user = user;
 		this.property = property;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.phone = phone;
+		this.description = description;
 	}
 
 	public Object create() {
@@ -32,11 +44,34 @@ public class NotificationMimeMessageFactory implements Factory {
 					InternetAddress.parse(this.user.getMail()));
 			message.setSubject("Notificacion de ChinuProp para "
 					+ this.user.getUsername());
-			message.setText("Usted tiene una nueva solicitud de contacto para su propiedad en "
-					+ this.property.getAddress()
-					+ ", "
-					+ this.property.getNeighborhood()
-					+ ". Por favor ingrese a ChinuProp para responder a esta solicitud.");
+
+			final StringBuilder sb = new StringBuilder();
+
+			sb.append(
+					"Usted tiene una nueva solicitud de contacto para su propiedad en "
+							+ this.property.getAddress() + ", "
+							+ this.property.getNeighborhood() + ".").append(
+					"\n");
+
+			sb.append("Datos del contacto:").append("\n");
+
+			sb.append("Nombre:")
+					.append(this.firstName + ", " + this.lastName).append("\n");
+
+			if (this.email != null) {
+				sb.append("Email:").append(this.email).append("\n");
+			}
+
+			if (this.phone != null) {
+				sb.append("Teléfono:").append(this.phone).append("\n");
+			}
+
+			if (this.description != null) {
+				sb.append("Descripción:").append(this.description)
+						.append("\n");
+			}
+
+			message.setText(sb.toString());
 
 			return message;
 		} catch (final AddressException e) {

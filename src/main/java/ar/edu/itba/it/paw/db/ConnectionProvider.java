@@ -26,6 +26,7 @@ public class ConnectionProvider {
 	 */
 	public static ConnectionProvider getProvider() {
 		final ConnectionProvider myDispatcher = new ConnectionProvider();
+
 		File configFile = new File(
 				"src/main/webapp/WEB-INF/database.properties");
 

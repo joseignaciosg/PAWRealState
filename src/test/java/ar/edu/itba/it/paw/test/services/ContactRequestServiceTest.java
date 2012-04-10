@@ -40,7 +40,7 @@ public class ContactRequestServiceTest {
 		final ContactRequest contact1 = new ContactRequest(10, "Nicolas",
 				"asd@asd.com", "44450322", "descrip1", prop9);
 
-		final ContactRequest contact2 = new ContactRequest(null, "Valles",
+		final ContactRequest contact2 = new ContactRequest(2, "Valles",
 				"lalala@asd.com", "44420322", "descrip2", prop9);
 
 		data.add(contact1);
@@ -72,24 +72,24 @@ public class ContactRequestServiceTest {
 				Integer.valueOf(3), Integer.valueOf(100), Integer.valueOf(200),
 				Integer.valueOf(5), service, "Descrip3", null);
 
-		Assert.assertEquals(true, this.contact.saveContactRequest(null,
+		Assert.assertEquals(true, this.contact.saveContactRequest(
 				"Pedro Perez", "nico@hotmail.com", "4442-3232", "desc1",
 				prop10, errors));
 
-		Assert.assertEquals(false, this.contact.saveContactRequest(null, null,
+		Assert.assertEquals(false, this.contact.saveContactRequest(null,
 				"nico@hotmail.com", "4442-3232", "desc1", prop10, errors));
 
 		errors.remove(0);
 
-		Assert.assertEquals(false, this.contact.saveContactRequest(null,
-				"Pepe", null, "4442-3232", "desc1", prop10, errors));
+		Assert.assertEquals(false, this.contact.saveContactRequest("Pepe",
+				null, "4442-3232", "desc1", prop10, errors));
 		errors.remove(0);
 
-		Assert.assertEquals(false, this.contact.saveContactRequest(null,
-				"pedrito", "nico@hotmail.com", null, "desc1", prop10, errors));
+		Assert.assertEquals(false, this.contact.saveContactRequest("pedrito",
+				"nico@hotmail.com", null, "desc1", prop10, errors));
 		errors.remove(0);
 
-		Assert.assertEquals(true, this.contact.saveContactRequest(10,
+		Assert.assertEquals(true, this.contact.saveContactRequest(
 				"Pedro Perez", "nico@hotmail.com", "4442-3232", "desc2", prop9,
 				errors));
 

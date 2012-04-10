@@ -13,7 +13,7 @@ import ar.edu.itba.it.paw.model.entities.Property.Operation;
 import ar.edu.itba.it.paw.model.entities.Property.Type;
 import ar.edu.itba.it.paw.model.entities.Services;
 
-public abstract class ContactRequestTest extends DaoTest {
+public abstract class ContactRequestDaoTest extends DaoTest {
 
 	private ContactRequestDao contactRequestDao;
 	private PropertyDao propertyDao;
@@ -71,7 +71,7 @@ public abstract class ContactRequestTest extends DaoTest {
 		final Property prop = new Property(1, Type.HOUSE, Operation.RENT,
 				"Soho", "Soho St. 120", 10000, 4, 1000, 2000, 15, ser1,
 				"Really good", null);
-		final ContactRequest c1 = new ContactRequest(3, "Peron",
+		final ContactRequest c1 = new ContactRequest("Peron",
 				"peron@hotmail.com", "3427383", "desc3", prop);
 		Assert.assertTrue(this.contactRequestDao.saveOrUpdate(c1));
 		Assert.assertFalse(this.contactRequestDao.saveOrUpdate(c1));

@@ -43,3 +43,5 @@
 		</c:forEach>
 	</tbody>
 </table>
+<hr/>
+<a href="${ basePath }/myproperties/new" class="btn btn-primary">Crear nueva propiedad</a>
