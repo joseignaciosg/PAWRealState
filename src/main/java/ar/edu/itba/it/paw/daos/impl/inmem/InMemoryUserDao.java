@@ -4,6 +4,7 @@ import java.util.List;
 
 import ar.edu.itba.it.paw.daos.api.UserDao;
 import ar.edu.itba.it.paw.model.entities.User;
+import ar.edu.itba.it.paw.model.entities.utils.EntityUtils;
 
 public class InMemoryUserDao implements UserDao {
 
@@ -27,12 +28,12 @@ public class InMemoryUserDao implements UserDao {
 	}
 
 	public boolean saveOrUpdate(final User obj) {
-		if (!this.users.contains(obj)) {
+		if (!EntityUtils.contains(this.users, obj)) {
 			obj.setDirty(false);
 			return this.users.add(obj);
 		} else {
 			if (obj.isDirty()) {
-				this.users.remove(obj);
+				EntityUtils.remove(this.users, obj);
 				obj.setDirty(false);
 				return this.users.add(obj);
 			} else {

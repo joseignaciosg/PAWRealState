@@ -185,8 +185,8 @@ public abstract class PropertyDaoTest extends DaoTest {
 		 * The dao should returnt he reference to the owner, which can or not be
 		 * lazy.
 		 */
-		Assert.assertEquals(this.getHelper().defaultUser(),
-				defaultProp.getOwner());
+		Assert.assertEquals(this.getHelper().defaultUser().getId(), defaultProp
+				.getOwner().getId());
 	}
 
 	@Test
@@ -273,7 +273,7 @@ public abstract class PropertyDaoTest extends DaoTest {
 		List<Property> props = this.propertyDao.getAll(null, null, 1000, 1000,
 				0, 3, Order.ASC, true);
 		Assert.assertTrue(props.size() == 1);
-		Assert.assertEquals(props.get(0), prop1);
+		Assert.assertEquals(props.get(0).getId(), prop1.getId());
 
 		props = this.propertyDao.getAll(null, Type.HOUSE, -1, -1, 0, 3,
 				Order.ASC, true);
@@ -281,6 +281,7 @@ public abstract class PropertyDaoTest extends DaoTest {
 
 		List<Property> props2 = this.propertyDao.getAll(null, Type.HOUSE, -1,
 				-1, 0, 3, Order.ASC, true);
+
 		Assert.assertEquals(props, props2);
 
 		props = this.propertyDao.getAll(null, Type.HOUSE, -1, -1, 1, 3,

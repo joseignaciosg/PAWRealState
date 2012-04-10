@@ -64,7 +64,9 @@ public class PhotoAddPage extends HttpServlet {
 	protected void doPost(final HttpServletRequest req,
 			final HttpServletResponse resp) throws ServletException,
 			IOException {
+		final List<String> errors = new ArrayList<String>();
 		try {
+
 			if (ServletFileUpload.isMultipartContent(req)) {
 
 				final Photo photo = this.buildPhoto(req);
@@ -81,11 +83,13 @@ public class PhotoAddPage extends HttpServlet {
 						+ "/myproperties/myphotos?propertyId="
 						+ photo.getPropertyId());
 			} else {
-				resp.sendRedirect(req.getContextPath() + "/index");
+				errors.add("Archivo inválido");
 			}
 		} catch (final FileUploadException e) {
-			e.printStackTrace();
+			errors.add("Archivo inválido");
 		}
+
+		this.doGet(req, resp);
 
 	}
 
@@ -114,7 +118,8 @@ public class PhotoAddPage extends HttpServlet {
 				propertyId = Integer.valueOf(fileItem.getString());
 			}
 		}
-		if (!found) {
+		if (!found || data.length == 0
+				|| (!fileName.endsWith("jpg") && !fileName.endsWith("jpeg"))) {
 			throw new FileUploadException("No file uploaded");
 		}
 

@@ -18,9 +18,6 @@ public class InMemoryPhotoDaoTest extends PhotoDaoTest {
 		return this.provider;
 	}
 
-	/**
-	 * Fix that
-	 */
 	@After
 	public void afterTest() {
 		((InMemoryDaoProvider) this.getDaoProvider()).reload();

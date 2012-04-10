@@ -40,8 +40,8 @@ public abstract class PhotoDaoTest extends DaoTest {
 		final Property prop1 = new Property(Integer.valueOf(1), Type.APARTMENT,
 				Operation.RENT, "Palermo", "Lavalle 660", Integer.valueOf(500),
 				Integer.valueOf(3), Integer.valueOf(100), Integer.valueOf(200),
-				Integer.valueOf(5), service, "Descrip1",
-				this.getHelper().defaultUser());
+				Integer.valueOf(5), service, "Descrip1", this.getHelper()
+						.defaultUser());
 		final Property prop2 = new Property(Integer.valueOf(2), Type.HOUSE,
 				Operation.SELL, "BarrioNorte", "Junca 460",
 				Integer.valueOf(500), Integer.valueOf(3), Integer.valueOf(100),

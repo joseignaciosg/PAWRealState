@@ -57,6 +57,8 @@ public class ContactRequestService {
 		contact = new ContactRequest(name, email, telephone, description,
 				propRefered);
 
+		contact.setId(1);
+
 		this.contactDao.saveOrUpdate(contact);
 
 		return true;
