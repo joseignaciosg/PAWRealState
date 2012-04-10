@@ -28,11 +28,15 @@ import ar.edu.itba.it.paw.web.utils.HTMLUtils;
 @SuppressWarnings("serial")
 public class ContactRequestPage extends HttpServlet {
 
+	private String conctactRequest = "/contactrequest/contactRequest.jsp";
+
+	// private String viewProperty = ""
+
 	@Override
 	protected void doGet(final HttpServletRequest req,
 			final HttpServletResponse resp) throws ServletException,
 			IOException {
-
+		HTMLUtils.render("/viewproperties/viewproperty.jsp", req, resp);
 	}
 
 	@Override
@@ -56,8 +60,13 @@ public class ContactRequestPage extends HttpServlet {
 		final Integer propID = Integer.valueOf(req.getParameter("property_id"));
 		final Property property = PropService.getPropertyByID(propID, errors);
 
+		System.out.println("n:" + firstName + " email: " + email);
+		System.out.println("errors size: " + errors.size());
+
 		final boolean valid = service.saveContactRequest(firstName + " "
 				+ lastName, email, telephone, description, property, errors);
+
+		System.out.println("errors size: " + errors.size());
 
 		if (valid) {
 			final EmailService notification = ServiceProvider.getEmailService();
@@ -65,8 +74,9 @@ public class ContactRequestPage extends HttpServlet {
 					firstName, lastName, email, telephone, description);
 			req.setAttribute("user", property.getOwner());
 			req.setAttribute("property", property);
-			HTMLUtils.render("/contactrequest/contactRequest.jsp", req, resp);
+			HTMLUtils.render(this.conctactRequest, req, resp);
 		} else {
+			req.setAttribute("property", property);
 			req.setAttribute("errors", errors);
 			this.doGet(req, resp);
 		}

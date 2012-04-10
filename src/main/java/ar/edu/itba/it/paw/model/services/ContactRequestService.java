@@ -5,7 +5,6 @@ import java.util.List;
 import ar.edu.itba.it.paw.daos.api.ContactRequestDao;
 import ar.edu.itba.it.paw.model.entities.ContactRequest;
 import ar.edu.itba.it.paw.model.entities.Property;
-import ar.edu.itba.it.paw.model.services.utils.ServiceUtils;
 
 public class ContactRequestService {
 
@@ -31,10 +30,24 @@ public class ContactRequestService {
 			final String telephone, final String description,
 			final Property propRefered, final List<String> errors) {
 
-		ServiceUtils.validateNotNull(name, "Tipo inválido", errors);
-		ServiceUtils.validateNotNull(email, "Debe ingresar el barrio", errors);
-		ServiceUtils.validateNotNull(telephone, "Debe ingresar el barrio",
-				errors);
+		if (name.length() == 1) {
+			errors.add("Debe Ingresar un Nombre");
+		}
+		if (email.length() == 0) {
+			errors.add("Debe Ingresar un Email");
+		} else {
+			final String[] splited = email.split("@");
+			if (splited.length < 2) {
+				errors.add("Debe ingresar un E-mail valido");
+			} else {
+				if (splited[0].length() == 0 || splited[1].length() == 0) {
+					errors.add("Debe ingresar un E-mail valido");
+				}
+			}
+		}
+		if (telephone.length() == 0) {
+			errors.add("Debe Ingresar un Telefono");
+		}
 
 		if (errors.size() > 0) {
 			return false;
@@ -48,5 +61,4 @@ public class ContactRequestService {
 
 		return true;
 	}
-
 }
