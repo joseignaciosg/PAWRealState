@@ -90,14 +90,18 @@ public class SQLPropertyDao implements PropertyDao {
 
 	}
 
-	public boolean delete(final Property obj) {
+	public boolean delete(final Property property) {
 		try {
+
+			for (final Photo photo : property.getPhotos()) {
+				this.photoDao.delete(photo);
+			}
 
 			final Connection conn = this.provider.getConnection();
 			final PreparedStatement statement = conn
 					.prepareStatement("DELETE FROM PROPERTIES WHERE id = ?");
 
-			statement.setInt(1, obj.getId());
+			statement.setInt(1, property.getId());
 
 			final int rows = statement.executeUpdate();
 
