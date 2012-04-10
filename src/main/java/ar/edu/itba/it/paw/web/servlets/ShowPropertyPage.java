@@ -39,7 +39,10 @@ public class ShowPropertyPage extends HttpServlet {
 		System.out.println("id :" + ID);
 		final PropertyService propservice = ServiceProvider
 				.getPropertyService();
+		// final PhotoService photoservice = ServiceProvider.getPhotoService();
+
 		final Property property = propservice.getPropertyByID(ID, errors);
+
 		if (property == null) {
 			req.setAttribute("errors", errors);
 			HTMLUtils.render("/viewproperties/viewproperty.jsp", req, resp);
