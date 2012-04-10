@@ -45,6 +45,35 @@ public class PropertyService {
 		return ans;
 	}
 
+	public boolean deleteProperty(final Integer id, final User user,
+			final List<String> errors) {
+
+		ServiceUtils.validateNotNull(id, "El id debe ser válido", errors);
+		ServiceUtils.validateNotNull(user,
+				"El usuario logueado debe ser válido", errors);
+
+		final Property property = this.propertyDao.getById(id);
+
+		ServiceUtils.validateNotNull(property,
+				"La propiedad debe existir para poder ser eliminada", errors);
+
+		boolean belongs = false;
+		for (final Property prop : user.getProperties()) {
+			if (prop.getId().equals(property.getId())) {
+				belongs = true;
+			}
+		}
+		if (!belongs) {
+			errors.add("El usuario debe ser dueño de la propiedad para poder eliminarla");
+		}
+
+		if (errors.size() > 0) {
+			return false;
+		}
+
+		return this.propertyDao.delete(property);
+	}
+
 	public boolean toggleVisibility(final Integer propertyId,
 			final List<String> errors) {
 
