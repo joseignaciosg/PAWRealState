@@ -13,6 +13,7 @@ import ar.edu.itba.it.paw.model.entities.Photo;
 import ar.edu.itba.it.paw.model.entities.Property;
 import ar.edu.itba.it.paw.model.entities.Property.Operation;
 import ar.edu.itba.it.paw.model.entities.Property.Type;
+import ar.edu.itba.it.paw.model.entities.utils.EntityUtils;
 import ar.edu.itba.it.paw.model.services.PropertyService.Order;
 import ar.edu.itba.it.paw.utils.collections.CollectionWithMemory;
 
@@ -35,12 +36,12 @@ public class InMemoryPropertyDao implements PropertyDao {
 	}
 
 	public boolean delete(final Property obj) {
-		if (obj.getOwner().getProperties().contains(obj)) {
-			obj.getOwner().getProperties().remove(obj);
+		if (EntityUtils.contains(obj.getOwner().getProperties(), obj)) {
+			EntityUtils.remove(obj.getOwner().getProperties(), obj);
 		}
 
-		if (this.data.contains(obj)) {
-			this.data.remove(obj);
+		if (EntityUtils.contains(this.data, obj)) {
+			EntityUtils.remove(this.data, obj);
 			return true;
 		}
 		return false;
@@ -50,12 +51,12 @@ public class InMemoryPropertyDao implements PropertyDao {
 
 		this.updateReferences(obj);
 
-		if (!this.data.contains(obj)) {
+		if (!EntityUtils.contains(this.data, obj)) {
 			obj.setDirty(false);
 			return this.data.add(obj);
 		} else {
 			if (obj.isDirty()) {
-				this.data.remove(obj);
+				EntityUtils.remove(this.data, obj);
 				obj.setDirty(false);
 
 				return this.data.add(obj);
@@ -81,7 +82,7 @@ public class InMemoryPropertyDao implements PropertyDao {
 			photosWithDeletions.setModified(false);
 		}
 
-		if (!obj.getOwner().getProperties().contains(obj)) {
+		if (!EntityUtils.contains(obj.getOwner().getProperties(), obj)) {
 			obj.getOwner().getProperties().add(obj);
 		}
 
@@ -144,8 +145,10 @@ public class InMemoryPropertyDao implements PropertyDao {
 
 		for (final Property p : this.data) {
 			if ((p.getVisible() == visible || visible == null)
-					&& oplist.contains(p) && typelist.contains(p)
-					&& pricelowlist.contains(p) && pricehighlist.contains(p)) {
+					&& EntityUtils.contains(oplist, p)
+					&& EntityUtils.contains(typelist, p)
+					&& EntityUtils.contains(pricelowlist, p)
+					&& EntityUtils.contains(pricehighlist, p)) {
 				ans.add(p);
 			}
 

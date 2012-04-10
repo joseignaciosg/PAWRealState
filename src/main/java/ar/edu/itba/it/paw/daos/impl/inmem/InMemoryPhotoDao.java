@@ -6,6 +6,7 @@ import java.util.List;
 import ar.edu.itba.it.paw.daos.api.PhotoDao;
 import ar.edu.itba.it.paw.daos.api.PropertyDao;
 import ar.edu.itba.it.paw.model.entities.Photo;
+import ar.edu.itba.it.paw.model.entities.utils.EntityUtils;
 import ar.edu.itba.it.paw.utils.collections.CollectionWithMemory;
 
 public class InMemoryPhotoDao implements PhotoDao {
@@ -34,14 +35,15 @@ public class InMemoryPhotoDao implements PhotoDao {
 	}
 
 	public boolean delete(final Photo obj) {
-		if (this.photos.contains(obj)) {
-			this.photos.remove(obj);
+		if (EntityUtils.contains(this.photos, obj)) {
+			EntityUtils.remove(this.photos, obj);
 
-			if (!((CollectionWithMemory<Photo>) this.propertyDao.getById(
-					obj.getPropertyId()).getPhotos()).getDeletedItems()
-					.contains(obj)) {
-				this.propertyDao.getById(obj.getPropertyId()).getPhotos()
-						.remove(obj);
+			if (!EntityUtils
+					.contains(((CollectionWithMemory<Photo>) this.propertyDao
+							.getById(obj.getPropertyId()).getPhotos())
+							.getDeletedItems(), obj)) {
+				EntityUtils.remove(this.propertyDao
+						.getById(obj.getPropertyId()).getPhotos(), obj);
 			}
 			return true;
 		}
@@ -50,9 +52,10 @@ public class InMemoryPhotoDao implements PhotoDao {
 
 	public boolean saveOrUpdate(final Photo obj) {
 
-		if (!this.photos.contains(obj)) {
-			if (!this.propertyDao.getById(obj.getPropertyId()).getPhotos()
-					.contains(obj)) {
+		if (!EntityUtils.contains(this.photos, obj)) {
+			if (!EntityUtils.contains(
+					this.propertyDao.getById(obj.getPropertyId()).getPhotos(),
+					obj)) {
 				this.propertyDao.getById(obj.getPropertyId()).getPhotos()
 						.add(obj);
 			}
@@ -60,7 +63,7 @@ public class InMemoryPhotoDao implements PhotoDao {
 			return this.photos.add(obj);
 		} else {
 			if (obj.isDirty()) {
-				this.photos.remove(obj);
+				EntityUtils.remove(this.photos, obj);
 				obj.setDirty(false);
 
 				return this.photos.add(obj);

@@ -28,8 +28,8 @@ public class PostgreConnectionManager implements ConnectionManager {
 
 	private Driver driver = new org.postgresql.Driver();
 
-	private String username = "postgres";
-	private String password = "teta";
+	private String username;
+	private String password;
 
 	public PostgreConnectionManager(final File propertiesFile) {
 		try {

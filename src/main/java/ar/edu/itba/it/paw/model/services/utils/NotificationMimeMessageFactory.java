@@ -55,20 +55,19 @@ public class NotificationMimeMessageFactory implements Factory {
 
 			sb.append("Datos del contacto:").append("\n");
 
-			sb.append("Nombre:")
-					.append(this.firstName + ", " + this.lastName).append("\n");
+			sb.append("Nombre:").append(this.firstName + ", " + this.lastName)
+					.append("\n");
 
 			if (this.email != null) {
 				sb.append("Email:").append(this.email).append("\n");
 			}
 
 			if (this.phone != null) {
-				sb.append("Teléfono:").append(this.phone).append("\n");
+				sb.append("Telefono:").append(this.phone).append("\n");
 			}
 
 			if (this.description != null) {
-				sb.append("Descripción:").append(this.description)
-						.append("\n");
+				sb.append("Descripcion:").append(this.description).append("\n");
 			}
 
 			message.setText(sb.toString());

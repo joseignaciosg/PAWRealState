@@ -20,6 +20,7 @@ public class IndexPage extends HttpServlet {
 		final CookiesManager manager = new CookiesManager(req, resp);
 
 		req.setAttribute("user_cookie_username", manager.getName());
+		req.setAttribute("user_remember", manager.getRemember());
 		HTMLUtils.render("index/index.jsp", req, resp);
 	}
 

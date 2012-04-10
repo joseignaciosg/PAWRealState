@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import ar.edu.itba.it.paw.model.services.ServiceProvider;
 import ar.edu.itba.it.paw.model.services.UserService;
+import ar.edu.itba.it.paw.web.cookies.CookiesManager;
 import ar.edu.itba.it.paw.web.session.UserManager;
 
 public class LogoutServlet extends HttpServlet {
@@ -21,6 +22,10 @@ public class LogoutServlet extends HttpServlet {
 		final UserManager manager = (UserManager) req
 				.getAttribute("userManager");
 
+		final CookiesManager cookman = new CookiesManager(req, resp);
+		if (cookman.getRemember().equals("session")) {
+			cookman.resetUser();
+		}
 		final UserService service = ServiceProvider.getUserService();
 
 		service.logout(manager);

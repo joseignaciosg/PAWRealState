@@ -73,6 +73,7 @@ public abstract class ContactRequestDaoTest extends DaoTest {
 				"Really good", null);
 		final ContactRequest c1 = new ContactRequest("Peron",
 				"peron@hotmail.com", "3427383", "desc3", prop);
+		c1.setId(1);
 		Assert.assertTrue(this.contactRequestDao.saveOrUpdate(c1));
 		Assert.assertFalse(this.contactRequestDao.saveOrUpdate(c1));
 
