@@ -24,7 +24,7 @@
 					<td>E-Mail: <c:out value=" ${user.mail}" /></td>
 				</tr>
 				<tr>
-					<td>Telefono: <c:out value=" ${usert.telephone}"/></td>
+					<td>Telefono: <c:out value=" ${user.telephone}"/></td>
 				</tr>
 			</tbody>
 		
