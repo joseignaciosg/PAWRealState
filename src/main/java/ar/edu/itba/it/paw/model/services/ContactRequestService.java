@@ -30,10 +30,10 @@ public class ContactRequestService {
 			final String telephone, final String description,
 			final Property propRefered, final List<String> errors) {
 
-		if (name.length() == 1) {
+		if (name == null || name.length() == 0) {
 			errors.add("Debe Ingresar un Nombre");
 		}
-		if (email.length() == 0) {
+		if (email == null || email.length() == 0) {
 			errors.add("Debe Ingresar un Email");
 		} else {
 			final String[] splited = email.split("@");
@@ -45,7 +45,7 @@ public class ContactRequestService {
 				}
 			}
 		}
-		if (telephone.length() == 0) {
+		if (telephone == null || telephone.length() == 0) {
 			errors.add("Debe Ingresar un Telefono");
 		}
 

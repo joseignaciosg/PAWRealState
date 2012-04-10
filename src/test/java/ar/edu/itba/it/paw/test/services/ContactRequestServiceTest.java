@@ -76,10 +76,8 @@ public class ContactRequestServiceTest {
 				"Pedro Perez", "nico@hotmail.com", "4442-3232", "desc1",
 				prop10, errors));
 
-		Assert.assertEquals(false, this.contact.saveContactRequest(null,
+		Assert.assertEquals(true, this.contact.saveContactRequest("nombre",
 				"nico@hotmail.com", "4442-3232", "desc1", prop10, errors));
-
-		errors.remove(0);
 
 		Assert.assertEquals(false, this.contact.saveContactRequest("Pepe",
 				null, "4442-3232", "desc1", prop10, errors));
