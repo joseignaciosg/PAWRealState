@@ -1,5 +1,9 @@
 package ar.edu.itba.it.paw.db.managers;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.sql.Connection;
@@ -27,25 +31,7 @@ public class PostgreConnectionManager implements ConnectionManager {
 	private String username = "postgres";
 	private String password = "teta";
 
-	public PostgreConnectionManager(final String connectionString,
-			final String username, final String password) {
-		this.connectionString = connectionString;
-		this.username = username;
-		this.password = password;
-	}
-
-	public static ConnectionManager getConnectionManager() {
-		if (instance == null) {
-			instance = new PostgreConnectionManager();
-		}
-		return instance;
-	}
-
-	public PostgreConnectionManager(final String connectionString) {
-		this.connectionString = connectionString;
-	}
-
-	public PostgreConnectionManager() {
+	public PostgreConnectionManager(final File propertiesFile) {
 		try {
 			Class.forName("org.postgresql.Driver");
 		} catch (final ClassNotFoundException e) {
@@ -71,8 +57,25 @@ public class PostgreConnectionManager implements ConnectionManager {
 
 		}
 
-		if (this.connectionString == null) {
-			this.connectionString = "￼￼jdbc:postgresql://localhost:5432/Chinuprop";
+		boolean error = !propertiesFile.exists();
+
+		final Properties props = new Properties();
+		try {
+			props.load(new FileReader(propertiesFile));
+			this.username = props.getProperty("db.username");
+			this.password = props.getProperty("db.password");
+			this.connectionString = props.getProperty("db.connectionString");
+		} catch (final FileNotFoundException e) {
+			error = true;
+		} catch (final IOException e) {
+			error = true;
+		}
+
+		if (error) {
+			System.out.println("Error loading the db from file");
+			this.username = "postgres";
+			this.password = "postgres";
+			this.connectionString = "jdbc:postgresql://localhost:5432/Chinuprop";
 		}
 	}
 

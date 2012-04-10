@@ -1,5 +1,6 @@
 package ar.edu.itba.it.paw.db;
 
+import java.io.File;
 import java.sql.Connection;
 
 import ar.edu.itba.it.paw.db.managers.InMemorySQLiteConnectionManager;
@@ -25,7 +26,14 @@ public class ConnectionProvider {
 	 */
 	public static ConnectionProvider getProvider() {
 		final ConnectionProvider myDispatcher = new ConnectionProvider();
-		myDispatcher.manager = new PostgreConnectionManager();
+		File configFile = new File(
+				"src/main/webapp/WEB-INF/database.properties");
+
+		if (!configFile.exists()) {
+			configFile = new File("WEB-INF/database.properties");
+		}
+
+		myDispatcher.manager = new PostgreConnectionManager(configFile);
 		return myDispatcher;
 	}
 
