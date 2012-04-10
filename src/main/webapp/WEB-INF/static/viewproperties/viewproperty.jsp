@@ -57,7 +57,7 @@
 	 				 <!-- Carousel items -->
 	  				<div class="carousel-inner">
 							<c:choose>
-								<c:when test="not empty property.photos">
+								<c:when test="${ not empty property.photos }">
 									<c:forEach var="photo" items="${property.photos}">
 										<div class="item">
 											<img height="260" width="368"
