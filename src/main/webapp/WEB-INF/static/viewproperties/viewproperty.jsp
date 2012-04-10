@@ -3,7 +3,16 @@
 <%@ page isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-
+<script type="text/javascript">
+	
+	 $(document).ready(function () {
+  		$('.carousel').carousel('next',{
+  				interval: 4000
+  			
+  		});
+  	 });
+</script>
+  
 <div class="row-fluid">
 	<div class="span12">
 		<div class="span8">
@@ -42,8 +51,25 @@
 					</dl>
 
 				</div>
-				<li class="span5"><a href="#" class="thumbnail"> <img height="360" width="268" src="http://www.highgrowthpropertyinvestment.co.uk/media/Sell-Property.jpg" alt="house" />
-				</a></li>
+				<div class="span5" >
+				
+				<div id="myCarousel" class="carousel" style="overflow:hidden; height:260px;">
+	 				 <!-- Carousel items -->
+	  				<div class="carousel-inner">
+	  				
+	  				<c:forEach var="photo" items="${property.photos}">
+						<div class="item"><img height="260" width="368" src="${ basePath }/photos?ID=${ photo.id }" alt=""/></div>
+					</c:forEach>
+					    <!--<div class="item"><img height="260" width="368" src="http://www.proprofs.com/flashcards/upload/a3325112.jpg" alt></div>
+					    <div class="item"><img height="260" width="368" src="http://www.highgrowthpropertyinvestment.co.uk/media/Sell-Property.jpg" alt></div>
+					    <div class="item"><img height="260" width="368" src="http://3.bp.blogspot.com/_rD3fj5P8gmE/TGTunUI3rUI/AAAAAAAAC-A/Bh6sVZqKmF0/s1600/European+house+design.jpg" alt></div>-->
+					</div>
+				 	<!-- Carousel nav -->
+				 	<a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+				  	<a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
+				</div>
+				
+				</div>
 			</ul>
 			<div class="span5"  style="margin: 0px;">
 		<table class="table table-striped">
@@ -128,6 +154,7 @@
 		</div>
 		<div class="span3">
 	<script type="text/javascript">
+	
 	 $(document).ready(function () {
   		$(".js-contact-button").on("click", function() {
   			$(this).parent().hide();

@@ -1,3 +1,15 @@
+CREATE TABLE users
+(
+  id serial NOT NULL,
+  firstname character varying NOT NULL,
+  lastname character varying NOT NULL,
+  email character varying NOT NULL,
+  phone character varying NOT NULL,
+  username character varying,
+  "password" character varying NOT NULL,
+  CONSTRAINT users_pkey PRIMARY KEY (id),
+  CONSTRAINT users_username_key UNIQUE (username)
+);
 
 
 CREATE TABLE properties
@@ -37,18 +49,7 @@ CREATE TABLE contact_requests
   CONSTRAINT contact_request_pkey PRIMARY KEY (id)
 );
 
-CREATE TABLE users
-(
-  id serial NOT NULL,
-  firstname character varying NOT NULL,
-  lastname character varying NOT NULL,
-  email character varying NOT NULL,
-  phone character varying NOT NULL,
-  username character varying,
-  "password" character varying NOT NULL,
-  CONSTRAINT users_pkey PRIMARY KEY (id),
-  CONSTRAINT users_username_key UNIQUE (username)
-);
+
 
 CREATE TABLE photos
 (
