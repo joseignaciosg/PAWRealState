@@ -6,6 +6,7 @@
 <web-app>
 	<display-name>Archetype Created Web Application</display-name>
 
+	
 	<servlet>
 		<servlet-name>RegisterPage</servlet-name>
 		<servlet-class>ar.edu.itba.it.paw.web.servlets.RegisterPage</servlet-class>
@@ -66,12 +67,12 @@
 		<servlet-name>PropertyDelete</servlet-name>
 		<servlet-class>ar.edu.itba.it.paw.web.servlets.MyPropertiesDeleteServlet</servlet-class>
 	</servlet>
-	
+
 	<servlet>
 		<servlet-name>PhotoDeletePage</servlet-name>
 		<servlet-class>ar.edu.itba.it.paw.web.servlets.PhotoDeletePage</servlet-class>
 	</servlet>
-	
+
 	<servlet-mapping>
 		<servlet-name>PropertyDelete</servlet-name>
 		<url-pattern>/myproperties/delete</url-pattern>

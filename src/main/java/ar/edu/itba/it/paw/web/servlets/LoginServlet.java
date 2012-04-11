@@ -13,10 +13,16 @@ import ar.edu.itba.it.paw.model.services.ServiceProvider;
 import ar.edu.itba.it.paw.model.services.UserService;
 import ar.edu.itba.it.paw.web.cookies.CookiesManager;
 import ar.edu.itba.it.paw.web.session.UserManager;
-import ar.edu.itba.it.paw.web.utils.HTMLUtils;
 
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = -5309533354100266135L;
+
+	@Override
+	protected void doGet(final HttpServletRequest req,
+			final HttpServletResponse resp) throws ServletException,
+			IOException {
+		resp.sendRedirect(req.getContextPath() + "/index");
+	}
 
 	@Override
 	protected void doPost(final HttpServletRequest req,
@@ -36,7 +42,7 @@ public class LoginServlet extends HttpServlet {
 		if (loginValid) {
 			final CookiesManager cookman = new CookiesManager(req, resp);
 			cookman.setUser(username, password, remember);
-			HTMLUtils.redirectBack(req, resp);
+			resp.sendRedirect(req.getContextPath() + "/index");
 		} else {
 			final List<String> errors = new ArrayList<String>();
 

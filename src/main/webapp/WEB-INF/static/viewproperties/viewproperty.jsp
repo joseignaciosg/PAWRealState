@@ -170,7 +170,7 @@
   		});
   	 });
   	</script>
-		<form name="contactrequest" class="form-vertical" action="/contactrequest" method="POST">
+		<form name="contactrequest" class="form-vertical" action="${ basePath }/contactrequest" method="POST">
 		<fieldset>
 			<legend>Contacta al Publicador</legend>
 			<input type="hidden" class="input-xlarge" id="property_id" name="property_id" value="${ property.id }">

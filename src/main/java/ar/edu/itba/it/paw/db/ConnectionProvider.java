@@ -15,6 +15,12 @@ public class ConnectionProvider {
 
 	private ConnectionManager manager;
 
+	private static String applicationPath;
+
+	public static void setApplicationPath(final String applicationPath) {
+		ConnectionProvider.applicationPath = applicationPath;
+	}
+
 	private ConnectionProvider() {
 
 	}
@@ -27,8 +33,8 @@ public class ConnectionProvider {
 	public static ConnectionProvider getProvider() {
 		final ConnectionProvider myDispatcher = new ConnectionProvider();
 
-		File configFile = new File(
-				"src/main/webapp/WEB-INF/database.properties");
+		File configFile = new File(applicationPath
+				+ "WEB-INF/database.properties");
 
 		if (!configFile.exists()) {
 			configFile = new File("WEB-INF/database.properties");

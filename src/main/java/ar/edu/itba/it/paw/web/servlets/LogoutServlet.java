@@ -19,6 +19,7 @@ public class LogoutServlet extends HttpServlet {
 	protected void doGet(final HttpServletRequest req,
 			final HttpServletResponse resp) throws ServletException,
 			IOException {
+
 		final UserManager manager = (UserManager) req
 				.getAttribute("userManager");
 
@@ -30,6 +31,6 @@ public class LogoutServlet extends HttpServlet {
 
 		service.logout(manager);
 
-		resp.sendRedirect("/index");
+		resp.sendRedirect(req.getContextPath() + "/index");
 	}
 }

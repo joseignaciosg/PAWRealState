@@ -25,7 +25,7 @@
 			</form>
 		</li>
 		<li class="divider-vertical"></li>
-		<li><a href="/register">Registrarse</a></li>
+		<li><a href="${ basePath }/register">Registrarse</a></li>
 	</c:if>
 	<c:if test="${ not empty current_user }">
 		<li class="dropdown">
@@ -41,7 +41,7 @@
 					<a href="${ basePath }/myproperties/new"> Crear Propiedad </a>
 				</li>
 				<li>
-					<a href="${ basePath }/logout"> Salir </a>
+					<a href="${ basePath }/logout">Salir </a>
 				</li>
 			</ul>
 		</li>

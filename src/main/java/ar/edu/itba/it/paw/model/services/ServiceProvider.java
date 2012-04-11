@@ -11,6 +11,12 @@ public class ServiceProvider {
 	private static PhotoService photoService;
 	private static EmailService emailService;
 
+	private static String applicationPath;
+
+	public static void setApplicationPath(final String applicationPath) {
+		ServiceProvider.applicationPath = applicationPath;
+	}
+
 	private ServiceProvider() {
 	}
 
@@ -24,7 +30,8 @@ public class ServiceProvider {
 
 	public static PropertyService getPropertyService() {
 		if (propertyService == null) {
-			propertyService = new PropertyService(DaoProvider.getDefaultPropertyDao(),
+			propertyService = new PropertyService(
+					DaoProvider.getDefaultPropertyDao(),
 					DaoProvider.getDefaultUserDao());
 		}
 
@@ -50,7 +57,8 @@ public class ServiceProvider {
 
 	public static EmailService getEmailService() {
 		if (emailService == null) {
-			emailService = new EmailService(new EmailMessageSender());
+			emailService = new EmailService(new EmailMessageSender(
+					applicationPath));
 		}
 		return emailService;
 	}

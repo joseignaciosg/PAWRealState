@@ -17,6 +17,11 @@ public class EmailMessageSender implements MessageSender {
 
 	// TODO: Remove with log4j
 	private boolean verbose = false;
+	private String configPath;
+
+	public EmailMessageSender(final String configPath) {
+		this.configPath = configPath;
+	}
 
 	public boolean send(final Message m) {
 		try {
@@ -53,10 +58,9 @@ public class EmailMessageSender implements MessageSender {
 		final Properties props = new Properties();
 		FileInputStream inputStream = null;
 
-		// TODO: Resolver cómo se apunta desde el container
 		try {
-			inputStream = new FileInputStream(
-					"src/main/webapp/WEB-INF/email.properties");
+			inputStream = new FileInputStream(this.configPath
+					+ "/WEB-INF/email.properties");
 			props.load(inputStream);
 		} catch (final Exception excp) {
 			try {
