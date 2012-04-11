@@ -126,7 +126,7 @@
 						prop.neighborhood } <br />
 					</div>
 					<div class="span2 pull-right">
-						<p style="color: #27702A; font-size: 30px;">
+						<p style="color: #2F5D9F; font-size: 30px;">
 							$
 							<c:out value=" ${prop.price}" />
 						<p>

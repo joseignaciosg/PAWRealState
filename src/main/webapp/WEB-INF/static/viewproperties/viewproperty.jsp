@@ -51,7 +51,7 @@
 					</dl>
 
 				</div>
-				<div class="span5" >
+				<div class="span7" >
 				
 				<div id="myCarousel" class="carousel" style="overflow:hidden; height:260px;">
 	 				 <!-- Carousel items -->
@@ -60,14 +60,14 @@
 								<c:when test="${ not empty property.photos }">
 									<c:forEach var="photo" items="${property.photos}">
 										<div class="item">
-											<img height="260" width="368"
+											<img height="100" width="425"
 												src="${ basePath }/photos?ID=${ photo.id }" alt="" />
 										</div>
 									</c:forEach>
 								</c:when>
 								<c:otherwise>
 									<div class="item">
-										<img height="260" width="368"
+										<img height="260" width="425"
 											src="${ basePath }/assets/img/no-picture.jpg" alt="" />
 									</div>
 								</c:otherwise>
@@ -80,7 +80,7 @@
 				
 				</div>
 			</ul>
-			<div class="span5"  style="margin: 0px;">
+			<div class="span6"  style="margin: 0px;">
 		<table class="table table-striped">
 			<thead>
 				<tr>
@@ -103,7 +103,7 @@
 			</tbody>
 		</table>
 	</div>
-	<div class="span2" >
+	<div class="span5" >
 		<table class="table table-striped">
 			<thead>
 				<tr>
