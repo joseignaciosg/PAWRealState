@@ -22,8 +22,6 @@ public class PostgreConnectionManager implements ConnectionManager {
 
 	private String connectionString;
 
-	private static ConnectionManager instance = null;
-
 	private Connection conn;
 
 	private Driver driver = new org.postgresql.Driver();
