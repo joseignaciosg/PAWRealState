@@ -72,23 +72,24 @@ public class ContactRequestServiceTest {
 				Integer.valueOf(3), Integer.valueOf(100), Integer.valueOf(200),
 				Integer.valueOf(5), service, "Descrip3", null);
 
-		Assert.assertEquals(true, this.contact.saveContactRequest(
-				"Pedro Perez", "nico@hotmail.com", "4442-3232", "desc1",
-				prop10, errors));
+		Assert.assertEquals(true, this.contact.saveContactRequest("Pedro",
+				"Perez", "nico@hotmail.com", "4442-3232", "desc1", prop10,
+				errors));
 
 		Assert.assertEquals(true, this.contact.saveContactRequest("nombre",
-				"nico@hotmail.com", "4442-3232", "desc1", prop10, errors));
+				"apellido", "nico@hotmail.com", "4442-3232", "desc1", prop10,
+				errors));
 
 		Assert.assertEquals(false, this.contact.saveContactRequest("Pepe",
-				null, "4442-3232", "desc1", prop10, errors));
+				"Word", null, "4442-3232", "desc1", prop10, errors));
 		errors.remove(0);
 
 		Assert.assertEquals(false, this.contact.saveContactRequest("pedrito",
-				"nico@hotmail.com", null, "desc1", prop10, errors));
+				"lopez", "nico@hotmail.com", null, "desc1", prop10, errors));
 		errors.remove(0);
 
-		Assert.assertEquals(true, this.contact.saveContactRequest(
-				"Pedro Perez", "nico@hotmail.com", "4442-3232", "desc2", prop9,
+		Assert.assertEquals(true, this.contact.saveContactRequest("Pedro",
+				"Perez", "nico@hotmail.com", "4442-3232", "desc2", prop9,
 				errors));
 
 	}

@@ -26,12 +26,16 @@ public class ContactRequestService {
 		return ans;
 	}
 
-	public boolean saveContactRequest(final String name, final String email,
-			final String telephone, final String description,
-			final Property propRefered, final List<String> errors) {
+	public boolean saveContactRequest(final String name, final String lastname,
+			final String email, final String telephone,
+			final String description, final Property propRefered,
+			final List<String> errors) {
 
 		if (name == null || name.length() == 0) {
-			errors.add("Debe Ingresar un Nombre");
+			errors.add("Debe ingresar un Nombre");
+		}
+		if (lastname == null || lastname.length() == 0) {
+			errors.add("Debe ingresar un Apellido");
 		}
 		if (email == null || email.length() == 0) {
 			errors.add("Debe Ingresar un Email");
