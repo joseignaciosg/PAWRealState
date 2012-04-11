@@ -1,0 +1,12 @@
+How to run:
+
+- Loading the database schema + data:
+   	psql -U $username -h $host -d Chinuprop < create.sql
+   	psql -U $username -h $host -d Chinuprop < insert.sql
+   	
+	Renaming the database to other than Chinuprop requires changing the settings in WEB-INF/database.settings
+
+- Starting up the application:
+	mvn package
+	cp target/*.war $tomcat_webapps_path/
+	# and run tomcat
