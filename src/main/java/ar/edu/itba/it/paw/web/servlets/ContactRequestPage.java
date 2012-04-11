@@ -60,11 +60,8 @@ public class ContactRequestPage extends HttpServlet {
 		final Integer propID = Integer.valueOf(req.getParameter("property_id"));
 		final Property property = PropService.getPropertyByID(propID, errors);
 
-		System.out.println("n:" + firstName + " email: " + email);
-		System.out.println("errors size: " + errors.size());
-
-		final boolean valid = service.saveContactRequest(firstName + " "
-				+ lastName, email, telephone, description, property, errors);
+		final boolean valid = service.saveContactRequest(firstName, lastName,
+				email, telephone, description, property, errors);
 
 		System.out.println("errors size: " + errors.size());
 
