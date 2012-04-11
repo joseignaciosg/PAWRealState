@@ -63,8 +63,6 @@ public class ContactRequestPage extends HttpServlet {
 		final boolean valid = service.saveContactRequest(firstName, lastName,
 				email, telephone, description, property, errors);
 
-		System.out.println("errors size: " + errors.size());
-
 		if (valid) {
 			final EmailService notification = ServiceProvider.getEmailService();
 			notification.sendMail(property.getOwner(), property, errors,

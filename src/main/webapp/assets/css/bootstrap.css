@@ -1729,6 +1729,11 @@ table .span12 {
   font-size: 11px;
   line-height: 16px;
 }
+.btn-mini {
+  padding: 2px 6px;
+  font-size: 11px;
+  line-height: 14px;
+}
 .btn-small .icon {
   margin-top: -1px;
 }

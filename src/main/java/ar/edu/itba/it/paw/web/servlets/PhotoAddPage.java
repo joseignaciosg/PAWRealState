@@ -82,6 +82,7 @@ public class PhotoAddPage extends HttpServlet {
 				resp.sendRedirect(req.getContextPath()
 						+ "/myproperties/myphotos?propertyId="
 						+ photo.getPropertyId());
+				return;
 			} else {
 				errors.add("Archivo inválido");
 			}

@@ -72,7 +72,7 @@ public class PostgreConnectionManager implements ConnectionManager {
 		}
 
 		if (error) {
-			System.out.println("Error loading the db from file");
+			System.err.println("Error loading the db from file");
 			this.username = "postgres";
 			this.password = "postgres";
 			this.connectionString = "jdbc:postgresql://localhost:5432/Chinuprop";

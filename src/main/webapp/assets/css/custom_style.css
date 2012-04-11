@@ -124,3 +124,20 @@ h3.search-result {
 #footer .container {
 	padding: 20px 0 0px;
 }
+
+.remember-me {
+	margin-right:5px;
+}
+
+.remember-me-label {
+	margin-top:10px;
+	color:#3E6FB1;
+}
+
+.home-thumbnails a {
+	text-align: center;
+}
+
+.home-thumbnails img {
+	margin-bottom: 4px;
+}

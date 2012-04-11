@@ -15,7 +15,8 @@ import javax.mail.internet.MimeMessage.RecipientType;
 
 public class EmailMessageSender implements MessageSender {
 
-	private boolean verbose = true;
+	// TODO: Remove with log4j
+	private boolean verbose = false;
 
 	public boolean send(final Message m) {
 		try {

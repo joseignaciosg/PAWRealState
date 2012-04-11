@@ -23,10 +23,14 @@ public class CookiesManager {
 		if (cookies != null) {
 			for (final Cookie c : cookies) {
 				if (c.getName().equals(COOKIE_NAME)) {
-					final String[] values = c.getValue().split("&");
-					this.name = values[0];
-					this.pass = values[1];
-					this.remember = values[2];
+					try {
+						final String[] values = c.getValue().split("&");
+						this.name = values[0];
+						this.pass = values[1];
+						this.remember = values[2];
+					} catch (final Exception e) {
+
+					}
 					break;
 				}
 			}

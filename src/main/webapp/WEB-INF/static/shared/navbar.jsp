@@ -13,15 +13,11 @@
 					name="user_password" class="span2" placeholder="Contrase&ntilde;a" /> <input
 					type="submit" class="btn btn-primary" value="Entrar" />
 				</div>
-				<!--<div class="pull-right" style="text-align:right; margin-top:10px; margin-right:5px;">
-					nombre
-					<input type="checkbox" name="user_remember" id="rememberme" />
-				</div>-->
-				<div data-toggle="buttons-radio" id="remember" class="btn-group pull-right tabs" style="margin-right:5px;">
+				<div data-toggle="buttons-radio" id="remember" class="btn-group pull-right tabs remember-me">
                     <input type="button" class="btn btn-primary active" id="remember_name" name="remember_name" value="Nombre"/>
                     <input type="button" class="btn btn-primary" id="remember_session" name="remember_session" value="Sesi&oacute;n"/>
                   </div>				
-				<div style="margin-top:10px;">
+				<div class="remember-me-label" >
 					Recordar:
 				</div>
                 	   

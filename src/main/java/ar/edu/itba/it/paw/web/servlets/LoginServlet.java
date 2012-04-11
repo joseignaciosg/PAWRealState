@@ -25,7 +25,6 @@ public class LoginServlet extends HttpServlet {
 		final String username = req.getParameter("user_username");
 		final String password = req.getParameter("user_password");
 		final String remember = req.getParameter("remember");
-		System.out.println("remember: " + remember);
 
 		final UserManager manager = (UserManager) req
 				.getAttribute("userManager");

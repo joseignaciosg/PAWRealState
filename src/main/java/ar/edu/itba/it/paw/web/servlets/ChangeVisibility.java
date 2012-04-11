@@ -18,7 +18,7 @@ public class ChangeVisibility extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	@Override
-	protected void doGet(final HttpServletRequest req,
+	protected void doPost(final HttpServletRequest req,
 			final HttpServletResponse resp) throws ServletException,
 			IOException {
 

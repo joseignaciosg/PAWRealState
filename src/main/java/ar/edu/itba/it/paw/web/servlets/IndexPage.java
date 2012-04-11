@@ -26,10 +26,13 @@ public class IndexPage extends HttpServlet {
 		final CookiesManager manager = new CookiesManager(req, resp);
 		final PropertyService service = ServiceProvider.getPropertyService();
 
-		final List<Property> propList = service.advancedSearch(Operation.RENT,
-				null, 0, 1000000, 0, 3, Order.DESC);
+		final List<Property> rentProperties = service.advancedSearch(
+				Operation.RENT, null, -1, -1, 0, 2, Order.DESC);
+		final List<Property> sellProperties = service.advancedSearch(
+				Operation.SELL, null, -1, -1, 0, 2, Order.DESC);
 
-		req.setAttribute("props", propList);
+		req.setAttribute("rentProperties", rentProperties);
+		req.setAttribute("sellProperties", sellProperties);
 
 		req.setAttribute("user_cookie_username", manager.getName());
 		req.setAttribute("user_remember", manager.getRemember());

@@ -19,7 +19,7 @@ public class MyPropertiesDeleteServlet extends HttpServlet {
 	private static final long serialVersionUID = 5705690655250406540L;
 
 	@Override
-	protected void doGet(final HttpServletRequest req,
+	protected void doPost(final HttpServletRequest req,
 			final HttpServletResponse resp) throws ServletException,
 			IOException {
 		final List<String> errors = new ArrayList<String>();

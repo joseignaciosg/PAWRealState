@@ -36,10 +36,8 @@ public class ShowPropertyPage extends HttpServlet {
 
 		final List<String> errors = new ArrayList<String>();
 		final Integer ID = Integer.valueOf(req.getParameter("id"));
-		System.out.println("id :" + ID);
 		final PropertyService propservice = ServiceProvider
 				.getPropertyService();
-		// final PhotoService photoservice = ServiceProvider.getPhotoService();
 
 		final Property property = propservice.getPropertyByID(ID, errors);
 
