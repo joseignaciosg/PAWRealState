@@ -15,8 +15,6 @@ import javax.mail.internet.MimeMessage.RecipientType;
 
 public class EmailMessageSender implements MessageSender {
 
-	// TODO: Remove with log4j
-	private boolean verbose = false;
 	private String configPath;
 
 	public EmailMessageSender(final String configPath) {
@@ -25,9 +23,6 @@ public class EmailMessageSender implements MessageSender {
 
 	public boolean send(final Message m) {
 		try {
-			if (this.verbose) {
-				System.out.println("Trying to send email");
-			}
 			final Message message = new MimeMessage(this.getSession());
 			message.setFrom(InternetAddress.parse("chinosrealstate@gmail.com")[0]);
 			message.setRecipients(RecipientType.TO,
@@ -39,9 +34,6 @@ public class EmailMessageSender implements MessageSender {
 			message.setText((String) m.getContent());
 			message.setSubject(m.getSubject());
 			Transport.send(message);
-			if (this.verbose) {
-				System.out.println("Email sent");
-			}
 			return true;
 		} catch (final MessagingException e) {
 			e.printStackTrace();

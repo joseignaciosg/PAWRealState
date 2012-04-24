@@ -70,6 +70,7 @@ public class CookiesManager {
 		this.remember = remember;
 		final Cookie c = new Cookie(COOKIE_NAME, name + "&" + pass + "&"
 				+ remember);
+		c.setMaxAge(604800);
 		this.response.addCookie(c);
 	}
 

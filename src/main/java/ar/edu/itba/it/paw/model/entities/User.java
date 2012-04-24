@@ -115,7 +115,7 @@ public class User implements Entity {
 	}
 
 	public boolean isDirty() {
-		return (this.dirty == false) ? false : true;
+		return this.dirty;
 	}
 
 	@Override
