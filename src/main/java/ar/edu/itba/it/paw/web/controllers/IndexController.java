@@ -4,9 +4,12 @@ import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import ar.edu.itba.it.paw.model.entities.Property;
 import ar.edu.itba.it.paw.model.entities.Property.Operation;
@@ -16,11 +19,12 @@ import ar.edu.itba.it.paw.model.services.ServiceProvider;
 import ar.edu.itba.it.paw.web.cookies.CookiesManager;
 import ar.edu.itba.it.paw.web.utils.HTMLUtils;
 
-public class IndexPage extends HttpServlet {
-	private static final long serialVersionUID = -3867633616799444335L;
+@Controller
+@RequestMapping("/")
+public class IndexController {
 
-	@Override
-	protected void doGet(final HttpServletRequest req,
+	@RequestMapping(method = RequestMethod.GET)
+	public void index(final HttpServletRequest req,
 			final HttpServletResponse resp) throws ServletException,
 			IOException {
 		final CookiesManager manager = new CookiesManager(req, resp);
@@ -40,10 +44,4 @@ public class IndexPage extends HttpServlet {
 		HTMLUtils.render("index/index.jsp", req, resp);
 	}
 
-	@Override
-	protected void doPost(final HttpServletRequest req,
-			final HttpServletResponse resp) throws ServletException,
-			IOException {
-		this.doGet(req, resp);
-	}
 }

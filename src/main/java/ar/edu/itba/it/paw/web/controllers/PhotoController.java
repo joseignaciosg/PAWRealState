@@ -2,10 +2,10 @@ package ar.edu.itba.it.paw.web.controllers;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -13,6 +13,9 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import ar.edu.itba.it.paw.model.entities.Photo;
 import ar.edu.itba.it.paw.model.entities.Property;
@@ -22,23 +25,14 @@ import ar.edu.itba.it.paw.model.services.PropertyService;
 import ar.edu.itba.it.paw.model.services.ServiceProvider;
 import ar.edu.itba.it.paw.web.utils.HTMLUtils;
 
-/**
- * Los usuarios registrados deben poder cargar y eliminar fotos asociadas a una
- * publicación. En la página de detalle de una publicación se deben poder ver
- * las fotos relacionadas a la misma
- * 
- * @author cris
- * 
- */
+@Controller
+@RequestMapping("/photo")
+public class PhotoController {
 
-@SuppressWarnings("serial")
-public class PhotoAddPage extends HttpServlet {
-
-	@Override
-	protected void doGet(final HttpServletRequest req,
-			final HttpServletResponse resp) throws ServletException,
-			IOException {
-
+	@RequestMapping(method = RequestMethod.GET, value = "/addphoto")
+	protected void addGET(final HttpServletRequest req,
+			final HttpServletResponse resp) throws IOException,
+			ServletException {
 		final PropertyService service = ServiceProvider.getPropertyService();
 
 		final List<String> errors = new ArrayList<String>();
@@ -60,10 +54,9 @@ public class PhotoAddPage extends HttpServlet {
 		}
 	}
 
-	@Override
-	protected void doPost(final HttpServletRequest req,
-			final HttpServletResponse resp) throws ServletException,
-			IOException {
+	@RequestMapping(method = RequestMethod.POST, value = "/addphoto")
+	protected void addPOST(final HttpServletRequest req,
+			final HttpServletResponse resp) throws IOException {
 		final List<String> errors = new ArrayList<String>();
 		try {
 
@@ -89,8 +82,6 @@ public class PhotoAddPage extends HttpServlet {
 		} catch (final FileUploadException e) {
 			errors.add("Archivo inválido");
 		}
-
-		this.doGet(req, resp);
 
 	}
 
@@ -126,6 +117,60 @@ public class PhotoAddPage extends HttpServlet {
 
 		return new Photo(null, data, fileName.substring(fileName
 				.lastIndexOf(".") + 1), propertyId);
+	}
+
+	@RequestMapping(method = RequestMethod.POST)
+	protected void delete(final HttpServletRequest req,
+			final HttpServletResponse resp) throws IOException {
+		final PhotoService service = ServiceProvider.getPhotoService();
+
+		final List<String> errors = Collections.emptyList();
+
+		final User currentUser = (User) req.getAttribute("current_user");
+
+		service.deletePhoto(Integer.valueOf(req.getParameter("photoId")),
+				currentUser, errors);
+
+		HTMLUtils.redirectBack(req, resp);
+	}
+
+	@RequestMapping(method = RequestMethod.GET)
+	protected void list(final HttpServletRequest req,
+			final HttpServletResponse resp) throws IOException,
+			ServletException {
+		final PropertyService service = ServiceProvider.getPropertyService();
+
+		final List<String> errors = new ArrayList<String>();
+
+		final Property property = service.getPropertyByID(
+				Integer.valueOf(req.getParameter("propertyId")), errors);
+
+		req.setAttribute("property", property);
+
+		if (errors.size() > 0) {
+			resp.sendRedirect(req.getContextPath() + "/index");
+		} else {
+			HTMLUtils.render("myproperties/myphotos.jsp", req, resp);
+		}
+	}
+
+	@RequestMapping(method = RequestMethod.GET)
+	protected void show(final HttpServletRequest req,
+			final HttpServletResponse resp) throws IOException {
+		final PhotoService service = ServiceProvider.getPhotoService();
+		final List<String> errors = new ArrayList<String>();
+
+		final Photo p = service.getPhotoById(
+				Integer.valueOf(req.getParameter("ID")), errors);
+
+		if (p == null) {
+			resp.setStatus(404);
+			return;
+		}
+
+		resp.setHeader("Content-Type", "image/jpeg");
+		resp.getOutputStream().write(p.getData());
+
 	}
 
 }
