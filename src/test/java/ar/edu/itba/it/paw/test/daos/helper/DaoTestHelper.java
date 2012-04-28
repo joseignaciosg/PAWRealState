@@ -63,11 +63,11 @@ public class DaoTestHelper {
 		if ((this.defaultProperty = this.propertyDao.getById(1)) == null) {
 			final Services service = new Services(true, true, true, true,
 					false, true);
-			this.defaultProperty = new Property(Integer.valueOf(1),
-					Type.APARTMENT, Operation.RENT, "Palermo", "Lavalle 660",
-					Integer.valueOf(500), Integer.valueOf(3),
-					Integer.valueOf(100), Integer.valueOf(200),
-					Integer.valueOf(5), service, "Descrip1", this.defaultUser());
+			this.defaultProperty = new Property(Type.APARTMENT, Operation.RENT,
+					"Palermo", "Lavalle 660", Integer.valueOf(500),
+					Integer.valueOf(3), Integer.valueOf(100),
+					Integer.valueOf(200), Integer.valueOf(5), service,
+					"Descrip1", this.defaultUser());
 
 			this.propertyDao.saveOrUpdate(this.defaultProperty);
 		}

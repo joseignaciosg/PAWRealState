@@ -101,8 +101,6 @@ public class SQLUserDao implements UserDao {
 					user.setId(set.getInt(1));
 				}
 
-				user.setNew(false);
-
 			} else if (user.isDirty()) {
 				statement = conn.prepareStatement("UPDATE USERS "
 						+ "SET firstname = ?, lastname = ?, "
@@ -194,7 +192,6 @@ public class SQLUserDao implements UserDao {
 		user.setProperties(new CollectionWithMemory<Property>(
 				new LazyCollection<Property>(new PropertyCollectionFactory(
 						this.propertyDao, user))));
-		user.setNew(false);
 		return user;
 	}
 

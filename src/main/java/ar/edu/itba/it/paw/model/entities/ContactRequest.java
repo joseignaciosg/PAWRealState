@@ -1,15 +1,12 @@
 package ar.edu.itba.it.paw.model.entities;
 
-public class ContactRequest implements Entity {
+public class ContactRequest extends BaseEntity {
 
-	private Integer ID;
 	private String name;
 	private String email;
 	private String telephone;
 	private String description;
 	private Property propRefered;
-	private boolean dirty;
-	private boolean isnew;
 
 	public ContactRequest(final String name, final String email,
 			final String telephone, final String description,
@@ -21,14 +18,12 @@ public class ContactRequest implements Entity {
 			final String email, final String telephone,
 			final String description, final Property propRefered) {
 		super();
-		this.ID = iD;
 		this.name = name;
 		this.email = email;
 		this.telephone = telephone;
 		this.description = description;
 		this.propRefered = propRefered;
 		this.setDirty(false);
-		this.isnew = true;
 	}
 
 	public String getDescription() {
@@ -64,23 +59,6 @@ public class ContactRequest implements Entity {
 	public void setTelephone(final String telephone) {
 		this.telephone = telephone;
 		this.setDirty(true);
-	}
-
-	public Integer getId() {
-		return this.ID;
-	}
-
-	public void setId(final Integer iD) {
-		this.ID = iD;
-		this.setDirty(true);
-	}
-
-	public boolean isDirty() {
-		return this.dirty;
-	}
-
-	public void setDirty(final boolean dirty) {
-		this.dirty = dirty;
 	}
 
 	public Property getPropRefered() {
@@ -162,17 +140,9 @@ public class ContactRequest implements Entity {
 
 	@Override
 	public String toString() {
-		return "ContactRequest [ID=" + this.ID + ", name=" + this.name
+		return "ContactRequest [ID=" + this.getId() + ", name=" + this.name
 				+ ", email=" + this.email + ", telephone=" + this.telephone
-				+ ", dirty=" + this.dirty + "]";
-	}
-
-	public boolean isNew() {
-		return this.isnew;
-	}
-
-	public void setNew(final boolean isnew) {
-		this.isnew = isnew;
+				+ "";
 	}
 
 }

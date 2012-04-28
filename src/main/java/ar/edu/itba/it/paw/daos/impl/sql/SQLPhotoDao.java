@@ -41,7 +41,6 @@ public class SQLPhotoDao implements PhotoDao {
 				photo = new Photo(Integer.valueOf(cursor.getString("id")),
 						cursor.getBytes("data"), cursor.getString("type"),
 						Integer.valueOf(cursor.getString("property_id")));
-				photo.setNew(false);
 			}
 		} catch (final Exception e) {
 			e.printStackTrace();
@@ -105,7 +104,6 @@ public class SQLPhotoDao implements PhotoDao {
 			return false;
 		}
 
-		obj.setNew(false);
 		obj.setDirty(false);
 		return true;
 	}
@@ -126,8 +124,6 @@ public class SQLPhotoDao implements PhotoDao {
 						.getString("id")), null, null, Integer.valueOf(cursor
 						.getString("property_id")));
 				photos.add(photo);
-				photo.setNew(false);
-
 			}
 			return photos;
 		} catch (final Exception e) {
