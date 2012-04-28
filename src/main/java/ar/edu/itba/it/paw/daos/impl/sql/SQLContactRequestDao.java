@@ -119,7 +119,6 @@ public class SQLContactRequestDao implements ContactRequestDao {
 			e.printStackTrace();
 			return false;
 		}
-		obj.setNew(false);
 		obj.setDirty(false);
 		return true;
 	}
@@ -167,8 +166,6 @@ public class SQLContactRequestDao implements ContactRequestDao {
 		contact = new ContactRequest(name, email, telephone, description, prop);
 
 		contact.setId(ID);
-
-		contact.setNew(false);
 
 		return contact;
 	}

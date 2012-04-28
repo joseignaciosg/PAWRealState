@@ -1,16 +1,17 @@
 package ar.edu.itba.it.paw.test.services;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import junit.framework.Assert;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import ar.edu.itba.it.paw.daos.impl.inmem.InMemoryUserDao;
+import ar.edu.itba.it.paw.daos.DaoProvider;
+import ar.edu.itba.it.paw.daos.api.UserDao;
 import ar.edu.itba.it.paw.model.entities.User;
 import ar.edu.itba.it.paw.model.services.UserService;
+import ar.edu.itba.it.paw.test.TransactionalTest;
 import ar.edu.itba.it.paw.web.session.UserManager;
 
 /**
@@ -20,7 +21,7 @@ import ar.edu.itba.it.paw.web.session.UserManager;
  * correctamente escrita. No puede haber nombres de usuario repetidos.
  */
 
-public class UserServiceTest {
+public class UserServiceTest extends TransactionalTest {
 
 	private UserService service;
 	private UserManager userManager;
@@ -28,12 +29,17 @@ public class UserServiceTest {
 
 	@Before
 	public void initService() {
-		final List<User> users = new ArrayList<User>();
 		this.usr = new User("Ben", "Stiller", "ben@gmail.com", "16748376",
 				"BenSti", "B3nSt1");
-		this.usr.setId(1);
-		users.add(this.usr);
-		this.service = new UserService(new InMemoryUserDao(users));
+
+		final DaoProvider provider = DaoProvider.getProviderForConnection(this
+				.getConnectionProvider());
+
+		final UserDao dao = provider.getUserDao();
+
+		dao.saveOrUpdate(this.usr);
+
+		this.service = new UserService(dao);
 		this.userManager = new UserManager() {
 			private User user;
 

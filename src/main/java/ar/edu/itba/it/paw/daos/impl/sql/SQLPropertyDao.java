@@ -367,7 +367,6 @@ public class SQLPropertyDao implements PropertyDao {
 				new LazyCollection<Photo>(new PhotoCollectionFactory(
 						this.photoDao, property))));
 
-		property.setNew(false);
 		property.setDirty(false);
 		return property;
 	}
