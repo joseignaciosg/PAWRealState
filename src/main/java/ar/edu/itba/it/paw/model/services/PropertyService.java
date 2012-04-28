@@ -45,6 +45,58 @@ public class PropertyService {
 		return ans;
 	}
 
+	public boolean deleteProperty(final Integer id, final User user,
+			final List<String> errors) {
+
+		ServiceUtils.validateNotNull(id, "El id debe ser válido", errors);
+		ServiceUtils.validateNotNull(user,
+				"El usuario logueado debe ser válido", errors);
+
+		final Property property = this.propertyDao.getById(id);
+
+		ServiceUtils.validateNotNull(property,
+				"La propiedad debe existir para poder ser eliminada", errors);
+
+		boolean belongs = false;
+		for (final Property prop : user.getProperties()) {
+			if (prop.getId().equals(property.getId())) {
+				belongs = true;
+			}
+		}
+		if (!belongs) {
+			errors.add("El usuario debe ser dueño de la propiedad para poder eliminarla");
+		}
+
+		if (errors.size() > 0) {
+			return false;
+		}
+
+		return this.propertyDao.delete(property);
+	}
+
+	public boolean toggleVisibility(final Integer propertyId,
+			final List<String> errors) {
+
+		ServiceUtils.validateNotNull(propertyId, "El ID debe ser no nulo",
+				errors);
+
+		if (errors.size() > 0) {
+			return false;
+		}
+
+		final Property prop = this.propertyDao.getById(propertyId);
+
+		ServiceUtils.validateNotNull(prop, "La propiedad debe existir", errors);
+
+		if (errors.size() > 0) {
+			return false;
+		}
+
+		prop.setVisible(!prop.getVisible());
+
+		return this.propertyDao.saveOrUpdate(prop);
+	}
+
 	public boolean saveProperty(final String operationStr,
 			final String typeStr, final String neighborhood,
 			final String address, final Integer price, final Integer spaces,
@@ -95,12 +147,10 @@ public class PropertyService {
 		Property prop = null;
 		if (id == null) {
 			prop = new Property(type, operation, neighborhood, address, price,
-					spaces, coveredArea, freeArea, age, service, description);
-			prop.setOwner(owner);
+					spaces, coveredArea, freeArea, age, service, description,
+					owner);
 		} else {
 			prop = this.propertyDao.getById(id);
-
-			// TODO: Check id integrity
 
 			prop.setType(type);
 			prop.setOperation(operation);
@@ -114,16 +164,10 @@ public class PropertyService {
 			prop.setService(service);
 			prop.setDescription(description);
 
-			prop.setDirty(true); // TODO: This should be dynamic
+			prop.setDirty(true);
 		}
 
 		this.propertyDao.saveOrUpdate(prop);
-
-		if (!owner.getProperties().contains(prop)) {
-			owner.getProperties().add(prop);
-		}
-
-		this.userDao.saveOrUpdate(owner);
 
 		return true;
 	}

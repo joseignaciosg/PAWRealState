@@ -33,29 +33,44 @@ public class AdvancedSearchPage extends HttpServlet {
 	protected void doGet(final javax.servlet.http.HttpServletRequest req,
 			final javax.servlet.http.HttpServletResponse resp)
 			throws javax.servlet.ServletException, java.io.IOException {
-		HTMLUtils.render("search/search.jsp", req, resp);
+
+		this.doPost(req, resp);
+
 	};
 
 	@Override
 	protected void doPost(final HttpServletRequest req,
 			final HttpServletResponse resp) throws ServletException,
 			IOException {
+
+		Integer page;
+		try {
+			page = Integer.valueOf(req.getParameter("page"));
+		} catch (final Exception e) {
+			page = 0;
+		}
 		Operation op = null;
-		if (req.getParameter("operation").equals("Sell")) {
+		if (req.getParameter("operation") != null
+				&& req.getParameter("operation").equals("Sell")) {
 			op = Operation.SELL;
-		} else if (req.getParameter("operation").equals("Rent")) {
+		} else if (req.getParameter("operation") != null
+				&& req.getParameter("operation").equals("Rent")) {
 			op = Operation.RENT;
 		}
 		Type type = null;
-		if (req.getParameter("type").equals("House")) {
+		if (req.getParameter("type") != null
+				&& req.getParameter("type").equals("House")) {
 			type = Type.HOUSE;
-		} else if (req.getParameter("type").equals("Apartment")) {
+		} else if (req.getParameter("type") != null
+				&& req.getParameter("type").equals("Apartment")) {
 			type = Type.APARTMENT;
 		}
 		Order order = null;
-		if (req.getParameter("order").equals("Asc")) {
+		if (req.getParameter("order") != null
+				&& req.getParameter("order").equals("Asc")) {
 			order = Order.ASC;
-		} else if (req.getParameter("order").equals("Desc")) {
+		} else if (req.getParameter("order") != null
+				&& req.getParameter("order").equals("Desc")) {
 			order = Order.DESC;
 		}
 
@@ -75,15 +90,16 @@ public class AdvancedSearchPage extends HttpServlet {
 
 		final PropertyService serv = ServiceProvider.getPropertyService();
 		final List<Property> props = serv.advancedSearch(op, type, pricelow,
-				pricehigh, 0, 10, order);
-		System.out.println("operation:" + op);
-		System.out.println("type: " + type);
-		System.out.println("pricelow: " + pricelow);
-		System.out.println("pricehigh: " + pricehigh);
-		System.out.println("order: " + order);
-		System.out.println("servlet: " + props);
+				pricehigh, Integer.valueOf(page), 5, order);
+
 		req.setAttribute("props", props);
-		HTMLUtils.render("search/searchresult.jsp", req, resp);
+		req.setAttribute("pagenum", page);
+		req.setAttribute("operation", req.getParameter("operation"));
+		req.setAttribute("type", req.getParameter("type"));
+		req.setAttribute("pricelow", req.getParameter("pricelow"));
+		req.setAttribute("pricehigh", req.getParameter("pricehigh"));
+		req.setAttribute("order", req.getParameter("order"));
+		HTMLUtils.render("search/search.jsp", req, resp);
 
 	}
 }

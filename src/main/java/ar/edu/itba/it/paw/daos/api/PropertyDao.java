@@ -15,4 +15,6 @@ public interface PropertyDao extends Dao<Property> {
 			final int pricelow, final int pricehigh, final int page,
 			final int quant, Order order, Boolean visible);
 
+	public List<Property> getByUserId(int userId);
+
 }

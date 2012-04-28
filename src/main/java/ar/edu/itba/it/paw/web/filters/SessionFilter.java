@@ -12,6 +12,10 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import ar.edu.itba.it.paw.db.ConnectionProvider;
+import ar.edu.itba.it.paw.model.services.ServiceProvider;
+import ar.edu.itba.it.paw.model.services.UserService;
+import ar.edu.itba.it.paw.web.cookies.CookiesManager;
 import ar.edu.itba.it.paw.web.session.SessionManager;
 import ar.edu.itba.it.paw.web.session.UserManager;
 
@@ -21,6 +25,11 @@ public class SessionFilter implements Filter {
 
 	public void init(final FilterConfig filterConfig) throws ServletException {
 		this.excludePatterns = filterConfig.getInitParameter("excludePatterns");
+		final String applicationPath = filterConfig.getServletContext()
+				.getRealPath("/");
+		ServiceProvider.setApplicationPath(applicationPath);
+		ConnectionProvider.setApplicationPath(applicationPath);
+
 	}
 
 	public void doFilter(final ServletRequest request,
@@ -33,6 +42,17 @@ public class SessionFilter implements Filter {
 
 		final UserManager userManager = new SessionManager(
 				httpRequest.getSession());
+
+		final CookiesManager manager = new CookiesManager(request, response);
+
+		final String remember = manager.getRemember();
+		if (remember != null) {
+			if (remember.equals("session")) {
+				final UserService service = ServiceProvider.getUserService();
+				service.login(manager.getName(), manager.getPassword(),
+						userManager);
+			}
+		}
 
 		if (userManager.getCurrentUser() != null) {
 			httpRequest.setAttribute("current_user",

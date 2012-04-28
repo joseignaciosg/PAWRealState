@@ -18,11 +18,19 @@ public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = -5309533354100266135L;
 
 	@Override
+	protected void doGet(final HttpServletRequest req,
+			final HttpServletResponse resp) throws ServletException,
+			IOException {
+		resp.sendRedirect(req.getContextPath() + "/index");
+	}
+
+	@Override
 	protected void doPost(final HttpServletRequest req,
 			final HttpServletResponse resp) throws ServletException,
 			IOException {
 		final String username = req.getParameter("user_username");
 		final String password = req.getParameter("user_password");
+		final String remember = req.getParameter("remember");
 
 		final UserManager manager = (UserManager) req
 				.getAttribute("userManager");
@@ -33,16 +41,8 @@ public class LoginServlet extends HttpServlet {
 
 		if (loginValid) {
 			final CookiesManager cookman = new CookiesManager(req, resp);
-			cookman.setUser(username, password);
-			String backPage = null;
-			if (req.getHeader("Origin") == null) {
-				backPage = "/index";
-			} else {
-				backPage = req.getHeader("Origin");
-			}
-
-			resp.sendRedirect(backPage);
-
+			cookman.setUser(username, password, remember);
+			resp.sendRedirect(req.getContextPath() + "/index");
 		} else {
 			final List<String> errors = new ArrayList<String>();
 
@@ -53,4 +53,5 @@ public class LoginServlet extends HttpServlet {
 			req.getRequestDispatcher("/index").forward(req, resp);
 		}
 	}
+
 }

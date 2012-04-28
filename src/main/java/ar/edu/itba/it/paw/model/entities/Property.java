@@ -1,7 +1,9 @@
 package ar.edu.itba.it.paw.model.entities;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
+
+import ar.edu.itba.it.paw.utils.collections.CollectionWithMemory;
 
 public class Property implements Entity {
 
@@ -68,7 +70,16 @@ public class Property implements Entity {
 	private Integer age;
 	private Services service;
 	private String description;
-	private List<Photo> photos;
+	private Collection<Photo> photos;
+
+	public Collection<Photo> getPhotos() {
+		return this.photos;
+	}
+
+	public void setPhotos(final Collection<Photo> photos) {
+		this.photos = photos;
+	}
+
 	private User owner;
 	private boolean visible;
 	private boolean isnew;
@@ -77,9 +88,10 @@ public class Property implements Entity {
 			final String neighborhood, final String address,
 			final Integer price, final Integer spaces,
 			final Integer coveredArea, final Integer freeArea,
-			final Integer age, final Services service, final String description) {
+			final Integer age, final Services service,
+			final String description, final User owner) {
 		this(null, type, operation, neighborhood, address, price, spaces,
-				coveredArea, freeArea, age, service, description);
+				coveredArea, freeArea, age, service, description, owner);
 		this.setDirty(false);
 		this.setVisible(true);
 	}
@@ -88,7 +100,8 @@ public class Property implements Entity {
 			final Operation operation, final String neighborhood,
 			final String address, final Integer price, final Integer spaces,
 			final Integer coveredArea, final Integer freeArea,
-			final Integer age, final Services service, final String description) {
+			final Integer age, final Services service,
+			final String description, final User owner) {
 		this.id = id;
 		this.type = type;
 		this.operation = operation;
@@ -101,7 +114,8 @@ public class Property implements Entity {
 		this.age = age;
 		this.service = service;
 		this.description = description;
-		this.photos = new ArrayList<Photo>();
+		this.photos = new CollectionWithMemory<Photo>(new ArrayList<Photo>());
+		this.setOwner(owner);
 		this.setVisible(true);
 		this.setDirty(false);
 		this.isnew = true;
@@ -127,7 +141,33 @@ public class Property implements Entity {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((this.id == null) ? 0 : this.id.hashCode());
+		result = prime * result
+				+ ((this.address == null) ? 0 : this.address.hashCode());
+		result = prime * result
+				+ ((this.age == null) ? 0 : this.age.hashCode());
+		result = prime
+				* result
+				+ ((this.coveredArea == null) ? 0 : this.coveredArea.hashCode());
+		result = prime
+				* result
+				+ ((this.description == null) ? 0 : this.description.hashCode());
+		result = prime * result
+				+ ((this.freeArea == null) ? 0 : this.freeArea.hashCode());
+		result = prime
+				* result
+				+ ((this.neighborhood == null) ? 0 : this.neighborhood
+						.hashCode());
+		result = prime * result
+				+ ((this.operation == null) ? 0 : this.operation.hashCode());
+		result = prime * result
+				+ ((this.price == null) ? 0 : this.price.hashCode());
+		result = prime * result
+				+ ((this.service == null) ? 0 : this.service.hashCode());
+		result = prime * result
+				+ ((this.spaces == null) ? 0 : this.spaces.hashCode());
+		result = prime * result
+				+ ((this.type == null) ? 0 : this.type.hashCode());
+		result = prime * result + (this.visible ? 1231 : 1237);
 		return result;
 	}
 
@@ -143,11 +183,76 @@ public class Property implements Entity {
 			return false;
 		}
 		final Property other = (Property) obj;
-		if (this.id == null) {
-			if (other.id != null) {
+		if (this.address == null) {
+			if (other.address != null) {
 				return false;
 			}
-		} else if (!this.id.equals(other.id)) {
+		} else if (!this.address.equals(other.address)) {
+			return false;
+		}
+		if (this.age == null) {
+			if (other.age != null) {
+				return false;
+			}
+		} else if (!this.age.equals(other.age)) {
+			return false;
+		}
+		if (this.coveredArea == null) {
+			if (other.coveredArea != null) {
+				return false;
+			}
+		} else if (!this.coveredArea.equals(other.coveredArea)) {
+			return false;
+		}
+		if (this.description == null) {
+			if (other.description != null) {
+				return false;
+			}
+		} else if (!this.description.equals(other.description)) {
+			return false;
+		}
+		if (this.freeArea == null) {
+			if (other.freeArea != null) {
+				return false;
+			}
+		} else if (!this.freeArea.equals(other.freeArea)) {
+			return false;
+		}
+		if (this.neighborhood == null) {
+			if (other.neighborhood != null) {
+				return false;
+			}
+		} else if (!this.neighborhood.equals(other.neighborhood)) {
+			return false;
+		}
+		if (this.operation != other.operation) {
+			return false;
+		}
+		if (this.price == null) {
+			if (other.price != null) {
+				return false;
+			}
+		} else if (!this.price.equals(other.price)) {
+			return false;
+		}
+		if (this.service == null) {
+			if (other.service != null) {
+				return false;
+			}
+		} else if (!this.service.equals(other.service)) {
+			return false;
+		}
+		if (this.spaces == null) {
+			if (other.spaces != null) {
+				return false;
+			}
+		} else if (!this.spaces.equals(other.spaces)) {
+			return false;
+		}
+		if (this.type != other.type) {
+			return false;
+		}
+		if (this.visible != other.visible) {
 			return false;
 		}
 		return true;
@@ -268,14 +373,6 @@ public class Property implements Entity {
 	public void setDescription(final String description) {
 		this.description = description;
 		this.setDirty(true);
-	}
-
-	public void addPhoto(final Photo photo) {
-		this.photos.add(photo);
-	}
-
-	public void removePhoto(final Photo photo) {
-		this.photos.remove(photo);
 	}
 
 	public boolean getVisible() {

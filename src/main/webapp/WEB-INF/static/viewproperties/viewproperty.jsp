@@ -3,7 +3,16 @@
 <%@ page isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-
+<script type="text/javascript">
+	
+	 $(document).ready(function () {
+  		$('.carousel').carousel('next',{
+  				interval: 4000
+  			
+  		});
+  	 });
+</script>
+  
 <div class="row-fluid">
 	<div class="span12">
 		<div class="span8">
@@ -16,10 +25,9 @@
 			<h2><c:out value=" ${property.neighborhood}" /> </h2>
 			<br />
 			<ul class="thumbnails">
-				<li class="span4"><a href="#" class="thumbnail"> <img height="360" width="268" src="http://www.highgrowthpropertyinvestment.co.uk/media/Sell-Property.jpg" alt="house" />
-				</a></li>
+				
 
-				<div class="span4">
+				<div class="span3">
 					<dl>
 						<dt><h4>Tipo de Inmueble</h4></dt>
 						<c:if test = "${property.type == 'HOUSE'}">   
@@ -43,8 +51,36 @@
 					</dl>
 
 				</div>
+				<div class="span7" >
+				
+				<div id="myCarousel" class="carousel" style="overflow:hidden; height:260px;">
+	 				 <!-- Carousel items -->
+	  				<div class="carousel-inner">
+							<c:choose>
+								<c:when test="${ not empty property.photos }">
+									<c:forEach var="photo" items="${property.photos}">
+										<div class="item">
+											<img height="100" width="425"
+												src="${ basePath }/photos?ID=${ photo.id }" alt="" />
+										</div>
+									</c:forEach>
+								</c:when>
+								<c:otherwise>
+									<div class="item">
+										<img height="260" width="425"
+											src="${ basePath }/assets/img/no-picture.jpg" alt="" />
+									</div>
+								</c:otherwise>
+							</c:choose>
+						</div>
+				 	<!-- Carousel nav -->
+				 	<a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+				  	<a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
+				</div>
+				
+				</div>
 			</ul>
-			<div class="span5"  style="margin: 0px;">
+			<div class="span6"  style="margin: 0px;">
 		<table class="table table-striped">
 			<thead>
 				<tr>
@@ -67,7 +103,7 @@
 			</tbody>
 		</table>
 	</div>
-	<div class="span2" >
+	<div class="span5" >
 		<table class="table table-striped">
 			<thead>
 				<tr>
@@ -126,25 +162,19 @@
 			
 		</div>
 		<div class="span3">
-
-		<form name="contactrequest" class="form-vertical" action="/contactrequest" method="POST">
-		
-				<!--<fieldset>
-					<legend>Contacta al Publicador</legend>
-					<label>Tu Nombre</label> 
-					<input type="text" class="span3" placeholder="Requerido…"> 
-					<label>Tu Apellido</label> 
-					<input type="text" class="span3" placeholder="Requerido…"> 
-					<label>Tu e-mail de contacto</label> 
-					<input type="text" class="span3" placeholder="Requerido…"> 
-					<label>Tu Consulta</label> 
-					<input type="text" class="span3" placeholder="Opcional…"><br />
-					<button type="submit" class="btn btn-primary">Obtener
-						datos del Publicador</button>
-				</fieldset>-->
-				
+	<script type="text/javascript">
+	
+	 $(document).ready(function () {
+  		$(".js-contact-button").on("click", function() {
+  			$(this).parent().hide();
+  		});
+  	 });
+  	</script>
+		<form name="contactrequest" class="form-vertical" action="${ basePath }/contactrequest" method="POST">
 		<fieldset>
 			<legend>Contacta al Publicador</legend>
+			<input type="hidden" class="input-xlarge" id="property_id" name="property_id" value="${ property.id }">
+			<div id="hiddenform" class="collapse" >
 			
 			<div class="control-group">
 				<label class="control-label" for="first_name">Nombre</label>
@@ -176,11 +206,17 @@
 					<input type="text" class="input-xlarge" id="description" name="description">
 				</div>
 			</div>
+			
 			<button type="submit" class="btn btn-primary">Obtener
 						datos del Publicador</button>
+			
+			</div>
 		</fieldset>
 	
 			</form>
+			<div class="form-actions" style="width:230px;">
+            <button class="btn js-contact-button"  data-toggle="collapse" data-target="#hiddenform">Mostrar Formulario</button>
+         	</div>
 				<table class="table table-striped">
 					<thead>
 					    <tr>
@@ -201,7 +237,7 @@
 	  	$("#map").gMap(options);
 	});
 	  </script>
-							<div id="map"  style="height:380px; width:270px;"></div>	
+							<div id="map"  style="height:380px; width:260px;"></div>	
 						</td>
 						</tr>
 					  </tbody>

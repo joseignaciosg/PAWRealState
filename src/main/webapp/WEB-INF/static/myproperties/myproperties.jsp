@@ -25,7 +25,7 @@
 					<c:if test="${ property.visible }">
 						Visible
 					</c:if>
-					<c:if test="${ !property.visible }">
+					<c:if test="${ ! property.visible }">
 						No visible
 					</c:if>
 				</td>
@@ -34,11 +34,14 @@
 					<div class="btn-group">
 						<a href="${ basePath }/properties/view?id=${ property.id }" class="btn btn-mini">Ver publicación</a>
 						<a href="${ basePath }/myproperties/edit?ID=${ property.id }" class="btn btn-mini">Editar</a>
-						<a href="${ basePath }/myproperties/changevisibility?id=${ property.id }" class="btn btn-mini">Cambiar visibilidad</a>
-						<a href="${ basePath }/myproperties/delete?ID=${ property.id }" class="btn btn-mini btn-danger">Eliminar</a>
+						<a href="${ basePath }/myproperties/myphotos?propertyId=${ property.id }" class="btn btn-mini">Fotos</a>
+						<a href="${ basePath }/myproperties/changevisibility?id=${ property.id }" class="btn btn-mini js-change-visibility" data-prop-id="${ property.id }">Cambiar visibilidad</a>
+						<a href="${ basePath }/myproperties/delete?ID=${ property.id }" class="btn btn-mini btn-danger js-delete" data-prop-id="${ property.id }">Eliminar</a>
 					</div>
 				</td>
 			</tr>
 		</c:forEach>
 	</tbody>
 </table>
+<hr/>
+<a href="${ basePath }/myproperties/new" class="btn btn-primary">Crear nueva propiedad</a>

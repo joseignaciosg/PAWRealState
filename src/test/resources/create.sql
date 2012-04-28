@@ -1,12 +1,16 @@
-CREATE TABLE contact_requests
+CREATE TABLE users
 (
   id serial NOT NULL,
-  username character varying NOT NULL,
+  firstname character varying NOT NULL,
+  lastname character varying NOT NULL,
   email character varying NOT NULL,
   phone character varying NOT NULL,
-  "comment" character varying,
-  CONSTRAINT contact_request_pkey PRIMARY KEY (id)
+  username character varying,
+  "password" character varying NOT NULL,
+  CONSTRAINT users_pkey PRIMARY KEY (id),
+  CONSTRAINT users_username_key UNIQUE (username)
 );
+
 
 CREATE TABLE properties
 (
@@ -28,29 +32,30 @@ CREATE TABLE properties
   has_quincho boolean NOT NULL,
   description character varying,
   visible boolean NOT NULL,
+  user_id integer references users(id),
   CONSTRAINT property_pkey PRIMARY KEY (id),
   CONSTRAINT property_transaction_check CHECK (transaction::text = ANY (ARRAY['SELL'::character varying::text, 'RENT'::character varying::text])),
   CONSTRAINT property_type_check CHECK (type::text = ANY (ARRAY['APARTMENT'::character varying::text, 'HOUSE'::character varying::text]))
 );
 
-CREATE TABLE users
+CREATE TABLE contact_requests
 (
   id serial NOT NULL,
-  firstname character varying NOT NULL,
-  lastname character varying NOT NULL,
+  username character varying NOT NULL,
   email character varying NOT NULL,
   phone character varying NOT NULL,
-  username character varying,
-  "password" character varying NOT NULL,
-  CONSTRAINT users_pkey PRIMARY KEY (id),
-  CONSTRAINT users_username_key UNIQUE (username)
+  "comment" character varying,
+  prop_id integer references properties(id),
+  CONSTRAINT contact_request_pkey PRIMARY KEY (id)
 );
+
+
 
 CREATE TABLE photos
 (
   id serial NOT NULL,
   data bytea NOT NULL,
   type character varying NOT NULL,
-  property_id integer references property(id),
+  property_id integer references properties(id),
   CONSTRAINT photos_pkey PRIMARY KEY (id)
 );

@@ -1,5 +1,7 @@
 package ar.edu.itba.it.paw.model.entities;
 
+import java.util.Arrays;
+
 public class Photo implements Entity {
 
 	private Integer id;
@@ -32,11 +34,11 @@ public class Photo implements Entity {
 		return this.type;
 	}
 
-	public Integer getPropertyid() {
+	public Integer getPropertyId() {
 		return this.propertyid;
 	}
 
-	public void setPropertyid(final Integer propertyid) {
+	public void setPropertyId(final Integer propertyid) {
 		this.setDirty(true);
 		this.propertyid = propertyid;
 	}
@@ -66,7 +68,11 @@ public class Photo implements Entity {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((this.id == null) ? 0 : this.id.hashCode());
+		result = prime * result + Arrays.hashCode(this.data);
+		result = prime * result
+				+ ((this.propertyid == null) ? 0 : this.propertyid.hashCode());
+		result = prime * result
+				+ ((this.type == null) ? 0 : this.type.hashCode());
 		return result;
 	}
 
@@ -82,11 +88,21 @@ public class Photo implements Entity {
 			return false;
 		}
 		final Photo other = (Photo) obj;
-		if (this.id == null) {
-			if (other.id != null) {
+		if (!Arrays.equals(this.data, other.data)) {
+			return false;
+		}
+		if (this.propertyid == null) {
+			if (other.propertyid != null) {
 				return false;
 			}
-		} else if (!this.id.equals(other.id)) {
+		} else if (!this.propertyid.equals(other.propertyid)) {
+			return false;
+		}
+		if (this.type == null) {
+			if (other.type != null) {
+				return false;
+			}
+		} else if (!this.type.equals(other.type)) {
 			return false;
 		}
 		return true;

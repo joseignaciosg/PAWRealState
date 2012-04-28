@@ -11,6 +11,12 @@ public class ContactRequest implements Entity {
 	private boolean dirty;
 	private boolean isnew;
 
+	public ContactRequest(final String name, final String email,
+			final String telephone, final String description,
+			final Property propRefered) {
+		this(null, name, email, telephone, description, propRefered);
+	}
+
 	public ContactRequest(final Integer iD, final String name,
 			final String email, final String telephone,
 			final String description, final Property propRefered) {
@@ -89,7 +95,18 @@ public class ContactRequest implements Entity {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((this.ID == null) ? 0 : this.ID.hashCode());
+		result = prime
+				* result
+				+ ((this.description == null) ? 0 : this.description.hashCode());
+		result = prime * result
+				+ ((this.email == null) ? 0 : this.email.hashCode());
+		result = prime * result
+				+ ((this.name == null) ? 0 : this.name.hashCode());
+		result = prime
+				* result
+				+ ((this.propRefered == null) ? 0 : this.propRefered.hashCode());
+		result = prime * result
+				+ ((this.telephone == null) ? 0 : this.telephone.hashCode());
 		return result;
 	}
 
@@ -105,11 +122,39 @@ public class ContactRequest implements Entity {
 			return false;
 		}
 		final ContactRequest other = (ContactRequest) obj;
-		if (this.ID == null) {
-			if (other.ID != null) {
+		if (this.description == null) {
+			if (other.description != null) {
 				return false;
 			}
-		} else if (!this.ID.equals(other.ID)) {
+		} else if (!this.description.equals(other.description)) {
+			return false;
+		}
+		if (this.email == null) {
+			if (other.email != null) {
+				return false;
+			}
+		} else if (!this.email.equals(other.email)) {
+			return false;
+		}
+		if (this.name == null) {
+			if (other.name != null) {
+				return false;
+			}
+		} else if (!this.name.equals(other.name)) {
+			return false;
+		}
+		if (this.propRefered == null) {
+			if (other.propRefered != null) {
+				return false;
+			}
+		} else if (!this.propRefered.equals(other.propRefered)) {
+			return false;
+		}
+		if (this.telephone == null) {
+			if (other.telephone != null) {
+				return false;
+			}
+		} else if (!this.telephone.equals(other.telephone)) {
 			return false;
 		}
 		return true;

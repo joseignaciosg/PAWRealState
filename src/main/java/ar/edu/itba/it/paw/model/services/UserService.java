@@ -19,6 +19,10 @@ public class UserService {
 		this.dao = inMemoryUserDao;
 	}
 
+	public User getById(final Integer id) {
+		return this.dao.getById(id);
+	}
+
 	public boolean login(final String username, final String password,
 			final UserManager manager) {
 		final User usr = this.dao.getUser(username);
@@ -31,9 +35,6 @@ public class UserService {
 		return false;
 	}
 
-	// TODO: Validate numeric telephone
-	// TODO: Validate email format
-	// Hint: Clase "Pattern"
 	public boolean register(final String name, final String lastname,
 			final String email, final String phone, final String username,
 			final String password, final String repeatedPassword,

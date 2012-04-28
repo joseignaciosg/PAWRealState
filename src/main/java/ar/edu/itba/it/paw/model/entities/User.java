@@ -1,7 +1,9 @@
 package ar.edu.itba.it.paw.model.entities;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
+
+import ar.edu.itba.it.paw.utils.collections.CollectionWithMemory;
 
 public class User implements Entity {
 
@@ -13,12 +15,19 @@ public class User implements Entity {
 	private String username;
 	private String password;
 	private boolean dirty;
-	private List<Property> properties;
+	private Collection<Property> properties;
+
+	public void setProperties(final Collection<Property> properties) {
+		this.properties = properties;
+	}
+
 	private boolean isnew;
+
+	protected User() {
+	}
 
 	public User(final String name, final String surname, final String mail,
 			final String telephone, final String username, final String password) {
-		// super();
 		this(null, name, surname, mail, telephone, username, password);
 		this.setDirty(false);
 		this.setVisible(true);
@@ -27,13 +36,15 @@ public class User implements Entity {
 	public User(final Integer userId, final String name, final String surname,
 			final String mail, final String telephone, final String username,
 			final String password) {
-		this.properties = new ArrayList<Property>();
+		this.properties = new CollectionWithMemory<Property>(
+				new ArrayList<Property>());
 		this.name = name;
 		this.surname = surname;
 		this.mail = mail;
 		this.telephone = telephone;
 		this.username = username;
 		this.password = password;
+		this.ID = userId;
 		this.setDirty(false);
 		this.isnew = true;
 	}
@@ -42,7 +53,7 @@ public class User implements Entity {
 		this.isnew = isnew;
 	}
 
-	public List<Property> getProperties() {
+	public Collection<Property> getProperties() {
 		return this.properties;
 	}
 
@@ -111,7 +122,20 @@ public class User implements Entity {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((this.ID == null) ? 0 : this.ID.hashCode());
+		result = prime * result
+				+ ((this.mail == null) ? 0 : this.mail.hashCode());
+		result = prime * result
+				+ ((this.name == null) ? 0 : this.name.hashCode());
+		result = prime * result
+				+ ((this.password == null) ? 0 : this.password.hashCode());
+		result = prime * result
+				+ ((this.properties == null) ? 0 : this.properties.hashCode());
+		result = prime * result
+				+ ((this.surname == null) ? 0 : this.surname.hashCode());
+		result = prime * result
+				+ ((this.telephone == null) ? 0 : this.telephone.hashCode());
+		result = prime * result
+				+ ((this.username == null) ? 0 : this.username.hashCode());
 		return result;
 	}
 
@@ -127,11 +151,53 @@ public class User implements Entity {
 			return false;
 		}
 		final User other = (User) obj;
-		if (this.ID == null) {
-			if (other.ID != null) {
+		if (this.mail == null) {
+			if (other.mail != null) {
 				return false;
 			}
-		} else if (!this.ID.equals(other.ID)) {
+		} else if (!this.mail.equals(other.mail)) {
+			return false;
+		}
+		if (this.name == null) {
+			if (other.name != null) {
+				return false;
+			}
+		} else if (!this.name.equals(other.name)) {
+			return false;
+		}
+		if (this.password == null) {
+			if (other.password != null) {
+				return false;
+			}
+		} else if (!this.password.equals(other.password)) {
+			return false;
+		}
+		if (this.properties == null) {
+			if (other.properties != null) {
+				return false;
+			}
+		} else if (!this.properties.equals(other.properties)) {
+			return false;
+		}
+		if (this.surname == null) {
+			if (other.surname != null) {
+				return false;
+			}
+		} else if (!this.surname.equals(other.surname)) {
+			return false;
+		}
+		if (this.telephone == null) {
+			if (other.telephone != null) {
+				return false;
+			}
+		} else if (!this.telephone.equals(other.telephone)) {
+			return false;
+		}
+		if (this.username == null) {
+			if (other.username != null) {
+				return false;
+			}
+		} else if (!this.username.equals(other.username)) {
 			return false;
 		}
 		return true;

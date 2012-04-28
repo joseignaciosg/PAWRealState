@@ -8,7 +8,7 @@ import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import ar.edu.itba.it.paw.daos.impl.InMemoryUserDao;
+import ar.edu.itba.it.paw.daos.impl.inmem.InMemoryUserDao;
 import ar.edu.itba.it.paw.model.entities.User;
 import ar.edu.itba.it.paw.model.services.UserService;
 import ar.edu.itba.it.paw.web.session.UserManager;
