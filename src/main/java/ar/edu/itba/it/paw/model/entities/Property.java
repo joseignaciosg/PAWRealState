@@ -5,7 +5,7 @@ import java.util.Collection;
 
 import ar.edu.itba.it.paw.utils.collections.CollectionWithMemory;
 
-public class Property implements Entity {
+public class Property extends BaseEntity {
 
 	public enum Type {
 		APARTMENT, HOUSE;
@@ -39,8 +39,6 @@ public class Property implements Entity {
 		}
 	}
 
-	private Integer id;
-	private boolean dirty;
 	private Type type;
 	private Operation operation;
 	private String neighborhood;
@@ -64,7 +62,6 @@ public class Property implements Entity {
 
 	private User owner;
 	private boolean visible;
-	private boolean isnew;
 
 	public Property(final Type type, final Operation operation,
 			final String neighborhood, final String address,
@@ -74,7 +71,6 @@ public class Property implements Entity {
 			final String description, final User owner) {
 		this(null, type, operation, neighborhood, address, price, spaces,
 				coveredArea, freeArea, age, service, description, owner);
-		this.setDirty(false);
 		this.setVisible(true);
 	}
 
@@ -84,7 +80,7 @@ public class Property implements Entity {
 			final Integer coveredArea, final Integer freeArea,
 			final Integer age, final Services service,
 			final String description, final User owner) {
-		this.id = id;
+		super(id);
 		this.type = type;
 		this.operation = operation;
 		this.neighborhood = neighborhood;
@@ -99,8 +95,6 @@ public class Property implements Entity {
 		this.photos = new CollectionWithMemory<Photo>(new ArrayList<Photo>());
 		this.setOwner(owner);
 		this.setVisible(true);
-		this.setDirty(false);
-		this.isnew = true;
 	}
 
 	public String getPropertyType() {
@@ -240,30 +234,13 @@ public class Property implements Entity {
 		return true;
 	}
 
-	public Integer getId() {
-		return this.id;
-	}
-
-	public void setId(final Integer id) {
-		this.id = id;
-		this.setDirty(true);
-	}
-
-	public boolean isDirty() {
-		return this.dirty;
-	}
-
-	public void setDirty(final boolean dirty) {
-		this.dirty = dirty;
-	}
-
 	public Type getType() {
 		return this.type;
 	}
 
 	public void setType(final Type type) {
 		this.type = type;
-		this.setDirty(true);
+		this.setDirty();
 	}
 
 	public Operation getOperation() {
@@ -273,7 +250,7 @@ public class Property implements Entity {
 
 	public void setOperation(final Operation operation) {
 		this.operation = operation;
-		this.setDirty(true);
+		this.setDirty();
 	}
 
 	public String getNeighborhood() {
@@ -282,7 +259,7 @@ public class Property implements Entity {
 
 	public void setNeighborhood(final String neighborhood) {
 		this.neighborhood = neighborhood;
-		this.setDirty(true);
+		this.setDirty();
 	}
 
 	public String getAddress() {
@@ -291,7 +268,7 @@ public class Property implements Entity {
 
 	public void setAddress(final String address) {
 		this.address = address;
-		this.setDirty(true);
+		this.setDirty();
 	}
 
 	public Integer getPrice() {
@@ -300,7 +277,7 @@ public class Property implements Entity {
 
 	public void setPrice(final Integer price) {
 		this.price = price;
-		this.setDirty(true);
+		this.setDirty();
 	}
 
 	public Integer getSpaces() {
@@ -309,7 +286,7 @@ public class Property implements Entity {
 
 	public void setSpaces(final Integer spaces) {
 		this.spaces = spaces;
-		this.setDirty(true);
+		this.setDirty();
 	}
 
 	public Integer getCoveredArea() {
@@ -318,7 +295,7 @@ public class Property implements Entity {
 
 	public void setCoveredArea(final Integer coveredArea) {
 		this.coveredArea = coveredArea;
-		this.setDirty(true);
+		this.setDirty();
 	}
 
 	public Integer getFreeArea() {
@@ -327,7 +304,7 @@ public class Property implements Entity {
 
 	public void setFreeArea(final Integer freeArea) {
 		this.freeArea = freeArea;
-		this.setDirty(true);
+		this.setDirty();
 	}
 
 	public Integer getAge() {
@@ -336,7 +313,7 @@ public class Property implements Entity {
 
 	public void setAge(final Integer age) {
 		this.age = age;
-		this.setDirty(true);
+		this.setDirty();
 	}
 
 	public Services getService() {
@@ -345,7 +322,7 @@ public class Property implements Entity {
 
 	public void setService(final Services service) {
 		this.service = service;
-		this.setDirty(true);
+		this.setDirty();
 	}
 
 	public String getDescription() {
@@ -354,7 +331,7 @@ public class Property implements Entity {
 
 	public void setDescription(final String description) {
 		this.description = description;
-		this.setDirty(true);
+		this.setDirty();
 	}
 
 	public boolean getVisible() {
@@ -363,21 +340,13 @@ public class Property implements Entity {
 
 	public void setVisible(final boolean visible) {
 		this.visible = visible;
-		this.setDirty(true);
+		this.setDirty();
 	}
 
 	@Override
 	public String toString() {
-		return "Property [ID=" + this.id + ", type=" + this.type
+		return "Property [ID=" + this.getId() + ", type=" + this.type
 				+ ", operation=" + this.operation + ", price=" + this.price
 				+ "]";
-	}
-
-	public boolean isNew() {
-		return this.isnew;
-	}
-
-	public void setNew(final boolean isnew) {
-		this.isnew = isnew;
 	}
 }

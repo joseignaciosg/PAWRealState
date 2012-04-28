@@ -19,7 +19,7 @@ public class UserFactory implements Factory<User> {
 		this.id = id;
 	}
 
-	public User create() {
+	public synchronized User create() {
 		return this.dao.getById(this.id);
 	}
 

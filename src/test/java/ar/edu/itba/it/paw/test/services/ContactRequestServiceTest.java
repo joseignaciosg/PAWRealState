@@ -8,47 +8,51 @@ import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import ar.edu.itba.it.paw.daos.DaoProvider;
 import ar.edu.itba.it.paw.daos.api.ContactRequestDao;
 import ar.edu.itba.it.paw.daos.api.PropertyDao;
-import ar.edu.itba.it.paw.daos.impl.inmem.InMemoryContactRequestDao;
-import ar.edu.itba.it.paw.daos.impl.inmem.InMemoryPropertyDao;
 import ar.edu.itba.it.paw.model.entities.ContactRequest;
 import ar.edu.itba.it.paw.model.entities.Property;
 import ar.edu.itba.it.paw.model.entities.Property.Operation;
 import ar.edu.itba.it.paw.model.entities.Property.Type;
 import ar.edu.itba.it.paw.model.entities.Services;
+import ar.edu.itba.it.paw.model.entities.User;
 import ar.edu.itba.it.paw.model.services.ContactRequestService;
+import ar.edu.itba.it.paw.test.TransactionalTest;
 
-public class ContactRequestServiceTest {
+public class ContactRequestServiceTest extends TransactionalTest {
 
 	ContactRequestService contact;
 
 	@Before
 	public void initTest() {
 
-		final List<ContactRequest> data = new ArrayList<ContactRequest>();
-		final List<Property> propertyList = new ArrayList<Property>();
+		final DaoProvider provider = DaoProvider.getProviderForConnection(this
+				.getConnectionProvider());
+
+		final ContactRequestDao contactDao = provider.getContactRequestDao();
+		final PropertyDao dao = provider.getPropertyDao();
 
 		final Services service = new Services(true, true, true, true, false,
 				true);
 
+		final User user = new User(1, "cris", "", "", "", "", "");
+
 		final Property prop9 = new Property(Integer.valueOf(1), Type.HOUSE,
 				Operation.SELL, "Palermo", "Alem 110", Integer.valueOf(500),
 				Integer.valueOf(3), Integer.valueOf(100), Integer.valueOf(200),
-				Integer.valueOf(5), service, "Descrip3", null);
+				Integer.valueOf(5), service, "Descrip3", user);
 
-		final ContactRequest contact1 = new ContactRequest(10, "Nicolas",
+		final ContactRequest contact1 = new ContactRequest("Nicolas",
 				"asd@asd.com", "44450322", "descrip1", prop9);
 
-		final ContactRequest contact2 = new ContactRequest(2, "Valles",
+		final ContactRequest contact2 = new ContactRequest("Valles",
 				"lalala@asd.com", "44420322", "descrip2", prop9);
 
-		data.add(contact1);
-		data.add(contact2);
-		propertyList.add(prop9);
+		contactDao.saveOrUpdate(contact1);
+		contactDao.saveOrUpdate(contact2);
 
-		final ContactRequestDao contactDao = new InMemoryContactRequestDao(data);
-		final PropertyDao dao = new InMemoryPropertyDao(propertyList);
+		dao.saveOrUpdate(prop9);
 
 		this.contact = new ContactRequestService(contactDao);
 
@@ -62,13 +66,13 @@ public class ContactRequestServiceTest {
 		final Services service = new Services(true, true, true, true, false,
 				true);
 
-		final Property prop9 = new Property(Integer.valueOf(1), Type.HOUSE,
-				Operation.SELL, "Palermo", "Alem 110", Integer.valueOf(500),
+		final Property prop9 = new Property(Type.HOUSE, Operation.SELL,
+				"Palermo", "Alem 110", Integer.valueOf(500),
 				Integer.valueOf(3), Integer.valueOf(100), Integer.valueOf(200),
 				Integer.valueOf(5), service, "Descrip3", null);
 
-		final Property prop10 = new Property(Integer.valueOf(10), Type.HOUSE,
-				Operation.SELL, "Palermo", "Alem 110", Integer.valueOf(500),
+		final Property prop10 = new Property(Type.HOUSE, Operation.SELL,
+				"Palermo", "Alem 110", Integer.valueOf(500),
 				Integer.valueOf(3), Integer.valueOf(100), Integer.valueOf(200),
 				Integer.valueOf(5), service, "Descrip3", null);
 
@@ -99,7 +103,7 @@ public class ContactRequestServiceTest {
 
 		final List<String> errors = new ArrayList<String>();
 
-		final ContactRequest contact = this.contact.getContactRequestByID(10,
+		final ContactRequest contact = this.contact.getContactRequestByID(1,
 				errors);
 		Assert.assertEquals("Nicolas", contact.getName());
 		Assert.assertEquals("asd@asd.com", contact.getEmail());

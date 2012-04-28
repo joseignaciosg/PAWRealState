@@ -21,10 +21,6 @@ public class DaoProvider {
 	protected DaoProvider() {
 	}
 
-	public static DaoProvider getInMemoryProvider() {
-		return new InMemoryDaoProvider();
-	}
-
 	public static DaoProvider getDefaultProvider() {
 		if (defaultProvider == null) {
 			defaultProvider = new SQLDaoProvider();

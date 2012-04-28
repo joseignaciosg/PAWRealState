@@ -5,23 +5,19 @@ import java.util.Collection;
 
 import ar.edu.itba.it.paw.utils.collections.CollectionWithMemory;
 
-public class User implements Entity {
+public class User extends BaseEntity {
 
-	private Integer ID;
 	private String name;
 	private String surname;
 	private String mail;
 	private String telephone;
 	private String username;
 	private String password;
-	private boolean dirty;
 	private Collection<Property> properties;
 
 	public void setProperties(final Collection<Property> properties) {
 		this.properties = properties;
 	}
-
-	private boolean isnew;
 
 	protected User() {
 	}
@@ -29,13 +25,12 @@ public class User implements Entity {
 	public User(final String name, final String surname, final String mail,
 			final String telephone, final String username, final String password) {
 		this(null, name, surname, mail, telephone, username, password);
-		this.setDirty(false);
-		this.setVisible(true);
 	}
 
 	public User(final Integer userId, final String name, final String surname,
 			final String mail, final String telephone, final String username,
 			final String password) {
+		super(userId);
 		this.properties = new CollectionWithMemory<Property>(
 				new ArrayList<Property>());
 		this.name = name;
@@ -44,13 +39,6 @@ public class User implements Entity {
 		this.telephone = telephone;
 		this.username = username;
 		this.password = password;
-		this.ID = userId;
-		this.setDirty(false);
-		this.isnew = true;
-	}
-
-	public void setVisible(final boolean isnew) {
-		this.isnew = isnew;
 	}
 
 	public Collection<Property> getProperties() {
@@ -71,20 +59,7 @@ public class User implements Entity {
 
 	public void setTelephone(final String telephone) {
 		this.telephone = telephone;
-		this.setDirty(true);
-	}
-
-	public void setDirty(final boolean dirty) {
-		this.dirty = dirty;
-	}
-
-	public Integer getId() {
-		return this.ID;
-	}
-
-	public void setId(final Integer iD) {
-		this.ID = iD;
-		this.setDirty(true);
+		this.setDirty();
 	}
 
 	public String getName() {
@@ -93,7 +68,7 @@ public class User implements Entity {
 
 	public void setName(final String name) {
 		this.name = name;
-		this.setDirty(true);
+		this.setDirty();
 	}
 
 	public String getSurname() {
@@ -102,7 +77,7 @@ public class User implements Entity {
 
 	public void setSurname(final String surname) {
 		this.surname = surname;
-		this.setDirty(true);
+		this.setDirty();
 	}
 
 	public String getMail() {
@@ -111,11 +86,7 @@ public class User implements Entity {
 
 	public void setMail(final String mail) {
 		this.mail = mail;
-		this.setDirty(true);
-	}
-
-	public boolean isDirty() {
-		return this.dirty;
+		this.setDirty();
 	}
 
 	@Override
@@ -205,10 +176,10 @@ public class User implements Entity {
 
 	@Override
 	public String toString() {
-		return "User [ID=" + this.ID + ", name=" + this.name + ", surname="
-				+ this.surname + ", mail=" + this.mail + ", telephone="
-				+ this.telephone + ", username=" + this.username
-				+ ", password=" + this.password + ", dirty=" + this.dirty + "]";
+		return "User [ID=" + this.getId() + ", name=" + this.name
+				+ ", surname=" + this.surname + ", mail=" + this.mail
+				+ ", telephone=" + this.telephone + ", username="
+				+ this.username + ", password=" + this.password + "]";
 	}
 
 	public String getUsername() {
@@ -217,14 +188,6 @@ public class User implements Entity {
 
 	public void setUsername(final String username) {
 		this.username = username;
-	}
-
-	public boolean isNew() {
-		return this.isnew;
-	}
-
-	public void setNew(final boolean isnew) {
-		this.isnew = isnew;
 	}
 
 }
