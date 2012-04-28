@@ -10,15 +10,9 @@ public class LazyUser extends User {
 	private User user;
 
 	public LazyUser(final UserFactory userFactory, final int ID) {
-		this.userFactory = userFactory;
 		super.setId(ID);
-		super.setNew(false);
-		super.setDirty(false);
-	}
+		this.userFactory = userFactory;
 
-	@Override
-	public Integer getId() {
-		return super.getId();
 	}
 
 	@Override
@@ -72,26 +66,6 @@ public class LazyUser extends User {
 	}
 
 	@Override
-	public boolean isDirty() {
-		return this.getUser().isDirty();
-	}
-
-	@Override
-	public boolean isNew() {
-		return this.getUser().isNew();
-	}
-
-	@Override
-	public void setDirty(final boolean dirty) {
-		this.getUser().setDirty(dirty);
-	}
-
-	@Override
-	public void setId(final Integer iD) {
-		this.getUser().setId(iD);
-	}
-
-	@Override
 	public void setMail(final String mail) {
 		this.getUser().setMail(mail);
 	}
@@ -99,11 +73,6 @@ public class LazyUser extends User {
 	@Override
 	public void setName(final String name) {
 		this.getUser().setName(name);
-	}
-
-	@Override
-	public void setNew(final boolean isnew) {
-		this.getUser().setNew(isnew);
 	}
 
 	@Override
@@ -124,11 +93,6 @@ public class LazyUser extends User {
 	@Override
 	public void setUsername(final String username) {
 		this.getUser().setUsername(username);
-	}
-
-	@Override
-	public void setVisible(final boolean isnew) {
-		this.getUser().setVisible(isnew);
 	}
 
 	@Override

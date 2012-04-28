@@ -2,32 +2,26 @@ package ar.edu.itba.it.paw.model.entities;
 
 import java.util.Arrays;
 
-public class Photo implements Entity {
+public class Photo extends BaseEntity {
 
-	private Integer id;
 	private byte[] data = null;
 	private String type;
-	private boolean dirty;
 	private Integer propertyid;
-	private boolean isnew;
+
+	public Photo(final byte[] data, final String type, final int propertyid) {
+		this(null, data, type, propertyid);
+	}
 
 	public Photo(final Integer id, final byte[] data, final String type,
 			final int propertyid) {
-		this.id = id;
+		super(id);
 		this.data = data;
 		this.type = type;
 		this.propertyid = propertyid;
-		this.dirty = false;
-		this.isnew = true;
 	}
 
 	public byte[] getData() {
 		return this.data;
-	}
-
-	public void setData(final byte[] data) {
-		this.setDirty(true);
-		this.data = data;
 	}
 
 	public String getType() {
@@ -36,32 +30,6 @@ public class Photo implements Entity {
 
 	public Integer getPropertyId() {
 		return this.propertyid;
-	}
-
-	public void setPropertyId(final Integer propertyid) {
-		this.setDirty(true);
-		this.propertyid = propertyid;
-	}
-
-	public void setType(final String type) {
-		this.setDirty(true);
-		this.type = type;
-	}
-
-	public boolean isDirty() {
-		return this.dirty;
-	}
-
-	public void setDirty(final boolean dirty) {
-		this.dirty = dirty;
-	}
-
-	public Integer getId() {
-		return this.id;
-	}
-
-	public void setId(final Integer id) {
-		this.id = id;
 	}
 
 	@Override
@@ -108,17 +76,9 @@ public class Photo implements Entity {
 		return true;
 	}
 
-	public boolean isNew() {
-		return this.isnew;
-	}
-
-	public void setNew(final boolean isnew) {
-		this.isnew = isnew;
-	}
-
 	@Override
 	public String toString() {
-		return "Photo [id=" + this.id + "]";
+		return "Photo [id=" + this.getId() + "]";
 	}
 
 }
