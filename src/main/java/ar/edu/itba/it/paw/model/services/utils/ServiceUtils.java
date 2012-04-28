@@ -14,4 +14,12 @@ public class ServiceUtils {
 		}
 	}
 
+	public static void validateNotNegative(final int integer,
+			final String message, final List<String> errors) {
+		if (integer < 0) {
+			errors.add(message);
+		}
+
+	}
+
 }

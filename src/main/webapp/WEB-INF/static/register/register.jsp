@@ -52,7 +52,6 @@
 			</div>
 			<div class="form-actions">
             <input type="submit" class="btn btn-primary" value="Registrarse"/>
-            <button class="btn">Limpiar</button>
           </div>
 		</fieldset>
 	</form>

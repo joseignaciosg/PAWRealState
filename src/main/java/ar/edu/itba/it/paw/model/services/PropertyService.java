@@ -117,8 +117,8 @@ public class PropertyService {
 			final String description, final List<String> errors,
 			final User owner, final Integer id) {
 
-		final Operation operation = Operation.fromString(operationStr);
-		final Type type = Type.fromString(typeStr);
+		final Operation operation = Operation.valueOf(operationStr);
+		final Type type = Type.valueOf(typeStr);
 
 		ServiceUtils.validateNotNull(operation, "Operación inválida", errors);
 		ServiceUtils.validateNotNull(type, "Tipo inválido", errors);
@@ -126,13 +126,24 @@ public class PropertyService {
 				errors);
 		ServiceUtils.validateNotNull(address, "Debe ingresar la dirección",
 				errors);
+
+		ServiceUtils.validateNotNegative(price, "El precio debe ser positivo",
+				errors);
 		ServiceUtils.validateNotNull(price, "Debe ingresar el precio", errors);
+		ServiceUtils.validateNotNegative(spaces,
+				"La cantidad de ambientes debe ser positivo", errors);
 		ServiceUtils.validateNotNull(spaces,
 				"Debe ingresar la cantidad de ambientes", errors);
 		ServiceUtils.validateNotNull(coveredArea,
 				"Debe ingresar el área cubierta", errors);
+		ServiceUtils.validateNotNegative(coveredArea,
+				"Debe ingresar un área cubierta positiva", errors);
 		ServiceUtils.validateNotNull(freeArea,
 				"Debe ingresar el área descubierta", errors);
+		ServiceUtils.validateNotNegative(freeArea,
+				"Debe ingresar un área descubierta positiva", errors);
+		ServiceUtils.validateNotNegative(age, "La edad debe ser positiva",
+				errors);
 		ServiceUtils
 				.validateNotNull(age, "Debe ingresar la antiguedad", errors);
 		ServiceUtils.validateNotNull(service, "Debe ingresar los servicios",

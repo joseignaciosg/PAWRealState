@@ -10,15 +10,6 @@ public class Property implements Entity {
 	public enum Type {
 		APARTMENT, HOUSE;
 
-		public static Type fromString(final String s) {
-			if (s.equals("APARTMENT")) {
-				return APARTMENT;
-			} else if (s.equals("HOUSE")) {
-				return HOUSE;
-			}
-			return null;
-		}
-
 		@Override
 		public String toString() {
 			switch (this) {
@@ -34,15 +25,6 @@ public class Property implements Entity {
 
 	public enum Operation {
 		SELL, RENT;
-
-		public static Operation fromString(final String s) {
-			if (s.equals("RENT")) {
-				return RENT;
-			} else if (s.equals("SELL")) {
-				return SELL;
-			}
-			return null;
-		}
 
 		@Override
 		public String toString() {
