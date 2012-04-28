@@ -355,8 +355,8 @@ public class SQLPropertyDao implements PropertyDao {
 		service.setPaddle(result.getBoolean("has_paddle"));
 		service.setQuincho(result.getBoolean("has_quincho"));
 
-		property = new Property(propertyId, Type.fromString(typeStr),
-				Operation.fromString(transactionStr), neighborhood, address,
+		property = new Property(propertyId, Type.valueOf(typeStr),
+				Operation.valueOf(transactionStr), neighborhood, address,
 				price, rooms, coveredArea, uncoveredArea, age, service,
 				description, new LazyUser(
 						new UserFactory(this.userDao, userId), userId));

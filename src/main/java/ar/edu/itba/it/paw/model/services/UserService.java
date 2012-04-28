@@ -66,6 +66,10 @@ public class UserService {
 			errors.add("Ya existe un usuario con el nombre dado");
 		}
 
+		if (username != null && username.trim().equals("")) {
+			errors.add("Debe proveer un nombre de usuario");
+		}
+
 		if (errors.size() > 0) {
 			return false;
 		}
