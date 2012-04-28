@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import ar.edu.itba.it.paw.daos.api.PropertyDao;
 import ar.edu.itba.it.paw.daos.api.UserDao;
 import ar.edu.itba.it.paw.daos.impl.sql.factories.PropertyCollectionFactory;
@@ -16,10 +18,15 @@ import ar.edu.itba.it.paw.model.entities.User;
 import ar.edu.itba.it.paw.utils.collections.CollectionWithMemory;
 import ar.edu.itba.it.paw.utils.collections.LazyCollection;
 
+@Repository
 public class SQLUserDao implements UserDao {
 
 	private ConnectionProvider provider;
 	private PropertyDao propertyDao;
+
+	public SQLUserDao() {
+		super();
+	}
 
 	public SQLUserDao(final ConnectionProvider provider) {
 		this.provider = provider;

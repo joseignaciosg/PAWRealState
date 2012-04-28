@@ -1,11 +1,14 @@
 package ar.edu.itba.it.paw.daos;
 
+import org.springframework.stereotype.Component;
+
 import ar.edu.itba.it.paw.daos.impl.sql.SQLContactRequestDao;
 import ar.edu.itba.it.paw.daos.impl.sql.SQLPhotoDao;
 import ar.edu.itba.it.paw.daos.impl.sql.SQLPropertyDao;
 import ar.edu.itba.it.paw.daos.impl.sql.SQLUserDao;
 import ar.edu.itba.it.paw.db.ConnectionProvider;
 
+@Component
 public class SQLDaoProvider extends DaoProvider {
 	public SQLDaoProvider() {
 		this(ConnectionProvider.getProvider());

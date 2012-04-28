@@ -1,12 +1,13 @@
-package ar.edu.itba.it.paw.web.servlets;
+package ar.edu.itba.it.paw.web.controllers;
 
-import java.io.IOException;
 import java.util.List;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import ar.edu.itba.it.paw.model.entities.Property;
 import ar.edu.itba.it.paw.model.entities.Property.Operation;
@@ -14,7 +15,6 @@ import ar.edu.itba.it.paw.model.entities.Property.Type;
 import ar.edu.itba.it.paw.model.services.PropertyService;
 import ar.edu.itba.it.paw.model.services.PropertyService.Order;
 import ar.edu.itba.it.paw.model.services.ServiceProvider;
-import ar.edu.itba.it.paw.web.utils.HTMLUtils;
 
 /*
  * El usuario debe disponer de busquedas avanzadas para poder 
@@ -25,23 +25,13 @@ import ar.edu.itba.it.paw.web.utils.HTMLUtils;
  * @author Nico
  * 
  */
+@Controller
+@RequestMapping("/search")
+public class AdvancedSearchPageController {
 
-@SuppressWarnings("serial")
-public class AdvancedSearchPage extends HttpServlet {
-
-	@Override
-	protected void doGet(final javax.servlet.http.HttpServletRequest req,
-			final javax.servlet.http.HttpServletResponse resp)
-			throws javax.servlet.ServletException, java.io.IOException {
-
-		this.doPost(req, resp);
-
-	};
-
-	@Override
-	protected void doPost(final HttpServletRequest req,
-			final HttpServletResponse resp) throws ServletException,
-			IOException {
+	@RequestMapping(method = RequestMethod.POST)
+	protected void search(@RequestParam("propertyId") final Property property,
+			final HttpServletRequest req) {
 
 		Integer page;
 		try {
@@ -99,7 +89,7 @@ public class AdvancedSearchPage extends HttpServlet {
 		req.setAttribute("pricelow", req.getParameter("pricelow"));
 		req.setAttribute("pricehigh", req.getParameter("pricehigh"));
 		req.setAttribute("order", req.getParameter("order"));
-		HTMLUtils.render("search/search.jsp", req, resp);
+		// HTMLUtils.render("search/search.jsp", req, resp);
 
 	}
 }

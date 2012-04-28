@@ -2,6 +2,8 @@ package ar.edu.itba.it.paw.model.services;
 
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
 import ar.edu.itba.it.paw.daos.api.PropertyDao;
 import ar.edu.itba.it.paw.daos.api.UserDao;
 import ar.edu.itba.it.paw.model.entities.Property;
@@ -11,6 +13,7 @@ import ar.edu.itba.it.paw.model.entities.Services;
 import ar.edu.itba.it.paw.model.entities.User;
 import ar.edu.itba.it.paw.model.services.utils.ServiceUtils;
 
+@Component
 public class PropertyService {
 
 	public enum Order {
@@ -19,6 +22,10 @@ public class PropertyService {
 
 	private PropertyDao propertyDao;
 	private UserDao userDao;
+
+	public PropertyService() {
+		super();
+	}
 
 	public PropertyService(final PropertyDao dao, final UserDao userDao) {
 		this.propertyDao = dao;

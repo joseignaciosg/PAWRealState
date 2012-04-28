@@ -9,6 +9,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
+import org.springframework.stereotype.Repository;
 
 import ar.edu.itba.it.paw.daos.api.PhotoDao;
 import ar.edu.itba.it.paw.daos.api.PropertyDao;
@@ -26,11 +27,16 @@ import ar.edu.itba.it.paw.model.services.PropertyService.Order;
 import ar.edu.itba.it.paw.utils.collections.CollectionWithMemory;
 import ar.edu.itba.it.paw.utils.collections.LazyCollection;
 
+@Repository
 public class SQLPropertyDao implements PropertyDao {
 
 	private ConnectionProvider provider;
 	private UserDao userDao;
 	private PhotoDao photoDao;
+
+	public SQLPropertyDao() {
+		super();
+	}
 
 	public SQLPropertyDao(final ConnectionProvider provider,
 			final UserDao userDao, final PhotoDao photoDao) {

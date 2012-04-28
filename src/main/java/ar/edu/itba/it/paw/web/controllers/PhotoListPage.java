@@ -1,4 +1,4 @@
-package ar.edu.itba.it.paw.web.servlets;
+package ar.edu.itba.it.paw.web.controllers;
 
 import java.io.IOException;
 import java.util.ArrayList;

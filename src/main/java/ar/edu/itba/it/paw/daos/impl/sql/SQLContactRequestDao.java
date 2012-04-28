@@ -7,16 +7,23 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import ar.edu.itba.it.paw.daos.api.ContactRequestDao;
 import ar.edu.itba.it.paw.daos.api.PropertyDao;
 import ar.edu.itba.it.paw.db.ConnectionProvider;
 import ar.edu.itba.it.paw.model.entities.ContactRequest;
 import ar.edu.itba.it.paw.model.entities.Property;
 
+@Repository
 public class SQLContactRequestDao implements ContactRequestDao {
 
 	private ConnectionProvider provider;
 	private PropertyDao propertyDao;
+
+	public SQLContactRequestDao() {
+		super();
+	}
 
 	public SQLContactRequestDao(final ConnectionProvider provider,
 			final PropertyDao propertyDao) {

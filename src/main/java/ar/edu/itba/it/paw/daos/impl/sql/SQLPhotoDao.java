@@ -6,13 +6,20 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import ar.edu.itba.it.paw.daos.api.PhotoDao;
 import ar.edu.itba.it.paw.db.ConnectionProvider;
 import ar.edu.itba.it.paw.model.entities.Photo;
 
+@Repository
 public class SQLPhotoDao implements PhotoDao {
 
 	private ConnectionProvider provider;
+
+	public SQLPhotoDao() {
+		super();
+	}
 
 	public SQLPhotoDao(final ConnectionProvider provider) {
 		this.provider = provider;

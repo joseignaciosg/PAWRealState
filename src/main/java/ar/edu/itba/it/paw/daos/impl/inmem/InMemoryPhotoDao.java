@@ -3,16 +3,23 @@ package ar.edu.itba.it.paw.daos.impl.inmem;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import ar.edu.itba.it.paw.daos.api.PhotoDao;
 import ar.edu.itba.it.paw.daos.api.PropertyDao;
 import ar.edu.itba.it.paw.model.entities.Photo;
 import ar.edu.itba.it.paw.model.entities.utils.EntityUtils;
 import ar.edu.itba.it.paw.utils.collections.CollectionWithMemory;
 
+@Repository
 public class InMemoryPhotoDao implements PhotoDao {
 
 	private List<Photo> photos;
 	private PropertyDao propertyDao;
+
+	public InMemoryPhotoDao() {
+		super();
+	}
 
 	public InMemoryPhotoDao(final List<Photo> photos,
 			final PropertyDao propertyDao) {

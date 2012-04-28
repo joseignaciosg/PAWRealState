@@ -6,6 +6,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import org.apache.commons.collections.comparators.ReverseComparator;
+import org.springframework.stereotype.Repository;
 
 import ar.edu.itba.it.paw.daos.api.PhotoDao;
 import ar.edu.itba.it.paw.daos.api.PropertyDao;
@@ -17,7 +18,12 @@ import ar.edu.itba.it.paw.model.entities.utils.EntityUtils;
 import ar.edu.itba.it.paw.model.services.PropertyService.Order;
 import ar.edu.itba.it.paw.utils.collections.CollectionWithMemory;
 
+@Repository
 public class InMemoryPropertyDao implements PropertyDao {
+
+	public InMemoryPropertyDao() {
+		super();
+	}
 
 	private List<Property> data;
 	private PhotoDao photoDao;

@@ -2,13 +2,20 @@ package ar.edu.itba.it.paw.daos.impl.inmem;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import ar.edu.itba.it.paw.daos.api.ContactRequestDao;
 import ar.edu.itba.it.paw.model.entities.ContactRequest;
 import ar.edu.itba.it.paw.model.entities.utils.EntityUtils;
 
+@Repository
 public class InMemoryContactRequestDao implements ContactRequestDao {
 
 	List<ContactRequest> contactrequests = null;
+
+	public InMemoryContactRequestDao() {
+		super();
+	}
 
 	public InMemoryContactRequestDao(final List<ContactRequest> data) {
 		this.contactrequests = data;

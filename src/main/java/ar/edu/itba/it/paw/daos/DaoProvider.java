@@ -1,11 +1,14 @@
 package ar.edu.itba.it.paw.daos;
 
+import org.springframework.stereotype.Component;
+
 import ar.edu.itba.it.paw.daos.api.ContactRequestDao;
 import ar.edu.itba.it.paw.daos.api.PhotoDao;
 import ar.edu.itba.it.paw.daos.api.PropertyDao;
 import ar.edu.itba.it.paw.daos.api.UserDao;
 import ar.edu.itba.it.paw.db.ConnectionProvider;
 
+@Component
 public class DaoProvider {
 
 	private static DaoProvider defaultProvider;

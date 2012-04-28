@@ -2,13 +2,20 @@ package ar.edu.itba.it.paw.daos.impl.inmem;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import ar.edu.itba.it.paw.daos.api.UserDao;
 import ar.edu.itba.it.paw.model.entities.User;
 import ar.edu.itba.it.paw.model.entities.utils.EntityUtils;
 
+@Repository
 public class InMemoryUserDao implements UserDao {
 
 	List<User> users = null;
+
+	public InMemoryUserDao() {
+		super();
+	}
 
 	public InMemoryUserDao(final List<User> data) {
 		this.users = data;
