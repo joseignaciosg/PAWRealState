@@ -19,4 +19,8 @@ public class SessionManager implements UserManager {
 	public void setCurrentUser(final User user) {
 		this.session.setAttribute("user", user);
 	}
+
+	public void logout() {
+		this.session.invalidate();
+	}
 }

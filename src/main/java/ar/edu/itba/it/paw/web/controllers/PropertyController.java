@@ -26,8 +26,8 @@ import ar.edu.itba.it.paw.model.services.ServiceProvider;
  * 
  */
 @Controller
-@RequestMapping("/search")
-public class AdvancedSearchPageController {
+@RequestMapping("/property")
+public class PropertyController {
 
 	@RequestMapping(method = RequestMethod.POST)
 	protected void search(@RequestParam("propertyId") final Property property,
