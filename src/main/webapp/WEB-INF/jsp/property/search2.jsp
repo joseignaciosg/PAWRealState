@@ -1,13 +1,14 @@
 <%@ page pageEncoding="UTF-8"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ page isELIgnored="false"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 
 
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <div class="subnav subnav-fixed">
-	<form class="navbar-form pull-center" method="post" action="search">
+	<form class="navbar-form pull-center" method="post" action="search" commandName="searchForm">
 		<fieldset>
 			<ul class="nav nav-pills">
 				<li><input type="text" name="pricelow" class="span2"
@@ -21,35 +22,35 @@
 				<li><h6>Operación:</h6></li>
 				<li><select id="operation" name="operation"
 					style="width: 100px">
-						<option value="All">Todos</option>
-						<c:if test="${operation == 'Sell'}">
-							<option value="Sell" selected="selected">Venta</option>
+						<option value="Operation.ALL">Todos</option>
+						<c:if test="${operation == Operation.SELL}">
+							<option value="Operation.Sell" selected="selected">Venta</option>
 						</c:if>
-						<c:if test="${operation != 'Sell'}">
-							<option value="Sell">Venta</option>
+						<c:if test="${operation != Operation.SELL}">
+							<option value="Operation.Sell">Venta</option>
 						</c:if>
-						<c:if test="${operation == 'Rent'}">
-							<option value="Rent" selected="selected">Alquiler</option>
+						<c:if test="${operation == Operation.RENT}">
+							<option value="Operation.RENT" selected="selected">Alquiler</option>
 						</c:if>
-						<c:if test="${operation != 'Rent'}">
-							<option value="Rent">Alquiler</option>
+						<c:if test="${operation != Operation.RENT}">
+							<option value="Operation.RENT">Alquiler</option>
 						</c:if>
 				</select></li>
 				<li class="divider-vertical"><hr /></li>
 				<li><h6>Tipo:</h6></li>
 				<li><select id="type" name="type" style="width: 100px">
 						<option value="All">Todos</option>
-						<c:if test="${type == 'House'}">
-							<option value="House" selected="selected">Casa</option>
+						<c:if test="${type == Type.HOUSE}">
+							<option value="Type.HOUSE" selected="selected">Casa</option>
 						</c:if>
-						<c:if test="${type != 'House'}">
-							<option value="House">Casa</option>
+						<c:if test="${type != Type.HOUSE}">
+							<option value="Type.HOUSE">Casa</option>
 						</c:if>
-						<c:if test="${type == 'Apartment'}">
-							<option value="Apartment" selected="selected">Departamento</option>
+						<c:if test="${type == Type.APARTMENT}">
+							<option value="Type.APARTMENT" selected="selected">Departamento</option>
 						</c:if>
-						<c:if test="${type != 'Apartment'}">
-							<option value="Apartment">Departamento</option>
+						<c:if test="${type != Type.APARTMENT}">
+							<option value="Type.APARTMENT">Departamento</option>
 						</c:if>
 				</select></li>
 				<li class="divider-vertical"></li>

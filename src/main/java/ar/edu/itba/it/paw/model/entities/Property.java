@@ -18,7 +18,7 @@ public class Property implements Entity {
 			case HOUSE:
 				return "HOUSE";
 			default:
-				return "";
+				return "ALL";
 			}
 		}
 	}
@@ -34,7 +34,7 @@ public class Property implements Entity {
 			case RENT:
 				return "RENT";
 			default:
-				return "";
+				return "ALL";
 			}
 		}
 	}
