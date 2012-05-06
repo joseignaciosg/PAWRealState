@@ -22,7 +22,6 @@ import ar.edu.itba.it.paw.model.entities.Photo;
 import ar.edu.itba.it.paw.model.entities.Property;
 import ar.edu.itba.it.paw.model.entities.Property.Operation;
 import ar.edu.itba.it.paw.model.entities.Property.Type;
-import ar.edu.itba.it.paw.model.entities.Services;
 import ar.edu.itba.it.paw.model.services.PropertyService.Order;
 import ar.edu.itba.it.paw.utils.collections.CollectionWithMemory;
 import ar.edu.itba.it.paw.utils.collections.LazyCollection;
@@ -346,18 +345,31 @@ public class SQLPropertyDao implements PropertyDao {
 		final Integer userId = result.getInt("user_id");
 		final Boolean visible = result.getBoolean("visible");
 
-		final Services service = new Services();
+		final List<String> services = new ArrayList<String>();
 
-		service.setCable(result.getBoolean("has_cable"));
-		service.setTelephone(result.getBoolean("has_phone"));
-		service.setSwimmingpool(result.getBoolean("has_swimmingpool"));
-		service.setLobby(result.getBoolean("has_salon"));
-		service.setPaddle(result.getBoolean("has_paddle"));
-		service.setQuincho(result.getBoolean("has_quincho"));
+		// TODO: modify the way that we store services
+		if (result.getBoolean("has_cable")) {
+			services.add("cable");
+		}
+		if (result.getBoolean("has_phone")) {
+			services.add("telephone");
+		}
+		if (result.getBoolean("has_swimmingpool")) {
+			services.add("swimmingpool");
+		}
+		if (result.getBoolean("has_salon")) {
+			services.add("salon");
+		}
+		if (result.getBoolean("has_paddle")) {
+			services.add("paddle");
+		}
+		if (result.getBoolean("has_quincho")) {
+			services.add("quincho");
+		}
 
 		property = new Property(propertyId, Type.valueOf(typeStr),
 				Operation.valueOf(transactionStr), neighborhood, address,
-				price, rooms, coveredArea, uncoveredArea, age, service,
+				price, rooms, coveredArea, uncoveredArea, age, services,
 				description, new LazyUser(
 						new UserFactory(this.userDao, userId), userId));
 
@@ -383,12 +395,12 @@ public class SQLPropertyDao implements PropertyDao {
 		statement.setInt(7, property.getCoveredArea());
 		statement.setInt(8, property.getFreeArea());
 		statement.setInt(9, property.getAge());
-		statement.setBoolean(10, property.getService().isCable());
-		statement.setBoolean(11, property.getService().isTelephone());
-		statement.setBoolean(12, property.getService().isSwimmingpool());
-		statement.setBoolean(13, property.getService().isLobby());
-		statement.setBoolean(14, property.getService().isPaddle());
-		statement.setBoolean(15, property.getService().isQuincho());
+		statement.setBoolean(10, property.getServices().contains("cable"));
+		statement.setBoolean(11, property.getServices().contains("telephone"));
+		statement.setBoolean(12, property.getServices().contains("telephone"));
+		statement.setBoolean(13, property.getServices().contains("salon"));
+		statement.setBoolean(14, property.getServices().contains("paddle"));
+		statement.setBoolean(15, property.getServices().contains("quincho"));
 		statement.setString(16, property.getDescription());
 		statement.setBoolean(17, property.getVisible());
 		statement.setInt(18, property.getOwner().getId());

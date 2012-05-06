@@ -97,12 +97,12 @@
 				<div class="row">
 					<div class="span2 pull-left">
 						<a class="thumbnail"
-							href='${ basePath }/properties/view?id=${prop.id}'> <c:if
+							href='${ basePath }/bin/property/view?id=${prop.id}'> <c:if
 								test="${not empty prop.photos}">
 								<c:forEach var="photo" items="${prop.photos}" varStatus="status">
 									<c:if test="${status.first}">
 										<img height="120" width="160"
-											src="${ basePath }/photos?ID=${ photo.id }" alt="house" />
+											src="${ basePath }/bin/photos?ID=${ photo.id }" alt="house" />
 									</c:if>
 								</c:forEach>
 							</c:if> <c:if test="${empty prop.photos}">
@@ -135,7 +135,7 @@
 							<c:out value=" ${prop.price}" />
 						<p>
 							<br /> <a class="btn btn-large"
-								href="${ basePath }/properties/view?id=${prop.id}">Ver detalle</a>
+								href="${ basePath }/bin/property/view?id=${prop.id}">Ver detalle</a>
 				</div>
 				</div>
 				<div class="clear"></div>

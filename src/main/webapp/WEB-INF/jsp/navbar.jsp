@@ -1,6 +1,6 @@
 <%@ page isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<a class="brand" href="${ basePath }/"> ChinuProp </a>
+<a class="brand" href="${ basePath }/bin/"> ChinuProp </a>
 <ul class="nav pull-right">
 	<c:if test="${ empty current_user }">
 		<li>

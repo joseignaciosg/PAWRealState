@@ -2,6 +2,7 @@ package ar.edu.itba.it.paw.model.entities;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import ar.edu.itba.it.paw.utils.collections.CollectionWithMemory;
 
@@ -9,34 +10,10 @@ public class Property implements Entity {
 
 	public enum Type {
 		APARTMENT, HOUSE;
-
-		@Override
-		public String toString() {
-			switch (this) {
-			case APARTMENT:
-				return "APARTMENT";
-			case HOUSE:
-				return "HOUSE";
-			default:
-				return "ALL";
-			}
-		}
 	}
 
 	public enum Operation {
 		SELL, RENT;
-
-		@Override
-		public String toString() {
-			switch (this) {
-			case SELL:
-				return "SELL";
-			case RENT:
-				return "RENT";
-			default:
-				return "ALL";
-			}
-		}
 	}
 
 	private Integer id;
@@ -50,7 +27,7 @@ public class Property implements Entity {
 	private Integer coveredArea;
 	private Integer freeArea;
 	private Integer age;
-	private Services service;
+	private List<String> services;
 	private String description;
 	private Collection<Photo> photos;
 
@@ -70,10 +47,10 @@ public class Property implements Entity {
 			final String neighborhood, final String address,
 			final Integer price, final Integer spaces,
 			final Integer coveredArea, final Integer freeArea,
-			final Integer age, final Services service,
+			final Integer age, final List<String> services,
 			final String description, final User owner) {
 		this(null, type, operation, neighborhood, address, price, spaces,
-				coveredArea, freeArea, age, service, description, owner);
+				coveredArea, freeArea, age, services, description, owner);
 		this.setDirty(false);
 		this.setVisible(true);
 	}
@@ -82,7 +59,7 @@ public class Property implements Entity {
 			final Operation operation, final String neighborhood,
 			final String address, final Integer price, final Integer spaces,
 			final Integer coveredArea, final Integer freeArea,
-			final Integer age, final Services service,
+			final Integer age, final List<String> services,
 			final String description, final User owner) {
 		this.id = id;
 		this.type = type;
@@ -94,7 +71,7 @@ public class Property implements Entity {
 		this.coveredArea = coveredArea;
 		this.freeArea = freeArea;
 		this.age = age;
-		this.service = service;
+		this.services = services;
 		this.description = description;
 		this.photos = new CollectionWithMemory<Photo>(new ArrayList<Photo>());
 		this.setOwner(owner);
@@ -117,127 +94,6 @@ public class Property implements Entity {
 
 	public void setOwner(final User user) {
 		this.owner = user;
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result
-				+ ((this.address == null) ? 0 : this.address.hashCode());
-		result = prime * result
-				+ ((this.age == null) ? 0 : this.age.hashCode());
-		result = prime
-				* result
-				+ ((this.coveredArea == null) ? 0 : this.coveredArea.hashCode());
-		result = prime
-				* result
-				+ ((this.description == null) ? 0 : this.description.hashCode());
-		result = prime * result
-				+ ((this.freeArea == null) ? 0 : this.freeArea.hashCode());
-		result = prime
-				* result
-				+ ((this.neighborhood == null) ? 0 : this.neighborhood
-						.hashCode());
-		result = prime * result
-				+ ((this.operation == null) ? 0 : this.operation.hashCode());
-		result = prime * result
-				+ ((this.price == null) ? 0 : this.price.hashCode());
-		result = prime * result
-				+ ((this.service == null) ? 0 : this.service.hashCode());
-		result = prime * result
-				+ ((this.spaces == null) ? 0 : this.spaces.hashCode());
-		result = prime * result
-				+ ((this.type == null) ? 0 : this.type.hashCode());
-		result = prime * result + (this.visible ? 1231 : 1237);
-		return result;
-	}
-
-	@Override
-	public boolean equals(final Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (this.getClass() != obj.getClass()) {
-			return false;
-		}
-		final Property other = (Property) obj;
-		if (this.address == null) {
-			if (other.address != null) {
-				return false;
-			}
-		} else if (!this.address.equals(other.address)) {
-			return false;
-		}
-		if (this.age == null) {
-			if (other.age != null) {
-				return false;
-			}
-		} else if (!this.age.equals(other.age)) {
-			return false;
-		}
-		if (this.coveredArea == null) {
-			if (other.coveredArea != null) {
-				return false;
-			}
-		} else if (!this.coveredArea.equals(other.coveredArea)) {
-			return false;
-		}
-		if (this.description == null) {
-			if (other.description != null) {
-				return false;
-			}
-		} else if (!this.description.equals(other.description)) {
-			return false;
-		}
-		if (this.freeArea == null) {
-			if (other.freeArea != null) {
-				return false;
-			}
-		} else if (!this.freeArea.equals(other.freeArea)) {
-			return false;
-		}
-		if (this.neighborhood == null) {
-			if (other.neighborhood != null) {
-				return false;
-			}
-		} else if (!this.neighborhood.equals(other.neighborhood)) {
-			return false;
-		}
-		if (this.operation != other.operation) {
-			return false;
-		}
-		if (this.price == null) {
-			if (other.price != null) {
-				return false;
-			}
-		} else if (!this.price.equals(other.price)) {
-			return false;
-		}
-		if (this.service == null) {
-			if (other.service != null) {
-				return false;
-			}
-		} else if (!this.service.equals(other.service)) {
-			return false;
-		}
-		if (this.spaces == null) {
-			if (other.spaces != null) {
-				return false;
-			}
-		} else if (!this.spaces.equals(other.spaces)) {
-			return false;
-		}
-		if (this.type != other.type) {
-			return false;
-		}
-		if (this.visible != other.visible) {
-			return false;
-		}
-		return true;
 	}
 
 	public Integer getId() {
@@ -339,12 +195,12 @@ public class Property implements Entity {
 		this.setDirty(true);
 	}
 
-	public Services getService() {
-		return this.service;
+	public List<String> getServices() {
+		return this.services;
 	}
 
-	public void setService(final Services service) {
-		this.service = service;
+	public void setServices(final List<String> services) {
+		this.services = services;
 		this.setDirty(true);
 	}
 
@@ -380,4 +236,160 @@ public class Property implements Entity {
 	public void setNew(final boolean isnew) {
 		this.isnew = isnew;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((this.address == null) ? 0 : this.address.hashCode());
+		result = prime * result
+				+ ((this.age == null) ? 0 : this.age.hashCode());
+		result = prime
+				* result
+				+ ((this.coveredArea == null) ? 0 : this.coveredArea.hashCode());
+		result = prime
+				* result
+				+ ((this.description == null) ? 0 : this.description.hashCode());
+		result = prime * result + (this.dirty ? 1231 : 1237);
+		result = prime * result
+				+ ((this.freeArea == null) ? 0 : this.freeArea.hashCode());
+		result = prime * result + ((this.id == null) ? 0 : this.id.hashCode());
+		result = prime * result + (this.isnew ? 1231 : 1237);
+		result = prime
+				* result
+				+ ((this.neighborhood == null) ? 0 : this.neighborhood
+						.hashCode());
+		result = prime * result
+				+ ((this.operation == null) ? 0 : this.operation.hashCode());
+		result = prime * result
+				+ ((this.owner == null) ? 0 : this.owner.hashCode());
+		result = prime * result
+				+ ((this.photos == null) ? 0 : this.photos.hashCode());
+		result = prime * result
+				+ ((this.price == null) ? 0 : this.price.hashCode());
+		result = prime * result
+				+ ((this.services == null) ? 0 : this.services.hashCode());
+		result = prime * result
+				+ ((this.spaces == null) ? 0 : this.spaces.hashCode());
+		result = prime * result
+				+ ((this.type == null) ? 0 : this.type.hashCode());
+		result = prime * result + (this.visible ? 1231 : 1237);
+		return result;
+	}
+
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (this.getClass() != obj.getClass()) {
+			return false;
+		}
+		final Property other = (Property) obj;
+		if (this.address == null) {
+			if (other.address != null) {
+				return false;
+			}
+		} else if (!this.address.equals(other.address)) {
+			return false;
+		}
+		if (this.age == null) {
+			if (other.age != null) {
+				return false;
+			}
+		} else if (!this.age.equals(other.age)) {
+			return false;
+		}
+		if (this.coveredArea == null) {
+			if (other.coveredArea != null) {
+				return false;
+			}
+		} else if (!this.coveredArea.equals(other.coveredArea)) {
+			return false;
+		}
+		if (this.description == null) {
+			if (other.description != null) {
+				return false;
+			}
+		} else if (!this.description.equals(other.description)) {
+			return false;
+		}
+		if (this.dirty != other.dirty) {
+			return false;
+		}
+		if (this.freeArea == null) {
+			if (other.freeArea != null) {
+				return false;
+			}
+		} else if (!this.freeArea.equals(other.freeArea)) {
+			return false;
+		}
+		if (this.id == null) {
+			if (other.id != null) {
+				return false;
+			}
+		} else if (!this.id.equals(other.id)) {
+			return false;
+		}
+		if (this.isnew != other.isnew) {
+			return false;
+		}
+		if (this.neighborhood == null) {
+			if (other.neighborhood != null) {
+				return false;
+			}
+		} else if (!this.neighborhood.equals(other.neighborhood)) {
+			return false;
+		}
+		if (this.operation != other.operation) {
+			return false;
+		}
+		if (this.owner == null) {
+			if (other.owner != null) {
+				return false;
+			}
+		} else if (!this.owner.equals(other.owner)) {
+			return false;
+		}
+		if (this.photos == null) {
+			if (other.photos != null) {
+				return false;
+			}
+		} else if (!this.photos.equals(other.photos)) {
+			return false;
+		}
+		if (this.price == null) {
+			if (other.price != null) {
+				return false;
+			}
+		} else if (!this.price.equals(other.price)) {
+			return false;
+		}
+		if (this.services == null) {
+			if (other.services != null) {
+				return false;
+			}
+		} else if (!this.services.equals(other.services)) {
+			return false;
+		}
+		if (this.spaces == null) {
+			if (other.spaces != null) {
+				return false;
+			}
+		} else if (!this.spaces.equals(other.spaces)) {
+			return false;
+		}
+		if (this.type != other.type) {
+			return false;
+		}
+		if (this.visible != other.visible) {
+			return false;
+		}
+		return true;
+	}
+
 }
