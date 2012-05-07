@@ -1,4 +1,4 @@
-package ar.edu.itba.it.paw.daos.impl.inmem;
+package ar.edu.itba.it.paw.web.command;
 
 import org.springframework.stereotype.Component;
 
@@ -7,9 +7,9 @@ import ar.edu.itba.it.paw.model.entities.Property.Type;
 import ar.edu.itba.it.paw.model.services.PropertyService.Order;
 
 @Component
-public class SearchFormParams {
+public class SearchForm {
 
-	private Operation op;
+	private Operation operation;
 	private Type type;
 	private Order order;
 	private Integer pricelow;
@@ -17,15 +17,13 @@ public class SearchFormParams {
 	private Integer quant;
 	private Integer page;
 
-	public SearchFormParams() {
-		super();
+	public SearchForm() {
 	}
 
-	public SearchFormParams(final Operation op, final Type type,
+	public SearchForm(final Operation operation, final Type type,
 			final Order order, final Integer pricelow, final Integer pricehigh,
 			final Integer quant, final Integer page) {
-		super();
-		this.op = op;
+		this.operation = operation;
 		this.type = type;
 		this.order = order;
 		this.pricelow = pricelow;
@@ -34,12 +32,12 @@ public class SearchFormParams {
 		this.page = page;
 	}
 
-	public Operation getOp() {
-		return this.op;
+	public Operation getOperation() {
+		return this.operation;
 	}
 
 	public void setOp(final Operation op) {
-		this.op = op;
+		this.operation = op;
 	}
 
 	public Type getType() {

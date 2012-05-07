@@ -1,79 +1,81 @@
 <%@ page pageEncoding="UTF-8"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ page isELIgnored="false"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+
 
 
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <div class="subnav subnav-fixed">
-	<form class="navbar-form pull-center" method="post" action="search">
+	<form:form class="navbar-form pull-center" method="post" action="search" commandName="searchForm">
 		<fieldset>
 			<ul class="nav nav-pills">
 				<li><input type="text" name="pricelow" class="span2"
-					value="${ pricelow == -1 ? '' : pricelow }"
+					value="${ searchForm.pricelow == -1 ? '' : searchForm.pricelow }"
 					placeholder="Precio desde"></li>
 				<li class="divider-vertical"></li>
 				<li><input type="text" name="pricehigh" class="span2"
-					value="${ pricehigh == -1 ? '' : pricehigh}"
+					value="${ searchForm.pricehigh == -1 ? '' : searchForm.pricehigh}"
 					placeholder="Precio hasta" /></li>
 				<li class="divider-vertical"></li>
 				<li><h6>Operación:</h6></li>
-				<li><select id="operation" name="operation"
-					style="width: 100px">
-						<option value="All">Todos</option>
-						<c:if test="${operation == 'Sell'}">
-							<option value="Sell" selected="selected">Venta</option>
+				<li><form:select  id="operation" name="operation" path="operation" style="width: 100px">
+						<form:option value="All">Todos</form:option>
+						<c:if test="${searchForm.operation == 'SELL'}">
+							<form:option value="Sell" selected="selected">Venta</form:option>
 						</c:if>
-						<c:if test="${operation != 'Sell'}">
-							<option value="Sell">Venta</option>
+						<c:if test="${searchForm.operation != 'SELL'}">
+							<form:option value="Sell">Venta</form:option>
 						</c:if>
-						<c:if test="${operation == 'Rent'}">
-							<option value="Rent" selected="selected">Alquiler</option>
+						<c:if test="${searchForm.operation == 'RENT'}">
+							<form:option value="Rent" selected="selected">Alquiler</form:option>
 						</c:if>
-						<c:if test="${operation != 'Rent'}">
-							<option value="Rent">Alquiler</option>
+						<c:if test="${searchForm.operation != 'RENT'}">
+							<form:option value="Rent">Alquiler</form:option>
 						</c:if>
-				</select></li>
+				</form:select></li>
 				<li class="divider-vertical"><hr /></li>
 				<li><h6>Tipo:</h6></li>
-				<li><select id="type" name="type" style="width: 100px">
-						<option value="All">Todos</option>
-						<c:if test="${type == 'House'}">
-							<option value="House" selected="selected">Casa</option>
+				<li><form:select id="type" name="type" path="type" style="width: 100px">
+						<form:option value="All">Todos</form:option>
+						<c:if test="${searchForm.type == 'HOUSE'}">
+							<form:option value="House" selected="selected">Casa</form:option>
 						</c:if>
-						<c:if test="${type != 'House'}">
-							<option value="House">Casa</option>
+						<c:if test="${searchForm.type != 'HOUSE'}">
+							<form:option value="House">Casa</form:option>
 						</c:if>
-						<c:if test="${type == 'Apartment'}">
-							<option value="Apartment" selected="selected">Departamento</option>
+						<c:if test="${searchForm.type == 'APARTMENT'}">
+							<form:option value="Apartment" selected="selected">Departamento</form:option>
 						</c:if>
-						<c:if test="${type != 'Apartment'}">
-							<option value="Apartment">Departamento</option>
+						<c:if test="${searchForm.type != 'APARTMENT'}">
+							<form:option value="Apartment">Departamento</form:option>
 						</c:if>
-				</select></li>
+				</form:select></li>
 				<li class="divider-vertical"></li>
 				<li><h6>Orden:</h6></li>
-				<li><select id="order" name="order" style="width: 100px">
-						<c:if test="${order == 'Asc'}">
-							<option value="Asc" selected="selected">Ascendente</option>
+				<li><form:select id="order" name="order" path="order" style="width: 100px">
+						<c:if test="${searchForm.order == 'ASC'}">
+							<form:option value="Asc" selected="selected">Ascendente</form:option>
 						</c:if>
-						<c:if test="${order != 'Asc'}">
-							<option value="Asc">Ascendente</option>
+						<c:if test="${searchForm.order != 'ASC'}">
+							<form:option value="Asc">Ascendente</form:option>
 						</c:if>
-						<c:if test="${order == 'Desc'}">
-							<option value="Desc" selected="selected">Descendiente</option>
+						<c:if test="${searchForm.order == 'DESC'}">
+							<form:option value="Desc" selected="selected">Descendiente</form:option>
 						</c:if>
-						<c:if test="${order != 'Desc'}">
-							<option value="Desc">Descendiente</option>
+						<c:if test="${searchForm.order != 'DESC'}">
+							<form:option value="Desc">Descendiente</form:option>
 						</c:if>
-				</select></li>
+				</form:select></li>
 				<li class="divider-vertical"></li>
-				<li><input type="hidden" value="0" name="page" /> <input
-					type="submit" class="btn btn-primary" value="Buscar"></li>
+				<li><form:input type="hidden" value="0" name="page" path="page"/> 
+					<input type="submit" class="btn btn-primary" value="Buscar"/>
+				</li>
 			</ul>
 		</fieldset>
-	</form>
+	</form:form>
 
 </div>
 
@@ -95,12 +97,12 @@
 				<div class="row">
 					<div class="span2 pull-left">
 						<a class="thumbnail"
-							href='${ basePath }/properties/view?id=${prop.id}'> <c:if
+							href='${ basePath }/bin/property/view?id=${prop.id}'> <c:if
 								test="${not empty prop.photos}">
 								<c:forEach var="photo" items="${prop.photos}" varStatus="status">
 									<c:if test="${status.first}">
 										<img height="120" width="160"
-											src="${ basePath }/photos?ID=${ photo.id }" alt="house" />
+											src="${ basePath }/bin/photos?ID=${ photo.id }" alt="house" />
 									</c:if>
 								</c:forEach>
 							</c:if> <c:if test="${empty prop.photos}">
@@ -133,7 +135,7 @@
 							<c:out value=" ${prop.price}" />
 						<p>
 							<br /> <a class="btn btn-large"
-								href="${ basePath }/properties/view?id=${prop.id}">Ver detalle</a>
+								href="${ basePath }/bin/property/view?id=${prop.id}">Ver detalle</a>
 				</div>
 				</div>
 				<div class="clear"></div>

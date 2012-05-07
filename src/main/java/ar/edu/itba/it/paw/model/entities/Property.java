@@ -2,6 +2,7 @@ package ar.edu.itba.it.paw.model.entities;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import ar.edu.itba.it.paw.utils.collections.CollectionWithMemory;
 
@@ -9,34 +10,10 @@ public class Property extends BaseEntity {
 
 	public enum Type {
 		APARTMENT, HOUSE;
-
-		@Override
-		public String toString() {
-			switch (this) {
-			case APARTMENT:
-				return "APARTMENT";
-			case HOUSE:
-				return "HOUSE";
-			default:
-				return "";
-			}
-		}
 	}
 
 	public enum Operation {
 		SELL, RENT;
-
-		@Override
-		public String toString() {
-			switch (this) {
-			case SELL:
-				return "SELL";
-			case RENT:
-				return "RENT";
-			default:
-				return "";
-			}
-		}
 	}
 
 	private Type type;
@@ -48,7 +25,7 @@ public class Property extends BaseEntity {
 	private Integer coveredArea;
 	private Integer freeArea;
 	private Integer age;
-	private Services service;
+	private List<String> services;
 	private String description;
 	private Collection<Photo> photos;
 
@@ -67,10 +44,11 @@ public class Property extends BaseEntity {
 			final String neighborhood, final String address,
 			final Integer price, final Integer spaces,
 			final Integer coveredArea, final Integer freeArea,
-			final Integer age, final Services service,
+			final Integer age, final List<String> services,
 			final String description, final User owner) {
 		this(null, type, operation, neighborhood, address, price, spaces,
-				coveredArea, freeArea, age, service, description, owner);
+				coveredArea, freeArea, age, services, description, owner);
+		this.setDirty();
 		this.setVisible(true);
 	}
 
@@ -78,7 +56,7 @@ public class Property extends BaseEntity {
 			final Operation operation, final String neighborhood,
 			final String address, final Integer price, final Integer spaces,
 			final Integer coveredArea, final Integer freeArea,
-			final Integer age, final Services service,
+			final Integer age, final List<String> services,
 			final String description, final User owner) {
 		super(id);
 		this.type = type;
@@ -90,7 +68,7 @@ public class Property extends BaseEntity {
 		this.coveredArea = coveredArea;
 		this.freeArea = freeArea;
 		this.age = age;
-		this.service = service;
+		this.services = services;
 		this.description = description;
 		this.photos = new CollectionWithMemory<Photo>(new ArrayList<Photo>());
 		this.setOwner(owner);
@@ -137,8 +115,6 @@ public class Property extends BaseEntity {
 				+ ((this.operation == null) ? 0 : this.operation.hashCode());
 		result = prime * result
 				+ ((this.price == null) ? 0 : this.price.hashCode());
-		result = prime * result
-				+ ((this.service == null) ? 0 : this.service.hashCode());
 		result = prime * result
 				+ ((this.spaces == null) ? 0 : this.spaces.hashCode());
 		result = prime * result
@@ -209,13 +185,6 @@ public class Property extends BaseEntity {
 				return false;
 			}
 		} else if (!this.price.equals(other.price)) {
-			return false;
-		}
-		if (this.service == null) {
-			if (other.service != null) {
-				return false;
-			}
-		} else if (!this.service.equals(other.service)) {
 			return false;
 		}
 		if (this.spaces == null) {
@@ -316,12 +285,12 @@ public class Property extends BaseEntity {
 		this.setDirty();
 	}
 
-	public Services getService() {
-		return this.service;
+	public List<String> getServices() {
+		return this.services;
 	}
 
-	public void setService(final Services service) {
-		this.service = service;
+	public void setServices(final List<String> services) {
+		this.services = services;
 		this.setDirty();
 	}
 
@@ -349,4 +318,5 @@ public class Property extends BaseEntity {
 				+ ", operation=" + this.operation + ", price=" + this.price
 				+ "]";
 	}
+
 }

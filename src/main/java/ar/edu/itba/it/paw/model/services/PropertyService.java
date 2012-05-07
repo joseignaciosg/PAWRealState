@@ -9,7 +9,6 @@ import ar.edu.itba.it.paw.daos.api.UserDao;
 import ar.edu.itba.it.paw.model.entities.Property;
 import ar.edu.itba.it.paw.model.entities.Property.Operation;
 import ar.edu.itba.it.paw.model.entities.Property.Type;
-import ar.edu.itba.it.paw.model.entities.Services;
 import ar.edu.itba.it.paw.model.entities.User;
 import ar.edu.itba.it.paw.model.services.utils.ServiceUtils;
 
@@ -108,11 +107,11 @@ public class PropertyService {
 			final String typeStr, final String neighborhood,
 			final String address, final Integer price, final Integer spaces,
 			final Integer coveredArea, final Integer freeArea,
-			final Integer age, final Services service,
+			final Integer age, final List<String> services,
 			final String description, final List<String> errors,
 			final User owner) {
 		return this.saveProperty(operationStr, typeStr, neighborhood, address,
-				price, spaces, coveredArea, freeArea, age, service,
+				price, spaces, coveredArea, freeArea, age, services,
 				description, errors, owner, null);
 	}
 
@@ -120,7 +119,7 @@ public class PropertyService {
 			final String typeStr, final String neighborhood,
 			final String address, final Integer price, final Integer spaces,
 			final Integer coveredArea, final Integer freeArea,
-			final Integer age, final Services service,
+			final Integer age, final List<String> services,
 			final String description, final List<String> errors,
 			final User owner, final Integer id) {
 
@@ -153,7 +152,7 @@ public class PropertyService {
 				errors);
 		ServiceUtils
 				.validateNotNull(age, "Debe ingresar la antiguedad", errors);
-		ServiceUtils.validateNotNull(service, "Debe ingresar los servicios",
+		ServiceUtils.validateNotNull(services, "Debe ingresar los servicios",
 				errors);
 		ServiceUtils.validateNotNull(description,
 				"Debe ingresar la descripción", errors);
@@ -165,7 +164,7 @@ public class PropertyService {
 		Property prop = null;
 		if (id == null) {
 			prop = new Property(type, operation, neighborhood, address, price,
-					spaces, coveredArea, freeArea, age, service, description,
+					spaces, coveredArea, freeArea, age, services, description,
 					owner);
 		} else {
 			prop = this.propertyDao.getById(id);
@@ -179,7 +178,7 @@ public class PropertyService {
 			prop.setCoveredArea(coveredArea);
 			prop.setFreeArea(freeArea);
 			prop.setAge(age);
-			prop.setService(service);
+			prop.setServices(services);
 			prop.setDescription(description);
 
 			prop.setDirty(true);

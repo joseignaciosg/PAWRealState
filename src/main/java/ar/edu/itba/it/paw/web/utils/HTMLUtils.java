@@ -6,6 +6,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.web.servlet.ModelAndView;
+
 public class HTMLUtils {
 	public static void redirectBack(final HttpServletRequest req,
 			final HttpServletResponse resp) throws IOException {
@@ -24,7 +26,7 @@ public class HTMLUtils {
 	}
 
 	/**
-	 * Loads a jsp file from with the parameters given.
+	 * TODO: delete Loads a jsp file from with the parameters given.
 	 * 
 	 * @param jspFile
 	 *            JSP file to load
@@ -41,6 +43,14 @@ public class HTMLUtils {
 		request.setAttribute("basePath", request.getContextPath());
 		request.getRequestDispatcher("/WEB-INF/static/shared/layout.jsp")
 				.forward(request, response);
+	}
+
+	public static ModelAndView render(final String jspFile,
+			final ModelAndView mav) {
+		mav.addObject("page", jspFile);
+		mav.addObject("basePath", "/test");
+		mav.setViewName("layout");
+		return mav;
 	}
 
 	/**

@@ -8,21 +8,22 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.itba.it.paw.model.entities.Property;
-import ar.edu.itba.it.paw.model.entities.Property.Operation;
-import ar.edu.itba.it.paw.model.entities.Property.Type;
-import ar.edu.itba.it.paw.model.entities.Services;
 import ar.edu.itba.it.paw.model.entities.User;
 import ar.edu.itba.it.paw.model.services.ContactRequestService;
 import ar.edu.itba.it.paw.model.services.EmailService;
 import ar.edu.itba.it.paw.model.services.PropertyService;
-import ar.edu.itba.it.paw.model.services.PropertyService.Order;
 import ar.edu.itba.it.paw.model.services.ServiceProvider;
 import ar.edu.itba.it.paw.model.services.UserService;
+import ar.edu.itba.it.paw.web.command.PropertyForm;
+import ar.edu.itba.it.paw.web.command.SearchForm;
 import ar.edu.itba.it.paw.web.session.UserManager;
 import ar.edu.itba.it.paw.web.utils.HTMLUtils;
 
@@ -30,122 +31,127 @@ import ar.edu.itba.it.paw.web.utils.HTMLUtils;
 @RequestMapping("/property")
 public class PropertyController {
 
-	@RequestMapping(method = RequestMethod.GET, value = "/search")
-	protected void searchGET(final HttpServletRequest req,
-			final HttpServletResponse resp) throws ServletException,
-			IOException {
-		this.searchPOST(req, resp);
+	private final PropertyService propertyservice;
+
+	@Autowired
+	public PropertyController(final PropertyService propertyservice) {
+		this.propertyservice = propertyservice;
 	}
 
+	@RequestMapping(method = RequestMethod.GET, value = "/search")
+	protected ModelAndView searchGET(final SearchForm searchform)
+			throws ServletException, IOException {
+		return this.searchPOST(searchform);
+	}
+
+	/*
+	 * Searches and displays all the properties according to the request
+	 * parameters
+	 * 
+	 * @param searchform: object with all the parameters for the search
+	 */
 	@RequestMapping(method = RequestMethod.POST, value = "/search")
-	protected void searchPOST(final HttpServletRequest req,
-			final HttpServletResponse resp) throws ServletException,
-			IOException {
+	protected ModelAndView searchPOST(final SearchForm searchform)
+			throws ServletException, IOException {
 		Integer page;
 		try {
-			page = Integer.valueOf(req.getParameter("page"));
+			page = Integer.valueOf(searchform.getPage());
 		} catch (final Exception e) {
 			page = 0;
 		}
-		Operation op = null;
-		if (req.getParameter("operation") != null
-				&& req.getParameter("operation").equals("Sell")) {
-			op = Operation.SELL;
-		} else if (req.getParameter("operation") != null
-				&& req.getParameter("operation").equals("Rent")) {
-			op = Operation.RENT;
-		}
-		Type type = null;
-		if (req.getParameter("type") != null
-				&& req.getParameter("type").equals("House")) {
-			type = Type.HOUSE;
-		} else if (req.getParameter("type") != null
-				&& req.getParameter("type").equals("Apartment")) {
-			type = Type.APARTMENT;
-		}
-		Order order = null;
-		if (req.getParameter("order") != null
-				&& req.getParameter("order").equals("Asc")) {
-			order = Order.ASC;
-		} else if (req.getParameter("order") != null
-				&& req.getParameter("order").equals("Desc")) {
-			order = Order.DESC;
-		}
+		System.out.println("order: " + searchform.getOrder());
+		System.out.println("type: " + searchform.getType());
+		System.out.println("operation: " + searchform.getOperation());
 
 		int pricelow;
 		int pricehigh;
 
 		try {
-			pricelow = Integer.parseInt(req.getParameter("pricelow"));
+			pricelow = searchform.getPricelow();
 		} catch (final Exception e) {
 			pricelow = -1;
 		}
 		try {
-			pricehigh = Integer.parseInt(req.getParameter("pricehigh"));
+			pricehigh = searchform.getPricehigh();
 		} catch (final Exception e) {
 			pricehigh = -1;
 		}
 
 		final PropertyService serv = ServiceProvider.getPropertyService();
-		final List<Property> props = serv.advancedSearch(op, type, pricelow,
-				pricehigh, Integer.valueOf(page), 5, order);
+		// final List<Property> props = serv.advancedSearch(op, type, pricelow,
+		// pricehigh, Integer.valueOf(page), 5, order);
+		final List<Property> props = serv.advancedSearch(
+				searchform.getOperation(), searchform.getType(), pricelow,
+				pricehigh, Integer.valueOf(page), 5, searchform.getOrder());
 
-		req.setAttribute("props", props);
-		req.setAttribute("pagenum", page);
-		req.setAttribute("operation", req.getParameter("operation"));
-		req.setAttribute("type", req.getParameter("type"));
-		req.setAttribute("pricelow", req.getParameter("pricelow"));
-		req.setAttribute("pricehigh", req.getParameter("pricehigh"));
-		req.setAttribute("order", req.getParameter("order"));
-		HTMLUtils.render("search/search.jsp", req, resp);
+		final ModelAndView mav = new ModelAndView();
+
+		mav.addObject("props", props);
+		mav.addObject("propertyForm", searchform);
+		return HTMLUtils.render("jsp/property/search.jsp", mav);
 	}
 
+	/*
+	 * Displays the form whereby the user can create a new property
+	 */
 	@RequestMapping(method = RequestMethod.GET, value = "/new")
-	protected String newGET(final HttpServletRequest req,
-			final HttpServletResponse resp) throws ServletException,
-			IOException {
-		return "register";
+	protected ModelAndView newGET(final PropertyForm propertyForm)
+			throws ServletException, IOException {
+		final ModelAndView mav = new ModelAndView();
+		mav.addObject("propertyForm", propertyForm);
+		return HTMLUtils.render("jsp/property/new.jsp", mav);
 	}
 
 	@RequestMapping(method = RequestMethod.POST, value = "/new")
-	protected String newPOST(final HttpServletRequest req,
-			final HttpServletResponse resp) throws IOException,
-			ServletException {
+	protected ModelAndView newPOST(final PropertyForm propertyForm)
+			throws IOException, ServletException {
 		final List<String> errors = new ArrayList<String>();
 
 		final PropertyService service = ServiceProvider.getPropertyService();
-		final User currentUser = (User) req.getAttribute("current_user");
+		final User currentUser = propertyForm.getCurrentUser();
 		boolean saved = false;
+		final List<String> services = new ArrayList<String>();
+		if (propertyForm.getService().isCable()) {
+			services.add("cable");
+		}
+		if (propertyForm.getService().isLobby()) {
+			services.add("salon");
+		}
+		if (propertyForm.getService().isPaddle()) {
+			services.add("paddle");
+		}
+		if (propertyForm.getService().isSwimmingpool()) {
+			services.add("swimmingpool");
+		}
+		if (propertyForm.getService().isQuincho()) {
+			services.add("quincho");
+		}
+		if (propertyForm.getService().isTelephone()) {
+			services.add("telephone");
+		}
+
 		try {
-			saved = service.saveProperty(
-					req.getParameter("property_operation"),
-					req.getParameter("property_type"),
-					req.getParameter("property_neighborhood"),
-					req.getParameter("property_address"),
-					Integer.valueOf(req.getParameter("property_price")),
-					Integer.valueOf(req.getParameter("property_spaces")),
-					Integer.valueOf(req.getParameter("property_coveredArea")),
-					Integer.valueOf(req.getParameter("property_freeArea")),
-					Integer.valueOf(req.getParameter("property_age")),
-					new Services(req.getParameter("property_cable") != null,
-							req.getParameter("property_telephone") != null,
-							req.getParameter("property_swimmingpool") != null,
-							req.getParameter("property_lobby") != null, req
-									.getParameter("property_paddle") != null,
-							req.getParameter("property_quincho") != null), req
-							.getParameter("property_description"), errors,
-					currentUser, null);
+			saved = service.saveProperty(propertyForm.getOperation(),
+					propertyForm.getType(), propertyForm.getNeighborhood(),
+					propertyForm.getAddress(), propertyForm.getPrice(),
+					propertyForm.getSpaces(), propertyForm.getCoveredArea(),
+					propertyForm.getFreeArea(), propertyForm.getAge(),
+					services, propertyForm.getDescription(), errors,
+					currentUser);
 		} catch (final NumberFormatException e) {
 			errors.add("Parámetros inválidos");
 		}
+		final ModelAndView mav = new ModelAndView();
+		mav.addObject(errors);
+		mav.addObject("propertyForm", propertyForm);
 
 		if (saved) {
 			// resp.sendRedirect(req.getContextPath() + "/myproperties");
-			return "redirect:..";
+			return HTMLUtils.render("", mav);
 		} else {
-			req.setAttribute("errors", errors);
+			// req.setAttribute("errors", errors);
 			// this.newGET(req, resp);
-			return "redirect:new";
+			return HTMLUtils.render("jsp/property/new.jsp", mav);
 		}
 	}
 
@@ -196,6 +202,14 @@ public class PropertyController {
 		final PropertyService service = ServiceProvider.getPropertyService();
 		final User currentUser = (User) req.getAttribute("current_user");
 		boolean saved = false;
+		final List<String> services = new ArrayList<String>();
+		// new Services(req.getParameter("property_cable") != null,
+		// req.getParameter("property_telephone") != null,
+		// req.getParameter("property_swimmingpool") != null,
+		// req.getParameter("property_lobby") != null, req
+		// .getParameter("property_paddle") != null,
+		// req.getParameter("property_quincho") != null), req
+		// .getParameter("property_description"),
 		try {
 			saved = service.saveProperty(
 					req.getParameter("property_operation"),
@@ -207,13 +221,7 @@ public class PropertyController {
 					Integer.valueOf(req.getParameter("property_coveredArea")),
 					Integer.valueOf(req.getParameter("property_freeArea")),
 					Integer.valueOf(req.getParameter("property_age")),
-					new Services(req.getParameter("property_cable") != null,
-							req.getParameter("property_telephone") != null,
-							req.getParameter("property_swimmingpool") != null,
-							req.getParameter("property_lobby") != null, req
-									.getParameter("property_paddle") != null,
-							req.getParameter("property_quincho") != null), req
-							.getParameter("property_description"), errors,
+					services, req.getParameter("property_description"), errors,
 					currentUser, Integer.valueOf(req.getParameter("ID")));
 		} catch (final NumberFormatException e) {
 			errors.add("Parámetros inválidos");
@@ -237,25 +245,25 @@ public class PropertyController {
 		}
 	}
 
-	@RequestMapping(method = RequestMethod.GET)
-	protected void show(final HttpServletRequest req,
-			final HttpServletResponse resp) throws ServletException,
-			IOException {
+	/*
+	 * Displays the detail of a property
+	 * 
+	 * @param id : id of the property to
+	 */
+	@RequestMapping(method = RequestMethod.GET, value = "/view")
+	protected ModelAndView view(@RequestParam("id") final int id)
+			throws ServletException, IOException {
 		final List<String> errors = new ArrayList<String>();
-		final Integer ID = Integer.valueOf(req.getParameter("id"));
 		final PropertyService propservice = ServiceProvider
 				.getPropertyService();
 
-		final Property property = propservice.getPropertyByID(ID, errors);
+		final Property property = propservice.getPropertyByID(id, errors);
 
-		if (property == null) {
-			req.setAttribute("errors", errors);
-			HTMLUtils.render("/viewproperties/viewproperty.jsp", req, resp);
-		} else {
-			req.setAttribute("property", property);
-			HTMLUtils.render("/viewproperties/viewproperty.jsp", req, resp);
+		final ModelAndView mav = new ModelAndView();
+		mav.addObject("errors", errors);
+		mav.addObject("property", property);
+		return HTMLUtils.render("jsp/property/view.jsp", mav);
 
-		}
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
