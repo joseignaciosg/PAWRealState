@@ -17,7 +17,6 @@ import ar.edu.itba.it.paw.model.services.ServiceProvider;
 import ar.edu.itba.it.paw.model.services.UserService;
 import ar.edu.itba.it.paw.web.cookies.CookiesManager;
 import ar.edu.itba.it.paw.web.session.UserManager;
-import ar.edu.itba.it.paw.web.utils.HTMLUtils;
 
 @Controller
 @RequestMapping("/user")
@@ -41,14 +40,14 @@ public class UserController {
 		if (loginValid) {
 			final CookiesManager cookman = new CookiesManager(req, resp);
 			cookman.setUser(username, password, remember);
-			return "register:..";
+			return "redirect:/index";
 		} else {
 			final List<String> errors = new ArrayList<String>();
 
 			errors.add("Usuario/Contraseña inválidos");
 
 			req.setAttribute("errors", errors);
-			return "register:..";
+			return "redirect:/index";
 		}
 
 	}
@@ -72,11 +71,10 @@ public class UserController {
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/register")
-	protected void registerGet(final User user, final HttpServletRequest req,
+	protected String registerGet(final User user, final HttpServletRequest req,
 			final HttpServletResponse resp) throws ServletException,
 			IOException {
-		final String registerPage = "/register/register.jsp";
-		HTMLUtils.render(registerPage, req, resp);
+		return "register/register";
 	}
 
 	@RequestMapping(method = RequestMethod.POST, value = "/register")
@@ -96,7 +94,7 @@ public class UserController {
 				req.getParameter("user_password_repeated"), errors);
 
 		if (valid) {
-			return "redirect:..";
+			return "redirect:/index";
 		} else {
 			req.setAttribute("errors", errors);
 			return "redirect:register";

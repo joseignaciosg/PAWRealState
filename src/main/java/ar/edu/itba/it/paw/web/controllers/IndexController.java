@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.itba.it.paw.model.entities.Property;
 import ar.edu.itba.it.paw.model.entities.Property.Operation;
@@ -17,14 +18,13 @@ import ar.edu.itba.it.paw.model.services.PropertyService;
 import ar.edu.itba.it.paw.model.services.PropertyService.Order;
 import ar.edu.itba.it.paw.model.services.ServiceProvider;
 import ar.edu.itba.it.paw.web.cookies.CookiesManager;
-import ar.edu.itba.it.paw.web.utils.HTMLUtils;
 
 @Controller
 @RequestMapping("/")
 public class IndexController {
 
 	@RequestMapping(method = RequestMethod.GET)
-	public void index(final HttpServletRequest req,
+	public ModelAndView index(final HttpServletRequest req,
 			final HttpServletResponse resp) throws ServletException,
 			IOException {
 		final CookiesManager manager = new CookiesManager(req, resp);
@@ -35,13 +35,15 @@ public class IndexController {
 		final List<Property> sellProperties = service.advancedSearch(
 				Operation.SELL, null, -1, -1, 0, 2, Order.DESC);
 
-		req.setAttribute("rentProperties", rentProperties);
-		req.setAttribute("sellProperties", sellProperties);
+		final ModelAndView mav = new ModelAndView("index/index");
 
-		req.setAttribute("user_cookie_username", manager.getName());
-		req.setAttribute("user_remember", manager.getRemember());
+		mav.getModelMap().put("rentProperties", rentProperties);
+		mav.getModelMap().put("sellProperties", sellProperties);
 
-		HTMLUtils.render("index/index.jsp", req, resp);
+		mav.getModelMap().put("user_cookie_username", manager.getName());
+		mav.getModelMap().put("user_remember", manager.getRemember());
+
+		return mav;
 	}
 
 }

@@ -84,11 +84,11 @@ public class PropertyController {
 				searchform.getOperation(), searchform.getType(), pricelow,
 				pricehigh, Integer.valueOf(page), 5, searchform.getOrder());
 
-		final ModelAndView mav = new ModelAndView();
+		final ModelAndView mav = new ModelAndView("property/search");
 
 		mav.addObject("props", props);
 		mav.addObject("propertyForm", searchform);
-		return HTMLUtils.render("jsp/property/search.jsp", mav);
+		return mav;
 	}
 
 	/*

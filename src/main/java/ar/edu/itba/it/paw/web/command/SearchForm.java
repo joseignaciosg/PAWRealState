@@ -1,12 +1,9 @@
 package ar.edu.itba.it.paw.web.command;
 
-import org.springframework.stereotype.Component;
-
 import ar.edu.itba.it.paw.model.entities.Property.Operation;
 import ar.edu.itba.it.paw.model.entities.Property.Type;
 import ar.edu.itba.it.paw.model.services.PropertyService.Order;
 
-@Component
 public class SearchForm {
 
 	private Operation operation;
