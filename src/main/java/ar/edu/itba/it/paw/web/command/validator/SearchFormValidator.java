@@ -15,5 +15,7 @@ public class SearchFormValidator implements Validator {
 
 	public void validate(final Object target, final Errors errors) {
 
+		errors.reject("error.hola");
+		return;
 	}
 }

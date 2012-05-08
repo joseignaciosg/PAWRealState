@@ -24,7 +24,7 @@
 	<script type="text/javascript" src="${ assetPath }/js/bootstrap-button.js"></script>
 	
 	<script type="text/javascript">
-		assetPath = "${ assetPath }";
+		assetPath = "${ assetprPath }";
 	</script>
 	<script type="text/javascript" src="${ assetPath }/js/application.js"></script>
 </head>

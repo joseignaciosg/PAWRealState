@@ -111,36 +111,6 @@
 				</tr>
 			</thead>
 			<tbody>
-				<c:if test = "${property.service.telephone == 'true'}">   
-					<tr>
-						<td>Telefono</td>
-					</tr>
-				</c:if>
-				<c:if test = "${property.service.swimmingpool == 'true'}">   
-					<tr>
-						<td>Pileta</td>
-					</tr>
-				</c:if>
-				<c:if test = "${property.service.paddle == 'true'}">   
-					<tr>
-						<td>Paddle</td>
-					</tr>
-				</c:if>
-				<c:if test = "${property.service.lobby == 'true'}">   
-					<tr>
-						<td>Lobby</td>
-					</tr>
-				</c:if>
-				<c:if test = "${property.service.cable == 'true'}">   
-					<tr>
-						<td>Cable</td>
-					</tr>
-				</c:if>
-				<c:if test = "${property.service.quincho == 'true'}">   
-					<tr>
-						<td>Quincho</td>
-					</tr>
-				</c:if>
 				
 			</tbody>
 		</table>

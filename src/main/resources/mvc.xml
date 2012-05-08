@@ -10,8 +10,13 @@
          http://www.springframework.org/schema/context/spring-context-3.0.xsd
          http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
 
-	<context:component-scan base-package="ar.edu.itba.it.paw" />
+	<context:component-scan base-package="ar.edu.itba.it.paw"/>
 
+
+
+
+
+	<bean id="sessionInterceptor" class="ar.edu.itba.it.paw.web.interceptors.SessionInterceptor" />
 	<bean id="layoutInterceptor" class="ar.edu.itba.it.paw.web.interceptors.LayoutInterceptor">
 		<property name="layoutView" value="shared/layout"></property>
 		<property name="prefix" value="/WEB-INF/static/" />
@@ -19,15 +24,12 @@
 		<property name="basePath" value="/bin" />
 		<property name="assetPath" value="/assets" />
 	</bean>
-
-	<bean
-		class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
-	</bean>
 	<bean
 		class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">
 		<property name="interceptors">
 			<list>
 				<ref bean="layoutInterceptor" />
+				<ref bean="sessionInterceptor" />
 			</list>
 		</property>
 		<property name="order" value="0" />
@@ -37,6 +39,7 @@
 		<property name="interceptors">
 			<list>
 				<ref bean="layoutInterceptor" />
+				<ref bean="sessionInterceptor" />
 			</list>
 		</property>
 		<property name="order" value="1" />
@@ -50,10 +53,14 @@
 		<property name="suffix" value=".jsp" />
 	</bean>
 
+
 	<mvc:annotation-driven conversion-service="conversionService" />
 
 	<bean id="conversionService"
 		class="ar.edu.itba.it.paw.web.converter.EnhancedFormattingConversionServiceFactoryBean" />
+
+	<bean
+		class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter" />
 
 
 	<bean id="messageSource"

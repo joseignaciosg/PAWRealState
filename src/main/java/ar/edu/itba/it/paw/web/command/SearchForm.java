@@ -1,17 +1,32 @@
 package ar.edu.itba.it.paw.web.command;
 
+import javax.validation.constraints.Min;
+
 import ar.edu.itba.it.paw.model.entities.Property.Operation;
 import ar.edu.itba.it.paw.model.entities.Property.Type;
 import ar.edu.itba.it.paw.model.services.PropertyService.Order;
 
 public class SearchForm {
 
+	@Override
+	public String toString() {
+		return "SearchForm [operation=" + this.operation + ", type="
+				+ this.type + ", order=" + this.order + ", pricelow="
+				+ this.pricelow + ", pricehigh=" + this.pricehigh + ", quant="
+				+ this.quant + ", page=" + this.page + "]";
+	}
+
 	private Operation operation;
 	private Type type;
 	private Order order;
+
+	@Min(0)
 	private Integer pricelow;
+	@Min(0)
 	private Integer pricehigh;
+	@Min(0)
 	private Integer quant;
+	@Min(0)
 	private Integer page;
 
 	public SearchForm() {
@@ -33,7 +48,7 @@ public class SearchForm {
 		return this.operation;
 	}
 
-	public void setOp(final Operation op) {
+	public void setOperation(final Operation op) {
 		this.operation = op;
 	}
 
@@ -49,7 +64,7 @@ public class SearchForm {
 		return this.order;
 	}
 
-	public void serOrder(final Order order) {
+	public void setOrder(final Order order) {
 		this.order = order;
 	}
 

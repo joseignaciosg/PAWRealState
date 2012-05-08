@@ -4,7 +4,7 @@
 <ul class="nav pull-right">
 	<c:if test="${ empty current_user }">
 		<li>
-			<form class="navbar-form pull-right span7" action="user/login"
+			<form class="navbar-form pull-right span7" action="${ basePath }/user/login"
 				method="POST">
 				<div class="pull-right">
 				<input type="hidden" name="remember" id="remember" value="name"/>
@@ -25,7 +25,7 @@
 			</form>
 		</li>
 		<li class="divider-vertical"></li>
-		<li><a href="user/register">Registrarse</a></li>
+		<li><a href="${ basePath }/user/register">Registrarse</a></li>
 	</c:if>
 	<c:if test="${ not empty current_user }">
 		<li class="dropdown">
@@ -35,13 +35,13 @@
 			</a> 
 			<ul class="dropdown-menu">
 				<li>
-					<a href="${ basePath }/myproperties"> Mis Propiedades </a>
+					<a href="${ basePath }/property/list"> Mis Propiedades </a>
 				</li>
 				<li>
-					<a href="${ basePath }/myproperties/new"> Crear Propiedad </a>
+					<a href="${ basePath }/property/new"> Crear Propiedad </a>
 				</li>
 				<li>
-					<a href="${ basePath }/logout">Salir </a>
+					<a href="${ basePath }/user/logout">Salir </a>
 				</li>
 			</ul>
 		</li>

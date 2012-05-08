@@ -1,32 +1,64 @@
 package ar.edu.itba.it.paw.web.command;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 import org.springframework.stereotype.Component;
 
+import ar.edu.itba.it.paw.model.entities.Property.Operation;
+import ar.edu.itba.it.paw.model.entities.Property.Type;
 import ar.edu.itba.it.paw.model.entities.Services;
 import ar.edu.itba.it.paw.model.entities.User;
 
 @Component
 public class PropertyForm {
 
-	private String operation;
-	private String type;
+	@NotNull
+	private Operation operation;
+
+	@NotNull
+	private Type type;
+
+	@NotNull
+	@Size(min = 10, max = 150)
 	private String neighborhood;
+
+	@NotNull
+	@Size(min = 10, max = 150)
 	private String address;
+
+	@NotNull
+	@Min(0)
 	private Integer price;
+
+	@NotNull
+	@Min(0)
 	private Integer spaces;
+
+	@NotNull
+	@Min(0)
 	private Integer coveredArea;
+
+	@NotNull
+	@Min(0)
 	private Integer freeArea;
+
+	@NotNull
+	@Min(0)
 	private Integer age;
-	// List<String> services;
+
 	private Services service;
-	private String Description;
+
+	@Size(min = 10, max = 150)
+	private String description;
 	private Integer id;
 	private User currentUser;
 
 	public PropertyForm() {
 	}
 
-	public PropertyForm(final String operation, final String type,
+	public PropertyForm(final Operation operation, final Type type,
 			final String neighborhood, final String address,
 			final Integer price, final Integer spaces,
 			final Integer coveredArea, final Integer freeArea,
@@ -42,24 +74,24 @@ public class PropertyForm {
 		this.freeArea = freeArea;
 		this.age = age;
 		this.service = service;
-		this.Description = description;
+		this.description = description;
 		this.id = id;
 		this.currentUser = currentUser;
 	}
 
-	public String getOperation() {
+	public Operation getOperation() {
 		return this.operation;
 	}
 
-	public void setOperation(final String operation) {
+	public void setOperation(final Operation operation) {
 		this.operation = operation;
 	}
 
-	public String getType() {
+	public Type getType() {
 		return this.type;
 	}
 
-	public void setType(final String type) {
+	public void setType(final Type type) {
 		this.type = type;
 	}
 
@@ -128,11 +160,11 @@ public class PropertyForm {
 	}
 
 	public String getDescription() {
-		return this.Description;
+		return this.description;
 	}
 
 	public void setDescription(final String description) {
-		this.Description = description;
+		this.description = description;
 	}
 
 	public Integer getId() {

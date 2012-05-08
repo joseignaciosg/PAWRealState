@@ -227,13 +227,15 @@ public class SQLPropertyDao implements PropertyDao {
 	}
 
 	public List<Property> getAll(final Operation op, final Type type,
-			final int pricelow, final int pricehigh, final int page,
-			final int quant, final Order order, final Boolean visible) {
+			final Integer pricelow, final Integer pricehigh,
+			final Integer page, final Integer quant, final Order order,
+			final Boolean visible) {
 		final List<Property> properties = new ArrayList<Property>();
 
 		try {
-			final boolean searching = (pricehigh != -1 || pricelow != -1
-					|| type != null || op != null || visible != null);
+			final boolean searching = ((pricehigh != null && pricehigh != -1)
+					|| (pricelow != null && pricelow != -1) || type != null
+					|| op != null || visible != null);
 			final Connection conn = this.provider.getConnection();
 
 			final StringBuilder query = new StringBuilder(
@@ -245,11 +247,11 @@ public class SQLPropertyDao implements PropertyDao {
 
 			final List<String> commands = new ArrayList<String>();
 
-			if (pricehigh != -1) {
+			if (pricehigh != null && pricehigh != -1) {
 				commands.add(" price <= ? ");
 			}
 
-			if (pricelow != -1) {
+			if (pricelow != null && pricelow != -1) {
 				commands.add(" price >= ? ");
 			}
 
@@ -278,11 +280,11 @@ public class SQLPropertyDao implements PropertyDao {
 				}
 			}
 
-			if (quant != -1) {
+			if (quant != null && quant != -1) {
 				query.append(" LIMIT ").append(quant).append(" ");
 			}
 
-			if (page != -1 && quant != -1) {
+			if (page != null && page != -1 && quant != null && quant != -1) {
 				query.append(" OFFSET ").append(quant * page).append(" ");
 			}
 
@@ -291,11 +293,11 @@ public class SQLPropertyDao implements PropertyDao {
 
 			int paramIndex = 1;
 
-			if (pricehigh != -1) {
+			if (pricehigh != null && pricehigh != -1) {
 				statement.setInt(paramIndex++, pricehigh);
 			}
 
-			if (pricelow != -1) {
+			if (pricelow != null && pricelow != -1) {
 				statement.setInt(paramIndex++, pricelow);
 			}
 

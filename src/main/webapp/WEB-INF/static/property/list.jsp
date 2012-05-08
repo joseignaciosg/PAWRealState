@@ -44,4 +44,4 @@
 	</tbody>
 </table>
 <hr/>
-<a href="${ basePath }/myproperties/new" class="btn btn-primary">Crear nueva propiedad</a>
+<a href="${ basePath }/property/new" class="btn btn-primary">Crear nueva propiedad</a>

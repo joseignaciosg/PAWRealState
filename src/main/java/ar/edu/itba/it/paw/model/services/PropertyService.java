@@ -32,8 +32,8 @@ public class PropertyService {
 	}
 
 	public List<Property> advancedSearch(final Operation op, final Type type,
-			final int pricelow, final int pricehigh, final int page,
-			final int quant, final Order order) {
+			final Integer pricelow, final Integer pricehigh,
+			final Integer page, final Integer quant, final Order order) {
 		List<Property> ans = null;
 		ans = this.propertyDao.getAll(op, type, pricelow, pricehigh, page,
 				quant, order, true);
@@ -132,10 +132,9 @@ public class PropertyService {
 				errors);
 		ServiceUtils.validateNotNull(address, "Debe ingresar la dirección",
 				errors);
-
+		ServiceUtils.validateNotNull(price, "Debe ingresar el precio", errors);
 		ServiceUtils.validateNotNegative(price, "El precio debe ser positivo",
 				errors);
-		ServiceUtils.validateNotNull(price, "Debe ingresar el precio", errors);
 		ServiceUtils.validateNotNegative(spaces,
 				"La cantidad de ambientes debe ser positivo", errors);
 		ServiceUtils.validateNotNull(spaces,

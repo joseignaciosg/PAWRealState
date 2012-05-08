@@ -3,9 +3,6 @@
 <%@ page isELIgnored="false"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
-
-
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <div class="subnav subnav-fixed">
@@ -91,18 +88,18 @@
 		<div class="row">
 			<div class="offset2 span8">
 				<h3 class="property-title">
-						<a href='${ basePath }/properties/view?id=${prop.id}'> ${
+						<a href='${ basePath }/property/view?id=${prop.id}'> ${
 							prop.address } - ${ prop.neighborhood } </a>
 				</h3>
 				<div class="row">
 					<div class="span2 pull-left">
 						<a class="thumbnail"
-							href='${ basePath }/bin/property/view?id=${prop.id}'> <c:if
+							href='${ basePath }/property/view?id=${prop.id}'> <c:if
 								test="${not empty prop.photos}">
 								<c:forEach var="photo" items="${prop.photos}" varStatus="status">
 									<c:if test="${status.first}">
 										<img height="120" width="160"
-											src="${ basePath }/bin/photos?ID=${ photo.id }" alt="house" />
+											src="${ basePath }/photos?ID=${ photo.id }" alt="house" />
 									</c:if>
 								</c:forEach>
 							</c:if> <c:if test="${empty prop.photos}">
@@ -135,7 +132,7 @@
 							<c:out value=" ${prop.price}" />
 						<p>
 							<br /> <a class="btn btn-large"
-								href="${ basePath }/bin/property/view?id=${prop.id}">Ver detalle</a>
+								href="${ basePath }/property/view?id=${prop.id}">Ver detalle</a>
 				</div>
 				</div>
 				<div class="clear"></div>

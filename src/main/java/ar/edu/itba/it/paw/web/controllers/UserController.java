@@ -11,10 +11,11 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
-import ar.edu.itba.it.paw.model.entities.User;
 import ar.edu.itba.it.paw.model.services.ServiceProvider;
 import ar.edu.itba.it.paw.model.services.UserService;
+import ar.edu.itba.it.paw.web.command.RegistrationForm;
 import ar.edu.itba.it.paw.web.cookies.CookiesManager;
 import ar.edu.itba.it.paw.web.session.UserManager;
 
@@ -43,9 +44,7 @@ public class UserController {
 			return "redirect:/index";
 		} else {
 			final List<String> errors = new ArrayList<String>();
-
 			errors.add("Usuario/Contraseña inválidos");
-
 			req.setAttribute("errors", errors);
 			return "redirect:/index";
 		}
@@ -67,37 +66,41 @@ public class UserController {
 		final UserService service = ServiceProvider.getUserService();
 
 		service.logout(manager);
-		return "register:..";
+		return "redirect:/index";
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/register")
-	protected String registerGet(final User user, final HttpServletRequest req,
-			final HttpServletResponse resp) throws ServletException,
-			IOException {
-		return "register/register";
+	protected ModelAndView registerGet(final RegistrationForm form,
+			final HttpServletRequest req, final HttpServletResponse resp)
+			throws ServletException, IOException {
+
+		final ModelAndView mav = new ModelAndView("user/register");
+
+		mav.addObject("registerForm", form);
+
+		return mav;
 	}
 
 	@RequestMapping(method = RequestMethod.POST, value = "/register")
-	protected String registerPost(final HttpServletRequest req,
-			final HttpServletResponse resp) throws ServletException,
-			IOException {
+	protected ModelAndView registerPost(final RegistrationForm form,
+			final HttpServletRequest req, final HttpServletResponse resp)
+			throws ServletException, IOException {
+		System.out.println(form);
+
 		final UserService service = ServiceProvider.getUserService();
 
 		final List<String> errors = new ArrayList<String>();
 
-		final boolean valid = service.register(
-				req.getParameter("user_first_name"),
-				req.getParameter("user_last_name"),
-				req.getParameter("user_email"), req.getParameter("user_phone"),
-				req.getParameter("user_username"),
-				req.getParameter("user_password"),
-				req.getParameter("user_password_repeated"), errors);
+		final boolean valid = service.register(form.getFirstName(),
+				form.getLastName(), form.getEmail(), form.getPhone(),
+				form.getUserName(), form.getPassword(),
+				form.getRepeatedPassword(), errors);
 
 		if (valid) {
-			return "redirect:/index";
+			return new ModelAndView("redirect:/index");
 		} else {
 			req.setAttribute("errors", errors);
-			return "redirect:register";
+			return this.registerGet(form, req, resp);
 		}
 
 	}
