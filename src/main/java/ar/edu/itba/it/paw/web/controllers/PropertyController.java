@@ -13,12 +13,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.itba.it.paw.model.entities.Property;
+import ar.edu.itba.it.paw.model.entities.Property.Operation;
+import ar.edu.itba.it.paw.model.entities.Property.Type;
 import ar.edu.itba.it.paw.model.entities.User;
 import ar.edu.itba.it.paw.model.services.ContactRequestService;
 import ar.edu.itba.it.paw.model.services.EmailService;
@@ -37,6 +39,8 @@ public class PropertyController {
 
 	@Autowired
 	private SearchFormValidator searchFormValidator;
+
+	@Autowired
 	private final PropertyService propertyservice;
 
 	@Autowired
@@ -100,61 +104,57 @@ public class PropertyController {
 	 * Displays the form whereby the user can create a new property
 	 */
 	@RequestMapping(method = RequestMethod.GET, value = "/new")
-	protected ModelAndView newGET(final PropertyForm propertyForm)
-			throws ServletException, IOException {
-		final ModelAndView mav = new ModelAndView("property/new");
+	protected ModelAndView newGET(final ModelAndView mav,
+			final PropertyForm propertyForm) throws ServletException,
+			IOException {
+		mav.setViewName("property/new");
 		mav.addObject("propertyForm", propertyForm);
 		return mav;
 	}
 
 	@RequestMapping(method = RequestMethod.POST, value = "/new")
-	protected ModelAndView newPOST(final PropertyForm propertyForm)
+	protected ModelAndView newPOST(@Valid final PropertyForm propertyForm,
+			final BindingResult validateErrors, final HttpServletRequest request)
 			throws IOException, ServletException {
 		final List<String> errors = new ArrayList<String>();
 
-		final PropertyService service = ServiceProvider.getPropertyService();
-		final User currentUser = propertyForm.getCurrentUser();
 		boolean saved = false;
-		final List<String> services = new ArrayList<String>();
-		// if (propertyForm.getService().isCable()) {
-		// services.add("cable");
-		// }
-		// if (propertyForm.getService().isLobby()) {
-		// services.add("salon");
-		// }
-		// if (propertyForm.getService().isPaddle()) {
-		// services.add("paddle");
-		// }
-		// if (propertyForm.getService().isSwimmingpool()) {
-		// services.add("swimmingpool");
-		// }
-		// if (propertyForm.getService().isQuincho()) {
-		// services.add("quincho");
-		// }
-		// if (propertyForm.getService().isTelephone()) {
-		// services.add("telephone");
-		// }
+		if (validateErrors.hasFieldErrors()) {
+			for (final FieldError objectError : validateErrors.getFieldErrors()) {
+				// TODO: Resolver mensajes de error por acá con alguna clase
+				// auxiliar.
+				errors.add(objectError.getObjectName() + ","
+						+ objectError.getField());
+			}
+		} else {
+			// TODO: Sacá todas las llamadas a los providers y meté autowire!
+			final PropertyService service = ServiceProvider
+					.getPropertyService();
+			final UserManager manager = (UserManager) request
+					.getAttribute("userManager");
 
-		try {
+			final User user = manager.getCurrentUser();
+
+			final List<String> services = new ArrayList<String>();
+
 			saved = service.saveProperty(propertyForm.getOperation(),
 					propertyForm.getType(), propertyForm.getNeighborhood(),
 					propertyForm.getAddress(), propertyForm.getPrice(),
 					propertyForm.getSpaces(), propertyForm.getCoveredArea(),
 					propertyForm.getFreeArea(), propertyForm.getAge(),
-					services, propertyForm.getDescription(), errors,
-					currentUser);
-		} catch (final NumberFormatException e) {
-			errors.add("Parámetros inválidos");
+					services, propertyForm.getDescription(), errors, user,
+					propertyForm.getProperty());
+
 		}
 		final ModelAndView mav = new ModelAndView();
-		mav.addObject(errors);
+		mav.addObject("errors", errors);
 		mav.addObject("propertyForm", propertyForm);
 
 		if (saved) {
 			mav.setViewName("redirect:/property/list");
 			return mav;
 		} else {
-			return this.newGET(propertyForm);
+			return this.newGET(mav, propertyForm);
 		}
 	}
 
@@ -197,15 +197,32 @@ public class PropertyController {
 		HTMLUtils.redirectBack(req, resp);
 	}
 
-	@RequestMapping(method = RequestMethod.POST)
-	protected void edit(final HttpServletRequest req,
-			final HttpServletResponse resp) throws IOException,
-			ServletException {
+	@RequestMapping(method = RequestMethod.GET, value = "/{id}/edit")
+	protected ModelAndView editGET(final HttpServletRequest req,
+			final HttpServletResponse resp, final ModelAndView mav,
+			@PathVariable final int id) {
+		mav.setViewName("property/edit");
+
+		final Property property = this.propertyservice.getPropertyByID(id,
+				new ArrayList<String>());
+		if (!mav.getModel().containsKey("propertyForm")) {
+			mav.addObject("propertyForm", new PropertyForm(property));
+		}
+		return mav;
+	}
+
+	@RequestMapping(method = RequestMethod.POST, value = "/{id}/edit")
+	protected void editPOST(final HttpServletRequest req,
+			final HttpServletResponse resp, @PathVariable final int id)
+			throws IOException, ServletException {
 		final List<String> errors = new ArrayList<String>();
-		final PropertyService service = ServiceProvider.getPropertyService();
+
+		final Property property = this.propertyservice.getPropertyByID(id,
+				new ArrayList<String>());
 		final User currentUser = (User) req.getAttribute("current_user");
 		boolean saved = false;
 		final List<String> services = new ArrayList<String>();
+		System.out.println(property);
 		// new Services(req.getParameter("property_cable") != null,
 		// req.getParameter("property_telephone") != null,
 		// req.getParameter("property_swimmingpool") != null,
@@ -214,9 +231,11 @@ public class PropertyController {
 		// req.getParameter("property_quincho") != null), req
 		// .getParameter("property_description"),
 		try {
-			saved = service.saveProperty(
-					req.getParameter("property_operation"),
-					req.getParameter("property_type"),
+
+			// TODO: Fix this
+			saved = this.propertyservice.saveProperty(
+					Operation.valueOf(req.getParameter("property_operation")),
+					Type.valueOf(req.getParameter("property_type")),
 					req.getParameter("property_neighborhood"),
 					req.getParameter("property_address"),
 					Integer.valueOf(req.getParameter("property_price")),
@@ -225,7 +244,7 @@ public class PropertyController {
 					Integer.valueOf(req.getParameter("property_freeArea")),
 					Integer.valueOf(req.getParameter("property_age")),
 					services, req.getParameter("property_description"), errors,
-					currentUser, Integer.valueOf(req.getParameter("ID")));
+					currentUser, null);
 		} catch (final NumberFormatException e) {
 			errors.add("Parámetros inválidos");
 		}
@@ -239,9 +258,6 @@ public class PropertyController {
 
 			final List<String> errors1 = new ArrayList<String>();
 
-			final Property property = service1.getPropertyByID(
-					Integer.valueOf(req.getParameter("ID")), errors1);
-
 			req.setAttribute("property", property);
 
 			HTMLUtils.render("/myproperties/editproperty.jsp", req, resp);
@@ -253,8 +269,8 @@ public class PropertyController {
 	 * 
 	 * @param id : id of the property to
 	 */
-	@RequestMapping(method = RequestMethod.GET, value = "/view")
-	protected ModelAndView view(@RequestParam("id") final int id)
+	@RequestMapping(method = RequestMethod.GET, value = "/{id}/view")
+	protected ModelAndView view(@PathVariable final int id)
 			throws ServletException, IOException {
 		final List<String> errors = new ArrayList<String>();
 		final PropertyService propservice = ServiceProvider

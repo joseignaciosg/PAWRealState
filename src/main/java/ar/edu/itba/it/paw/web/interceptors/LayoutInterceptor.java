@@ -1,4 +1,5 @@
 package ar.edu.itba.it.paw.web.interceptors;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -23,13 +24,18 @@ public class LayoutInterceptor extends HandlerInterceptorAdapter {
 		final String originalView = modelAndView.getViewName();
 
 		if (originalView != null) {
-			if (!originalView.startsWith("redirect:")) {
+			if (!originalView.startsWith("redirect:")
+					&& !originalView.startsWith("forward:")) {
 				this.includeLayout(modelAndView, originalView, request);
 			} else if (originalView.startsWith("redirect:/")) {
 				final String realViewName = this.basePath
 						+ originalView.substring("redirect:".length());
 
 				modelAndView.setViewName("redirect:" + realViewName);
+			} else if (originalView.startsWith("forward:/")) {
+				final String realViewName = this.basePath
+						+ originalView.substring("forward:".length());
+				modelAndView.setViewName("forward:" + realViewName);
 			}
 		}
 	}

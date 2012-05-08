@@ -32,11 +32,11 @@
 				
 				<td>
 					<div class="btn-group">
-						<a href="${ basePath }/properties/view?id=${ property.id }" class="btn btn-mini">Ver publicación</a>
-						<a href="${ basePath }/myproperties/edit?ID=${ property.id }" class="btn btn-mini">Editar</a>
-						<a href="${ basePath }/myproperties/myphotos?propertyId=${ property.id }" class="btn btn-mini">Fotos</a>
-						<a href="${ basePath }/myproperties/changevisibility?id=${ property.id }" class="btn btn-mini js-change-visibility" data-prop-id="${ property.id }">Cambiar visibilidad</a>
-						<a href="${ basePath }/myproperties/delete?ID=${ property.id }" class="btn btn-mini btn-danger js-delete" data-prop-id="${ property.id }">Eliminar</a>
+						<a href="${ basePath }/property/${ property.id }" class="btn btn-mini">Ver publicación</a>
+						<a href="${ basePath }/property/${ property.id }/edit" class="btn btn-mini">Editar</a>
+						<a href="${ basePath }/property/${ property.id }/photos" class="btn btn-mini">Fotos</a>
+						<a href="${ basePath }/property/${ property.id }/changevisibility" class="btn btn-mini js-change-visibility" data-prop-id="${ property.id }">Cambiar visibilidad</a>
+						<a href="${ basePath }/property/${ property.id }/delete" class="btn btn-mini btn-danger js-delete" data-prop-id="${ property.id }">Eliminar</a>
 					</div>
 				</td>
 			</tr>

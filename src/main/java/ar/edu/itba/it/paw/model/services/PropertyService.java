@@ -2,6 +2,7 @@ package ar.edu.itba.it.paw.model.services;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import ar.edu.itba.it.paw.daos.api.PropertyDao;
@@ -19,7 +20,9 @@ public class PropertyService {
 		ASC, DESC
 	}
 
+	@Autowired
 	private PropertyDao propertyDao;
+	@Autowired
 	private UserDao userDao;
 
 	public PropertyService() {
@@ -103,8 +106,8 @@ public class PropertyService {
 		return this.propertyDao.saveOrUpdate(prop);
 	}
 
-	public boolean saveProperty(final String operationStr,
-			final String typeStr, final String neighborhood,
+	public boolean saveProperty(final Operation operationStr,
+			final Type typeStr, final String neighborhood,
 			final String address, final Integer price, final Integer spaces,
 			final Integer coveredArea, final Integer freeArea,
 			final Integer age, final List<String> services,
@@ -115,16 +118,13 @@ public class PropertyService {
 				description, errors, owner, null);
 	}
 
-	public boolean saveProperty(final String operationStr,
-			final String typeStr, final String neighborhood,
-			final String address, final Integer price, final Integer spaces,
+	public boolean saveProperty(final Operation operation, final Type type,
+			final String neighborhood, final String address,
+			final Integer price, final Integer spaces,
 			final Integer coveredArea, final Integer freeArea,
 			final Integer age, final List<String> services,
 			final String description, final List<String> errors,
-			final User owner, final Integer id) {
-
-		final Operation operation = Operation.valueOf(operationStr);
-		final Type type = Type.valueOf(typeStr);
+			final User owner, Property prop) {
 
 		ServiceUtils.validateNotNull(operation, "Operación inválida", errors);
 		ServiceUtils.validateNotNull(type, "Tipo inválido", errors);
@@ -160,13 +160,11 @@ public class PropertyService {
 			return false;
 		}
 
-		Property prop = null;
-		if (id == null) {
+		if (prop == null || prop.isNew()) {
 			prop = new Property(type, operation, neighborhood, address, price,
 					spaces, coveredArea, freeArea, age, services, description,
 					owner);
 		} else {
-			prop = this.propertyDao.getById(id);
 
 			prop.setType(type);
 			prop.setOperation(operation);

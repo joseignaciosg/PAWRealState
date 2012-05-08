@@ -9,9 +9,9 @@ import ar.edu.itba.it.paw.model.entities.Property.Type;
 public class TypeConverter implements Converter<String, Type> {
 
 	public Type convert(final String type) {
-		if (type.equals("House")) {
+		if (type.toLowerCase().equals("house")) {
 			return Type.HOUSE;
-		} else if (type.equals("Apartment")) {
+		} else if (type.toLowerCase().equals("apartment")) {
 			return Type.APARTMENT;
 		} else {
 			return null;

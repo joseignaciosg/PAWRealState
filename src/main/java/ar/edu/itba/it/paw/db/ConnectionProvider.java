@@ -3,6 +3,8 @@ package ar.edu.itba.it.paw.db;
 import java.io.File;
 import java.sql.Connection;
 
+import org.springframework.stereotype.Component;
+
 import ar.edu.itba.it.paw.db.managers.InMemorySQLiteConnectionManager;
 import ar.edu.itba.it.paw.db.managers.PostgreConnectionManager;
 
@@ -11,6 +13,7 @@ import ar.edu.itba.it.paw.db.managers.PostgreConnectionManager;
  * 
  * @author cris
  */
+@Component
 public class ConnectionProvider {
 
 	private ConnectionManager manager;
@@ -21,8 +24,15 @@ public class ConnectionProvider {
 		ConnectionProvider.applicationPath = applicationPath;
 	}
 
-	private ConnectionProvider() {
+	public ConnectionProvider() {
+		File configFile = new File(applicationPath
+				+ "WEB-INF/database.properties");
 
+		if (!configFile.exists()) {
+			configFile = new File("WEB-INF/database.properties");
+		}
+
+		this.manager = new PostgreConnectionManager(configFile);
 	}
 
 	/**

@@ -10,7 +10,7 @@
 		action="new" method="POST" commandName="propertyForm">
 		<fieldset>
 			<legend>Agregar Nueva Propiedad</legend>
-
+			<form:hidden path="property"/>
 			<div class="control-group">  
 			    <label class="control-label" for="property_type">Seleccione un tipo de inmueble </label>  
 			    <div class="controls">  
@@ -162,7 +162,8 @@
 			      Quincho
 			    </label>
 			  </div>  
-			</div>			<div class="form-actions">
+			</div>		
+			<div class="form-actions">
 				<input type="submit" class="btn btn-primary" value="Agregar" />
 				<button class="btn">Limpiar</button>
 			</div>

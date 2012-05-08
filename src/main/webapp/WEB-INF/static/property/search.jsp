@@ -21,16 +21,16 @@
 				<li><form:select  id="operation" name="operation" path="operation" style="width: 100px">
 						<form:option value="All">Todos</form:option>
 						<c:if test="${searchForm.operation == 'SELL'}">
-							<form:option value="Sell" selected="selected">Venta</form:option>
+							<form:option value="SELL" selected="selected">Venta</form:option>
 						</c:if>
 						<c:if test="${searchForm.operation != 'SELL'}">
-							<form:option value="Sell">Venta</form:option>
+							<form:option value="SELL">Venta</form:option>
 						</c:if>
 						<c:if test="${searchForm.operation == 'RENT'}">
-							<form:option value="Rent" selected="selected">Alquiler</form:option>
+							<form:option value="RENT" selected="selected">Alquiler</form:option>
 						</c:if>
 						<c:if test="${searchForm.operation != 'RENT'}">
-							<form:option value="Rent">Alquiler</form:option>
+							<form:option value="RENT">Alquiler</form:option>
 						</c:if>
 				</form:select></li>
 				<li class="divider-vertical"><hr /></li>
@@ -38,16 +38,16 @@
 				<li><form:select id="type" name="type" path="type" style="width: 100px">
 						<form:option value="All">Todos</form:option>
 						<c:if test="${searchForm.type == 'HOUSE'}">
-							<form:option value="House" selected="selected">Casa</form:option>
+							<form:option value="HOUSE" selected="selected">Casa</form:option>
 						</c:if>
 						<c:if test="${searchForm.type != 'HOUSE'}">
-							<form:option value="House">Casa</form:option>
+							<form:option value="HOUSE">Casa</form:option>
 						</c:if>
 						<c:if test="${searchForm.type == 'APARTMENT'}">
-							<form:option value="Apartment" selected="selected">Departamento</form:option>
+							<form:option value="APARTMENT" selected="selected">Departamento</form:option>
 						</c:if>
 						<c:if test="${searchForm.type != 'APARTMENT'}">
-							<form:option value="Apartment">Departamento</form:option>
+							<form:option value="APARTMENT">Departamento</form:option>
 						</c:if>
 				</form:select></li>
 				<li class="divider-vertical"></li>

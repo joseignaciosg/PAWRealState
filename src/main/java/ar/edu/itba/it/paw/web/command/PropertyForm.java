@@ -6,6 +6,7 @@ import javax.validation.constraints.Size;
 
 import org.springframework.stereotype.Component;
 
+import ar.edu.itba.it.paw.model.entities.Property;
 import ar.edu.itba.it.paw.model.entities.Property.Operation;
 import ar.edu.itba.it.paw.model.entities.Property.Type;
 import ar.edu.itba.it.paw.model.entities.Services;
@@ -21,11 +22,11 @@ public class PropertyForm {
 	private Type type;
 
 	@NotNull
-	@Size(min = 10, max = 150)
+	@Size(min = 1, max = 150)
 	private String neighborhood;
 
 	@NotNull
-	@Size(min = 10, max = 150)
+	@Size(min = 1, max = 150)
 	private String address;
 
 	@NotNull
@@ -50,9 +51,12 @@ public class PropertyForm {
 
 	private Services service;
 
-	@Size(min = 10, max = 150)
+	@Size(min = 1, max = 150)
 	private String description;
-	private Integer id;
+
+	private Property property;
+
+	// TODO: Rename a owner, current user no necesariamente lo es
 	private User currentUser;
 
 	public PropertyForm() {
@@ -63,7 +67,8 @@ public class PropertyForm {
 			final Integer price, final Integer spaces,
 			final Integer coveredArea, final Integer freeArea,
 			final Integer age, final Services service,
-			final String description, final Integer id, final User currentUser) {
+			final String description, final Property property,
+			final User currentUser) {
 		this.operation = operation;
 		this.type = type;
 		this.neighborhood = neighborhood;
@@ -75,8 +80,16 @@ public class PropertyForm {
 		this.age = age;
 		this.service = service;
 		this.description = description;
-		this.id = id;
+		this.property = property;
 		this.currentUser = currentUser;
+	}
+
+	public PropertyForm(final Property property) {
+		this(property.getOperation(), property.getType(), property
+				.getNeighborhood(), property.getAddress(), property.getPrice(),
+				property.getSpaces(), property.getCoveredArea(), property
+						.getFreeArea(), property.getAge(), null, property
+						.getDescription(), property, property.getOwner());
 	}
 
 	public Operation getOperation() {
@@ -167,20 +180,20 @@ public class PropertyForm {
 		this.description = description;
 	}
 
-	public Integer getId() {
-		return this.id;
-	}
-
-	public void setId(final Integer id) {
-		this.id = id;
-	}
-
 	public User getCurrentUser() {
 		return this.currentUser;
 	}
 
 	public void setCurrentUser(final User currentUser) {
 		this.currentUser = currentUser;
+	}
+
+	public Property getProperty() {
+		return this.property;
+	}
+
+	public void setProperty(final Property property) {
+		this.property = property;
 	}
 
 }

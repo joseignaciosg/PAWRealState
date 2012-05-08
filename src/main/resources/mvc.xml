@@ -10,7 +10,7 @@
          http://www.springframework.org/schema/context/spring-context-3.0.xsd
          http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
 
-	<context:component-scan base-package="ar.edu.itba.it.paw"/>
+	<context:component-scan base-package="ar.edu.itba.it.paw" />
 
 
 
@@ -60,7 +60,11 @@
 		class="ar.edu.itba.it.paw.web.converter.EnhancedFormattingConversionServiceFactoryBean" />
 
 	<bean
-		class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter" />
+		class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+		<property name="webBindingInitializer">
+			<ref bean="customBindingInitializer" />
+		</property>
+	</bean>
 
 
 	<bean id="messageSource"

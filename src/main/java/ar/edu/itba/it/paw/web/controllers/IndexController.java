@@ -23,6 +23,13 @@ import ar.edu.itba.it.paw.web.cookies.CookiesManager;
 @RequestMapping("/")
 public class IndexController {
 
+	@RequestMapping(method = RequestMethod.POST, value = "/index")
+	public ModelAndView indexPOST(final HttpServletRequest req,
+			final HttpServletResponse resp) throws ServletException,
+			IOException {
+		return this.index(req, resp);
+	}
+
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView index(final HttpServletRequest req,
 			final HttpServletResponse resp) throws ServletException,

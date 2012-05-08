@@ -1,7 +1,6 @@
 package ar.edu.itba.it.paw.web.converter;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
@@ -11,7 +10,7 @@ import ar.edu.itba.it.paw.model.entities.Property;
 import ar.edu.itba.it.paw.model.services.PropertyService;
 
 @Component
-public class PropertyConverter implements Converter<Integer, Property> {
+public class PropertyConverter implements Converter<String, Property> {
 
 	PropertyService service;
 
@@ -20,9 +19,13 @@ public class PropertyConverter implements Converter<Integer, Property> {
 		this.service = service;
 	}
 
-	public Property convert(final Integer source) {
-		final List<String> errors = new ArrayList<String>();
-		return this.service.getPropertyByID(source, errors);
+	public Property convert(final String source) {
+		try {
+			return this.service.getPropertyByID(Integer.valueOf(source),
+					new ArrayList<String>());
+		} catch (final Exception e) {
+			return null;
+		}
 	}
 
 }

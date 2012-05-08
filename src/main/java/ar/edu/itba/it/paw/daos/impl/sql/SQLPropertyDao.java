@@ -9,6 +9,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import ar.edu.itba.it.paw.daos.api.PhotoDao;
@@ -29,14 +30,18 @@ import ar.edu.itba.it.paw.utils.collections.LazyCollection;
 @Repository
 public class SQLPropertyDao implements PropertyDao {
 
+	@Autowired
 	private ConnectionProvider provider;
+	@Autowired
 	private UserDao userDao;
+	@Autowired
 	private PhotoDao photoDao;
 
 	public SQLPropertyDao() {
 		super();
 	}
 
+	@Autowired
 	public SQLPropertyDao(final ConnectionProvider provider,
 			final UserDao userDao, final PhotoDao photoDao) {
 		this.provider = provider;

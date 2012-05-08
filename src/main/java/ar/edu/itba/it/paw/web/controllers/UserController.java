@@ -24,7 +24,7 @@ import ar.edu.itba.it.paw.web.session.UserManager;
 public class UserController {
 
 	@RequestMapping(method = RequestMethod.POST)
-	protected String login(final HttpServletRequest req,
+	protected ModelAndView login(final HttpServletRequest req,
 			final HttpServletResponse resp) throws ServletException,
 			IOException {
 		final String username = req.getParameter("user_username");
@@ -39,16 +39,16 @@ public class UserController {
 		final boolean loginValid = service.login(username, password, manager);
 
 		if (loginValid) {
+			final ModelAndView mav = new ModelAndView("forward:/index");
 			final CookiesManager cookman = new CookiesManager(req, resp);
 			cookman.setUser(username, password, remember);
-			return "redirect:/index";
+			mav.addObject("errors", new String[] { "Bienvenido " + username });
+			return mav;
 		} else {
-			final List<String> errors = new ArrayList<String>();
-			errors.add("Usuario/Contraseña inválidos");
-			req.setAttribute("errors", errors);
-			return "redirect:/index";
+			final ModelAndView mav = new ModelAndView("forward:/index");
+			mav.addObject("errors", new String[] { "Login inválido" });
+			return mav;
 		}
-
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
