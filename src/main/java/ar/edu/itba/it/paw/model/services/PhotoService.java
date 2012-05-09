@@ -2,16 +2,21 @@ package ar.edu.itba.it.paw.model.services;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import ar.edu.itba.it.paw.daos.api.PhotoDao;
 import ar.edu.itba.it.paw.model.entities.Photo;
 import ar.edu.itba.it.paw.model.entities.Property;
 import ar.edu.itba.it.paw.model.entities.User;
 import ar.edu.itba.it.paw.model.services.utils.ServiceUtils;
 
+@Component
 public class PhotoService {
 
 	private PhotoDao photoDao;
 
+	@Autowired
 	public PhotoService(final PhotoDao dao) {
 		this.photoDao = dao;
 	}

@@ -82,6 +82,11 @@ public class PropertyForm {
 		this.description = description;
 		this.property = property;
 		this.currentUser = currentUser;
+
+		if (currentUser == null && this.property != null
+				&& this.property.getOwner() != null) {
+			this.currentUser = this.property.getOwner();
+		}
 	}
 
 	public PropertyForm(final Property property) {

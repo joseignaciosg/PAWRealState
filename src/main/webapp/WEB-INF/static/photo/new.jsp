@@ -4,7 +4,7 @@
 
 <div class="row">
 	<form name="property_newphoto" class="form-horizontal span8 offset2"
-		action="newphoto" method="POST" enctype="multipart/form-data">
+		action="new" method="POST" enctype="multipart/form-data">
 		<fieldset>
 			<legend>Agregar Nueva Foto a la Propiedad</legend>
 			<input type="hidden" class="input-xlarge" id="freeArea"

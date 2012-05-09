@@ -61,9 +61,6 @@
 
 	<bean
 		class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
-		<property name="webBindingInitializer">
-			<ref bean="customBindingInitializer" />
-		</property>
 	</bean>
 
 

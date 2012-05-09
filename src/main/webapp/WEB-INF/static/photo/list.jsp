@@ -5,7 +5,7 @@
 
 <div class="offset3 span6">
 	<h6>
-		<a href="${ basePath }/properties/view?id=${ property.id }">Fotos
+		<a href="${ basePath }/property/view?id=${ property.id }">Fotos
 			de ${ property.address } - ${ property.neighborhood }</a>
 	</h6>
 
@@ -18,7 +18,7 @@
 							height="120" width="160"
 							src="${ basePath }/photos?ID=${ photo.id }" alt=""/>
 					</a>
-					<form method="POST" action="${ basePath }/myproperties/myphotos/delete" class="centered">
+					<form method="POST" action="${ basePath }/photo/delete" class="centered">
 						<input type="hidden" name="photoId" value="${ photo.id }"/>
 						<input type="submit" class="btn btn-danger" value="Eliminar"/>
 					</form></li>
@@ -30,6 +30,6 @@
 		</c:if>
 	</p>
 	<div class="centered">
-		<a href="${ basePath }/myproperties/newphoto?propertyId=${ property.id }" class="btn btn-primary btn-large">Agregar foto</a>
+		<a href="${ basePath }/photo/new?propertyId=${ property.id }" class="btn btn-primary btn-large">Agregar foto</a>
 	</div>
 </div>

@@ -15,7 +15,6 @@ import ar.edu.itba.it.paw.web.session.UserManager;
 
 public class SessionInterceptor extends HandlerInterceptorAdapter {
 
-	// TODO: Use spring security or improve this!
 	private String filter = "(.*/assets/.*|.*/search(/)?|.*/contactrequest(/)?|.*/properties/view(/)?$|.*/index(/)?|.*/register(/)?|.*/login(/)?|.*/photos.*(/)?)";
 
 	@Override

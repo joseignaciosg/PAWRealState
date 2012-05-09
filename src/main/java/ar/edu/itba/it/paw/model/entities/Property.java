@@ -27,7 +27,8 @@ public class Property extends BaseEntity {
 	private Integer age;
 	private List<String> services;
 	private String description;
-	private Collection<Photo> photos;
+	private Collection<Photo> photos = new CollectionWithMemory<Photo>(
+			new ArrayList<Photo>());
 
 	public Collection<Photo> getPhotos() {
 		return this.photos;
