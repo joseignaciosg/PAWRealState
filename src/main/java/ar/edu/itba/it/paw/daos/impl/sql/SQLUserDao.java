@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import ar.edu.itba.it.paw.daos.api.PropertyDao;
@@ -28,6 +29,7 @@ public class SQLUserDao implements UserDao {
 		super();
 	}
 
+	@Autowired
 	public SQLUserDao(final ConnectionProvider provider) {
 		this.provider = provider;
 	}
