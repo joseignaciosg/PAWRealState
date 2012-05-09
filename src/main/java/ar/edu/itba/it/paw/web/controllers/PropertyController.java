@@ -11,9 +11,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,6 +26,7 @@ import ar.edu.itba.it.paw.model.services.ServiceProvider;
 import ar.edu.itba.it.paw.model.services.UserService;
 import ar.edu.itba.it.paw.web.command.PropertyForm;
 import ar.edu.itba.it.paw.web.command.SearchForm;
+import ar.edu.itba.it.paw.web.command.validator.PropertyFormValidator;
 import ar.edu.itba.it.paw.web.command.validator.SearchFormValidator;
 import ar.edu.itba.it.paw.web.session.UserManager;
 import ar.edu.itba.it.paw.web.utils.HTMLUtils;
@@ -38,12 +37,15 @@ public class PropertyController {
 
 	private PropertyService propertyservice;
 	private SearchFormValidator searchFormValidator;
+	private PropertyFormValidator propertyFormValidatior;
 
 	@Autowired
 	public PropertyController(final PropertyService propertyservice,
-			final SearchFormValidator searchFormValidator) {
+			final SearchFormValidator searchFormValidator,
+			final PropertyFormValidator propertyFormValidatior) {
 		this.propertyservice = propertyservice;
 		this.searchFormValidator = searchFormValidator;
+		this.propertyFormValidatior = propertyFormValidatior;
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/search")
@@ -59,14 +61,13 @@ public class PropertyController {
 	 * @param searchform: object with all the parameters for the search
 	 */
 	@RequestMapping(method = RequestMethod.POST, value = "/search")
-	protected ModelAndView searchPOST(@Valid final SearchForm searchForm,
+	protected ModelAndView searchPOST(final SearchForm searchForm,
 			final Errors errors) throws ServletException, IOException {
 
 		final SearchForm sessionSearchForm = searchForm;
 		this.searchFormValidator.validate(sessionSearchForm, errors);
 
-		final PropertyService serv = ServiceProvider.getPropertyService();
-		final List<Property> props = serv.advancedSearch(
+		final List<Property> props = this.propertyservice.advancedSearch(
 				searchForm.getOperation(), searchForm.getType(),
 				searchForm.getPricelow(), searchForm.getPricehigh(),
 				searchForm.getPage(), 5, searchForm.getOrder());
@@ -91,40 +92,30 @@ public class PropertyController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST, value = "/new")
-	protected ModelAndView newPOST(@Valid final PropertyForm propertyForm,
-			final BindingResult validateErrors, final HttpServletRequest request)
+	protected ModelAndView newPOST(final PropertyForm propertyForm,
+			final Errors validateErrors, final HttpServletRequest request)
 			throws IOException, ServletException {
 		final List<String> errors = new ArrayList<String>();
-
 		boolean saved = false;
-		if (validateErrors.hasFieldErrors()) {
-			for (final FieldError objectError : validateErrors.getFieldErrors()) {
-				// TODO: Resolver mensajes de error por acá con alguna clase
-				// auxiliar.
-				errors.add(objectError.getObjectName() + ","
-						+ objectError.getField());
-			}
-		} else {
-			// TODO: Sacá todas las llamadas a los providers y meté autowire!
-			final UserManager manager = (UserManager) request
-					.getAttribute("userManager");
+		this.propertyFormValidatior.validate(propertyForm, validateErrors);
 
-			final User user = manager.getCurrentUser();
+		// TODO: Sacá todas las llamadas a los providers y meté autowire!
+		final UserManager manager = (UserManager) request
+				.getAttribute("userManager");
 
-			final List<String> services = new ArrayList<String>();
+		final User user = manager.getCurrentUser();
 
-			saved = this.propertyservice.saveProperty(
-					propertyForm.getOperation(), propertyForm.getType(),
-					propertyForm.getNeighborhood(), propertyForm.getAddress(),
-					propertyForm.getPrice(), propertyForm.getSpaces(),
-					propertyForm.getCoveredArea(), propertyForm.getFreeArea(),
-					propertyForm.getAge(), services,
-					propertyForm.getDescription(), errors, user,
-					propertyForm.getProperty());
+		final List<String> services = new ArrayList<String>();
 
-		}
+		saved = this.propertyservice.saveProperty(propertyForm.getOperation(),
+				propertyForm.getType(), propertyForm.getNeighborhood(),
+				propertyForm.getAddress(), propertyForm.getPrice(),
+				propertyForm.getSpaces(), propertyForm.getCoveredArea(),
+				propertyForm.getFreeArea(), propertyForm.getAge(), services,
+				propertyForm.getDescription(), errors, user,
+				propertyForm.getProperty());
+
 		final ModelAndView mav = new ModelAndView();
-		mav.addObject("errors", errors);
 		mav.addObject("propertyForm", propertyForm);
 
 		if (saved) {
