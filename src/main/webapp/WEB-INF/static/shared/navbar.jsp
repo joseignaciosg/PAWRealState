@@ -3,6 +3,7 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <a class="brand" href="${ basePath }/"> ChinuProp </a>
 
 <ul class="nav pull-right">
@@ -10,15 +11,9 @@
 		<li>
 			<form:form class="navbar-form pull-right span7" action="${ basePath }/user/login" commandName="loginForm" method="POST">
 				<div class="pull-right">
-				<spring:bind path="loginForm.remember">
 					<input type="hidden" name="remember" id="remember" value="name"/>
-				</spring:bind>
-				<spring:bind path="loginForm.user_username">
              		<input type="text" name="user_username" class="span2" value="${ user_cookie_username }" placeholder="Usuario" />
-             	</spring:bind>
-             	<spring:bind path="loginForm.user_password">
              		<input type="password" name="user_password" class="span2" placeholder="Contrase&ntilde;a"/>
-             	</spring:bind> 
              	<input type="submit" class="btn btn-primary" value="Entrar" />
 				</div>
 				<div data-toggle="buttons-radio" id="remember" class="btn-group pull-right tabs remember-me">
