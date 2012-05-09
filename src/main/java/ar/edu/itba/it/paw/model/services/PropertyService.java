@@ -3,7 +3,7 @@ package ar.edu.itba.it.paw.model.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import ar.edu.itba.it.paw.daos.api.PropertyDao;
 import ar.edu.itba.it.paw.daos.api.UserDao;
@@ -13,7 +13,7 @@ import ar.edu.itba.it.paw.model.entities.Property.Type;
 import ar.edu.itba.it.paw.model.entities.User;
 import ar.edu.itba.it.paw.model.services.utils.ServiceUtils;
 
-@Component
+@Service
 public class PropertyService {
 
 	public enum Order {

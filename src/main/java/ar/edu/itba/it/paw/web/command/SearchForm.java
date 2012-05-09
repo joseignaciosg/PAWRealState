@@ -1,7 +1,5 @@
 package ar.edu.itba.it.paw.web.command;
 
-import javax.validation.constraints.Min;
-
 import ar.edu.itba.it.paw.model.entities.Property.Operation;
 import ar.edu.itba.it.paw.model.entities.Property.Type;
 import ar.edu.itba.it.paw.model.services.PropertyService.Order;
@@ -19,14 +17,9 @@ public class SearchForm {
 	private Operation operation;
 	private Type type;
 	private Order order;
-
-	@Min(0)
 	private Integer pricelow;
-	@Min(0)
 	private Integer pricehigh;
-	@Min(0)
 	private Integer quant;
-	@Min(0)
 	private Integer page;
 
 	public SearchForm() {

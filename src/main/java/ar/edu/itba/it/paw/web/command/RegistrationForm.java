@@ -1,8 +1,6 @@
 package ar.edu.itba.it.paw.web.command;
 
-import org.springframework.stereotype.Component;
 
-@Component
 public class RegistrationForm {
 	@Override
 	public String toString() {
