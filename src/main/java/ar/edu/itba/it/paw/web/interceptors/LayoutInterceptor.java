@@ -6,6 +6,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+import ar.edu.itba.it.paw.web.command.LoginForm;
+
 public class LayoutInterceptor extends HandlerInterceptorAdapter {
 	private static final String NO_LAYOUT = "noLayout:";
 
@@ -37,6 +39,10 @@ public class LayoutInterceptor extends HandlerInterceptorAdapter {
 						+ originalView.substring("forward:".length());
 				modelAndView.setViewName("forward:" + realViewName);
 			}
+		}
+
+		if (!modelAndView.getModel().containsKey("loginForm")) {
+			modelAndView.getModel().put("loginForm", new LoginForm());
 		}
 	}
 

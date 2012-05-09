@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.itba.it.paw.model.services.ServiceProvider;
 import ar.edu.itba.it.paw.model.services.UserService;
+import ar.edu.itba.it.paw.web.command.LoginForm;
 import ar.edu.itba.it.paw.web.command.RegistrationForm;
 import ar.edu.itba.it.paw.web.cookies.CookiesManager;
 import ar.edu.itba.it.paw.web.session.UserManager;
@@ -24,12 +25,12 @@ import ar.edu.itba.it.paw.web.session.UserManager;
 public class UserController {
 
 	@RequestMapping(method = RequestMethod.POST)
-	protected ModelAndView login(final HttpServletRequest req,
-			final HttpServletResponse resp) throws ServletException,
-			IOException {
-		final String username = req.getParameter("user_username");
-		final String password = req.getParameter("user_password");
-		final String remember = req.getParameter("remember");
+	protected ModelAndView login(final LoginForm loginForm,
+			final HttpServletRequest req, final HttpServletResponse resp)
+			throws ServletException, IOException {
+		final String username = loginForm.getUser_username();
+		final String password = loginForm.getUser_password();
+		final String remember = loginForm.getRemember();
 
 		final UserManager manager = (UserManager) req
 				.getAttribute("userManager");
