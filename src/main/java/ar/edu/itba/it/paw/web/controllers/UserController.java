@@ -8,7 +8,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -17,12 +19,23 @@ import ar.edu.itba.it.paw.model.services.ServiceProvider;
 import ar.edu.itba.it.paw.model.services.UserService;
 import ar.edu.itba.it.paw.web.command.LoginForm;
 import ar.edu.itba.it.paw.web.command.RegistrationForm;
+import ar.edu.itba.it.paw.web.command.validator.RegistrationFormValidator;
 import ar.edu.itba.it.paw.web.cookies.CookiesManager;
 import ar.edu.itba.it.paw.web.session.UserManager;
 
 @Controller
 @RequestMapping("/user")
 public class UserController {
+
+	private UserService userService;
+	private RegistrationFormValidator registrationFormValidator;
+
+	@Autowired
+	public UserController(final UserService userService,
+			final RegistrationFormValidator registrationFormValidator) {
+		this.userService = userService;
+		this.registrationFormValidator = registrationFormValidator;
+	}
 
 	@RequestMapping(method = RequestMethod.POST)
 	protected ModelAndView login(final LoginForm loginForm,
@@ -71,37 +84,33 @@ public class UserController {
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/register")
-	protected ModelAndView registerGet(final RegistrationForm form,
-			final HttpServletRequest req, final HttpServletResponse resp)
+	protected ModelAndView registerGet(final RegistrationForm form)
 			throws ServletException, IOException {
 
 		final ModelAndView mav = new ModelAndView("user/register");
-
 		mav.addObject("registerForm", form);
-
 		return mav;
 	}
 
 	@RequestMapping(method = RequestMethod.POST, value = "/register")
-	protected ModelAndView registerPost(final RegistrationForm form,
-			final HttpServletRequest req, final HttpServletResponse resp)
-			throws ServletException, IOException {
-		System.out.println(form);
-
-		final UserService service = ServiceProvider.getUserService();
+	protected ModelAndView registerPost(
+			final RegistrationForm registrationForm,
+			final Errors validationErrors) throws ServletException, IOException {
 
 		final List<String> errors = new ArrayList<String>();
-
-		final boolean valid = service.register(form.getFirstName(),
-				form.getLastName(), form.getEmail(), form.getPhone(),
-				form.getUserName(), form.getPassword(),
-				form.getRepeatedPassword(), errors);
+		this.registrationFormValidator.validate(registrationForm,
+				validationErrors);
+		final boolean valid = this.userService.register(
+				registrationForm.getFirstName(),
+				registrationForm.getLastName(), registrationForm.getEmail(),
+				registrationForm.getPhone(), registrationForm.getUserName(),
+				registrationForm.getPassword(),
+				registrationForm.getRepeatedPassword(), errors);
 
 		if (valid) {
 			return new ModelAndView("redirect:/index");
 		} else {
-			req.setAttribute("errors", errors);
-			return this.registerGet(form, req, resp);
+			return this.registerGet(registrationForm);
 		}
 
 	}

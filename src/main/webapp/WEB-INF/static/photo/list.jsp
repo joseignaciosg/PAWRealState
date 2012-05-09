@@ -16,7 +16,7 @@
 				<c:forEach var="photo" items="${ property.photos }">
 					<li class="span2"><a href="#" class="thumbnail"> <img
 							height="120" width="160"
-							src="${ basePath }/photos?ID=${ photo.id }" alt=""/>
+							src="${ basePath }/photo/show?ID=${ photo.id }" alt=""/>
 					</a>
 					<form method="POST" action="${ basePath }/photo/delete" class="centered">
 						<input type="hidden" name="photoId" value="${ photo.id }"/>

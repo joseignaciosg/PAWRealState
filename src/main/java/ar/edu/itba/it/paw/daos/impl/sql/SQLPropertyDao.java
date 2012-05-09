@@ -30,11 +30,8 @@ import ar.edu.itba.it.paw.utils.collections.LazyCollection;
 @Repository
 public class SQLPropertyDao implements PropertyDao {
 
-	@Autowired
 	private ConnectionProvider provider;
-	@Autowired
 	private UserDao userDao;
-	@Autowired
 	private PhotoDao photoDao;
 
 	public SQLPropertyDao() {
@@ -47,6 +44,9 @@ public class SQLPropertyDao implements PropertyDao {
 		this.provider = provider;
 		this.userDao = userDao;
 		this.photoDao = photoDao;
+		if (userDao instanceof SQLUserDao) {
+			((SQLUserDao) userDao).setPropertyDao(this);
+		}
 	}
 
 	public Property getById(final Integer id) {
