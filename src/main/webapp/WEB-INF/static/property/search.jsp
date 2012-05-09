@@ -6,7 +6,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <div class="subnav subnav-fixed">
+	
+	
 	<form:form class="navbar-form pull-center" method="post" action="search" commandName="searchForm">
+		
 		<fieldset>
 			<ul class="nav nav-pills">
 				<li><input type="text" name="pricelow" class="span2"
@@ -72,6 +75,7 @@
 				</li>
 			</ul>
 		</fieldset>
+	<form:errors path="*"/>
 	</form:form>
 
 </div>
@@ -132,7 +136,7 @@
 							<c:out value=" ${prop.price}" />
 						<p>
 							<br /> <a class="btn btn-large"
-								href="${ basePath }/property/view?id=${prop.id}">Ver detalle</a>
+								href="${ basePath }/property/${prop.id}/view">Ver detalle</a>
 				</div>
 				</div>
 				<div class="clear"></div>

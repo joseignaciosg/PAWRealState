@@ -12,6 +12,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -35,22 +36,20 @@ import ar.edu.itba.it.paw.web.utils.HTMLUtils;
 @RequestMapping("/property")
 public class PropertyController {
 
-	@Autowired
+	private PropertyService propertyservice;
 	private SearchFormValidator searchFormValidator;
 
 	@Autowired
-	private final PropertyService propertyservice;
-
-	@Autowired
-	public PropertyController(final PropertyService propertyservice) {
+	public PropertyController(final PropertyService propertyservice,
+			final SearchFormValidator searchFormValidator) {
 		this.propertyservice = propertyservice;
+		this.searchFormValidator = searchFormValidator;
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/search")
 	protected ModelAndView searchGET(@Valid final SearchForm searchForm,
-			final BindingResult validateErrors) throws ServletException,
-			IOException {
-		return this.searchPOST(searchForm, validateErrors);
+			final Errors errors) throws ServletException, IOException {
+		return this.searchPOST(searchForm, errors);
 	}
 
 	/*
@@ -60,27 +59,11 @@ public class PropertyController {
 	 * @param searchform: object with all the parameters for the search
 	 */
 	@RequestMapping(method = RequestMethod.POST, value = "/search")
-	protected ModelAndView searchPOST(@Valid SearchForm searchForm,
-			final BindingResult validateErrors) throws ServletException,
-			IOException {
+	protected ModelAndView searchPOST(@Valid final SearchForm searchForm,
+			final Errors errors) throws ServletException, IOException {
 
 		final SearchForm sessionSearchForm = searchForm;
-		final List<String> errorStrings = new ArrayList<String>();
-		if (validateErrors.hasErrors()) {
-
-			final List<FieldError> errors = validateErrors.getFieldErrors();
-			for (final FieldError objectError : errors) {
-				// TODO: Resolver mensajes de error por acá con alguna clase
-				// auxiliar.
-				errorStrings.add(objectError.getObjectName() + ","
-						+ objectError.getField());
-			}
-		}
-		System.out.println(searchForm);
-
-		if (searchForm == null || validateErrors.hasErrors()) {
-			searchForm = new SearchForm();
-		}
+		this.searchFormValidator.validate(sessionSearchForm, errors);
 
 		final PropertyService serv = ServiceProvider.getPropertyService();
 		final List<Property> props = serv.advancedSearch(
@@ -90,9 +73,6 @@ public class PropertyController {
 
 		final ModelAndView mav = new ModelAndView("property/search");
 
-		if (errorStrings.size() > 0) {
-			mav.addObject("errors", errorStrings);
-		}
 		mav.addObject("props", props);
 		mav.addObject("propertyForm", sessionSearchForm);
 		return mav;
