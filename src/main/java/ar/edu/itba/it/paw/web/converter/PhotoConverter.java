@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
-import ar.edu.itba.it.paw.model.entities.Photo;
-import ar.edu.itba.it.paw.model.services.PhotoService;
+import ar.edu.itba.it.paw.domain.entities.Photo;
+import ar.edu.itba.it.paw.services.PhotoService;
 
 @Component
 public class PhotoConverter implements Converter<String, Photo> {

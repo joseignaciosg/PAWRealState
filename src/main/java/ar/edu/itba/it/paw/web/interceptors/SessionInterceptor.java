@@ -7,8 +7,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import ar.edu.itba.it.paw.model.services.ServiceProvider;
-import ar.edu.itba.it.paw.model.services.UserService;
 import ar.edu.itba.it.paw.web.cookies.CookiesManager;
 import ar.edu.itba.it.paw.web.session.SessionManager;
 import ar.edu.itba.it.paw.web.session.UserManager;

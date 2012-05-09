@@ -3,7 +3,7 @@ package ar.edu.itba.it.paw.web.converter;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
-import ar.edu.itba.it.paw.model.entities.Property.Type;
+import ar.edu.itba.it.paw.domain.entities.Property.Type;
 
 @Component
 public class TypeConverter implements Converter<String, Type> {

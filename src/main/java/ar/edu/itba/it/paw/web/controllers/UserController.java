@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import ar.edu.itba.it.paw.model.services.ServiceProvider;
-import ar.edu.itba.it.paw.model.services.UserService;
+import ar.edu.itba.it.paw.services.ServiceProvider;
+import ar.edu.itba.it.paw.services.UserService;
 import ar.edu.itba.it.paw.web.command.RegistrationForm;
 import ar.edu.itba.it.paw.web.cookies.CookiesManager;
 import ar.edu.itba.it.paw.web.session.UserManager;

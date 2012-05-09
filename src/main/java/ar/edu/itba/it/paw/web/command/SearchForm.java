@@ -1,8 +1,8 @@
 package ar.edu.itba.it.paw.web.command;
 
-import ar.edu.itba.it.paw.model.entities.Property.Operation;
-import ar.edu.itba.it.paw.model.entities.Property.Type;
-import ar.edu.itba.it.paw.model.services.PropertyService.Order;
+import ar.edu.itba.it.paw.domain.entities.Property.Operation;
+import ar.edu.itba.it.paw.domain.entities.Property.Type;
+import ar.edu.itba.it.paw.services.PropertyService.Order;
 
 public class SearchForm {
 

@@ -3,7 +3,7 @@ package ar.edu.itba.it.paw.web.converter;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
-import ar.edu.itba.it.paw.model.services.PropertyService.Order;
+import ar.edu.itba.it.paw.services.PropertyService.Order;
 
 @Component
 public class OrderConverter implements Converter<String, Order> {

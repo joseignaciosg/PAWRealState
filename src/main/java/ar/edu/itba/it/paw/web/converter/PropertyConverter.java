@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
-import ar.edu.itba.it.paw.model.entities.Property;
-import ar.edu.itba.it.paw.model.services.PropertyService;
+import ar.edu.itba.it.paw.domain.entities.Property;
+import ar.edu.itba.it.paw.services.PropertyService;
 
 @Component
 public class PropertyConverter implements Converter<String, Property> {

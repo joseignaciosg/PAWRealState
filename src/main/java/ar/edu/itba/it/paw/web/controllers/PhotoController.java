@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import ar.edu.itba.it.paw.model.entities.Photo;
-import ar.edu.itba.it.paw.model.entities.Property;
-import ar.edu.itba.it.paw.model.services.PhotoService;
+import ar.edu.itba.it.paw.domain.entities.Photo;
+import ar.edu.itba.it.paw.domain.entities.Property;
+import ar.edu.itba.it.paw.services.PhotoService;
 import ar.edu.itba.it.paw.web.session.UserManager;
 
 @Controller

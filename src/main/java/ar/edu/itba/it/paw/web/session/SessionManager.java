@@ -2,7 +2,7 @@ package ar.edu.itba.it.paw.web.session;
 
 import javax.servlet.http.HttpSession;
 
-import ar.edu.itba.it.paw.model.entities.User;
+import ar.edu.itba.it.paw.domain.entities.User;
 
 public class SessionManager implements UserManager {
 

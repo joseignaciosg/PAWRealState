@@ -4,11 +4,11 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import ar.edu.itba.it.paw.model.entities.Property;
-import ar.edu.itba.it.paw.model.entities.Property.Operation;
-import ar.edu.itba.it.paw.model.entities.Property.Type;
-import ar.edu.itba.it.paw.model.entities.Services;
-import ar.edu.itba.it.paw.model.entities.User;
+import ar.edu.itba.it.paw.domain.entities.Property;
+import ar.edu.itba.it.paw.domain.entities.Services;
+import ar.edu.itba.it.paw.domain.entities.User;
+import ar.edu.itba.it.paw.domain.entities.Property.Operation;
+import ar.edu.itba.it.paw.domain.entities.Property.Type;
 
 public class PropertyForm {
 

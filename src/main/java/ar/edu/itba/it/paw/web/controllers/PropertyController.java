@@ -19,13 +19,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import ar.edu.itba.it.paw.model.entities.Property;
-import ar.edu.itba.it.paw.model.entities.User;
-import ar.edu.itba.it.paw.model.services.ContactRequestService;
-import ar.edu.itba.it.paw.model.services.EmailService;
-import ar.edu.itba.it.paw.model.services.PropertyService;
-import ar.edu.itba.it.paw.model.services.ServiceProvider;
-import ar.edu.itba.it.paw.model.services.UserService;
+import ar.edu.itba.it.paw.domain.entities.Property;
+import ar.edu.itba.it.paw.domain.entities.User;
+import ar.edu.itba.it.paw.domain.repositories.api.PropertyRepository;
+import ar.edu.itba.it.paw.services.ContactRequestService;
+import ar.edu.itba.it.paw.services.EmailService;
+import ar.edu.itba.it.paw.services.PropertyService;
+import ar.edu.itba.it.paw.services.ServiceProvider;
+import ar.edu.itba.it.paw.services.UserService;
 import ar.edu.itba.it.paw.web.command.PropertyForm;
 import ar.edu.itba.it.paw.web.command.SearchForm;
 import ar.edu.itba.it.paw.web.command.validator.SearchFormValidator;
@@ -35,6 +36,9 @@ import ar.edu.itba.it.paw.web.utils.HTMLUtils;
 @Controller
 @RequestMapping("/property")
 public class PropertyController {
+
+	@Autowired
+	private PropertyRepository propertyRepository;
 
 	private PropertyService propertyservice;
 	private SearchFormValidator searchFormValidator;
@@ -66,10 +70,12 @@ public class PropertyController {
 		this.searchFormValidator.validate(sessionSearchForm, errors);
 
 		final PropertyService serv = ServiceProvider.getPropertyService();
-		final List<Property> props = serv.advancedSearch(
-				searchForm.getOperation(), searchForm.getType(),
-				searchForm.getPricelow(), searchForm.getPricehigh(),
-				searchForm.getPage(), 5, searchForm.getOrder());
+		List<Property> props = serv.advancedSearch(searchForm.getOperation(),
+				searchForm.getType(), searchForm.getPricelow(),
+				searchForm.getPricehigh(), searchForm.getPage(), 5,
+				searchForm.getOrder());
+
+		props = this.propertyRepository.getAll();
 
 		final ModelAndView mav = new ModelAndView("property/search");
 

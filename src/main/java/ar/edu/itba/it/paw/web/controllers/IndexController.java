@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import ar.edu.itba.it.paw.model.entities.Property;
-import ar.edu.itba.it.paw.model.entities.Property.Operation;
-import ar.edu.itba.it.paw.model.services.PropertyService;
-import ar.edu.itba.it.paw.model.services.PropertyService.Order;
-import ar.edu.itba.it.paw.model.services.ServiceProvider;
+import ar.edu.itba.it.paw.domain.entities.Property;
+import ar.edu.itba.it.paw.domain.entities.Property.Operation;
+import ar.edu.itba.it.paw.services.PropertyService;
+import ar.edu.itba.it.paw.services.ServiceProvider;
+import ar.edu.itba.it.paw.services.PropertyService.Order;
 import ar.edu.itba.it.paw.web.cookies.CookiesManager;
 
 @Controller
