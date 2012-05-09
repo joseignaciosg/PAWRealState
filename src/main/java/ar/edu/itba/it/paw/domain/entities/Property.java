@@ -3,10 +3,6 @@ package ar.edu.itba.it.paw.domain.entities;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.Entity;
-import javax.persistence.Enumerated;
-
-@Entity
 public class Property extends PersistentEntity {
 
 	public enum Type {
@@ -17,10 +13,10 @@ public class Property extends PersistentEntity {
 		SELL, RENT;
 	}
 
-	@Enumerated
+	// @Enumerated
 	private Type type;
 
-	@Enumerated
+	// @Enumerated
 	private Operation operation;
 
 	private String neighborhood;

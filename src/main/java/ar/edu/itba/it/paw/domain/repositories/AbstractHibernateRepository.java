@@ -25,9 +25,7 @@ public abstract class AbstractHibernateRepository {
 
 		final Query query = session.createQuery(hql);
 		for (int i = 0; i < params.length; i++) {
-			if (params[i] != null) {
-				query.setParameter(i, params[i]);
-			}
+			query.setParameter(i, params[i]);
 		}
 		final List<T> list = query.list();
 		return list;

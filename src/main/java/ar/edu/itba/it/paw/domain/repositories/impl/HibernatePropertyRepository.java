@@ -2,6 +2,8 @@ package ar.edu.itba.it.paw.domain.repositories.impl;
 
 import java.util.List;
 
+import javax.persistence.OrderBy;
+
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -12,7 +14,6 @@ import ar.edu.itba.it.paw.domain.entities.Property.Type;
 import ar.edu.itba.it.paw.domain.entities.User;
 import ar.edu.itba.it.paw.domain.repositories.AbstractHibernateRepository;
 import ar.edu.itba.it.paw.domain.repositories.api.PropertyRepository;
-import ar.edu.itba.it.paw.services.PropertyService.Order;
 
 @Repository
 public class HibernatePropertyRepository extends AbstractHibernateRepository
@@ -29,7 +30,7 @@ public class HibernatePropertyRepository extends AbstractHibernateRepository
 
 	public List<Property> getAll(final Operation op, final Type type,
 			final Integer pricelow, final Integer pricehigh,
-			final Integer page, final Integer quant, final Order order,
+			final Integer page, final Integer quant, final OrderBy order,
 			final Boolean visible) {
 		return this.find("from Property");
 	}

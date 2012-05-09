@@ -1,11 +1,9 @@
 package ar.edu.itba.it.paw.domain.entities;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import javax.persistence.Entity;
 
-import ar.edu.itba.it.paw.utils.collections.CollectionWithMemory;
-
-public class User extends BaseEntity {
+@Entity
+public class User extends PersistentEntity {
 
 	private String name;
 	private String surname;
@@ -13,26 +11,12 @@ public class User extends BaseEntity {
 	private String telephone;
 	private String username;
 	private String password;
-	private Collection<Property> properties;
-
-	public void setProperties(final Collection<Property> properties) {
-		this.properties = properties;
-	}
 
 	protected User() {
 	}
 
 	public User(final String name, final String surname, final String mail,
 			final String telephone, final String username, final String password) {
-		this(null, name, surname, mail, telephone, username, password);
-	}
-
-	public User(final Integer userId, final String name, final String surname,
-			final String mail, final String telephone, final String username,
-			final String password) {
-		super(userId);
-		this.properties = new CollectionWithMemory<Property>(
-				new ArrayList<Property>());
 		this.name = name;
 		this.surname = surname;
 		this.mail = mail;
@@ -41,52 +25,24 @@ public class User extends BaseEntity {
 		this.password = password;
 	}
 
-	public Collection<Property> getProperties() {
-		return this.properties;
-	}
-
 	public String getPassword() {
 		return this.password;
-	}
-
-	public void setPassword(final String password) {
-		this.password = password;
 	}
 
 	public String getTelephone() {
 		return this.telephone;
 	}
 
-	public void setTelephone(final String telephone) {
-		this.telephone = telephone;
-		this.setDirty();
-	}
-
 	public String getName() {
 		return this.name;
-	}
-
-	public void setName(final String name) {
-		this.name = name;
-		this.setDirty();
 	}
 
 	public String getSurname() {
 		return this.surname;
 	}
 
-	public void setSurname(final String surname) {
-		this.surname = surname;
-		this.setDirty();
-	}
-
 	public String getMail() {
 		return this.mail;
-	}
-
-	public void setMail(final String mail) {
-		this.mail = mail;
-		this.setDirty();
 	}
 
 	@Override
@@ -99,8 +55,6 @@ public class User extends BaseEntity {
 				+ ((this.name == null) ? 0 : this.name.hashCode());
 		result = prime * result
 				+ ((this.password == null) ? 0 : this.password.hashCode());
-		result = prime * result
-				+ ((this.properties == null) ? 0 : this.properties.hashCode());
 		result = prime * result
 				+ ((this.surname == null) ? 0 : this.surname.hashCode());
 		result = prime * result
@@ -143,13 +97,6 @@ public class User extends BaseEntity {
 		} else if (!this.password.equals(other.password)) {
 			return false;
 		}
-		if (this.properties == null) {
-			if (other.properties != null) {
-				return false;
-			}
-		} else if (!this.properties.equals(other.properties)) {
-			return false;
-		}
 		if (this.surname == null) {
 			if (other.surname != null) {
 				return false;
@@ -184,10 +131,6 @@ public class User extends BaseEntity {
 
 	public String getUsername() {
 		return this.username;
-	}
-
-	public void setUsername(final String username) {
-		this.username = username;
 	}
 
 }
