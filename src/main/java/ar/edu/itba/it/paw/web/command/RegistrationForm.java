@@ -1,7 +1,7 @@
 package ar.edu.itba.it.paw.web.command;
 
-
 public class RegistrationForm {
+
 	@Override
 	public String toString() {
 		return "RegistrationForm [username=" + this.userName + ", password="

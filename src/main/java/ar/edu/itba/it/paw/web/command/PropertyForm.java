@@ -9,29 +9,17 @@ import ar.edu.itba.it.paw.model.entities.User;
 public class PropertyForm {
 
 	private Operation operation;
-
 	private Type type;
-
 	private String neighborhood;
-
 	private String address;
-
 	private Integer price;
-
 	private Integer spaces;
-
 	private Integer coveredArea;
-
 	private Integer freeArea;
-
 	private Integer age;
-
 	private Services service;
-
 	private String description;
-
 	private Property property;
-
 	// TODO: Rename a owner, current user no necesariamente lo es
 	private User currentUser;
 
