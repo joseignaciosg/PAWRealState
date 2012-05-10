@@ -38,6 +38,11 @@ public class LayoutInterceptor extends HandlerInterceptorAdapter {
 				modelAndView.setViewName("forward:" + realViewName);
 			}
 		}
+
+		if (!modelAndView.getModel().containsKey("loginForm")) {
+			// TODO: Kill fefo
+			// modelAndView.getModel().put("loginForm", new LoginForm());
+		}
 	}
 
 	private void includeLayout(final ModelAndView modelAndView,

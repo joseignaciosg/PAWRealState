@@ -5,13 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,6 +19,7 @@ import ar.edu.itba.it.paw.domain.entities.Property;
 import ar.edu.itba.it.paw.domain.repositories.impl.HibernatePropertyRepository;
 import ar.edu.itba.it.paw.web.command.PropertyForm;
 import ar.edu.itba.it.paw.web.command.SearchForm;
+import ar.edu.itba.it.paw.web.command.validator.PropertyFormValidator;
 import ar.edu.itba.it.paw.web.command.validator.SearchFormValidator;
 
 @Controller
@@ -31,13 +29,16 @@ public class PropertyController {
 	private HibernatePropertyRepository propertyRepository;
 
 	private SearchFormValidator searchFormValidator;
+	private PropertyFormValidator propertyFormValidator;
 
 	@Autowired
 	public PropertyController(
 			final HibernatePropertyRepository propertyRepository,
-			final SearchFormValidator searchFormValidator) {
+			final SearchFormValidator searchFormValidator,
+			final PropertyFormValidator propertyFormValidator) {
 		this.propertyRepository = propertyRepository;
 		this.searchFormValidator = searchFormValidator;
+		this.propertyFormValidator = propertyFormValidator;
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/search")
@@ -53,7 +54,7 @@ public class PropertyController {
 	 * @param searchform: object with all the parameters for the search
 	 */
 	@RequestMapping(method = RequestMethod.POST, value = "/search")
-	protected ModelAndView searchPOST(@Valid final SearchForm searchForm,
+	protected ModelAndView searchPOST(final SearchForm searchForm,
 			final Errors errors) throws ServletException, IOException {
 
 		this.searchFormValidator.validate(searchForm, errors);
@@ -87,9 +88,11 @@ public class PropertyController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST, value = "/new")
-	protected ModelAndView newPOST(@Valid final PropertyForm propertyForm,
-			final BindingResult validateErrors) throws IOException,
-			ServletException {
+	protected ModelAndView newPOST(final PropertyForm propertyForm,
+			final Errors validateErrors) throws ServletException, IOException {
+
+		this.propertyFormValidator.validate(propertyForm, validateErrors);
+
 		boolean saved = false;
 		if (!validateErrors.hasErrors()) {
 			// TODO: Security check
@@ -108,21 +111,15 @@ public class PropertyController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	protected String delete(final HttpServletRequest req,
-			final HttpServletResponse resp,
-			@RequestParam("ID") final Property property)
-			throws ServletException, IOException {
+	protected String delete(@RequestParam("ID") final Property property) {
 		// TODO: Security check
 		this.propertyRepository.delete(property);
-
 		return "redirect:/property/list";
 	}
 
-	@RequestMapping(method = RequestMethod.POST)
-	protected String changeVisibility(final HttpServletRequest req,
-			final HttpServletResponse resp,
-			@RequestParam("id") final Property property) throws IOException {
-
+	@RequestMapping(method = RequestMethod.POST, value = "/changevisibility")
+	protected String changeVisibility(
+			@RequestParam("id") final Property property) {
 		property.toggleVisibility();
 
 		this.propertyRepository.save(property);
@@ -145,6 +142,7 @@ public class PropertyController {
 	protected ModelAndView editPOST(final PropertyForm propertyForm,
 			final Errors errors) throws IOException, ServletException {
 		boolean saved = false;
+		this.propertyFormValidator.validate(propertyForm, errors);
 		if (!errors.hasErrors()) {
 			// TODO: Security check
 			final Property built = propertyForm.build();
@@ -183,7 +181,8 @@ public class PropertyController {
 
 	// TODO: Broken, remake.
 	@RequestMapping(method = RequestMethod.POST)
-	protected String contactRequest() throws ServletException, IOException {
+	protected String contactRequest() {
+		// TODO: Hacer contactRequestForm
 		return "/index";
 	}
 

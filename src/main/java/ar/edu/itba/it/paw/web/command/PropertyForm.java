@@ -1,9 +1,5 @@
 package ar.edu.itba.it.paw.web.command;
 
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-
 import ar.edu.itba.it.paw.domain.entities.Property;
 import ar.edu.itba.it.paw.domain.entities.Property.Operation;
 import ar.edu.itba.it.paw.domain.entities.Property.Type;
@@ -12,43 +8,16 @@ import ar.edu.itba.it.paw.domain.entities.User;
 
 public class PropertyForm implements BuilderForm<Property> {
 
-	@NotNull
 	private Operation operation;
-
-	@NotNull
 	private Type type;
-
-	@NotNull
-	@Size(min = 1, max = 150)
 	private String neighborhood;
-
-	@NotNull
-	@Size(min = 1, max = 150)
 	private String address;
-
-	@NotNull
-	@Min(0)
 	private Integer price;
-
-	@NotNull
-	@Min(0)
 	private Integer spaces;
-
-	@NotNull
-	@Min(0)
 	private Integer coveredArea;
-
-	@NotNull
-	@Min(0)
 	private Integer freeArea;
-
-	@NotNull
-	@Min(0)
 	private Integer age;
-
 	private Services service;
-
-	@Size(min = 1, max = 150)
 	private String description;
 
 	private Property property = new Property();
