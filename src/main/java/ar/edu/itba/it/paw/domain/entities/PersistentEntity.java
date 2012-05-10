@@ -19,4 +19,10 @@ public class PersistentEntity {
 	public boolean isNew() {
 		return this.id == 0;
 	}
+
+	public <T extends PersistentEntity> void copy(final T entity) {
+		if (entity.isNew()) {
+			entity.id = this.id;
+		}
+	}
 }

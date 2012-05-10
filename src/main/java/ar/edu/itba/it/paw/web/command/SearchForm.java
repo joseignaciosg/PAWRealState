@@ -1,8 +1,9 @@
 package ar.edu.itba.it.paw.web.command;
 
+import org.hibernate.criterion.Order;
+
 import ar.edu.itba.it.paw.domain.entities.Property.Operation;
 import ar.edu.itba.it.paw.domain.entities.Property.Type;
-import ar.edu.itba.it.paw.services.PropertyService.Order;
 
 public class SearchForm {
 

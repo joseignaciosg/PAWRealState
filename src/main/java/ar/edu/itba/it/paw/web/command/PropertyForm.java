@@ -5,12 +5,12 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import ar.edu.itba.it.paw.domain.entities.Property;
-import ar.edu.itba.it.paw.domain.entities.Services;
-import ar.edu.itba.it.paw.domain.entities.User;
 import ar.edu.itba.it.paw.domain.entities.Property.Operation;
 import ar.edu.itba.it.paw.domain.entities.Property.Type;
+import ar.edu.itba.it.paw.domain.entities.Services;
+import ar.edu.itba.it.paw.domain.entities.User;
 
-public class PropertyForm {
+public class PropertyForm implements EntityForm<Property> {
 
 	@NotNull
 	private Operation operation;
@@ -51,7 +51,7 @@ public class PropertyForm {
 	@Size(min = 1, max = 150)
 	private String description;
 
-	private Property property;
+	private Property property = new Property();
 
 	// TODO: Rename a owner, current user no necesariamente lo es
 	private User currentUser;
@@ -198,4 +198,19 @@ public class PropertyForm {
 		this.property = property;
 	}
 
+	public Property build() {
+		final Property answer = this.property;
+		answer.setAddress(this.address);
+		answer.setDescription(this.description);
+		answer.setAge(this.age);
+		answer.setCoveredArea(this.coveredArea);
+		answer.setFreeArea(this.freeArea);
+		answer.setNeighborhood(this.neighborhood);
+		answer.setOperation(this.operation);
+		answer.setOwner(this.currentUser);
+		answer.setPrice(this.price);
+		answer.setSpaces(this.spaces);
+		answer.setType(this.type);
+		return answer;
+	}
 }

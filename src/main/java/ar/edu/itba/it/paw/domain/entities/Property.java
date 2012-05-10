@@ -3,6 +3,12 @@ package ar.edu.itba.it.paw.domain.entities;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.Enumerated;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
+@Entity
 public class Property extends PersistentEntity {
 
 	public enum Type {
@@ -13,10 +19,10 @@ public class Property extends PersistentEntity {
 		SELL, RENT;
 	}
 
-	// @Enumerated
+	@Enumerated
 	private Type type;
 
-	// @Enumerated
+	@Enumerated
 	private Operation operation;
 
 	private String neighborhood;
@@ -26,12 +32,15 @@ public class Property extends PersistentEntity {
 	private Integer coveredArea;
 	private Integer freeArea;
 	private Integer age;
+
 	// private List<String> services;
 	private String description;
 
+	@OneToMany(mappedBy = "property")
 	private List<Photo> photos = new ArrayList<Photo>();
 	private Boolean visible;
 
+	@ManyToOne
 	private User owner;
 
 	public Property() {
@@ -68,118 +77,6 @@ public class Property extends PersistentEntity {
 
 	public User getOwner() {
 		return this.owner;
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result
-				+ ((this.address == null) ? 0 : this.address.hashCode());
-		result = prime * result
-				+ ((this.age == null) ? 0 : this.age.hashCode());
-		result = prime
-				* result
-				+ ((this.coveredArea == null) ? 0 : this.coveredArea.hashCode());
-		result = prime
-				* result
-				+ ((this.description == null) ? 0 : this.description.hashCode());
-		result = prime * result
-				+ ((this.freeArea == null) ? 0 : this.freeArea.hashCode());
-		result = prime
-				* result
-				+ ((this.neighborhood == null) ? 0 : this.neighborhood
-						.hashCode());
-		result = prime * result
-				+ ((this.operation == null) ? 0 : this.operation.hashCode());
-		result = prime * result
-				+ ((this.price == null) ? 0 : this.price.hashCode());
-		result = prime * result
-				+ ((this.spaces == null) ? 0 : this.spaces.hashCode());
-		result = prime * result
-				+ ((this.type == null) ? 0 : this.type.hashCode());
-		result = prime * result + (this.visible ? 1231 : 1237);
-		return result;
-	}
-
-	@Override
-	public boolean equals(final Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (this.getClass() != obj.getClass()) {
-			return false;
-		}
-		final Property other = (Property) obj;
-		if (this.address == null) {
-			if (other.address != null) {
-				return false;
-			}
-		} else if (!this.address.equals(other.address)) {
-			return false;
-		}
-		if (this.age == null) {
-			if (other.age != null) {
-				return false;
-			}
-		} else if (!this.age.equals(other.age)) {
-			return false;
-		}
-		if (this.coveredArea == null) {
-			if (other.coveredArea != null) {
-				return false;
-			}
-		} else if (!this.coveredArea.equals(other.coveredArea)) {
-			return false;
-		}
-		if (this.description == null) {
-			if (other.description != null) {
-				return false;
-			}
-		} else if (!this.description.equals(other.description)) {
-			return false;
-		}
-		if (this.freeArea == null) {
-			if (other.freeArea != null) {
-				return false;
-			}
-		} else if (!this.freeArea.equals(other.freeArea)) {
-			return false;
-		}
-		if (this.neighborhood == null) {
-			if (other.neighborhood != null) {
-				return false;
-			}
-		} else if (!this.neighborhood.equals(other.neighborhood)) {
-			return false;
-		}
-		if (this.operation != other.operation) {
-			return false;
-		}
-		if (this.price == null) {
-			if (other.price != null) {
-				return false;
-			}
-		} else if (!this.price.equals(other.price)) {
-			return false;
-		}
-		if (this.spaces == null) {
-			if (other.spaces != null) {
-				return false;
-			}
-		} else if (!this.spaces.equals(other.spaces)) {
-			return false;
-		}
-		if (this.type != other.type) {
-			return false;
-		}
-		if (this.visible != other.visible) {
-			return false;
-		}
-		return true;
 	}
 
 	public Type getType() {
@@ -227,11 +124,60 @@ public class Property extends PersistentEntity {
 		return this.visible;
 	}
 
-	@Override
-	public String toString() {
-		return "Property [ID=" + this.getId() + ", type=" + this.type
-				+ ", operation=" + this.operation + ", price=" + this.price
-				+ "]";
+	public List<Photo> getPhotos() {
+		return this.photos;
+	}
+
+	public void setType(final Type type) {
+		this.type = type;
+	}
+
+	public void setOperation(final Operation operation) {
+		this.operation = operation;
+	}
+
+	public void setNeighborhood(final String neighborhood) {
+		this.neighborhood = neighborhood;
+	}
+
+	public void setAddress(final String address) {
+		this.address = address;
+	}
+
+	public void setPrice(final Integer price) {
+		this.price = price;
+	}
+
+	public void setSpaces(final Integer spaces) {
+		this.spaces = spaces;
+	}
+
+	public void setCoveredArea(final Integer coveredArea) {
+		this.coveredArea = coveredArea;
+	}
+
+	public void setFreeArea(final Integer freeArea) {
+		this.freeArea = freeArea;
+	}
+
+	public void setAge(final Integer age) {
+		this.age = age;
+	}
+
+	public void setDescription(final String description) {
+		this.description = description;
+	}
+
+	public void setPhotos(final List<Photo> photos) {
+		this.photos = photos;
+	}
+
+	public void setVisible(final Boolean visible) {
+		this.visible = visible;
+	}
+
+	public void setOwner(final User owner) {
+		this.owner = owner;
 	}
 
 }

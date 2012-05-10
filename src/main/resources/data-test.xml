@@ -14,16 +14,11 @@
 	<context:component-scan base-package="ar.edu.itba.it.paw.domain" />
 
 	<context:annotation-config />
-
-
-	<!-- a PlatformTransactionManager is still required -->
+	
 	<bean id="transactionManager"
-		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-		<!-- (this dependency is defined somewhere else) -->
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">		
 		<property name="dataSource" ref="dataSource" />
 	</bean>
-
-
 
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close">
