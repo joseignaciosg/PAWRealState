@@ -6,6 +6,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+import ar.edu.itba.it.paw.web.command.ContactRequestForm;
+
 public class LayoutInterceptor extends HandlerInterceptorAdapter {
 	private static final String NO_LAYOUT = "noLayout:";
 
@@ -38,6 +40,11 @@ public class LayoutInterceptor extends HandlerInterceptorAdapter {
 				modelAndView.setViewName("forward:" + realViewName);
 			}
 		}
+
+		if (!modelAndView.getModel().containsKey("contactRequestForm")) {
+			modelAndView.getModel().put("contactRequestForm",
+					new ContactRequestForm());
+		}
 	}
 
 	private void includeLayout(final ModelAndView modelAndView,
@@ -58,6 +65,7 @@ public class LayoutInterceptor extends HandlerInterceptorAdapter {
 					+ this.basePath);
 			modelAndView.setViewName(this.layoutView);
 		}
+
 	}
 
 	public void setPrefix(final String prefix) {

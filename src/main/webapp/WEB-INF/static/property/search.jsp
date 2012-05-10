@@ -136,7 +136,7 @@
 							<c:out value=" ${prop.price}" />
 						<p>
 							<br /> <a class="btn btn-large"
-								href="${ basePath }/property/${prop.id}/view">Ver detalle</a>
+								href="${ basePath }/property/view?id=${prop.id}">Ver detalle</a>
 				</div>
 				</div>
 				<div class="clear"></div>

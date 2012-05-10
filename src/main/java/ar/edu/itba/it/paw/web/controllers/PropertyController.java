@@ -26,6 +26,7 @@ import ar.edu.itba.it.paw.model.services.EmailService;
 import ar.edu.itba.it.paw.model.services.PropertyService;
 import ar.edu.itba.it.paw.model.services.ServiceProvider;
 import ar.edu.itba.it.paw.model.services.UserService;
+import ar.edu.itba.it.paw.web.command.ContactRequestForm;
 import ar.edu.itba.it.paw.web.command.PropertyForm;
 import ar.edu.itba.it.paw.web.command.SearchForm;
 import ar.edu.itba.it.paw.web.command.validator.SearchFormValidator;
@@ -75,6 +76,54 @@ public class PropertyController {
 
 		mav.addObject("props", props);
 		mav.addObject("propertyForm", sessionSearchForm);
+		return mav;
+	}
+
+	@RequestMapping(method = RequestMethod.GET, value = "/contactrequest")
+	// @ModelAttribute("contactRequestForm")
+	protected ModelAndView contactRequestGET(
+			@Valid final ContactRequestForm contactRequestForm,
+			final Errors errors) throws ServletException, IOException {
+		return this.contactRequestPOST(contactRequestForm, errors);
+	}
+
+	/*
+	 * Searches and displays all the properties according to the request
+	 * parameters
+	 * 
+	 * @param searchform: object with all the parameters for the search
+	 */
+	@RequestMapping(method = RequestMethod.POST, value = "/contactrequest")
+	// @ModelAttribute("contactRequestForm")
+	protected ModelAndView contactRequestPOST(
+			@Valid final ContactRequestForm contactRequestForm,
+			final Errors errors) throws ServletException, IOException {
+
+		final ContactRequestForm sessionSearchForm = contactRequestForm;
+		// this.searchFormValidator.validate(sessionSearchForm, errors);
+		final List<String> errorsList = new ArrayList<String>();
+		System.out.println(contactRequestForm);
+		final ContactRequestService contactService = ServiceProvider
+				.getContactRequestService();
+		final PropertyService propService = ServiceProvider
+				.getPropertyService();
+
+		final Property prop = propService.getPropertyByID(
+				contactRequestForm.getPropertyId(), errorsList);
+
+		final User user = prop.getOwner();
+
+		contactService.saveContactRequest(contactRequestForm.getFirstName(),
+				contactRequestForm.getLastName(),
+				contactRequestForm.getEmail(), contactRequestForm.getPhone(),
+				contactRequestForm.getDescription(), prop, errorsList);
+
+		final ModelAndView mav = new ModelAndView("property/contactrequest");
+
+		mav.addObject("user", user);
+		mav.addObject("property", prop);
+		mav.addObject("contactForm", sessionSearchForm);
+
 		return mav;
 	}
 
