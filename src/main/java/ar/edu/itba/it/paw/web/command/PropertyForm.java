@@ -1,15 +1,15 @@
 package ar.edu.itba.it.paw.web.command;
 
-import org.springframework.stereotype.Component;
+import ar.edu.itba.it.paw.domain.entities.Property;
+import ar.edu.itba.it.paw.domain.entities.Property.Operation;
+import ar.edu.itba.it.paw.domain.entities.Property.Type;
+import ar.edu.itba.it.paw.domain.entities.Services;
+import ar.edu.itba.it.paw.domain.entities.User;
 
-import ar.edu.itba.it.paw.model.entities.Services;
-import ar.edu.itba.it.paw.model.entities.User;
+public class PropertyForm implements BuilderForm<Property> {
 
-@Component
-public class PropertyForm {
-
-	private String operation;
-	private String type;
+	private Operation operation;
+	private Type type;
 	private String neighborhood;
 	private String address;
 	private Integer price;
@@ -17,21 +17,24 @@ public class PropertyForm {
 	private Integer coveredArea;
 	private Integer freeArea;
 	private Integer age;
-	// List<String> services;
 	private Services service;
-	private String Description;
-	private Integer id;
+	private String description;
+
+	private Property property = new Property();
+
+	// TODO: Rename a owner, current user no necesariamente lo es
 	private User currentUser;
 
 	public PropertyForm() {
 	}
 
-	public PropertyForm(final String operation, final String type,
+	public PropertyForm(final Operation operation, final Type type,
 			final String neighborhood, final String address,
 			final Integer price, final Integer spaces,
 			final Integer coveredArea, final Integer freeArea,
 			final Integer age, final Services service,
-			final String description, final Integer id, final User currentUser) {
+			final String description, final Property property,
+			final User currentUser) {
 		this.operation = operation;
 		this.type = type;
 		this.neighborhood = neighborhood;
@@ -42,24 +45,37 @@ public class PropertyForm {
 		this.freeArea = freeArea;
 		this.age = age;
 		this.service = service;
-		this.Description = description;
-		this.id = id;
+		this.description = description;
+		this.property = property;
 		this.currentUser = currentUser;
+
+		if (currentUser == null && this.property != null
+				&& this.property.getOwner() != null) {
+			this.currentUser = this.property.getOwner();
+		}
 	}
 
-	public String getOperation() {
+	public PropertyForm(final Property property) {
+		this(property.getOperation(), property.getType(), property
+				.getNeighborhood(), property.getAddress(), property.getPrice(),
+				property.getSpaces(), property.getCoveredArea(), property
+						.getFreeArea(), property.getAge(), null, property
+						.getDescription(), property, property.getOwner());
+	}
+
+	public Operation getOperation() {
 		return this.operation;
 	}
 
-	public void setOperation(final String operation) {
+	public void setOperation(final Operation operation) {
 		this.operation = operation;
 	}
 
-	public String getType() {
+	public Type getType() {
 		return this.type;
 	}
 
-	public void setType(final String type) {
+	public void setType(final Type type) {
 		this.type = type;
 	}
 
@@ -128,19 +144,11 @@ public class PropertyForm {
 	}
 
 	public String getDescription() {
-		return this.Description;
+		return this.description;
 	}
 
 	public void setDescription(final String description) {
-		this.Description = description;
-	}
-
-	public Integer getId() {
-		return this.id;
-	}
-
-	public void setId(final Integer id) {
-		this.id = id;
+		this.description = description;
 	}
 
 	public User getCurrentUser() {
@@ -151,4 +159,27 @@ public class PropertyForm {
 		this.currentUser = currentUser;
 	}
 
+	public Property getProperty() {
+		return this.property;
+	}
+
+	public void setProperty(final Property property) {
+		this.property = property;
+	}
+
+	public Property build() {
+		final Property answer = this.property;
+		answer.setAddress(this.address);
+		answer.setDescription(this.description);
+		answer.setAge(this.age);
+		answer.setCoveredArea(this.coveredArea);
+		answer.setFreeArea(this.freeArea);
+		answer.setNeighborhood(this.neighborhood);
+		answer.setOperation(this.operation);
+		answer.setOwner(this.currentUser);
+		answer.setPrice(this.price);
+		answer.setSpaces(this.spaces);
+		answer.setType(this.type);
+		return answer;
+	}
 }

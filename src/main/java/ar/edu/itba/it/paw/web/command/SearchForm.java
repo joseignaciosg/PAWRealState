@@ -1,13 +1,19 @@
 package ar.edu.itba.it.paw.web.command;
 
-import org.springframework.stereotype.Component;
+import ar.edu.itba.it.paw.domain.entities.Property.Operation;
+import ar.edu.itba.it.paw.domain.entities.Property.Type;
+import ar.edu.itba.it.paw.domain.repositories.api.PropertySearch;
+import ar.edu.itba.it.paw.domain.repositories.api.PropertySearch.Order;
 
-import ar.edu.itba.it.paw.model.entities.Property.Operation;
-import ar.edu.itba.it.paw.model.entities.Property.Type;
-import ar.edu.itba.it.paw.model.services.PropertyService.Order;
+public class SearchForm implements BuilderForm<PropertySearch> {
 
-@Component
-public class SearchForm {
+	@Override
+	public String toString() {
+		return "SearchForm [operation=" + this.operation + ", type="
+				+ this.type + ", order=" + this.order + ", pricelow="
+				+ this.pricelow + ", pricehigh=" + this.pricehigh + ", quant="
+				+ this.quant + ", page=" + this.page + "]";
+	}
 
 	private Operation operation;
 	private Type type;
@@ -36,7 +42,7 @@ public class SearchForm {
 		return this.operation;
 	}
 
-	public void setOp(final Operation op) {
+	public void setOperation(final Operation op) {
 		this.operation = op;
 	}
 
@@ -52,7 +58,7 @@ public class SearchForm {
 		return this.order;
 	}
 
-	public void serOrder(final Order order) {
+	public void setOrder(final Order order) {
 		this.order = order;
 	}
 
@@ -86,6 +92,11 @@ public class SearchForm {
 
 	public void setPage(final Integer page) {
 		this.page = page;
+	}
+
+	public PropertySearch build() {
+		return new PropertySearch(this.operation, this.type, this.pricelow,
+				this.pricehigh, this.page, this.quant, this.order);
 	}
 
 }

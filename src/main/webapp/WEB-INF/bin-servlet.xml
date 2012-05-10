@@ -10,13 +10,10 @@
          http://www.springframework.org/schema/context/spring-context-3.0.xsd
          http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
 
-	<!-- Beans relacionados con Spring MVC -->
+	<!-- Beans relacionados con Spring-MVC -->
 	<import resource="classpath:mvc.xml" />
 
-	<!-- Servicios - ya no hace falta declararlos - Spring scanea @Service en Clases -->
-	<!--<import resource="classpath:service.xml" />-->
-	
-	<!-- DAOs - Ya no hace falta declararlo - Spring scanea @Repository en clases -->
-	<!--<import resource="classpath:dao.xml" />-->
-	
+	<!-- Beans relacionados con Spring-Hibernate -->
+	<import resource="classpath:data.xml" />
+
 </beans>

@@ -7,41 +7,51 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
-import ar.edu.itba.it.paw.model.entities.Property;
-import ar.edu.itba.it.paw.model.entities.Property.Operation;
-import ar.edu.itba.it.paw.model.services.PropertyService;
-import ar.edu.itba.it.paw.model.services.PropertyService.Order;
-import ar.edu.itba.it.paw.model.services.ServiceProvider;
+import ar.edu.itba.it.paw.domain.entities.Property;
+import ar.edu.itba.it.paw.domain.entities.Property.Operation;
+import ar.edu.itba.it.paw.domain.repositories.api.PropertySearch;
+import ar.edu.itba.it.paw.domain.repositories.impl.HibernatePropertyRepository;
 import ar.edu.itba.it.paw.web.cookies.CookiesManager;
-import ar.edu.itba.it.paw.web.utils.HTMLUtils;
 
 @Controller
 @RequestMapping("/")
 public class IndexController {
 
+	@Autowired
+	private HibernatePropertyRepository repository;
+
+	@RequestMapping(method = RequestMethod.POST, value = "/index")
+	public ModelAndView indexPOST(final HttpServletRequest req,
+			final HttpServletResponse resp) throws ServletException,
+			IOException {
+		return this.index(req, resp);
+	}
+
 	@RequestMapping(method = RequestMethod.GET)
-	public void index(final HttpServletRequest req,
+	public ModelAndView index(final HttpServletRequest req,
 			final HttpServletResponse resp) throws ServletException,
 			IOException {
 		final CookiesManager manager = new CookiesManager(req, resp);
-		final PropertyService service = ServiceProvider.getPropertyService();
 
-		final List<Property> rentProperties = service.advancedSearch(
-				Operation.RENT, null, -1, -1, 0, 2, Order.DESC);
-		final List<Property> sellProperties = service.advancedSearch(
-				Operation.SELL, null, -1, -1, 0, 2, Order.DESC);
+		final List<Property> rentProperties = this.repository
+				.getAll(new PropertySearch(Operation.RENT));
+		final List<Property> sellProperties = this.repository
+				.getAll(new PropertySearch(Operation.SELL));
 
-		req.setAttribute("rentProperties", rentProperties);
-		req.setAttribute("sellProperties", sellProperties);
+		final ModelAndView mav = new ModelAndView("index/index");
 
-		req.setAttribute("user_cookie_username", manager.getName());
-		req.setAttribute("user_remember", manager.getRemember());
+		mav.getModelMap().put("rentProperties", rentProperties);
+		mav.getModelMap().put("sellProperties", sellProperties);
 
-		HTMLUtils.render("index/index.jsp", req, resp);
+		mav.getModelMap().put("user_cookie_username", manager.getName());
+		mav.getModelMap().put("user_remember", manager.getRemember());
+
+		return mav;
 	}
-
 }
