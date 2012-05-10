@@ -255,6 +255,9 @@ public class PropertyController {
 			throws ServletException, IOException {
 		final ModelAndView mav = new ModelAndView("property/view");
 		mav.addObject("property", property);
+		if (!mav.getModel().containsKey("contactRequestForm")) {
+			mav.getModel().put("contactRequestForm", new ContactRequestForm());
+		}
 		return mav;
 	}
 

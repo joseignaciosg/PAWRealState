@@ -41,10 +41,6 @@ public class LayoutInterceptor extends HandlerInterceptorAdapter {
 			}
 		}
 
-		if (!modelAndView.getModel().containsKey("contactRequestForm")) {
-			modelAndView.getModel().put("contactRequestForm",
-					new ContactRequestForm());
-
 			if (!modelAndView.getModel().containsKey("loginForm")) {
 				// modelAndView.getModel().put("loginForm", new LoginForm());
 			}
