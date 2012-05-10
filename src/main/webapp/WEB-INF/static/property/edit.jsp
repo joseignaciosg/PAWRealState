@@ -8,6 +8,8 @@
 <div class="row">
 	<form:form name="property_editproperty" class="form-horizontal span8 offset2"
 		action="edit" method="POST" commandName="propertyForm">
+		<form:errors path="*"/>
+		
 		<fieldset>
 			<legend>Editar Propiedad</legend>
 			<spring:bind path="propertyForm.property">

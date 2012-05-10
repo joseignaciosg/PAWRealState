@@ -8,6 +8,8 @@
 <div class="row">
 	<form:form name="property_newproperty" class="form-horizontal span8 offset2"
 		action="new" method="POST" commandName="propertyForm">
+		<form:errors path="*"/>
+		
 		<fieldset>
 			<legend>Agregar Nueva Propiedad</legend>
 			<jsp:include page="form.jsp"></jsp:include>
