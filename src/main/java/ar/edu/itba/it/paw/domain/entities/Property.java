@@ -172,8 +172,8 @@ public class Property extends PersistentEntity {
 		this.photos = photos;
 	}
 
-	public void setVisible(final Boolean visible) {
-		this.visible = visible;
+	public void toggleVisibility() {
+		this.visible = !this.visible;
 	}
 
 	public void setOwner(final User owner) {

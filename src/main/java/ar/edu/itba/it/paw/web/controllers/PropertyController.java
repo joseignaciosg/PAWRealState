@@ -13,20 +13,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.itba.it.paw.domain.entities.Property;
-import ar.edu.itba.it.paw.domain.entities.User;
-import ar.edu.itba.it.paw.domain.repositories.api.PropertyRepository;
-import ar.edu.itba.it.paw.services.ContactRequestService;
-import ar.edu.itba.it.paw.services.EmailService;
-import ar.edu.itba.it.paw.services.PropertyService;
-import ar.edu.itba.it.paw.services.ServiceProvider;
-import ar.edu.itba.it.paw.services.UserService;
+import ar.edu.itba.it.paw.domain.repositories.impl.HibernatePropertyRepository;
 import ar.edu.itba.it.paw.web.command.PropertyForm;
 import ar.edu.itba.it.paw.web.command.SearchForm;
 import ar.edu.itba.it.paw.web.command.validator.SearchFormValidator;
@@ -37,16 +30,15 @@ import ar.edu.itba.it.paw.web.utils.HTMLUtils;
 @RequestMapping("/property")
 public class PropertyController {
 
-	@Autowired
-	private PropertyRepository propertyRepository;
+	private HibernatePropertyRepository propertyRepository;
 
-	private PropertyService propertyservice;
 	private SearchFormValidator searchFormValidator;
 
 	@Autowired
-	public PropertyController(final PropertyService propertyservice,
+	public PropertyController(
+			final HibernatePropertyRepository propertyRepository,
 			final SearchFormValidator searchFormValidator) {
-		this.propertyservice = propertyservice;
+		this.propertyRepository = propertyRepository;
 		this.searchFormValidator = searchFormValidator;
 	}
 
@@ -69,13 +61,10 @@ public class PropertyController {
 		final SearchForm sessionSearchForm = searchForm;
 		this.searchFormValidator.validate(sessionSearchForm, errors);
 
-		final PropertyService serv = ServiceProvider.getPropertyService();
-		List<Property> props = serv.advancedSearch(searchForm.getOperation(),
-				searchForm.getType(), searchForm.getPricelow(),
-				searchForm.getPricehigh(), searchForm.getPage(), 5,
-				searchForm.getOrder());
-
-		props = this.propertyRepository.getAll();
+		final List<Property> props = serv.advancedSearch(
+				searchForm.getOperation(), searchForm.getType(),
+				searchForm.getPricelow(), searchForm.getPricehigh(),
+				searchForm.getPage(), 5, searchForm.getOrder());
 
 		final ModelAndView mav = new ModelAndView("property/search");
 
@@ -100,37 +89,14 @@ public class PropertyController {
 	protected ModelAndView newPOST(@Valid final PropertyForm propertyForm,
 			final BindingResult validateErrors, final HttpServletRequest request)
 			throws IOException, ServletException {
-		final List<String> errors = new ArrayList<String>();
-
 		boolean saved = false;
-		if (validateErrors.hasFieldErrors()) {
-			for (final FieldError objectError : validateErrors.getFieldErrors()) {
-				// TODO: Resolver mensajes de error por acá con alguna clase
-				// auxiliar.
-				errors.add(objectError.getObjectName() + ","
-						+ objectError.getField());
-			}
-		} else {
-			// TODO: Sacá todas las llamadas a los providers y meté autowire!
-			final UserManager manager = (UserManager) request
-					.getAttribute("userManager");
-
-			final User user = manager.getCurrentUser();
-
-			final List<String> services = new ArrayList<String>();
-
-			saved = this.propertyservice.saveProperty(
-					propertyForm.getOperation(), propertyForm.getType(),
-					propertyForm.getNeighborhood(), propertyForm.getAddress(),
-					propertyForm.getPrice(), propertyForm.getSpaces(),
-					propertyForm.getCoveredArea(), propertyForm.getFreeArea(),
-					propertyForm.getAge(), services,
-					propertyForm.getDescription(), errors, user,
-					propertyForm.getProperty());
-
+		if (!validateErrors.hasErrors()) {
+			// TODO: Security check
+			final Property built = propertyForm.build();
+			this.propertyRepository.save(built);
+			saved = true;
 		}
 		final ModelAndView mav = new ModelAndView();
-		mav.addObject("errors", errors);
 		mav.addObject("propertyForm", propertyForm);
 
 		if (saved) {
@@ -143,46 +109,29 @@ public class PropertyController {
 
 	@RequestMapping(method = RequestMethod.POST)
 	protected String delete(final HttpServletRequest req,
-			final HttpServletResponse resp) throws ServletException,
-			IOException {
-		final List<String> errors = new ArrayList<String>();
-		boolean valid = false;
-		try {
-			final Integer id = Integer.valueOf(req.getParameter("ID"));
-			final User currentUser = (User) req.getAttribute("current_user");
+			final HttpServletResponse resp,
+			@RequestParam("ID") final Property property)
+			throws ServletException, IOException {
+		// TODO: Security check
+		this.propertyRepository.delete(property);
 
-			final PropertyService service = ServiceProvider
-					.getPropertyService();
-
-			valid = service.deleteProperty(id, currentUser, errors);
-
-		} catch (final Exception e) {
-			errors.add("Parámetro inválido");
-		}
-
-		if (!valid) {
-			req.setAttribute("errors", errors);
-			// HTMLUtils.redirectBack(req, resp);
-			return "redirect:/index";
-		} else {
-			// HTMLUtils.redirectBack(req, resp);
-			return "redirect:/index";
-		}
+		return "redirect:/property/list";
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	protected void changeVisibility(final HttpServletRequest req,
-			final HttpServletResponse resp) throws IOException {
-		final PropertyService serv = ServiceProvider.getPropertyService();
-		final List<String> errors = new ArrayList<String>();
-		serv.toggleVisibility(Integer.valueOf(req.getParameter("id")), errors);
-		req.setAttribute("errors", errors);
-		HTMLUtils.redirectBack(req, resp);
+	protected String changeVisibility(final HttpServletRequest req,
+			final HttpServletResponse resp,
+			@RequestParam("id") final Property property) throws IOException {
+
+		property.toggleVisibility();
+
+		this.propertyRepository.save(property);
+
+		return "redirect:/property/list";
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/edit")
-	protected ModelAndView editGET(final HttpServletRequest req,
-			final HttpServletResponse resp, final ModelAndView mav,
+	protected ModelAndView editGET(final ModelAndView mav,
 			@RequestParam(value = "id") final Property property) {
 		mav.setViewName("property/edit");
 
@@ -196,36 +145,22 @@ public class PropertyController {
 	protected ModelAndView editPOST(final HttpServletRequest req,
 			final HttpServletResponse resp, final PropertyForm propertyForm)
 			throws IOException, ServletException {
-		final List<String> errors = new ArrayList<String>();
-		final Property property = propertyForm.getProperty();
-		boolean saved = false;
-		final List<String> services = new ArrayList<String>();
-		try {
 
-			// TODO: Fix this
-			saved = this.propertyservice.saveProperty(
-					propertyForm.getOperation(), propertyForm.getType(),
-					propertyForm.getNeighborhood(), propertyForm.getAddress(),
-					propertyForm.getPrice(), propertyForm.getSpaces(),
-					propertyForm.getCoveredArea(), propertyForm.getFreeArea(),
-					propertyForm.getAge(), services,
-					propertyForm.getDescription(), errors,
-					propertyForm.getCurrentUser(), propertyForm.getProperty());
-		} catch (final NumberFormatException e) {
-			errors.add("Parámetros inválidos");
+		boolean saved = false;
+		if (!validateErrors.hasErrors()) {
+			// TODO: Security check
+			final Property built = propertyForm.build();
+			this.propertyRepository.save(built);
+			saved = true;
 		}
+		final ModelAndView mav = new ModelAndView();
+		mav.addObject("propertyForm", propertyForm);
 
 		if (saved) {
-			return new ModelAndView("redirect:/property/list");
-		} else {
-
-			final ModelAndView mav = new ModelAndView("/property/edit");
-
-			mav.addObject("propertyForm", propertyForm);
-			mav.addObject("errors", errors);
-			mav.addObject("id", propertyForm.getProperty().getId().toString());
-
+			mav.setViewName("redirect:/property/list");
 			return mav;
+		} else {
+			return this.editGET(mav, propertyForm.getProperty());
 		}
 	}
 
