@@ -41,7 +41,6 @@ public class PhotoController {
 		// TODO: Validar tipo de archivo
 		try {
 			property.addPhoto(new Photo(file.getBytes(), "jpeg", property));
-			this.propertyRepository.save(property);
 		} catch (final IOException e) {
 			// TODO: Log this
 		}

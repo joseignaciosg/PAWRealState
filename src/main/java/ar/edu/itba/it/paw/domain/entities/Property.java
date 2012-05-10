@@ -3,12 +3,17 @@ package ar.edu.itba.it.paw.domain.entities;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "properties")
 public class Property extends PersistentEntity {
 
 	public enum Type {
@@ -19,28 +24,35 @@ public class Property extends PersistentEntity {
 		SELL, RENT;
 	}
 
-	@Enumerated
+	@Enumerated(EnumType.STRING)
 	private Type type;
 
-	@Enumerated
+	@Enumerated(EnumType.STRING)
+	@Column(name = "transaction")
 	private Operation operation;
 
 	private String neighborhood;
 	private String address;
 	private Integer price;
+
+	@Column(name = "rooms")
 	private Integer spaces;
+
+	@Column(name = "csqm")
 	private Integer coveredArea;
+	@Column(name = "usqm")
 	private Integer freeArea;
 	private Integer age;
 
-	// private List<String> services;
 	private String description;
 
 	@OneToMany(mappedBy = "property")
 	private List<Photo> photos = new ArrayList<Photo>();
+
 	private Boolean visible;
 
 	@ManyToOne
+	@JoinColumn(name = "user_id")
 	private User owner;
 
 	public Property() {
