@@ -1,7 +1,8 @@
 package ar.edu.itba.it.paw.web.command;
 
+import ar.edu.itba.it.paw.domain.entities.User;
 
-public class RegistrationForm {
+public class RegistrationForm implements BuilderForm<User> {
 	@Override
 	public String toString() {
 		return "RegistrationForm [username=" + this.userName + ", password="
@@ -87,5 +88,10 @@ public class RegistrationForm {
 
 	public void setPhone(final String phone) {
 		this.phone = phone;
+	}
+
+	public User build() {
+		return new User(this.userName, this.lastName, this.email, this.phone,
+				this.firstName, this.password);
 	}
 }

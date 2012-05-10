@@ -1,11 +1,11 @@
 package ar.edu.itba.it.paw.web.command;
 
-import org.hibernate.criterion.Order;
-
 import ar.edu.itba.it.paw.domain.entities.Property.Operation;
 import ar.edu.itba.it.paw.domain.entities.Property.Type;
+import ar.edu.itba.it.paw.domain.repositories.api.PropertySearch;
+import ar.edu.itba.it.paw.domain.repositories.api.PropertySearch.Order;
 
-public class SearchForm {
+public class SearchForm implements BuilderForm<PropertySearch> {
 
 	@Override
 	public String toString() {
@@ -92,6 +92,11 @@ public class SearchForm {
 
 	public void setPage(final Integer page) {
 		this.page = page;
+	}
+
+	public PropertySearch build() {
+		return new PropertySearch(this.operation, this.type, this.pricelow,
+				this.pricehigh, this.page, this.quant, this.order);
 	}
 
 }

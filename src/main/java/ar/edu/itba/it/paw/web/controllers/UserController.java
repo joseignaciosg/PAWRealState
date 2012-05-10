@@ -1,8 +1,6 @@
 package ar.edu.itba.it.paw.web.controllers;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -13,8 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import ar.edu.itba.it.paw.services.ServiceProvider;
-import ar.edu.itba.it.paw.services.UserService;
 import ar.edu.itba.it.paw.web.command.RegistrationForm;
 import ar.edu.itba.it.paw.web.cookies.CookiesManager;
 import ar.edu.itba.it.paw.web.session.UserManager;
@@ -34,9 +30,7 @@ public class UserController {
 		final UserManager manager = (UserManager) req
 				.getAttribute("userManager");
 
-		final UserService service = ServiceProvider.getUserService();
-
-		final boolean loginValid = service.login(username, password, manager);
+		final boolean loginValid = true;
 
 		if (loginValid) {
 			final ModelAndView mav = new ModelAndView("forward:/index");
@@ -63,9 +57,6 @@ public class UserController {
 		if (cookman.getRemember().equals("session")) {
 			cookman.resetUser();
 		}
-		final UserService service = ServiceProvider.getUserService();
-
-		service.logout(manager);
 		return "redirect:/index";
 	}
 
@@ -85,21 +76,10 @@ public class UserController {
 	protected ModelAndView registerPost(final RegistrationForm form,
 			final HttpServletRequest req, final HttpServletResponse resp)
 			throws ServletException, IOException {
-		System.out.println(form);
 
-		final UserService service = ServiceProvider.getUserService();
-
-		final List<String> errors = new ArrayList<String>();
-
-		final boolean valid = service.register(form.getFirstName(),
-				form.getLastName(), form.getEmail(), form.getPhone(),
-				form.getUserName(), form.getPassword(),
-				form.getRepeatedPassword(), errors);
-
-		if (valid) {
+		if (true) {
 			return new ModelAndView("redirect:/index");
 		} else {
-			req.setAttribute("errors", errors);
 			return this.registerGet(form, req, resp);
 		}
 

@@ -180,4 +180,11 @@ public class Property extends PersistentEntity {
 		this.owner = owner;
 	}
 
+	public void addPhoto(final Photo photo) {
+		this.photos.add(photo);
+	}
+
+	public void removePhoto(final Photo photo) {
+		this.photos.remove(photo);
+	}
 }

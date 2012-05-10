@@ -23,8 +23,6 @@ import ar.edu.itba.it.paw.domain.repositories.impl.HibernatePropertyRepository;
 import ar.edu.itba.it.paw.web.command.PropertyForm;
 import ar.edu.itba.it.paw.web.command.SearchForm;
 import ar.edu.itba.it.paw.web.command.validator.SearchFormValidator;
-import ar.edu.itba.it.paw.web.session.UserManager;
-import ar.edu.itba.it.paw.web.utils.HTMLUtils;
 
 @Controller
 @RequestMapping("/property")
@@ -58,18 +56,21 @@ public class PropertyController {
 	protected ModelAndView searchPOST(@Valid final SearchForm searchForm,
 			final Errors errors) throws ServletException, IOException {
 
-		final SearchForm sessionSearchForm = searchForm;
-		this.searchFormValidator.validate(sessionSearchForm, errors);
+		this.searchFormValidator.validate(searchForm, errors);
 
-		final List<Property> props = serv.advancedSearch(
-				searchForm.getOperation(), searchForm.getType(),
-				searchForm.getPricelow(), searchForm.getPricehigh(),
-				searchForm.getPage(), 5, searchForm.getOrder());
+		final boolean valid = !errors.hasErrors();
+
+		final List<Property> props;
+		if (valid) {
+			props = this.propertyRepository.getAll(searchForm.build());
+		} else {
+			props = new ArrayList<Property>();
+		}
 
 		final ModelAndView mav = new ModelAndView("property/search");
 
 		mav.addObject("props", props);
-		mav.addObject("propertyForm", sessionSearchForm);
+		mav.addObject("propertyForm", searchForm);
 		return mav;
 	}
 
@@ -87,13 +88,12 @@ public class PropertyController {
 
 	@RequestMapping(method = RequestMethod.POST, value = "/new")
 	protected ModelAndView newPOST(@Valid final PropertyForm propertyForm,
-			final BindingResult validateErrors, final HttpServletRequest request)
-			throws IOException, ServletException {
+			final BindingResult validateErrors) throws IOException,
+			ServletException {
 		boolean saved = false;
 		if (!validateErrors.hasErrors()) {
 			// TODO: Security check
-			final Property built = propertyForm.build();
-			this.propertyRepository.save(built);
+			this.propertyRepository.save(propertyForm.build());
 			saved = true;
 		}
 		final ModelAndView mav = new ModelAndView();
@@ -142,12 +142,10 @@ public class PropertyController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST, value = "/edit")
-	protected ModelAndView editPOST(final HttpServletRequest req,
-			final HttpServletResponse resp, final PropertyForm propertyForm)
-			throws IOException, ServletException {
-
+	protected ModelAndView editPOST(final PropertyForm propertyForm,
+			final Errors errors) throws IOException, ServletException {
 		boolean saved = false;
-		if (!validateErrors.hasErrors()) {
+		if (!errors.hasErrors()) {
 			// TODO: Security check
 			final Property built = propertyForm.build();
 			this.propertyRepository.save(built);
@@ -179,58 +177,14 @@ public class PropertyController {
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
-	protected String list(final HttpServletRequest req,
-			final HttpServletResponse resp) throws ServletException,
-			IOException {
-		final UserManager userManager = (UserManager) req
-				.getAttribute("userManager");
-		final UserService service = ServiceProvider.getUserService();
-
-		req.removeAttribute("current_user");
-		req.setAttribute("current_user",
-				service.getById(userManager.getCurrentUser().getId()));
-
+	protected String list() throws ServletException, IOException {
 		return "property/list";
 	}
 
+	// TODO: Broken, remake.
 	@RequestMapping(method = RequestMethod.POST)
-	protected void contactRequest(final HttpServletRequest req,
-			final HttpServletResponse resp) throws ServletException,
-			IOException {
-		final String contactRequest = "/contactrequest/contactRequest.jsp";
-
-		final ContactRequestService service = ServiceProvider
-				.getContactRequestService();
-
-		final PropertyService PropService = ServiceProvider
-				.getPropertyService();
-
-		final List<String> errors = new ArrayList<String>();
-
-		final String firstName = req.getParameter("first_name");
-		final String lastName = req.getParameter("last_name");
-		final String email = req.getParameter("email");
-		final String telephone = req.getParameter("phone");
-		final String description = req.getParameter("description");
-		final Integer propID = Integer.valueOf(req.getParameter("property_id"));
-		final Property property = PropService.getPropertyByID(propID, errors);
-
-		final boolean valid = service.saveContactRequest(firstName, lastName,
-				email, telephone, description, property, errors);
-
-		if (valid) {
-			final EmailService notification = ServiceProvider.getEmailService();
-			notification.sendMail(property.getOwner(), property, errors,
-					firstName, lastName, email, telephone, description);
-			req.setAttribute("user", property.getOwner());
-			req.setAttribute("property", property);
-			HTMLUtils.render(contactRequest, req, resp);
-		} else {
-			req.setAttribute("property", property);
-			req.setAttribute("errors", errors);
-			HTMLUtils.render("/viewproperties/viewproperty.jsp", req, resp);
-		}
-
+	protected String contactRequest() throws ServletException, IOException {
+		return "/index";
 	}
 
 }

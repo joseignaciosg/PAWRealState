@@ -10,19 +10,13 @@ public class PersistentEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private Integer id;
 
-	public int getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
 	public boolean isNew() {
-		return this.id == 0;
-	}
-
-	public <T extends PersistentEntity> void copy(final T entity) {
-		if (entity.isNew()) {
-			entity.id = this.id;
-		}
+		return this.id == null || this.id == 0;
 	}
 }

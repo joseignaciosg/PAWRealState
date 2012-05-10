@@ -26,9 +26,7 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 		final String remember = manager.getRemember();
 		if (remember != null) {
 			if (remember.equals("session")) {
-				final UserService service = ServiceProvider.getUserService();
-				service.login(manager.getName(), manager.getPassword(),
-						userManager);
+
 			}
 		}
 

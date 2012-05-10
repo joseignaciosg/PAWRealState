@@ -10,7 +10,7 @@ import ar.edu.itba.it.paw.domain.entities.Property.Type;
 import ar.edu.itba.it.paw.domain.entities.Services;
 import ar.edu.itba.it.paw.domain.entities.User;
 
-public class PropertyForm implements EntityForm<Property> {
+public class PropertyForm implements BuilderForm<Property> {
 
 	@NotNull
 	private Operation operation;
