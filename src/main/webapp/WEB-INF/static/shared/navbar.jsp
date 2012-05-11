@@ -23,8 +23,6 @@
 				<div class="remember-me-label" >
 					Recordar:
 				</div>
-                	   
-				
 			</form:form>
 		</li>
 		<li class="divider-vertical"></li>
