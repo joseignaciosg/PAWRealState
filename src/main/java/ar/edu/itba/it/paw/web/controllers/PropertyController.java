@@ -16,18 +16,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> github/development
 import ar.edu.itba.it.paw.domain.entities.Property;
 import ar.edu.itba.it.paw.domain.repositories.impl.HibernatePropertyRepository;
-=======
-import ar.edu.itba.it.paw.model.entities.Property;
-import ar.edu.itba.it.paw.model.entities.User;
-import ar.edu.itba.it.paw.model.services.ContactRequestService;
-import ar.edu.itba.it.paw.model.services.EmailService;
-import ar.edu.itba.it.paw.model.services.PropertyService;
-import ar.edu.itba.it.paw.model.services.ServiceProvider;
-import ar.edu.itba.it.paw.model.services.UserService;
 import ar.edu.itba.it.paw.web.command.ContactRequestForm;
+<<<<<<< HEAD
 >>>>>>> github/spring_migration
+=======
+>>>>>>> github/development
 import ar.edu.itba.it.paw.web.command.PropertyForm;
 import ar.edu.itba.it.paw.web.command.SearchForm;
 import ar.edu.itba.it.paw.web.command.validator.PropertyFormValidator;
@@ -109,26 +107,26 @@ public class PropertyController {
 		final ContactRequestForm sessionSearchForm = contactRequestForm;
 		// this.searchFormValidator.validate(sessionSearchForm, errors);
 		final List<String> errorsList = new ArrayList<String>();
-		System.out.println(contactRequestForm);
-		final ContactRequestService contactService = ServiceProvider
-				.getContactRequestService();
-		final PropertyService propService = ServiceProvider
-				.getPropertyService();
-
-		final Property prop = propService.getPropertyByID(
-				contactRequestForm.getPropertyId(), errorsList);
-
-		final User user = prop.getOwner();
-
-		contactService.saveContactRequest(contactRequestForm.getFirstName(),
-				contactRequestForm.getLastName(),
-				contactRequestForm.getEmail(), contactRequestForm.getPhone(),
-				contactRequestForm.getDescription(), prop, errorsList);
+		//
+		// final ContactRequestService contactService = ServiceProvider
+		// .getContactRequestService();
+		// final PropertyService propService = ServiceProvider
+		// .getPropertyService();
+		//
+		// final Property prop = propService.getPropertyByID(
+		// contactRequestForm.getPropertyId(), errorsList);
+		//
+		// final User user = prop.getOwner();
+		//
+		// contactService.saveContactRequest(contactRequestForm.getFirstName(),
+		// contactRequestForm.getLastName(),
+		// contactRequestForm.getEmail(), contactRequestForm.getPhone(),
+		// contactRequestForm.getDescription(), prop, errorsList);
 
 		final ModelAndView mav = new ModelAndView("property/contactrequest");
 
-		mav.addObject("user", user);
-		mav.addObject("property", prop);
+		// mav.addObject("user", user);
+		// mav.addObject("property", prop);
 		mav.addObject("contactForm", sessionSearchForm);
 
 		return mav;
