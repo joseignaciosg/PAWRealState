@@ -15,8 +15,19 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+<<<<<<< HEAD
 import ar.edu.itba.it.paw.domain.entities.Property;
 import ar.edu.itba.it.paw.domain.repositories.impl.HibernatePropertyRepository;
+=======
+import ar.edu.itba.it.paw.model.entities.Property;
+import ar.edu.itba.it.paw.model.entities.User;
+import ar.edu.itba.it.paw.model.services.ContactRequestService;
+import ar.edu.itba.it.paw.model.services.EmailService;
+import ar.edu.itba.it.paw.model.services.PropertyService;
+import ar.edu.itba.it.paw.model.services.ServiceProvider;
+import ar.edu.itba.it.paw.model.services.UserService;
+import ar.edu.itba.it.paw.web.command.ContactRequestForm;
+>>>>>>> github/spring_migration
 import ar.edu.itba.it.paw.web.command.PropertyForm;
 import ar.edu.itba.it.paw.web.command.SearchForm;
 import ar.edu.itba.it.paw.web.command.validator.PropertyFormValidator;
@@ -72,6 +83,54 @@ public class PropertyController {
 
 		mav.addObject("props", props);
 		mav.addObject("propertyForm", searchForm);
+		return mav;
+	}
+
+	@RequestMapping(method = RequestMethod.GET, value = "/contactrequest")
+	// @ModelAttribute("contactRequestForm")
+	protected ModelAndView contactRequestGET(
+			@Valid final ContactRequestForm contactRequestForm,
+			final Errors errors) throws ServletException, IOException {
+		return this.contactRequestPOST(contactRequestForm, errors);
+	}
+
+	/*
+	 * Searches and displays all the properties according to the request
+	 * parameters
+	 * 
+	 * @param searchform: object with all the parameters for the search
+	 */
+	@RequestMapping(method = RequestMethod.POST, value = "/contactrequest")
+	// @ModelAttribute("contactRequestForm")
+	protected ModelAndView contactRequestPOST(
+			@Valid final ContactRequestForm contactRequestForm,
+			final Errors errors) throws ServletException, IOException {
+
+		final ContactRequestForm sessionSearchForm = contactRequestForm;
+		// this.searchFormValidator.validate(sessionSearchForm, errors);
+		final List<String> errorsList = new ArrayList<String>();
+		System.out.println(contactRequestForm);
+		final ContactRequestService contactService = ServiceProvider
+				.getContactRequestService();
+		final PropertyService propService = ServiceProvider
+				.getPropertyService();
+
+		final Property prop = propService.getPropertyByID(
+				contactRequestForm.getPropertyId(), errorsList);
+
+		final User user = prop.getOwner();
+
+		contactService.saveContactRequest(contactRequestForm.getFirstName(),
+				contactRequestForm.getLastName(),
+				contactRequestForm.getEmail(), contactRequestForm.getPhone(),
+				contactRequestForm.getDescription(), prop, errorsList);
+
+		final ModelAndView mav = new ModelAndView("property/contactrequest");
+
+		mav.addObject("user", user);
+		mav.addObject("property", prop);
+		mav.addObject("contactForm", sessionSearchForm);
+
 		return mav;
 	}
 
@@ -171,6 +230,9 @@ public class PropertyController {
 			throws ServletException, IOException {
 		final ModelAndView mav = new ModelAndView("property/view");
 		mav.addObject("property", property);
+		if (!mav.getModel().containsKey("contactRequestForm")) {
+			mav.getModel().put("contactRequestForm", new ContactRequestForm());
+		}
 		return mav;
 	}
 

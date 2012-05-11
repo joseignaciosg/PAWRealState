@@ -6,6 +6,11 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+<<<<<<< HEAD
+=======
+import ar.edu.itba.it.paw.web.command.ContactRequestForm;
+
+>>>>>>> github/spring_migration
 public class LayoutInterceptor extends HandlerInterceptorAdapter {
 	private static final String NO_LAYOUT = "noLayout:";
 
@@ -39,9 +44,16 @@ public class LayoutInterceptor extends HandlerInterceptorAdapter {
 			}
 		}
 
+<<<<<<< HEAD
 		if (!modelAndView.getModel().containsKey("loginForm")) {
 			// TODO: Kill fefo
 			// modelAndView.getModel().put("loginForm", new LoginForm());
+=======
+			if (!modelAndView.getModel().containsKey("loginForm")) {
+				// modelAndView.getModel().put("loginForm", new LoginForm());
+			}
+
+>>>>>>> github/spring_migration
 		}
 	}
 
@@ -63,6 +75,7 @@ public class LayoutInterceptor extends HandlerInterceptorAdapter {
 					+ this.basePath);
 			modelAndView.setViewName(this.layoutView);
 		}
+
 	}
 
 	public void setPrefix(final String prefix) {
