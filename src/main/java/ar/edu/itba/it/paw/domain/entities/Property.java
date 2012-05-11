@@ -36,15 +36,6 @@ public class Property extends PersistentEntity {
 	@Enumerated(EnumType.STRING)
 	private List<Service> services = new ArrayList<Service>();
 
-	public enum RoomTypes {
-		A, B, C;
-	}
-
-	@CollectionOfElements
-	@JoinTable(name = "RoomTypes", joinColumns = @JoinColumn(name = "property_id"))
-	@Enumerated(EnumType.STRING)
-	private List<RoomTypes> roomTypes = new ArrayList<RoomTypes>();
-
 	@Enumerated(EnumType.STRING)
 	private Type type;
 
@@ -69,6 +60,9 @@ public class Property extends PersistentEntity {
 
 	@OneToMany(mappedBy = "property")
 	private List<Photo> photos = new ArrayList<Photo>();
+
+	@OneToMany(mappedBy = "property")
+	private List<Room> rooms = new ArrayList<Room>();
 
 	private Boolean visible;
 
@@ -229,11 +223,12 @@ public class Property extends PersistentEntity {
 		this.services = services;
 	}
 
-	public List<RoomTypes> getRoomTypes() {
-		return roomTypes;
+	public List<Room> getRooms() {
+		return this.rooms;
 	}
 
-	public void setRoomTypes(List<RoomTypes> roomTypes) {
-		this.roomTypes = roomTypes;
+	public void setRooms(final List<Room> rooms) {
+		this.rooms = rooms;
 	}
+
 }

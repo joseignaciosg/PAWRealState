@@ -14,6 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 import ar.edu.itba.it.paw.domain.entities.Photo;
 import ar.edu.itba.it.paw.domain.entities.Property;
 import ar.edu.itba.it.paw.domain.entities.Property.Service;
+import ar.edu.itba.it.paw.domain.entities.Room;
+import ar.edu.itba.it.paw.domain.entities.Room.RoomType;
 import ar.edu.itba.it.paw.domain.entities.User;
 import ar.edu.itba.it.paw.domain.repositories.impl.HibernatePropertyRepository;
 import ar.edu.itba.it.paw.domain.repositories.impl.HibernateUserRepository;
@@ -57,6 +59,8 @@ public class BasicDataPersistanceTest {
 
 		this.propertyRepository.save(property);
 
+		session.flush();
+
 		session.refresh(u);
 
 		Assert.assertTrue(u.getProperties().contains(property));
@@ -74,6 +78,8 @@ public class BasicDataPersistanceTest {
 
 		property.getServices().add(Service.A);
 
+		property.getServices().add(Service.B);
+
 		this.propertyRepository.save(property);
 
 		session.flush();
@@ -81,6 +87,33 @@ public class BasicDataPersistanceTest {
 		session.refresh(property);
 
 		Assert.assertTrue(property.getServices().contains(Service.A));
+		Assert.assertTrue(property.getServices().contains(Service.B));
+		Assert.assertTrue(!property.getServices().contains(Service.C));
+	}
+
+	@Test
+	public void roomListTest() {
+		this.propertiesListTest();
+		final Session session = this.factory.getCurrentSession();
+
+		final Property property = this.propertyRepository
+				.get(Property.class, 1);
+
+		final Room room = new Room(RoomType.A, 10, property);
+
+		this.propertyRepository.save(room);
+
+		session.flush();
+
+		session.refresh(property);
+
+		Assert.assertTrue(property.getRooms().contains(
+				new Room(RoomType.A, 10, property)));
+		Assert.assertTrue(!property.getRooms().contains(
+				new Room(RoomType.A, 11, property)));
+		Assert.assertTrue(!property.getRooms().contains(
+				new Room(RoomType.B, 11, property)));
+
 	}
 
 	@Test
@@ -98,10 +131,13 @@ public class BasicDataPersistanceTest {
 
 		this.propertyRepository.save(photo);
 
+		session.flush();
+
 		session.refresh(property);
 
 		Assert.assertTrue(property.getPhotos().contains(photo));
 		Assert.assertEquals(photo.getProperty(), property);
 
 	}
+
 }
