@@ -1,6 +1,7 @@
 <%@ page pageEncoding="UTF-8"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ page isELIgnored="false"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <script type="text/javascript">
@@ -140,53 +141,52 @@
   		});
   	 });
   	</script>
-		<form name="contactrequest" class="form-vertical" action="${ basePath }/contactrequest" method="POST">
+		<form:form class="form-vertical" action="${ basePath }/property/contactrequest" method="POST" commandName="contactRequestForm">
 		<fieldset>
 			<legend>Contacta al Publicador</legend>
-			<input type="hidden" class="input-xlarge" id="property_id" name="property_id" value="${ property.id }">
-			<div id="hiddenform" class="collapse" >
+			<form:input type="hidden" class="input-xlarge" id="propertyId" name="propertyId" value="${ property.id }" path="propertyId"/>
+			<div id="hiddenform" class="collapse" ></div>
 			
 			<div class="control-group">
-				<label class="control-label" for="first_name">Nombre</label>
+				<form:label class="control-label" path="firstName">Nombre</form:label>
 				<div class="controls">
-					<input type="text" class="input-xlarge" id="first_name" name="first_name">
+					<form:input path="firstName"/>
 				</div>
 			</div>
 			<div class="control-group">
-				<label class="control-label" for="last_name">Apellido</label>
+				<label class="control-label" for="lastName">Apellido</label>
 				<div class="controls">
-					<input type="text" class="input-xlarge" id="last_name" name="last_name">
+					<form:input type="text" class="input-xlarge" id="lastName" name="lastName" path="lastName"/>
 				</div>
 			</div>
 			<div class="control-group">
 				<label class="control-label" for="email">Email</label>
 				<div class="controls">
-					<input type="text" class="input-xlarge" id="telephone" name="email">
+					<form:input type="text" class="input-xlarge" id="email" name="email" path="email"/>
 				</div>
 			</div>
 			<div class="control-group">
 				<label class="control-label" for="phone">Teléfono</label>
 				<div class="controls">
-					<input type="text" class="input-xlarge" id="phone" name="phone">
+					<form:input type="text" class="input-xlarge" id="phone" name="phone" path="phone"/>
 				</div>
 			</div>
 			<div class="control-group">
 				<label class="control-label" for="phone">Descripcion</label>
 				<div class="controls">
-					<input type="text" class="input-xlarge" id="description" name="description">
+					<form:input type="text" class="input-xlarge" id="description" name="description" path="description"/>
 				</div>
 			</div>
 			
 			<button type="submit" class="btn btn-primary">Obtener
 						datos del Publicador</button>
 			
-			</div>
+		
 		</fieldset>
-	
-			</form>
-			<div class="form-actions" style="width:230px;">
+	</form:form>
+			<!--<div class="form-actions" style="width:230px;">
             <button class="btn js-contact-button"  data-toggle="collapse" data-target="#hiddenform">Mostrar Formulario</button>
-         	</div>
+         	</div>-->
 				<table class="table table-striped">
 					<thead>
 					    <tr>

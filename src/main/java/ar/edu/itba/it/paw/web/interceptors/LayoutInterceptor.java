@@ -40,8 +40,7 @@ public class LayoutInterceptor extends HandlerInterceptorAdapter {
 		}
 
 		if (!modelAndView.getModel().containsKey("loginForm")) {
-			// TODO: Kill fefo
-			// modelAndView.getModel().put("loginForm", new LoginForm());
+			modelAndView.getModel().put("loginForm", new LoginForm());
 		}
 	}
 
@@ -63,6 +62,7 @@ public class LayoutInterceptor extends HandlerInterceptorAdapter {
 					+ this.basePath);
 			modelAndView.setViewName(this.layoutView);
 		}
+
 	}
 
 	public void setPrefix(final String prefix) {
