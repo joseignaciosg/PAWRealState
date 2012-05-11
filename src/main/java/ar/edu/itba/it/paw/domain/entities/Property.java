@@ -8,9 +8,12 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.CollectionOfElements;
 
 @Entity
 @Table(name = "properties")
@@ -23,6 +26,15 @@ public class Property extends PersistentEntity {
 	public enum Operation {
 		SELL, RENT;
 	}
+
+	public enum Service {
+		A, B, C;
+	}
+
+	@CollectionOfElements
+	@JoinTable(name = "Service", joinColumns = @JoinColumn(name = "property_id"))
+	@Enumerated(EnumType.STRING)
+	private List<Service> services = new ArrayList<Service>();
 
 	@Enumerated(EnumType.STRING)
 	private Type type;
@@ -198,5 +210,13 @@ public class Property extends PersistentEntity {
 
 	public void removePhoto(final Photo photo) {
 		this.photos.remove(photo);
+	}
+
+	public List<Service> getServices() {
+		return this.services;
+	}
+
+	public void setServices(final List<Service> services) {
+		this.services = services;
 	}
 }

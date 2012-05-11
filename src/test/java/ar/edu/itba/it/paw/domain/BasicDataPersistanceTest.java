@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import ar.edu.itba.it.paw.domain.entities.Photo;
 import ar.edu.itba.it.paw.domain.entities.Property;
+import ar.edu.itba.it.paw.domain.entities.Property.Service;
 import ar.edu.itba.it.paw.domain.entities.User;
 import ar.edu.itba.it.paw.domain.repositories.impl.HibernatePropertyRepository;
 import ar.edu.itba.it.paw.domain.repositories.impl.HibernateUserRepository;
@@ -36,7 +37,6 @@ public class BasicDataPersistanceTest {
 	@Autowired
 	SessionFactory factory;
 
-	@Test
 	public void basicTest() {
 		final User u = new User("name", "username", "bla", "bla", "bla", "bla");
 		this.userRepository.save(u);
@@ -61,6 +61,26 @@ public class BasicDataPersistanceTest {
 
 		Assert.assertTrue(u.getProperties().contains(property));
 		Assert.assertEquals(u, property.getOwner());
+	}
+
+	@Test
+	public void serviceListTest() {
+		this.propertiesListTest();
+
+		final Session session = this.factory.getCurrentSession();
+
+		final Property property = this.propertyRepository
+				.get(Property.class, 1);
+
+		property.getServices().add(Service.A);
+
+		this.propertyRepository.save(property);
+
+		session.flush();
+
+		session.refresh(property);
+
+		Assert.assertTrue(property.getServices().contains(Service.A));
 	}
 
 	@Test
