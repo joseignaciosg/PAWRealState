@@ -15,17 +15,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> github/development
 import ar.edu.itba.it.paw.domain.entities.Property;
 import ar.edu.itba.it.paw.domain.repositories.impl.HibernatePropertyRepository;
 import ar.edu.itba.it.paw.web.command.ContactRequestForm;
-<<<<<<< HEAD
->>>>>>> github/spring_migration
-=======
->>>>>>> github/development
 import ar.edu.itba.it.paw.web.command.PropertyForm;
 import ar.edu.itba.it.paw.web.command.SearchForm;
 import ar.edu.itba.it.paw.web.command.validator.PropertyFormValidator;
