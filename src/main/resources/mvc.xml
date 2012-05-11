@@ -12,10 +12,6 @@
 
 	<context:component-scan base-package="ar.edu.itba.it.paw" />
 
-
-
-
-
 	<bean id="sessionInterceptor" class="ar.edu.itba.it.paw.web.interceptors.SessionInterceptor" />
 	<bean id="layoutInterceptor" class="ar.edu.itba.it.paw.web.interceptors.LayoutInterceptor">
 		<property name="layoutView" value="shared/layout"></property>

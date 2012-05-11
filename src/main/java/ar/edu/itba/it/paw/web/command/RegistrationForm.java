@@ -3,13 +3,6 @@ package ar.edu.itba.it.paw.web.command;
 import ar.edu.itba.it.paw.domain.entities.User;
 
 public class RegistrationForm implements BuilderForm<User> {
-	@Override
-	public String toString() {
-		return "RegistrationForm [username=" + this.userName + ", password="
-				+ this.password + ", repeatedPassword=" + this.repeatedPassword
-				+ ", email=" + this.email + ", firstName=" + this.firstName
-				+ ", lastName=" + this.lastName + ", phone=" + this.phone + "]";
-	}
 
 	private String userName;
 	private String password;

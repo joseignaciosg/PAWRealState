@@ -5,14 +5,16 @@ import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "users")
 public class User extends PersistentEntity {
 
-	private String name;
-	private String surname;
-	private String mail;
-	private String telephone;
+	private String firstname;
+	private String lastname;
+	private String email;
+	private String phone;
 	private String username;
 	private String password;
 
@@ -24,10 +26,10 @@ public class User extends PersistentEntity {
 
 	public User(final String name, final String surname, final String mail,
 			final String telephone, final String username, final String password) {
-		this.name = name;
-		this.surname = surname;
-		this.mail = mail;
-		this.telephone = telephone;
+		this.firstname = name;
+		this.lastname = surname;
+		this.email = mail;
+		this.phone = telephone;
 		this.username = username;
 		this.password = password;
 	}
@@ -37,19 +39,19 @@ public class User extends PersistentEntity {
 	}
 
 	public String getTelephone() {
-		return this.telephone;
+		return this.phone;
 	}
 
 	public String getName() {
-		return this.name;
+		return this.firstname;
 	}
 
 	public String getSurname() {
-		return this.surname;
+		return this.lastname;
 	}
 
 	public String getMail() {
-		return this.mail;
+		return this.email;
 	}
 
 	public String getUsername() {
