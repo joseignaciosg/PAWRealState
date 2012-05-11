@@ -1,5 +1,8 @@
 package ar.edu.itba.it.paw.domain.repositories.api;
 
-public interface UserRepository {
+import ar.edu.itba.it.paw.domain.entities.User;
 
+public interface UserRepository {
+	public User getByNameAndPassword(final String username,
+			final String password);
 }

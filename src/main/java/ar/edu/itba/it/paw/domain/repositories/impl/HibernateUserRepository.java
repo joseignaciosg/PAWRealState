@@ -4,6 +4,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import ar.edu.itba.it.paw.domain.entities.User;
 import ar.edu.itba.it.paw.domain.repositories.AbstractHibernateRepository;
 import ar.edu.itba.it.paw.domain.repositories.api.UserRepository;
 
@@ -16,4 +17,10 @@ public class HibernateUserRepository extends AbstractHibernateRepository
 		super(sessionFactory);
 	}
 
+	public User getByNameAndPassword(final String username,
+			final String password) {
+		return (User) this.find(
+				"from User u where u.username like ? and u.password like ?",
+				username, password).get(0);
+	}
 }
