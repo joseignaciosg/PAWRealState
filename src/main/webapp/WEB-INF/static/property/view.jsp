@@ -14,7 +14,7 @@
   	 });
 </script>
   
-<div class="row-fluid">
+<div class="row-fluid" >
 	<div class="span12">
 		<div class="span8">
 			<!--<ul class="breadcrumb">
@@ -24,6 +24,8 @@
 			</ul>-->
 			<h1><c:out value=" ${property.address}" /></h1>
 			<h2><c:out value=" ${property.neighborhood}" /> </h2>
+			<h4>Cantidad de Visitas: <c:out value=" ${property.visitCount}" /> </h4>
+			
 			<br />
 			<ul class="thumbnails">
 				
@@ -52,32 +54,37 @@
 					</dl>
 
 				</div>
-				<div class="span7" >
-				
-				<div id="myCarousel" class="carousel" style="overflow:hidden; height:260px;">
+				<div class="span7"  >
+
+					<div id="myCarousel" class="carousel" style="overflow:hidden; height:260px;">
+						<c:if test="${property.reserved}">				
+							<img src="${ assetPath }/img/reservado_background.png" height="100" width="100" style="position: absolute; top: 0px; left: 0px;z-index: 100;"/>
+						</c:if>	
 	 				 <!-- Carousel items -->
-	  				<div class="carousel-inner">
+	  					<div class="carousel-inner">
 							<c:choose>
 								<c:when test="${ not empty property.photos }">
 									<c:forEach var="photo" items="${property.photos}">
 										<div class="item">
-											<img height="100" width="425"
-												src="${ basePath }/photo/view?ID=${ photo.id }" alt="" />
+												<div>
+													<img height="100" width="425" src="${ basePath }/photo/view?ID=${ photo.id }" alt="" style="opacity=0.4;" />
+												</div>
 										</div>
 									</c:forEach>
 								</c:when>
 								<c:otherwise>
 									<div class="item">
 										<img height="260" width="425"
-											src="${ basePath }/assets/img/no-picture.jpg" alt="" />
+											src="${ assetPath }/img/no-picture.jpg" alt="" />
 									</div>
 								</c:otherwise>
 							</c:choose>
 						</div>
+					
 				 	<!-- Carousel nav -->
-				 	<a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
-				  	<a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
-				</div>
+				 		<a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+				  		<a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
+					</div>
 				
 				</div>
 			</ul>
@@ -142,8 +149,10 @@
   	 });
   	</script>
 		<form:form class="form-vertical" action="${ basePath }/property/contactrequest" method="POST" commandName="contactRequestForm">
+		
 		<fieldset>
 			<legend>Contacta al Publicador</legend>
+			<form:errors path="*"/>
 			<form:input type="hidden" class="input-xlarge" id="propertyId" name="propertyId" value="${ property.id }" path="property"/>
 			<div id="hiddenform" class="collapse" ></div>
 			

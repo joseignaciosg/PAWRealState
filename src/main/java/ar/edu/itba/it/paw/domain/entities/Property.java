@@ -1,6 +1,7 @@
 package ar.edu.itba.it.paw.domain.entities;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -31,7 +32,21 @@ public class Property extends PersistentEntity {
 
 	@Table(name = "services")
 	public enum Service {
-		TENIS, SECURITY, LAUNDRY, SOLARIUM, CABLE, PHONE, SWIMMING, SALON, PADDLE, QUINCHO
+		TENIS("Tenis"), SECURITY("Vigilancia Nocturna"), LAUNDRY(
+				"Servicio de Laundry"), SOLARIUM("Solarium"), CABLE("Cable"), PHONE(
+				"Telefono"), SWIMMING("Pileta de natacion"), SALON("Salon"), PADDLE(
+				"Cancha de paddle"), QUINCHO("Quincho");
+
+		private final String name;
+
+		Service(final String name) {
+			this.name = name;
+		}
+
+		@Override
+		public String toString() {
+			return this.name;
+		}
 	}
 
 	@CollectionOfElements
@@ -39,7 +54,6 @@ public class Property extends PersistentEntity {
 	@JoinTable(name = "services", joinColumns = @JoinColumn(name = "property_id"))
 	@Enumerated(EnumType.STRING)
 	private List<Service> services = new ArrayList<Service>();
-
 	@Enumerated(EnumType.STRING)
 	private Type type;
 
@@ -78,8 +92,22 @@ public class Property extends PersistentEntity {
 	@JoinColumn(name = "user_id")
 	private User owner;
 
-	public Property() {
+	@Column(name = "visitcount")
+	private Integer visitCount;
 
+	@Column(name = "reserved")
+	private boolean reserved;
+
+	public Property() {
+		this.visitCount = 0;
+	}
+
+	public static List<Service> getAllServices() {
+		final List<Service> list = new LinkedList<Service>();
+		for (final Service srv : Service.values()) {
+			list.add(srv);
+		}
+		return list;
 	}
 
 	/**
@@ -122,6 +150,12 @@ public class Property extends PersistentEntity {
 		if (rooms != null) {
 			this.rooms = rooms;
 		}
+		this.visitCount = 0;
+		this.reserved = false;
+	}
+
+	public void setServices(final List<Service> services) {
+		this.services = services;
 	}
 
 	public String getPropertyType() {
@@ -183,6 +217,22 @@ public class Property extends PersistentEntity {
 
 	public List<Photo> getPhotos() {
 		return this.photos;
+	}
+
+	public Integer getVisitCount() {
+		return this.visitCount;
+	}
+
+	public boolean isReserved() {
+		return this.reserved;
+	}
+
+	public void setReserved(final boolean reserved) {
+		this.reserved = reserved;
+	}
+
+	public void setVisitCount(final int visitCount) {
+		this.visitCount = visitCount;
 	}
 
 	public void setType(final Type type) {
@@ -249,10 +299,6 @@ public class Property extends PersistentEntity {
 		return this.services;
 	}
 
-	public void setServices(final List<Service> services) {
-		this.services = services;
-	}
-
 	public List<Room> getRooms() {
 		return this.rooms;
 	}
@@ -282,4 +328,15 @@ public class Property extends PersistentEntity {
 		return false;
 	}
 
+	public void updateVisitCount() {
+		this.visitCount++;
+	}
+
+	public void reserve() {
+		this.reserved = true;
+	}
+
+	public void unreserve() {
+		this.reserved = false;
+	}
 }

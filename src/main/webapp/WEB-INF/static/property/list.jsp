@@ -36,6 +36,12 @@
 						<a href="${ basePath }/property/edit?id=${ property.id }" class="btn btn-mini">Editar</a>
 						<a href="${ basePath }/photo/list?propertyId=${ property.id }" class="btn btn-mini">Fotos</a>
 						<a href="${ basePath }/property/changevisibility?id=${ property.id }" class="btn btn-mini js-change-visibility" data-prop-id="${ property.id }">Cambiar visibilidad</a>
+						<c:if test="${property.reserved}">
+							<a href="${ basePath }/property/unreserve?id=${ property.id }" class="btn btn-mini js-change-visibility" data-prop-id="${ property.id }">Desreservar</a>
+						</c:if>
+						<c:if test="${!property.reserved}">
+							<a href="${ basePath }/property/reserve?id=${ property.id }" class="btn btn-mini js-change-visibility" data-prop-id="${ property.id }">Reservar</a>
+						</c:if>
 						<a href="${ basePath }/property/delete?id=${ property.id }" class="btn btn-mini btn-danger js-delete" data-prop-id="${ property.id }">Eliminar</a>
 					</div>
 				</td>

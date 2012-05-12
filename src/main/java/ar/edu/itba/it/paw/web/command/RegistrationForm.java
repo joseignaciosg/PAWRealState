@@ -84,7 +84,7 @@ public class RegistrationForm implements BuilderForm<User> {
 	}
 
 	public User build() {
-		return new User(this.userName, this.lastName, this.email, this.phone,
-				this.firstName, this.password);
+		return new User(this.firstName, this.lastName, this.email, this.phone,
+				this.userName, this.password);
 	}
 }

@@ -17,7 +17,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.itba.it.paw.domain.entities.ContactRequest;
 import ar.edu.itba.it.paw.domain.entities.Property;
-import ar.edu.itba.it.paw.domain.repositories.api.UserRepository;
 import ar.edu.itba.it.paw.domain.repositories.impl.HibernatePropertyRepository;
 import ar.edu.itba.it.paw.web.command.ContactRequestForm;
 import ar.edu.itba.it.paw.web.command.PropertyForm;
@@ -38,11 +37,9 @@ public class PropertyController {
 	private SearchFormValidator searchFormValidator;
 	@Autowired
 	private PropertyFormValidator propertyFormValidator;
-	@Autowired
-	private UserRepository userRepository;
 
 	@RequestMapping(method = RequestMethod.GET, value = "/search")
-	protected ModelAndView searchGET(@Valid final SearchForm searchForm,
+	protected ModelAndView searchGET(final SearchForm searchForm,
 			final Errors errors) throws ServletException, IOException {
 		return this.searchPOST(searchForm, errors);
 	}
@@ -92,21 +89,25 @@ public class PropertyController {
 	@RequestMapping(method = RequestMethod.POST, value = "/contactrequest")
 	// @ModelAttribute("contactRequestForm")
 	protected ModelAndView contactRequestPOST(
-			@Valid final ContactRequestForm contactRequestForm,
-			final Errors errors) throws ServletException, IOException {
+			final ContactRequestForm contactRequestForm, final Errors errors)
+			throws ServletException, IOException {
 
 		this.contactRequestFormValidator.validate(contactRequestForm, errors);
 
 		if (errors.hasErrors()) {
-			return new ModelAndView("property/view?propertyId="
-					+ contactRequestForm.getProperty().getId());
+			final ModelAndView mav = new ModelAndView("/property/view");
+			final ContactRequest request = contactRequestForm.build();
+			mav.addObject("id", contactRequestForm.getProperty().getId());
+			mav.addObject("user", request.getPropRefered().getOwner());
+			mav.addObject("property", request.getPropRefered());
+			mav.addObject("contactForm", contactRequestForm);
+			return mav;
 		} else {
 			final ContactRequest request = contactRequestForm.build();
 			this.propertyRepository.sendContactRequest(request);
 			final ModelAndView mav = new ModelAndView("property/contactrequest");
-
 			mav.addObject("user", request.getPropRefered().getOwner());
-			mav.addObject("property", request.getPropRefered().getOwner());
+			mav.addObject("property", request.getPropRefered());
 			mav.addObject("contactForm", contactRequestForm);
 			return mav;
 		}
@@ -121,6 +122,7 @@ public class PropertyController {
 			IOException {
 		mav.setViewName("property/new");
 		mav.addObject("propertyForm", propertyForm);
+		mav.addObject("propertyServices", Property.getAllServices());
 		return mav;
 	}
 
@@ -132,7 +134,6 @@ public class PropertyController {
 
 		boolean saved = false;
 		if (!validateErrors.hasErrors()) {
-			// TODO: Security check
 			this.propertyRepository.save(propertyForm.build());
 			saved = true;
 		}
@@ -164,6 +165,20 @@ public class PropertyController {
 		return "redirect:/property/list";
 	}
 
+	@RequestMapping(method = RequestMethod.POST, value = "/reserve")
+	protected String reserve(@RequestParam("id") final Property property) {
+		property.reserve();
+		this.propertyRepository.save(property);
+		return "redirect:/property/list";
+	}
+
+	@RequestMapping(method = RequestMethod.POST, value = "/unreserve")
+	protected String unreserve(@RequestParam("id") final Property property) {
+		property.unreserve();
+		this.propertyRepository.save(property);
+		return "redirect:/property/list";
+	}
+
 	@RequestMapping(method = RequestMethod.GET, value = "/edit")
 	protected ModelAndView editGET(final ModelAndView mav,
 			@RequestParam(value = "id") final Property property) {
@@ -172,6 +187,10 @@ public class PropertyController {
 		if (!mav.getModel().containsKey("propertyForm")) {
 			mav.addObject("propertyForm", new PropertyForm(property));
 		}
+		if (!mav.getModel().containsKey("propertyServices")) {
+			mav.addObject("propertyServices", Property.getAllServices());
+		}
+
 		return mav;
 	}
 
@@ -206,6 +225,10 @@ public class PropertyController {
 	protected ModelAndView view(
 			@RequestParam(value = "id") final Property property)
 			throws ServletException, IOException {
+		System.out.println(property.getVisitCount());
+		property.updateVisitCount();
+		System.out.println(property.getVisitCount());
+
 		final ModelAndView mav = new ModelAndView("property/view");
 		mav.addObject("property", property);
 		if (!mav.getModel().containsKey("contactRequestForm")) {
