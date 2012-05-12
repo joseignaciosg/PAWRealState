@@ -150,7 +150,7 @@
 			<div class="control-group">
 				<form:label class="control-label" path="firstName">Nombre</form:label>
 				<div class="controls">
-					<form:input path="firstName"/>
+					<form:input class="input-xlarge" id="firstName" name="firstName" path="firstName"/>
 				</div>
 			</div>
 			<div class="control-group">

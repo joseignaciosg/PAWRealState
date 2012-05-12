@@ -16,7 +16,7 @@ public class ContactRequest extends PersistentEntity {
 
 	@ManyToOne
 	@JoinColumn(name = "prop_id")
-	private Property propRefered;
+	private Property property;
 
 	public ContactRequest(final String name, final String email,
 			final String telephone, final String description,
@@ -31,7 +31,7 @@ public class ContactRequest extends PersistentEntity {
 		this.email = email;
 		this.phone = telephone;
 		this.comment = description;
-		this.propRefered = propRefered;
+		this.property = propRefered;
 	}
 
 	public String getDescription() {
@@ -55,10 +55,10 @@ public class ContactRequest extends PersistentEntity {
 	}
 
 	public Property getPropRefered() {
-		return this.propRefered;
+		return this.property;
 	}
 
 	public void setPropRefered(final Property propRefered) {
-		this.propRefered = propRefered;
+		this.property = propRefered;
 	}
 }
