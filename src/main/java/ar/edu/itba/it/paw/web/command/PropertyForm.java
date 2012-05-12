@@ -3,7 +3,6 @@ package ar.edu.itba.it.paw.web.command;
 import ar.edu.itba.it.paw.domain.entities.Property;
 import ar.edu.itba.it.paw.domain.entities.Property.Operation;
 import ar.edu.itba.it.paw.domain.entities.Property.Type;
-import ar.edu.itba.it.paw.domain.entities.Services;
 import ar.edu.itba.it.paw.domain.entities.User;
 
 public class PropertyForm implements BuilderForm<Property> {
@@ -17,7 +16,6 @@ public class PropertyForm implements BuilderForm<Property> {
 	private Integer coveredArea;
 	private Integer freeArea;
 	private Integer age;
-	private Services service;
 	private String description;
 
 	private Property property = new Property();
@@ -32,9 +30,8 @@ public class PropertyForm implements BuilderForm<Property> {
 			final String neighborhood, final String address,
 			final Integer price, final Integer spaces,
 			final Integer coveredArea, final Integer freeArea,
-			final Integer age, final Services service,
-			final String description, final Property property,
-			final User currentUser) {
+			final Integer age, final String description,
+			final Property property, final User currentUser) {
 		this.operation = operation;
 		this.type = type;
 		this.neighborhood = neighborhood;
@@ -44,7 +41,6 @@ public class PropertyForm implements BuilderForm<Property> {
 		this.coveredArea = coveredArea;
 		this.freeArea = freeArea;
 		this.age = age;
-		this.service = service;
 		this.description = description;
 		this.property = property;
 		this.currentUser = currentUser;
@@ -59,7 +55,7 @@ public class PropertyForm implements BuilderForm<Property> {
 		this(property.getOperation(), property.getType(), property
 				.getNeighborhood(), property.getAddress(), property.getPrice(),
 				property.getSpaces(), property.getCoveredArea(), property
-						.getFreeArea(), property.getAge(), null, property
+						.getFreeArea(), property.getAge(), property
 						.getDescription(), property, property.getOwner());
 	}
 
@@ -133,14 +129,6 @@ public class PropertyForm implements BuilderForm<Property> {
 
 	public void setAge(final Integer age) {
 		this.age = age;
-	}
-
-	public Services getService() {
-		return this.service;
-	}
-
-	public void setService(final Services service) {
-		this.service = service;
 	}
 
 	public String getDescription() {

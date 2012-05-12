@@ -6,4 +6,6 @@ public interface UserManager {
 	public User getCurrentUser();
 
 	public void setCurrentUser(User user);
+
+	public void forgetCurrentUser();
 }

@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import ar.edu.itba.it.paw.domain.entities.User;
+import ar.edu.itba.it.paw.domain.repositories.impl.HibernateUserRepository;
 import ar.edu.itba.it.paw.web.command.LoginForm;
 import ar.edu.itba.it.paw.web.command.RegistrationForm;
 import ar.edu.itba.it.paw.web.command.validator.RegistrationFormValidator;
@@ -24,30 +26,37 @@ import ar.edu.itba.it.paw.web.session.UserManager;
 public class UserController {
 
 	private RegistrationFormValidator registrationFormValidator;
+	private HibernateUserRepository userRepository;
 
 	@Autowired
 	public UserController(
-			final RegistrationFormValidator registrationFormValidator) {
+			final RegistrationFormValidator registrationFormValidator,
+			final HibernateUserRepository userRepository) {
 		this.registrationFormValidator = registrationFormValidator;
+		this.userRepository = userRepository;
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	protected ModelAndView login(final LoginForm loginForm)
+	protected ModelAndView login(final LoginForm loginForm,
+			final HttpServletRequest request, final HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO: Make this
 		final String username = loginForm.getUser_username();
 		final String password = loginForm.getUser_password();
 		final String remember = loginForm.getRemember();
 
-		// final UserManager manager = (UserManager) req
-		// .getAttribute("userManager");
+		final UserManager manager = (UserManager) request
+				.getAttribute("userManager");
 
-		final boolean loginValid = true;
+		final User user = this.userRepository.getByNameAndPassword(username,
+				password);
+		final boolean loginValid = user != null;
 
 		if (loginValid) {
 			final ModelAndView mav = new ModelAndView("forward:/index");
-			// final CookiesManager cookman = new CookiesManager(req, resp);
-			// cookman.setUser(username, password, remember);
+			final CookiesManager cookman = new CookiesManager(request, response);
+			cookman.setUser(username, password, remember);
+			manager.setCurrentUser(user);
 			mav.addObject("errors", new String[] { "Bienvenido " + username });
 			return mav;
 		} else {
@@ -64,6 +73,8 @@ public class UserController {
 
 		final UserManager manager = (UserManager) req
 				.getAttribute("userManager");
+
+		manager.setCurrentUser(null);
 
 		final CookiesManager cookman = new CookiesManager(req, resp);
 		if (cookman.getRemember().equals("session")) {
@@ -89,7 +100,11 @@ public class UserController {
 		this.registrationFormValidator.validate(registrationForm,
 				validationErrors);
 
-		if (true) {
+		final boolean valid = !validationErrors.hasErrors();
+
+		if (valid) {
+			final User user = registrationForm.build();
+			this.userRepository.save(user);
 			return new ModelAndView("redirect:/index");
 		} else {
 			return this.registerGet(registrationForm);

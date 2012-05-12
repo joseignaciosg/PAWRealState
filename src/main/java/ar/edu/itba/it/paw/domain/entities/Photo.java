@@ -16,6 +16,10 @@ public class Photo extends PersistentEntity {
 	@JoinColumn(name = "property_id")
 	private Property property;
 
+	public Photo() {
+
+	}
+
 	public Photo(final byte[] data, final String type, final Property property) {
 		this.data = data;
 		this.type = type;
