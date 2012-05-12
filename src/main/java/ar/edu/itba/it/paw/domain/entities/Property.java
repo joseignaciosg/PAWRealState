@@ -27,12 +27,13 @@ public class Property extends PersistentEntity {
 		SELL, RENT;
 	}
 
+	@Table(name = "services")
 	public enum Service {
-		A, B, C;
+		TENIS, SECURITY, LAUNDRY, SOLARIUM, CABLE, PHONE, SWIMMING, SALON, PADDLE, QUINCHO
 	}
 
 	@CollectionOfElements
-	@JoinTable(name = "Service", joinColumns = @JoinColumn(name = "property_id"))
+	@JoinTable(name = "services", joinColumns = @JoinColumn(name = "property_id"))
 	@Enumerated(EnumType.STRING)
 	private List<Service> services = new ArrayList<Service>();
 

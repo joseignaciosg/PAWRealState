@@ -76,9 +76,9 @@ public class BasicDataPersistanceTest {
 		final Property property = this.propertyRepository
 				.get(Property.class, 1);
 
-		property.getServices().add(Service.A);
+		property.getServices().add(Service.CABLE);
 
-		property.getServices().add(Service.B);
+		property.getServices().add(Service.PHONE);
 
 		this.propertyRepository.save(property);
 
@@ -86,9 +86,9 @@ public class BasicDataPersistanceTest {
 
 		session.refresh(property);
 
-		Assert.assertTrue(property.getServices().contains(Service.A));
-		Assert.assertTrue(property.getServices().contains(Service.B));
-		Assert.assertTrue(!property.getServices().contains(Service.C));
+		Assert.assertTrue(property.getServices().contains(Service.CABLE));
+		Assert.assertTrue(property.getServices().contains(Service.PHONE));
+		Assert.assertTrue(!property.getServices().contains(Service.SALON));
 	}
 
 	@Test
