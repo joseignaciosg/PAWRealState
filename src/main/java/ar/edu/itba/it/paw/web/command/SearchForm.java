@@ -2,6 +2,8 @@ package ar.edu.itba.it.paw.web.command;
 
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
 import ar.edu.itba.it.paw.domain.entities.Property.Operation;
 import ar.edu.itba.it.paw.domain.entities.Property.Service;
 import ar.edu.itba.it.paw.domain.entities.Property.Type;
@@ -9,6 +11,7 @@ import ar.edu.itba.it.paw.domain.entities.Room;
 import ar.edu.itba.it.paw.domain.repositories.api.PropertySearch;
 import ar.edu.itba.it.paw.domain.repositories.api.PropertySearch.Order;
 
+@Component
 public class SearchForm implements BuilderForm<PropertySearch> {
 
 	@Override
