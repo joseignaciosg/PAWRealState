@@ -144,7 +144,7 @@
 		<form:form class="form-vertical" action="${ basePath }/property/contactrequest" method="POST" commandName="contactRequestForm">
 		<fieldset>
 			<legend>Contacta al Publicador</legend>
-			<form:input type="hidden" class="input-xlarge" id="propertyId" name="propertyId" value="${ property.id }" path="propertyId"/>
+			<form:input type="hidden" class="input-xlarge" id="propertyId" name="propertyId" value="${ property.id }" path="property"/>
 			<div id="hiddenform" class="collapse" ></div>
 			
 			<div class="control-group">
