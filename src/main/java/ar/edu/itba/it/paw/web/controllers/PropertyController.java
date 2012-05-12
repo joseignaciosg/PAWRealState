@@ -102,8 +102,7 @@ public class PropertyController {
 					+ contactRequestForm.getProperty().getId());
 		} else {
 			final ContactRequest request = contactRequestForm.build();
-			this.userRepository.sendContactRequest(request, request
-					.getPropRefered().getOwner());
+			this.propertyRepository.sendContactRequest(request);
 			final ModelAndView mav = new ModelAndView("property/contactrequest");
 
 			mav.addObject("user", request.getPropRefered().getOwner());
