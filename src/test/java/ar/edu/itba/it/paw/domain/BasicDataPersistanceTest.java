@@ -158,20 +158,25 @@ public class BasicDataPersistanceTest {
 		final Session session = this.factory.getCurrentSession();
 		final User u = new User("name", "username", "bla", "bla", "bla", "bla");
 
-		final User u2 = new RealStateAgency("Cristian", "Pereyra",
+		final Photo p = new Photo(new byte[] {}, "jpeg");
+
+		final RealStateAgency u2 = new RealStateAgency("Cristian", "Pereyra",
 				"criis.pereyra@algunlugar.com", "1233455", "kshmir", "login",
-				"Kshmirs real state", new Photo(new byte[] {}, "jpeg"));
+				"Kshmirs real state", p);
 
 		this.userRepository.save(u);
 		this.userRepository.save(u2);
 
 		session.flush();
 		session.clear();
+		session.refresh(u2);
 
 		Assert.assertEquals(
 				this.userRepository.getByNameAndPassword("kshmir", "login")
 						.getName(), u2.getName());
 		Assert.assertEquals(2, this.userRepository.find("from User").size());
+		Assert.assertEquals(u2.getName(), p.getAgency().getName());
+		Assert.assertEquals(u2.getPhoto().getType(), p.getType());
 
 	}
 }
