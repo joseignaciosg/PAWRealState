@@ -17,7 +17,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.itba.it.paw.domain.entities.ContactRequest;
 import ar.edu.itba.it.paw.domain.entities.Property;
-import ar.edu.itba.it.paw.domain.repositories.api.UserRepository;
 import ar.edu.itba.it.paw.domain.repositories.impl.HibernatePropertyRepository;
 import ar.edu.itba.it.paw.web.command.ContactRequestForm;
 import ar.edu.itba.it.paw.web.command.PropertyForm;
@@ -38,11 +37,9 @@ public class PropertyController {
 	private SearchFormValidator searchFormValidator;
 	@Autowired
 	private PropertyFormValidator propertyFormValidator;
-	@Autowired
-	private UserRepository userRepository;
 
 	@RequestMapping(method = RequestMethod.GET, value = "/search")
-	protected ModelAndView searchGET(@Valid final SearchForm searchForm,
+	protected ModelAndView searchGET(final SearchForm searchForm,
 			final Errors errors) throws ServletException, IOException {
 		return this.searchPOST(searchForm, errors);
 	}
@@ -92,21 +89,25 @@ public class PropertyController {
 	@RequestMapping(method = RequestMethod.POST, value = "/contactrequest")
 	// @ModelAttribute("contactRequestForm")
 	protected ModelAndView contactRequestPOST(
-			@Valid final ContactRequestForm contactRequestForm,
-			final Errors errors) throws ServletException, IOException {
+			final ContactRequestForm contactRequestForm, final Errors errors)
+			throws ServletException, IOException {
 
 		this.contactRequestFormValidator.validate(contactRequestForm, errors);
 
 		if (errors.hasErrors()) {
-			return new ModelAndView("property/view?propertyId="
-					+ contactRequestForm.getProperty().getId());
+			final ModelAndView mav = new ModelAndView("/property/view");
+			final ContactRequest request = contactRequestForm.build();
+			mav.addObject("id", contactRequestForm.getProperty().getId());
+			mav.addObject("user", request.getPropRefered().getOwner());
+			mav.addObject("property", request.getPropRefered());
+			mav.addObject("contactForm", contactRequestForm);
+			return mav;
 		} else {
 			final ContactRequest request = contactRequestForm.build();
 			this.propertyRepository.sendContactRequest(request);
 			final ModelAndView mav = new ModelAndView("property/contactrequest");
-
 			mav.addObject("user", request.getPropRefered().getOwner());
-			mav.addObject("property", request.getPropRefered().getOwner());
+			mav.addObject("property", request.getPropRefered());
 			mav.addObject("contactForm", contactRequestForm);
 			return mav;
 		}

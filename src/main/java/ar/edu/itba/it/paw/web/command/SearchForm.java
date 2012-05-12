@@ -2,13 +2,16 @@ package ar.edu.itba.it.paw.web.command;
 
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
 import ar.edu.itba.it.paw.domain.entities.Property.Operation;
 import ar.edu.itba.it.paw.domain.entities.Property.Service;
 import ar.edu.itba.it.paw.domain.entities.Property.Type;
-import ar.edu.itba.it.paw.domain.entities.Room;
 import ar.edu.itba.it.paw.domain.repositories.api.PropertySearch;
 import ar.edu.itba.it.paw.domain.repositories.api.PropertySearch.Order;
+import ar.edu.itba.it.paw.domain.repositories.api.RoomSearch;
 
+@Component
 public class SearchForm implements BuilderForm<PropertySearch> {
 
 	@Override
@@ -27,7 +30,7 @@ public class SearchForm implements BuilderForm<PropertySearch> {
 	private Integer quant;
 	private Integer page;
 	private List<Service> services;
-	private List<Room> rooms;
+	private List<RoomSearch> rooms;
 
 	public SearchForm() {
 	}
@@ -35,7 +38,7 @@ public class SearchForm implements BuilderForm<PropertySearch> {
 	public SearchForm(final Operation operation, final Type type,
 			final Order order, final Integer pricelow, final Integer pricehigh,
 			final Integer quant, final Integer page,
-			final List<Service> services, final List<Room> rooms) {
+			final List<Service> services, final List<RoomSearch> rooms) {
 		this.operation = operation;
 		this.type = type;
 		this.order = order;
@@ -105,7 +108,7 @@ public class SearchForm implements BuilderForm<PropertySearch> {
 
 	public PropertySearch build() {
 		return new PropertySearch(this.operation, this.type, this.pricelow,
-				this.pricehigh, this.page, this.quant, this.order,
-				this.services, this.rooms);
+				this.pricehigh, this.page, this.quant, this.order, null, null,
+				true);
 	}
 }
