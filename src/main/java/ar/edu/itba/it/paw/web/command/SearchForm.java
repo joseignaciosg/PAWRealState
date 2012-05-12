@@ -109,6 +109,6 @@ public class SearchForm implements BuilderForm<PropertySearch> {
 	public PropertySearch build() {
 		return new PropertySearch(this.operation, this.type, this.pricelow,
 				this.pricehigh, this.page, this.quant, this.order, null, null,
-				true);
+				true, );
 	}
 }

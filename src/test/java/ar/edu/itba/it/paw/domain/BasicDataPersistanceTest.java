@@ -67,7 +67,7 @@ public class BasicDataPersistanceTest {
 				23, 12, null, null, "", u);
 
 		final PropertySearch propSearch = new PropertySearch(null, null, null,
-				null, null, null, null, null, null, true);
+				null, null, null, null, null, null, true, null);
 
 		Assert.assertTrue(!property.getVisible());
 
