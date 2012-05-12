@@ -1,9 +1,12 @@
 <%@ page isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 
-			
 			<div class="control-group">  
+				<spring:bind path="propertyForm.owner">
+					<input type="hidden" name="owner" value="${current_user.id}"/>
+				</spring:bind>
 			    <label class="control-label" for="property_type">Seleccione un tipo de inmueble </label>  
 			    <div class="controls">  
 			    	<form:select id="type" name="property_type" path="type">  
@@ -85,7 +88,7 @@
 				<label class="control-label" for="property_age">Antiguedad </label>
 				<div class="controls">
 					<form:input type="text" class="input-xlarge" id="age" path="age" name="property_age" value=""/>
-					<p>Años</p>
+					<p>Aï¿½os</p>
 				</div>
 			</div>
 			<div class="control-group">
@@ -94,65 +97,11 @@
 					<form:input type="text" class="input-xlarge" id="description" path="description" name="property_description" value=""/>
 				</div>
 			</div>
+			
 			<div class="control-group">  
 			  <label class="control-label" for="property_service">Seleccione los servicios disponibles </label>  
-			  <div class="controls">  
-			    <label class="checkbox">  
-					
-				 <c:if test="${ propertyForm.service.cable }">
-					 <form:input type="checkbox" id="service" path="service.cable" checked="checked" name="property_cable" />
-			     </c:if>
-			      <c:if test="${ ! propertyForm.service.cable }">
-					 <form:input type="checkbox" id="service" path="service.cable" name="property_cable" />
-			     </c:if>
-			      Cable
-			    </label>
-			    <label class="checkbox">  
-			     <c:if test="${ propertyForm.service.telephone }">
-					<form:input type="checkbox" checked="checked" path="service.telephone" name="property_telephone" />
-			     </c:if>
-			     <c:if test="${ ! propertyForm.service.telephone }">
-					<form:input type="checkbox"  path="service.telephone" name="property_telephone" />
-			     </c:if>
-			      Telefono
-			    </label>
-			    <label class="checkbox">  
-			    <c:if test="${ propertyForm.service.swimmingpool }">
-					<form:input type="checkbox" path="service.swimmingpool" checked="checked"  name="property_swimmingpool" />
-			    </c:if>
-			    <c:if test="${ ! propertyForm.service.swimmingpool }">
-					<form:input type="checkbox" path="service.swimmingpool" name="property_swimmingpool" />
-			    </c:if>
-			      Pileta
-			    </label>
-			    <label class="checkbox">  
-			    <c:if test="${ propertyForm.service.lobby }">
-					<form:input type="checkbox" path="service.lobby" checked="checked" name="property_lobby" />
-			    </c:if>
-			    <c:if test="${ !propertyForm.service.lobby }">
-					<form:input type="checkbox" path="service.lobby" name="property_lobby" />
-			    </c:if>
-			      Salon
-			    </label>
-			    <label class="checkbox">  
-			    <c:if test="${ propertyForm.service.paddle }">
-					<form:input type="checkbox" path="service.paddle"  checked="checked" name="property_paddle" />
-			    </c:if>
-			    <c:if test="${ !propertyForm.service.paddle }">
-					<form:input type="checkbox" path="service.paddle" name="property_paddle" />
-			    </c:if>
-			      Cancha de paddle
-			    </label>
-			    <label class="checkbox">  
-			    <c:if test="${ propertyForm.service.quincho }">
-					<form:input type="checkbox" path="service.quincho"  checked="checked" name="property_quincho" />
-			    </c:if>
-			     <c:if test="${ !propertyForm.service.quincho }">
-					<form:input type="checkbox" path="service.quincho" name="property_quincho" />
-			    </c:if>
-			        
-			      Quincho
-			    </label>
+			  <div class="controls">
+                <form:checkboxes path="services" items="${propertyServices}" />
 			  </div>  
 			</div>		
 			

@@ -1,6 +1,7 @@
 package ar.edu.itba.it.paw.domain.entities;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -29,13 +30,27 @@ public class Property extends PersistentEntity {
 
 	@Table(name = "services")
 	public enum Service {
-		TENIS, SECURITY, LAUNDRY, SOLARIUM, CABLE, PHONE, SWIMMING, SALON, PADDLE, QUINCHO
+		TENIS("Tenis"), SECURITY("Vigilancia Nocturna"), LAUNDRY(
+				"Servicio de Laundry"), SOLARIUM("Solarium"), CABLE("Cable"), PHONE(
+				"Telefono"), SWIMMING("Pileta de natacion"), SALON("Salon"), PADDLE(
+				"Cancha de paddle"), QUINCHO("Quincho");
+
+		private final String name;
+
+		Service(final String name) {
+			this.name = name;
+		}
+
+		@Override
+		public String toString() {
+			return this.name;
+		}
 	}
 
 	@CollectionOfElements
 	@JoinTable(name = "services", joinColumns = @JoinColumn(name = "property_id"))
 	@Enumerated(EnumType.STRING)
-	private List<Service> services = new ArrayList<Service>();
+	private List<Service> services;
 
 	@Enumerated(EnumType.STRING)
 	private Type type;
@@ -65,7 +80,7 @@ public class Property extends PersistentEntity {
 	@OneToMany(mappedBy = "property")
 	private List<Room> rooms = new ArrayList<Room>();
 
-	private Boolean visible;
+	private boolean visible;
 
 	@ManyToOne
 	@JoinColumn(name = "user_id")
@@ -75,11 +90,19 @@ public class Property extends PersistentEntity {
 
 	}
 
+	public static List<Service> getAllServices() {
+		final List<Service> list = new LinkedList<Service>();
+		for (final Service srv : Service.values()) {
+			list.add(srv);
+		}
+		return list;
+	}
+
 	public Property(final Type type, final Operation operation,
 			final String neighborhood, final String address,
 			final Integer price, final Integer spaces,
 			final Integer coveredArea, final Integer freeArea,
-			final Integer age, final List<String> services,
+			final Integer age, final List<Service> services,
 			final String description, final User owner) {
 		this.type = type;
 		this.operation = operation;
@@ -90,9 +113,13 @@ public class Property extends PersistentEntity {
 		this.coveredArea = coveredArea;
 		this.freeArea = freeArea;
 		this.age = age;
-		// this.services = services;
+		this.services = services;
 		this.description = description;
 		this.owner = owner;
+	}
+
+	public void setServices(final List<Service> services) {
+		this.services = services;
 	}
 
 	public String getPropertyType() {
@@ -218,10 +245,6 @@ public class Property extends PersistentEntity {
 
 	public List<Service> getServices() {
 		return this.services;
-	}
-
-	public void setServices(final List<Service> services) {
-		this.services = services;
 	}
 
 	public List<Room> getRooms() {

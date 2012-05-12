@@ -67,12 +67,6 @@ public class PropertyFormValidator implements Validator {
 					errors.rejectValue("age", "lowercero");
 				}
 			}
-			if (form.getDescription() != null) {
-				final Integer desize = form.getDescription().length();
-				if (desize < 1 || desize > 150) {
-					errors.rejectValue("description", "invalidsize");
-				}
-			}
 		}
 	}
 

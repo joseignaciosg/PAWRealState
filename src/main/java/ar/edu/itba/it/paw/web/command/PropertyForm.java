@@ -1,8 +1,13 @@
 package ar.edu.itba.it.paw.web.command;
 
+import java.util.Arrays;
+import java.util.List;
+
 import ar.edu.itba.it.paw.domain.entities.Property;
 import ar.edu.itba.it.paw.domain.entities.Property.Operation;
+import ar.edu.itba.it.paw.domain.entities.Property.Service;
 import ar.edu.itba.it.paw.domain.entities.Property.Type;
+import ar.edu.itba.it.paw.domain.entities.Room;
 import ar.edu.itba.it.paw.domain.entities.User;
 
 public class PropertyForm implements BuilderForm<Property> {
@@ -17,11 +22,13 @@ public class PropertyForm implements BuilderForm<Property> {
 	private Integer freeArea;
 	private Integer age;
 	private String description;
+	private Service[] services;
+	private Room[] rooms;
 
 	private Property property = new Property();
 
 	// TODO: Rename a owner, current user no necesariamente lo es
-	private User currentUser;
+	private User owner;
 
 	public PropertyForm() {
 	}
@@ -31,7 +38,8 @@ public class PropertyForm implements BuilderForm<Property> {
 			final Integer price, final Integer spaces,
 			final Integer coveredArea, final Integer freeArea,
 			final Integer age, final String description,
-			final Property property, final User currentUser) {
+			final Property property, final User currentUser,
+			final List<Service> services, final List<Room> rooms) {
 		this.operation = operation;
 		this.type = type;
 		this.neighborhood = neighborhood;
@@ -43,11 +51,18 @@ public class PropertyForm implements BuilderForm<Property> {
 		this.age = age;
 		this.description = description;
 		this.property = property;
-		this.currentUser = currentUser;
+		this.owner = currentUser;
+		if (this.services != null) {
+			this.services = services.toArray(new Service[] {});
+		}
+
+		if (this.getRooms() != null) {
+			this.setRooms(rooms.toArray(new Room[] {}));
+		}
 
 		if (currentUser == null && this.property != null
 				&& this.property.getOwner() != null) {
-			this.currentUser = this.property.getOwner();
+			this.owner = this.property.getOwner();
 		}
 	}
 
@@ -56,11 +71,20 @@ public class PropertyForm implements BuilderForm<Property> {
 				.getNeighborhood(), property.getAddress(), property.getPrice(),
 				property.getSpaces(), property.getCoveredArea(), property
 						.getFreeArea(), property.getAge(), property
-						.getDescription(), property, property.getOwner());
+						.getDescription(), property, property.getOwner(),
+				property.getServices(), property.getRooms());
 	}
 
 	public Operation getOperation() {
 		return this.operation;
+	}
+
+	public Service[] getServices() {
+		return this.services;
+	}
+
+	public void setServices(final Service[] services) {
+		this.services = services;
 	}
 
 	public void setOperation(final Operation operation) {
@@ -139,12 +163,12 @@ public class PropertyForm implements BuilderForm<Property> {
 		this.description = description;
 	}
 
-	public User getCurrentUser() {
-		return this.currentUser;
+	public User getOwner() {
+		return this.owner;
 	}
 
-	public void setCurrentUser(final User currentUser) {
-		this.currentUser = currentUser;
+	public void setOwner(final User currentUser) {
+		this.owner = currentUser;
 	}
 
 	public Property getProperty() {
@@ -164,10 +188,19 @@ public class PropertyForm implements BuilderForm<Property> {
 		answer.setFreeArea(this.freeArea);
 		answer.setNeighborhood(this.neighborhood);
 		answer.setOperation(this.operation);
-		answer.setOwner(this.currentUser);
+		answer.setOwner(this.owner);
 		answer.setPrice(this.price);
 		answer.setSpaces(this.spaces);
 		answer.setType(this.type);
+		answer.setServices(Arrays.asList(this.services));
 		return answer;
+	}
+
+	public Room[] getRooms() {
+		return this.rooms;
+	}
+
+	public void setRooms(final Room[] rooms) {
+		this.rooms = rooms;
 	}
 }
