@@ -122,6 +122,7 @@ public class PropertyController {
 			IOException {
 		mav.setViewName("property/new");
 		mav.addObject("propertyForm", propertyForm);
+		mav.addObject("propertyServices", Property.getAllServices());
 		return mav;
 	}
 
@@ -133,7 +134,6 @@ public class PropertyController {
 
 		boolean saved = false;
 		if (!validateErrors.hasErrors()) {
-			// TODO: Security check
 			this.propertyRepository.save(propertyForm.build());
 			saved = true;
 		}
@@ -187,6 +187,10 @@ public class PropertyController {
 		if (!mav.getModel().containsKey("propertyForm")) {
 			mav.addObject("propertyForm", new PropertyForm(property));
 		}
+		if (!mav.getModel().containsKey("propertyServices")) {
+			mav.addObject("propertyServices", Property.getAllServices());
+		}
+
 		return mav;
 	}
 

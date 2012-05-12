@@ -33,4 +33,14 @@ public class HibernateUserRepository extends AbstractHibernateRepository
 
 		return (User) found.get(0);
 	}
+
+	@SuppressWarnings("rawtypes")
+	public User getByName(final String username) {
+		final List found = this.find("from User u where u.username like ?",
+				username);
+		if (found.isEmpty()) {
+			return null;
+		}
+		return (User) found.get(0);
+	}
 }

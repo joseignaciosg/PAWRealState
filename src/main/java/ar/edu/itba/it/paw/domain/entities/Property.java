@@ -1,6 +1,7 @@
 package ar.edu.itba.it.paw.domain.entities;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -31,7 +32,21 @@ public class Property extends PersistentEntity {
 
 	@Table(name = "services")
 	public enum Service {
-		TENIS, SECURITY, LAUNDRY, SOLARIUM, CABLE, PHONE, SWIMMING, SALON, PADDLE, QUINCHO
+		TENIS("Tenis"), SECURITY("Vigilancia Nocturna"), LAUNDRY(
+				"Servicio de Laundry"), SOLARIUM("Solarium"), CABLE("Cable"), PHONE(
+				"Telefono"), SWIMMING("Pileta de natacion"), SALON("Salon"), PADDLE(
+				"Cancha de paddle"), QUINCHO("Quincho");
+
+		private final String name;
+
+		Service(final String name) {
+			this.name = name;
+		}
+
+		@Override
+		public String toString() {
+			return this.name;
+		}
 	}
 
 	@CollectionOfElements
@@ -39,7 +54,6 @@ public class Property extends PersistentEntity {
 	@JoinTable(name = "services", joinColumns = @JoinColumn(name = "property_id"))
 	@Enumerated(EnumType.STRING)
 	private List<Service> services = new ArrayList<Service>();
-
 	@Enumerated(EnumType.STRING)
 	private Type type;
 
@@ -88,6 +102,14 @@ public class Property extends PersistentEntity {
 		this.visitCount = 0;
 	}
 
+	public static List<Service> getAllServices() {
+		final List<Service> list = new LinkedList<Service>();
+		for (final Service srv : Service.values()) {
+			list.add(srv);
+		}
+		return list;
+	}
+
 	/**
 	 * @deprecated Use {@link
 	 *             #Property(Type,Operation,String,String,Integer,Integer,
@@ -130,6 +152,10 @@ public class Property extends PersistentEntity {
 		}
 		this.visitCount = 0;
 		this.reserved = false;
+	}
+
+	public void setServices(final List<Service> services) {
+		this.services = services;
 	}
 
 	public String getPropertyType() {
@@ -271,10 +297,6 @@ public class Property extends PersistentEntity {
 
 	public List<Service> getServices() {
 		return this.services;
-	}
-
-	public void setServices(final List<Service> services) {
-		this.services = services;
 	}
 
 	public List<Room> getRooms() {
