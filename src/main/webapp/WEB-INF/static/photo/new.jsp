@@ -7,6 +7,7 @@
 <div class="row">
 	<form:form name="property_newphoto" class="form-horizontal span8 offset2"
 		action="new" method="POST" commandName="file" enctype="multipart/form-data">
+		<form:errors path="*"/>
 		<fieldset>
 			<legend>Agregar Nueva Foto a la Propiedad</legend>
 			<input type="hidden" class="input-xlarge" id="freeArea"

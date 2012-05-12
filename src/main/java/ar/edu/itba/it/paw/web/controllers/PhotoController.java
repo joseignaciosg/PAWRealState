@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -36,9 +37,17 @@ public class PhotoController {
 	@RequestMapping(method = RequestMethod.POST, value = "/new")
 	protected String addPOST(
 			@RequestParam(value = "file") final MultipartFile file,
-			@RequestParam(value = "propertyId") final Property property) {
-
-		// TODO: Validar tipo de archivo
+			@RequestParam(value = "propertyId") final Property property,
+			final Object command, final Errors errors) {
+		boolean valid = true;
+		if (file.getSize() > 1000000) {
+			errors.rejectValue("photo", "toobig");
+			valid = false;
+		}
+		if (!valid) {
+			return "redirect:/photo/new?propertyId="
+					+ property.getId().toString();
+		}
 		try {
 			property.addPhoto(new Photo(file.getBytes(), "jpeg", property));
 		} catch (final IOException e) {
@@ -51,25 +60,24 @@ public class PhotoController {
 	@RequestMapping(method = RequestMethod.POST)
 	protected String delete(@RequestParam(value = "photoId") final Photo photo) {
 
-		// Eliminar la foto
 		final Property prop = photo.getProperty();
 		prop.removePhoto(photo);
 
-		return "redirect:/photo/list?propertyId=" + photo.getProperty().getId();
+		return "redirect:/photo/list?propertyId=" + prop.getId();
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
 	protected ModelAndView list(
 			@RequestParam(value = "propertyId") final Property property) {
-		final ModelAndView mav = new ModelAndView("photo/list");
 
+		final ModelAndView mav = new ModelAndView("photo/list");
 		mav.addObject("property", property);
 
 		return mav;
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
-	protected void show(final HttpServletRequest req,
+	protected void view(final HttpServletRequest req,
 			final HttpServletResponse resp,
 			@RequestParam(value = "ID") final Photo p) throws IOException {
 

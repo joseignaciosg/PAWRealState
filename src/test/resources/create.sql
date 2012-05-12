@@ -4,7 +4,7 @@ CREATE TABLE services (
   property_id integer not null,
   element character varying not null,
   primary key(property_id, element)
-) 
+);
 
  -- has_cable boolean NOT NULL,
  --  has_phone boolean NOT NULL,
@@ -28,10 +28,10 @@ ALTER TABLE PROPERTIES DROP COLUMN has_salon;
 ALTER TABLE PROPERTIES DROP COLUMN has_paddle;
 ALTER TABLE PROPERTIES DROP COLUMN has_quincho;
 
-CREATE TABLE services (
-  id SERIAL not null.
+CREATE TABLE rooms (
+  id SERIAL not null,
   size integer not null,
   property_id integer not null,
   type character varying not null,
   primary key(id)
-) 
+);

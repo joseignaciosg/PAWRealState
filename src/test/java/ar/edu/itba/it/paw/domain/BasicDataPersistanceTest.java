@@ -127,17 +127,18 @@ public class BasicDataPersistanceTest {
 
 		final Photo photo = new Photo(new byte[] {}, "jpeg", property);
 
-		property.getPhotos().add(photo);
-
-		this.propertyRepository.save(photo);
+		property.addPhoto(photo);
 
 		session.flush();
-
-		session.refresh(property);
 
 		Assert.assertTrue(property.getPhotos().contains(photo));
 		Assert.assertEquals(photo.getProperty(), property);
 
-	}
+		property.removePhoto(photo);
 
+		session.flush();
+
+		Assert.assertFalse(property.getPhotos().contains(photo));
+
+	}
 }
