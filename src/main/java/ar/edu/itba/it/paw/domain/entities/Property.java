@@ -70,6 +70,14 @@ public class Property extends PersistentEntity {
 	@OneToMany(mappedBy = "property")
 	private List<Room> rooms = new ArrayList<Room>();
 
+<<<<<<< HEAD
+=======
+	@OneToMany(mappedBy = "property")
+	private List<ContactRequest> contactRequests = new ArrayList<ContactRequest>();
+
+	private Boolean visible;
+
+>>>>>>> github/development
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private User owner;
@@ -233,6 +241,27 @@ public class Property extends PersistentEntity {
 
 	public void setRooms(final List<Room> rooms) {
 		this.rooms = rooms;
+	}
+
+	public List<ContactRequest> getContactRequest() {
+		return this.contactRequests;
+	}
+
+	public void setContactRequest(final List<ContactRequest> contactRequests) {
+		this.contactRequests = contactRequests;
+	}
+
+	public void addContactRequest(final ContactRequest request) {
+		this.contactRequests.add(request);
+	}
+
+	public boolean removeContactRequest(final ContactRequest request) {
+
+		if (this.contactRequests.contains(request)) {
+			this.contactRequests.remove(request);
+			return true;
+		}
+		return false;
 	}
 
 }

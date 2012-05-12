@@ -74,7 +74,7 @@ public class UserController {
 		final UserManager manager = (UserManager) req
 				.getAttribute("userManager");
 
-		manager.setCurrentUser(null);
+		manager.forgetCurrentUser();
 
 		final CookiesManager cookman = new CookiesManager(req, resp);
 		if (cookman.getRemember().equals("session")) {
