@@ -3,18 +3,10 @@ package ar.edu.itba.it.paw.domain.entities;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.Column;
+import javax.persistence.*;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
 import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.CollectionOfElements;
 
 @Entity
@@ -35,7 +27,7 @@ public class Property extends PersistentEntity {
 	}
 
 	@CollectionOfElements
-	@Cascade(value = { CascadeType.ALL })
+	@Cascade(value = { org.hibernate.annotations.CascadeType.ALL })
 	@JoinTable(name = "services", joinColumns = @JoinColumn(name = "property_id"))
 	@Enumerated(EnumType.STRING)
 	private List<Service> services = new ArrayList<Service>();
@@ -46,7 +38,6 @@ public class Property extends PersistentEntity {
 	@Enumerated(EnumType.STRING)
 	@Column(name = "transaction")
 	private Operation operation;
-
 	private String neighborhood;
 	private String address;
 	private Integer price;
@@ -62,13 +53,18 @@ public class Property extends PersistentEntity {
 
 	private String description;
 
-	@OneToMany(mappedBy = "property")
+	@OneToMany(mappedBy = "property", cascade = { CascadeType.ALL,
+			CascadeType.REMOVE })
+	@Cascade(value = { org.hibernate.annotations.CascadeType.ALL,
+			org.hibernate.annotations.CascadeType.DELETE_ORPHAN })
 	private List<Photo> photos = new ArrayList<Photo>();
 
+	private boolean visible;
 	@OneToMany(mappedBy = "property")
 	private List<Room> rooms = new ArrayList<Room>();
 
-	private Boolean visible;
+	@OneToMany(mappedBy = "property")
+	private List<ContactRequest> contactRequests = new ArrayList<ContactRequest>();
 
 	@ManyToOne
 	@JoinColumn(name = "user_id")
@@ -255,6 +251,27 @@ public class Property extends PersistentEntity {
 
 	public void setRooms(final List<Room> rooms) {
 		this.rooms = rooms;
+	}
+
+	public List<ContactRequest> getContactRequest() {
+		return this.contactRequests;
+	}
+
+	public void setContactRequest(final List<ContactRequest> contactRequests) {
+		this.contactRequests = contactRequests;
+	}
+
+	public void addContactRequest(final ContactRequest request) {
+		this.contactRequests.add(request);
+	}
+
+	public boolean removeContactRequest(final ContactRequest request) {
+
+		if (this.contactRequests.contains(request)) {
+			this.contactRequests.remove(request);
+			return true;
+		}
+		return false;
 	}
 
 }
