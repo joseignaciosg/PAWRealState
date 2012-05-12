@@ -5,6 +5,7 @@ import java.util.List;
 import ar.edu.itba.it.paw.domain.entities.Property.Operation;
 import ar.edu.itba.it.paw.domain.entities.Property.Service;
 import ar.edu.itba.it.paw.domain.entities.Property.Type;
+import ar.edu.itba.it.paw.domain.entities.User;
 
 public final class PropertySearch {
 
@@ -22,12 +23,13 @@ public final class PropertySearch {
 	private List<Service> services;
 	private List<RoomSearch> rooms;
 	private boolean visibility;
+	private User user;
 
 	public PropertySearch(final Operation operation, final Type type,
 			final Integer priceLow, final Integer priceHigh,
 			final Integer page, final Integer quant, final Order order,
 			final List<Service> services, final List<RoomSearch> roomSearch,
-			final boolean visibility) {
+			final boolean visibility, final User user) {
 		this.operation = operation;
 		this.type = type;
 		this.priceLow = priceLow;
@@ -38,10 +40,12 @@ public final class PropertySearch {
 		this.services = services;
 		this.rooms = roomSearch;
 		this.visibility = visibility;
+		this.user = user;
 	}
 
 	public PropertySearch(final Operation rent) {
-		this(rent, null, null, null, null, null, Order.DESC, null, null, true);
+		this(rent, null, null, null, null, null, Order.DESC, null, null, true,
+				null);
 	}
 
 	public Operation getOperation() {
@@ -82,6 +86,10 @@ public final class PropertySearch {
 
 	public List<RoomSearch> getRooms() {
 		return this.rooms;
+	}
+
+	public User getUser() {
+		return this.user;
 	}
 
 }
