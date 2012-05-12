@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import ar.edu.itba.it.paw.web.command.RegistrationForm;
 
@@ -21,6 +22,7 @@ public class RegistrationFormValidator implements Validator {
 
 	public void validate(final Object target, final Errors errors) {
 		final RegistrationForm form = (RegistrationForm) target;
+		final CommonsMultipartFile file = form.getPhoto();
 		ValidationUtils.rejectIfEmpty(errors, "userName", "empty");
 		ValidationUtils.rejectIfEmpty(errors, "password", "empty");
 		ValidationUtils.rejectIfEmpty(errors, "repeatedPassword", "empty");
@@ -50,5 +52,15 @@ public class RegistrationFormValidator implements Validator {
 			}
 		}
 
+		if (form.getType() != null && form.getType().equals("RealStateAgency")) {
+			ValidationUtils.rejectIfEmpty(errors, "agencyName", "empty");
+			if (file != null
+					&& !(file.getOriginalFilename().endsWith(".jpeg")
+							|| file.getOriginalFilename().endsWith(".jpg")
+							|| file.getOriginalFilename().endsWith(".gif") || file
+							.getOriginalFilename().endsWith(".png"))) {
+				errors.rejectValue("photo", "invalidformat");
+			}
+		}
 	}
 }

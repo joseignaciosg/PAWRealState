@@ -5,15 +5,22 @@ import junit.framework.Assert;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.annotation.DirtiesContext.ClassMode;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
-import ar.edu.itba.it.paw.BaseTest;
 import ar.edu.itba.it.paw.domain.entities.Photo;
 import ar.edu.itba.it.paw.domain.entities.Property;
 import ar.edu.itba.it.paw.domain.entities.Property.Service;
+import ar.edu.itba.it.paw.domain.entities.RealStateAgency;
 import ar.edu.itba.it.paw.domain.entities.Room;
 import ar.edu.itba.it.paw.domain.entities.Room.RoomType;
 import ar.edu.itba.it.paw.domain.entities.User;
+import ar.edu.itba.it.paw.domain.exceptions.InvalidLoginException;
 import ar.edu.itba.it.paw.domain.repositories.impl.HibernatePropertyRepository;
 import ar.edu.itba.it.paw.domain.repositories.impl.HibernateUserRepository;
 
@@ -23,8 +30,11 @@ import ar.edu.itba.it.paw.domain.repositories.impl.HibernateUserRepository;
  * @author cris
  * 
  */
-
-public class BasicDataPersistanceTest extends BaseTest {
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = { "classpath:data-test.xml" })
+@Transactional
+@DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
+public class BasicDataPersistanceTest {
 	@Autowired
 	HibernateUserRepository userRepository;
 
@@ -139,6 +149,29 @@ public class BasicDataPersistanceTest extends BaseTest {
 		session.flush();
 
 		Assert.assertFalse(property.getPhotos().contains(photo));
+
+	}
+
+	@Test
+	public void userAndAgencyTest() throws InvalidLoginException {
+
+		final Session session = this.factory.getCurrentSession();
+		final User u = new User("name", "username", "bla", "bla", "bla", "bla");
+
+		final User u2 = new RealStateAgency("Cristian", "Pereyra",
+				"criis.pereyra@algunlugar.com", "1233455", "kshmir", "login",
+				"Kshmirs real state", new Photo(new byte[] {}, "jpeg"));
+
+		this.userRepository.save(u);
+		this.userRepository.save(u2);
+
+		session.flush();
+		session.clear();
+
+		Assert.assertEquals(
+				this.userRepository.getByNameAndPassword("kshmir", "login")
+						.getName(), u2.getName());
+		Assert.assertEquals(2, this.userRepository.find("from User").size());
 
 	}
 }

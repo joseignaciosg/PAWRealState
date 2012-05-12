@@ -3,6 +3,7 @@ package ar.edu.itba.it.paw.domain.entities;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -16,8 +17,17 @@ public class Photo extends PersistentEntity {
 	@JoinColumn(name = "property_id")
 	private Property property;
 
+	@OneToOne
+	@JoinColumn(name = "agent_id")
+	private RealStateAgency agency;
+
 	public Photo() {
 
+	}
+
+	public Photo(final byte[] data, final String type) {
+		this.data = data;
+		this.type = type;
 	}
 
 	public Photo(final byte[] data, final String type, final Property property) {
@@ -36,6 +46,14 @@ public class Photo extends PersistentEntity {
 
 	public Property getProperty() {
 		return this.property;
+	}
+
+	public RealStateAgency getAgency() {
+		return this.agency;
+	}
+
+	public void setAgency(final RealStateAgency agency) {
+		this.agency = agency;
 	}
 
 }

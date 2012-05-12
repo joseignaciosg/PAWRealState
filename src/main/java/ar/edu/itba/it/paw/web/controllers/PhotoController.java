@@ -39,11 +39,7 @@ public class PhotoController {
 			@RequestParam(value = "file") final MultipartFile file,
 			@RequestParam(value = "propertyId") final Property property,
 			final Object command, final Errors errors) {
-		boolean valid = true;
-		if (file.getSize() > 1000000) {
-			errors.rejectValue("photo", "toobig");
-			valid = false;
-		}
+		final boolean valid = errors.hasErrors();
 		if (!valid) {
 			return "redirect:/photo/new?propertyId="
 					+ property.getId().toString();

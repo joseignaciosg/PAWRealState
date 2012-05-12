@@ -28,6 +28,14 @@ ALTER TABLE PROPERTIES DROP COLUMN has_salon;
 ALTER TABLE PROPERTIES DROP COLUMN has_paddle;
 ALTER TABLE PROPERTIES DROP COLUMN has_quincho;
 
+ALTER TABLE PHOTOS ADD COLUMN agent_id INTEGER;
+
+ALTER TABLE USERS ADD COLUMN tipo character varying;
+ALTER TABLE USERS ADD COLUMN photo_id INTEGER;
+ALTER TABLE USERS ADD COLUMN agency_name character varying;
+
+UPDATE TABLE USERS SET tipo = "User";
+
 CREATE TABLE rooms (
   id SERIAL not null,
   size integer not null,
