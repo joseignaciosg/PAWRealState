@@ -30,7 +30,6 @@ public class Property extends PersistentEntity {
 	@Enumerated(EnumType.STRING)
 	@Column(name = "transaction")
 	private Operation operation;
-
 	private String neighborhood;
 	private String address;
 	private Integer price;
@@ -49,7 +48,7 @@ public class Property extends PersistentEntity {
 	@OneToMany(mappedBy = "property")
 	private List<Photo> photos = new ArrayList<Photo>();
 
-	private Boolean visible;
+	private boolean visible;
 
 	@ManyToOne
 	@JoinColumn(name = "user_id")
