@@ -22,6 +22,10 @@ public class Photo extends PersistentEntity {
 		this.property = property;
 	}
 
+	public Photo() {
+
+	}
+
 	public byte[] getData() {
 		return this.data;
 	}

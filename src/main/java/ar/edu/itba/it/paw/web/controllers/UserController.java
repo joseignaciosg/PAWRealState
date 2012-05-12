@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import ar.edu.itba.it.paw.web.command.LoginForm;
 import ar.edu.itba.it.paw.web.command.RegistrationForm;
 import ar.edu.itba.it.paw.web.command.validator.RegistrationFormValidator;
 import ar.edu.itba.it.paw.web.cookies.CookiesManager;
@@ -30,32 +31,31 @@ public class UserController {
 		this.registrationFormValidator = registrationFormValidator;
 	}
 
-	// TODO: Kill fefo
-	// @RequestMapping(method = RequestMethod.POST)
-	// protected ModelAndView login(final LoginForm loginForm)
-	// throws ServletException, IOException {
-	// // TODO: Make this
-	// final String username = loginForm.getUser_username();
-	// final String password = loginForm.getUser_password();
-	// final String remember = loginForm.getRemember();
-	//
-	// // final UserManager manager = (UserManager) req
-	// // .getAttribute("userManager");
-	//
-	// final boolean loginValid = true;
-	//
-	// if (loginValid) {
-	// final ModelAndView mav = new ModelAndView("forward:/index");
-	// // final CookiesManager cookman = new CookiesManager(req, resp);
-	// // cookman.setUser(username, password, remember);
-	// mav.addObject("errors", new String[] { "Bienvenido " + username });
-	// return mav;
-	// } else {
-	// final ModelAndView mav = new ModelAndView("forward:/index");
-	// mav.addObject("errors", new String[] { "Login inválido" });
-	// return mav;
-	// }
-	// }
+	@RequestMapping(method = RequestMethod.POST)
+	protected ModelAndView login(final LoginForm loginForm)
+			throws ServletException, IOException {
+		// TODO: Make this
+		final String username = loginForm.getUser_username();
+		final String password = loginForm.getUser_password();
+		final String remember = loginForm.getRemember();
+
+		// final UserManager manager = (UserManager) req
+		// .getAttribute("userManager");
+
+		final boolean loginValid = true;
+
+		if (loginValid) {
+			final ModelAndView mav = new ModelAndView("forward:/index");
+			// final CookiesManager cookman = new CookiesManager(req, resp);
+			// cookman.setUser(username, password, remember);
+			mav.addObject("errors", new String[] { "Bienvenido " + username });
+			return mav;
+		} else {
+			final ModelAndView mav = new ModelAndView("forward:/index");
+			mav.addObject("errors", new String[] { "Login inválido" });
+			return mav;
+		}
+	}
 
 	@RequestMapping(method = RequestMethod.GET)
 	protected String logout(final HttpServletRequest req,
