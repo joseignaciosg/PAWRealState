@@ -3,16 +3,10 @@ package ar.edu.itba.it.paw.domain.entities;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.Column;
+import javax.persistence.*;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CollectionOfElements;
 
 @Entity
@@ -33,6 +27,7 @@ public class Property extends PersistentEntity {
 	}
 
 	@CollectionOfElements
+	@Cascade(value = { org.hibernate.annotations.CascadeType.ALL })
 	@JoinTable(name = "services", joinColumns = @JoinColumn(name = "property_id"))
 	@Enumerated(EnumType.STRING)
 	private List<Service> services = new ArrayList<Service>();
@@ -43,7 +38,6 @@ public class Property extends PersistentEntity {
 	@Enumerated(EnumType.STRING)
 	@Column(name = "transaction")
 	private Operation operation;
-
 	private String neighborhood;
 	private String address;
 	private Integer price;
@@ -59,16 +53,18 @@ public class Property extends PersistentEntity {
 
 	private String description;
 
-	@OneToMany(mappedBy = "property")
+	@OneToMany(mappedBy = "property", cascade = { CascadeType.ALL,
+			CascadeType.REMOVE })
+	@Cascade(value = { org.hibernate.annotations.CascadeType.ALL,
+			org.hibernate.annotations.CascadeType.DELETE_ORPHAN })
 	private List<Photo> photos = new ArrayList<Photo>();
 
+	private boolean visible;
 	@OneToMany(mappedBy = "property")
 	private List<Room> rooms = new ArrayList<Room>();
 
 	@OneToMany(mappedBy = "property")
 	private List<ContactRequest> contactRequests = new ArrayList<ContactRequest>();
-
-	private Boolean visible;
 
 	@ManyToOne
 	@JoinColumn(name = "user_id")
@@ -78,12 +74,29 @@ public class Property extends PersistentEntity {
 
 	}
 
+	/**
+	 * @deprecated Use {@link
+	 *             #Property(Type,Operation,String,String,Integer,Integer,
+	 *             Integer,Integer,Integer,List<String>,List,String,User)}
+	 *             instead
+	 */
+	@Deprecated
 	public Property(final Type type, final Operation operation,
 			final String neighborhood, final String address,
 			final Integer price, final Integer spaces,
 			final Integer coveredArea, final Integer freeArea,
-			final Integer age, final List<String> services,
+			final Integer age, final List<Service> services,
 			final String description, final User owner) {
+		this(type, operation, neighborhood, address, price, spaces,
+				coveredArea, freeArea, age, services, null, description, owner);
+	}
+
+	public Property(final Type type, final Operation operation,
+			final String neighborhood, final String address,
+			final Integer price, final Integer spaces,
+			final Integer coveredArea, final Integer freeArea,
+			final Integer age, final List<Service> services,
+			final List<Room> rooms, final String description, final User owner) {
 		this.type = type;
 		this.operation = operation;
 		this.neighborhood = neighborhood;
@@ -93,9 +106,14 @@ public class Property extends PersistentEntity {
 		this.coveredArea = coveredArea;
 		this.freeArea = freeArea;
 		this.age = age;
-		// this.services = services;
+		if (services != null) {
+			this.services = services;
+		}
 		this.description = description;
 		this.owner = owner;
+		if (rooms != null) {
+			this.rooms = rooms;
+		}
 	}
 
 	public String getPropertyType() {

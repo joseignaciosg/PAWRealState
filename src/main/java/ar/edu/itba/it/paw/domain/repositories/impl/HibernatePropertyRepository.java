@@ -32,6 +32,7 @@ public class HibernatePropertyRepository extends AbstractHibernateRepository
 	}
 
 	public List<Property> getAll(final PropertySearch search) {
+		this.find("from Property p where p = ?", search);
 		return this.find("from Property");
 	}
 

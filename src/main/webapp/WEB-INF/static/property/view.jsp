@@ -62,7 +62,7 @@
 									<c:forEach var="photo" items="${property.photos}">
 										<div class="item">
 											<img height="100" width="425"
-												src="${ basePath }/photos?ID=${ photo.id }" alt="" />
+												src="${ basePath }/photo/view?ID=${ photo.id }" alt="" />
 										</div>
 									</c:forEach>
 								</c:when>
