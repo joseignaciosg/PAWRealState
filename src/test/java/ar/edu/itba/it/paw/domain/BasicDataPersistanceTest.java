@@ -23,6 +23,7 @@ import ar.edu.itba.it.paw.domain.entities.User;
 import ar.edu.itba.it.paw.domain.exceptions.InvalidLoginException;
 import ar.edu.itba.it.paw.domain.exceptions.NoSuchEntityException;
 import ar.edu.itba.it.paw.domain.repositories.api.PropertySearch;
+import ar.edu.itba.it.paw.domain.repositories.api.PropertySearch.Order;
 import ar.edu.itba.it.paw.domain.repositories.impl.HibernatePropertyRepository;
 import ar.edu.itba.it.paw.domain.repositories.impl.HibernateUserRepository;
 
@@ -67,30 +68,23 @@ public class BasicDataPersistanceTest {
 				23, 12, null, null, "", u);
 
 		final PropertySearch propSearch = new PropertySearch(null, null, null,
-				null, null, null, null, null, null, true);
-
-		Assert.assertTrue(!property.getVisible());
+				null, null, null, Order.ASC, null, null, true, null);
 
 		final int oldVisibleCount = this.propertyRepository.getAll(propSearch)
 				.size();
 
 		this.propertyRepository.save(property);
+
 		session.flush();
 
 		int newVisibleCount = this.propertyRepository.getAll(propSearch).size();
 
 		Assert.assertEquals(oldVisibleCount, newVisibleCount);
 
-		property.toggleVisibility();
-
-		// Assert.assertEquals(property.getVisible(), true);
-
 		this.propertyRepository.save(property);
 		session.flush();
 
 		newVisibleCount = this.propertyRepository.getAll().size();
-
-		// Assert.assertEquals(oldVisibleCount + 1, newVisibleCount);
 
 	}
 

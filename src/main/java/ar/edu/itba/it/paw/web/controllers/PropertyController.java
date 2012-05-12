@@ -64,7 +64,7 @@ public class PropertyController {
 		} else {
 			props = new ArrayList<Property>();
 		}
-
+		System.out.println(props);
 		final ModelAndView mav = new ModelAndView("property/search");
 
 		mav.addObject("props", props);
