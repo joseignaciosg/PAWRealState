@@ -95,6 +95,9 @@ public class Property extends PersistentEntity {
 	@Column(name = "visitcount")
 	private Integer visitCount;
 
+	@Column(name = "reserved")
+	private boolean reserved;
+
 	public Property() {
 		this.visitCount = 0;
 	}
@@ -148,6 +151,7 @@ public class Property extends PersistentEntity {
 			this.rooms = rooms;
 		}
 		this.visitCount = 0;
+		this.reserved = false;
 	}
 
 	public void setServices(final List<Service> services) {
@@ -217,6 +221,14 @@ public class Property extends PersistentEntity {
 
 	public Integer getVisitCount() {
 		return this.visitCount;
+	}
+
+	public boolean isReserved() {
+		return this.reserved;
+	}
+
+	public void setReserved(final boolean reserved) {
+		this.reserved = reserved;
 	}
 
 	public void setVisitCount(final int visitCount) {
@@ -318,5 +330,13 @@ public class Property extends PersistentEntity {
 
 	public void updateVisitCount() {
 		this.visitCount++;
+	}
+
+	public void reserve() {
+		this.reserved = true;
+	}
+
+	public void unreserve() {
+		this.reserved = false;
 	}
 }
