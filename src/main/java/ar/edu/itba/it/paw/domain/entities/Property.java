@@ -70,14 +70,9 @@ public class Property extends PersistentEntity {
 	@OneToMany(mappedBy = "property")
 	private List<Room> rooms = new ArrayList<Room>();
 
-<<<<<<< HEAD
-=======
 	@OneToMany(mappedBy = "property")
 	private List<ContactRequest> contactRequests = new ArrayList<ContactRequest>();
 
-	private Boolean visible;
-
->>>>>>> github/development
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private User owner;
