@@ -23,6 +23,14 @@ public class PropertyTest {
 
 		Assert.assertTrue(prop.getVisible());
 		Assert.assertTrue(prop2.getVisible());
+	}
 
+	@Test
+	public void updateVisitCountTest() {
+		final Property prop = new Property(Type.APARTMENT, Operation.RENT,
+				"bla", "bla", 1000, 3, 200, 200, 23, null, "nice", null);
+		Assert.assertTrue(prop.getVisitCount() == 0);
+		prop.updateVisitCount();
+		Assert.assertTrue(prop.getVisitCount() == 1);
 	}
 }

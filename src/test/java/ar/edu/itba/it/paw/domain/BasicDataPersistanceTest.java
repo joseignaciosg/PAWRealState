@@ -180,4 +180,5 @@ public class BasicDataPersistanceTest extends BaseTest {
 		Assert.assertTrue(thrown);
 
 	}
+
 }

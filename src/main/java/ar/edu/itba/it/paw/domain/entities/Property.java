@@ -3,8 +3,16 @@ package ar.edu.itba.it.paw.domain.entities;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CollectionOfElements;
@@ -70,8 +78,11 @@ public class Property extends PersistentEntity {
 	@JoinColumn(name = "user_id")
 	private User owner;
 
-	public Property() {
+	@Column(name = "visitcount")
+	private Integer visitCount;
 
+	public Property() {
+		this.visitCount = 0;
 	}
 
 	/**
@@ -114,6 +125,7 @@ public class Property extends PersistentEntity {
 		if (rooms != null) {
 			this.rooms = rooms;
 		}
+		this.visitCount = 0;
 	}
 
 	public String getPropertyType() {
@@ -175,6 +187,14 @@ public class Property extends PersistentEntity {
 
 	public List<Photo> getPhotos() {
 		return this.photos;
+	}
+
+	public Integer getVisitCount() {
+		return this.visitCount;
+	}
+
+	public void setVisitCount(final int visitCount) {
+		this.visitCount = visitCount;
 	}
 
 	public void setType(final Type type) {
@@ -274,4 +294,7 @@ public class Property extends PersistentEntity {
 		return false;
 	}
 
+	public void updateVisitCount() {
+		this.visitCount++;
+	}
 }

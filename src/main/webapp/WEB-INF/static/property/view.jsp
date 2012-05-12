@@ -24,6 +24,7 @@
 			</ul>-->
 			<h1><c:out value=" ${property.address}" /></h1>
 			<h2><c:out value=" ${property.neighborhood}" /> </h2>
+			<h4>Cantidad de Visitas: <c:out value=" ${property.visitCount}" /> </h4>
 			<br />
 			<ul class="thumbnails">
 				
