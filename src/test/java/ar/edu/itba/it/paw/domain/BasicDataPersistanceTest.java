@@ -17,6 +17,7 @@ import ar.edu.itba.it.paw.domain.entities.Property.Service;
 import ar.edu.itba.it.paw.domain.entities.Room;
 import ar.edu.itba.it.paw.domain.entities.Room.RoomType;
 import ar.edu.itba.it.paw.domain.entities.User;
+import ar.edu.itba.it.paw.domain.exceptions.NoSuchEntityException;
 import ar.edu.itba.it.paw.domain.repositories.impl.HibernatePropertyRepository;
 import ar.edu.itba.it.paw.domain.repositories.impl.HibernateUserRepository;
 
@@ -139,6 +140,44 @@ public class BasicDataPersistanceTest {
 		session.flush();
 
 		Assert.assertFalse(property.getPhotos().contains(photo));
+
+	}
+
+	@Test
+	public void photoByIdTest() {
+		this.propertiesListTest();
+
+		final Session session = this.factory.getCurrentSession();
+
+		final Property property = this.propertyRepository
+				.get(Property.class, 1);
+
+		final Photo photo = new Photo(new byte[] {}, "jpeg", property);
+		property.addPhoto(photo);
+		session.flush();
+		final int id = photo.getId();
+
+		boolean thrown = false;
+		Photo photo2 = null;
+		try {
+			photo2 = this.propertyRepository.getPhotoById(id);
+		} catch (final NoSuchEntityException e) {
+			thrown = true;
+		}
+
+		Assert.assertFalse(thrown);
+
+		Assert.assertTrue(photo.equals(photo2));
+
+		thrown = false;
+
+		try {
+			final Photo photo3 = this.propertyRepository.getPhotoById(100);
+		} catch (final NoSuchEntityException e) {
+			thrown = true;
+		}
+
+		Assert.assertTrue(thrown);
 
 	}
 }
