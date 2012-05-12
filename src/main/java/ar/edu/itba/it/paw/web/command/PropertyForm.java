@@ -52,11 +52,11 @@ public class PropertyForm implements BuilderForm<Property> {
 		this.description = description;
 		this.property = property;
 		this.owner = currentUser;
-		if (this.services != null) {
+		if (services != null) {
 			this.services = services.toArray(new Service[] {});
 		}
 
-		if (this.getRooms() != null) {
+		if (rooms != null) {
 			this.setRooms(rooms.toArray(new Room[] {}));
 		}
 

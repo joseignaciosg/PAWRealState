@@ -24,6 +24,7 @@
 			</ul>-->
 			<h1><c:out value=" ${property.address}" /></h1>
 			<h2><c:out value=" ${property.neighborhood}" /> </h2>
+			<h4>Cantidad de Visitas: <c:out value=" ${property.visitCount}" /> </h4>
 			<br />
 			<ul class="thumbnails">
 				
@@ -62,7 +63,7 @@
 									<c:forEach var="photo" items="${property.photos}">
 										<div class="item">
 											<img height="100" width="425"
-												src="${ basePath }/photos?ID=${ photo.id }" alt="" />
+												src="${ basePath }/photo/view?ID=${ photo.id }" alt="" />
 										</div>
 									</c:forEach>
 								</c:when>
@@ -150,7 +151,7 @@
 			<div class="control-group">
 				<form:label class="control-label" path="firstName">Nombre</form:label>
 				<div class="controls">
-					<form:input path="firstName"/>
+					<form:input class="input-xlarge" id="firstName" name="firstName" path="firstName"/>
 				</div>
 			</div>
 			<div class="control-group">

@@ -40,7 +40,7 @@
 							<c:forEach var="photo" items="${prop.photos}" varStatus="status">
 								<c:if test="${status.first}">
 									<img height="120" width="160"
-										src="${ basePath }/photos?ID=${ photo.id }" alt="house" />
+										src="${ basePath }/photo/view?ID=${ photo.id }" alt="house" />
 								</c:if>
 							</c:forEach>
 						</c:if> <c:if test="${empty prop.photos}">
@@ -66,7 +66,7 @@
 							<c:forEach var="photo" items="${prop.photos}" varStatus="status">
 								<c:if test="${status.first}">
 									<img height="120" width="160"
-										src="${ basePath }/photos?ID=${ photo.id }" alt="house" />
+										src="${ basePath }/photo/view?ID=${ photo.id }" alt="house" />
 								</c:if>
 							</c:forEach>
 						</c:if> <c:if test="${empty prop.photos}">

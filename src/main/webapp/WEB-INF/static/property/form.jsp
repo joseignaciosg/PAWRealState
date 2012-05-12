@@ -100,7 +100,7 @@
 			
 			<div class="control-group">  
 			  <label class="control-label" for="property_service">Seleccione los servicios disponibles </label>  
-			  <div class="controls">
+			  <div class="controls"> 
                 <form:checkboxes path="services" items="${propertyServices}" />
 			  </div>  
 			</div>		

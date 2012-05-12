@@ -2,11 +2,13 @@ package ar.edu.itba.it.paw.web.command.validator;
 
 import java.util.regex.Pattern;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
+import ar.edu.itba.it.paw.domain.repositories.impl.HibernateUserRepository;
 import ar.edu.itba.it.paw.web.command.RegistrationForm;
 
 @Component
@@ -14,6 +16,14 @@ public class RegistrationFormValidator implements Validator {
 
 	private final String VALID_MAIL = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 	private Pattern emailPattern = Pattern.compile(this.VALID_MAIL);
+
+	private HibernateUserRepository userRepository;
+
+	@Autowired
+	public RegistrationFormValidator(
+			final HibernateUserRepository userRepository) {
+		this.userRepository = userRepository;
+	}
 
 	public boolean supports(final Class<?> clazz) {
 		return RegistrationForm.class.equals(clazz);
@@ -48,6 +58,12 @@ public class RegistrationFormValidator implements Validator {
 			if (!this.emailPattern.matcher(form.getEmail()).find()) {
 				errors.rejectValue("email", "notvalid");
 			}
+		}
+		if (form.getUserName() != null) {
+			if (this.userRepository.getByName(form.getUserName()) != null) {
+				errors.rejectValue("userName", "alreadyInUse");
+			}
+
 		}
 
 	}

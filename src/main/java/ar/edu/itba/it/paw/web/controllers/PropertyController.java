@@ -102,8 +102,7 @@ public class PropertyController {
 					+ contactRequestForm.getProperty().getId());
 		} else {
 			final ContactRequest request = contactRequestForm.build();
-			this.userRepository.sendContactRequest(request, request
-					.getPropRefered().getOwner());
+			this.propertyRepository.sendContactRequest(request);
 			final ModelAndView mav = new ModelAndView("property/contactrequest");
 
 			mav.addObject("user", request.getPropRefered().getOwner());
@@ -211,6 +210,10 @@ public class PropertyController {
 	protected ModelAndView view(
 			@RequestParam(value = "id") final Property property)
 			throws ServletException, IOException {
+		System.out.println(property.getVisitCount());
+		property.updateVisitCount();
+		System.out.println(property.getVisitCount());
+
 		final ModelAndView mav = new ModelAndView("property/view");
 		mav.addObject("property", property);
 		if (!mav.getModel().containsKey("contactRequestForm")) {

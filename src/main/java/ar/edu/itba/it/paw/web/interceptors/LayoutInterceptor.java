@@ -23,6 +23,9 @@ public class LayoutInterceptor extends HandlerInterceptorAdapter {
 			final ModelAndView modelAndView) throws Exception {
 		super.postHandle(request, response, handler, modelAndView);
 
+		if (modelAndView == null) {
+			return;
+		}
 		final String originalView = modelAndView.getViewName();
 
 		if (originalView != null) {

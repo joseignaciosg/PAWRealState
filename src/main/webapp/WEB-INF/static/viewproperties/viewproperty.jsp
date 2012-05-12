@@ -172,20 +172,21 @@
   	</script>
 		<form name="contactrequest" class="form-vertical" action="${ basePath }/contactrequest" method="POST">
 		<fieldset>
-			<legend>Contacta al Publicador</legend>
+			<legend>Contacta al Publicaaaador</legend>
 			<input type="hidden" class="input-xlarge" id="property_id" name="property_id" value="${ property.id }">
 			<div id="hiddenform" class="collapse" >
 			
-			<div class="control-group">
-				<label class="control-label" for="first_name">Nombre</label>
-				<div class="controls">
-					<input type="text" class="input-xlarge" id="first_name" name="first_name">
-				</div>
-			</div>
+			
 			<div class="control-group">
 				<label class="control-label" for="last_name">Apellido</label>
 				<div class="controls">
 					<input type="text" class="input-xlarge" id="last_name" name="last_name">
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="first_name">Nombre</label>
+				<div class="controls">
+					<input class="input-xlarge" type="text" id="first_name" name="first_name"/>
 				</div>
 			</div>
 			<div class="control-group">

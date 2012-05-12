@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -14,6 +15,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CollectionOfElements;
 
 @Entity
@@ -48,17 +50,16 @@ public class Property extends PersistentEntity {
 	}
 
 	@CollectionOfElements
+	@Cascade(value = { org.hibernate.annotations.CascadeType.ALL })
 	@JoinTable(name = "services", joinColumns = @JoinColumn(name = "property_id"))
 	@Enumerated(EnumType.STRING)
-	private List<Service> services;
-
+	private List<Service> services = new ArrayList<Service>();
 	@Enumerated(EnumType.STRING)
 	private Type type;
 
 	@Enumerated(EnumType.STRING)
 	@Column(name = "transaction")
 	private Operation operation;
-
 	private String neighborhood;
 	private String address;
 	private Integer price;
@@ -74,20 +75,28 @@ public class Property extends PersistentEntity {
 
 	private String description;
 
-	@OneToMany(mappedBy = "property")
+	@OneToMany(mappedBy = "property", cascade = { CascadeType.ALL,
+			CascadeType.REMOVE })
+	@Cascade(value = { org.hibernate.annotations.CascadeType.ALL,
+			org.hibernate.annotations.CascadeType.DELETE_ORPHAN })
 	private List<Photo> photos = new ArrayList<Photo>();
 
+	private boolean visible;
 	@OneToMany(mappedBy = "property")
 	private List<Room> rooms = new ArrayList<Room>();
 
-	private boolean visible;
+	@OneToMany(mappedBy = "property")
+	private List<ContactRequest> contactRequests = new ArrayList<ContactRequest>();
 
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private User owner;
 
-	public Property() {
+	@Column(name = "visitcount")
+	private Integer visitCount;
 
+	public Property() {
+		this.visitCount = 0;
 	}
 
 	public static List<Service> getAllServices() {
@@ -98,12 +107,29 @@ public class Property extends PersistentEntity {
 		return list;
 	}
 
+	/**
+	 * @deprecated Use {@link
+	 *             #Property(Type,Operation,String,String,Integer,Integer,
+	 *             Integer,Integer,Integer,List<String>,List,String,User)}
+	 *             instead
+	 */
+	@Deprecated
 	public Property(final Type type, final Operation operation,
 			final String neighborhood, final String address,
 			final Integer price, final Integer spaces,
 			final Integer coveredArea, final Integer freeArea,
 			final Integer age, final List<Service> services,
 			final String description, final User owner) {
+		this(type, operation, neighborhood, address, price, spaces,
+				coveredArea, freeArea, age, services, null, description, owner);
+	}
+
+	public Property(final Type type, final Operation operation,
+			final String neighborhood, final String address,
+			final Integer price, final Integer spaces,
+			final Integer coveredArea, final Integer freeArea,
+			final Integer age, final List<Service> services,
+			final List<Room> rooms, final String description, final User owner) {
 		this.type = type;
 		this.operation = operation;
 		this.neighborhood = neighborhood;
@@ -113,9 +139,15 @@ public class Property extends PersistentEntity {
 		this.coveredArea = coveredArea;
 		this.freeArea = freeArea;
 		this.age = age;
-		this.services = services;
+		if (services != null) {
+			this.services = services;
+		}
 		this.description = description;
 		this.owner = owner;
+		if (rooms != null) {
+			this.rooms = rooms;
+		}
+		this.visitCount = 0;
 	}
 
 	public void setServices(final List<Service> services) {
@@ -181,6 +213,14 @@ public class Property extends PersistentEntity {
 
 	public List<Photo> getPhotos() {
 		return this.photos;
+	}
+
+	public Integer getVisitCount() {
+		return this.visitCount;
+	}
+
+	public void setVisitCount(final int visitCount) {
+		this.visitCount = visitCount;
 	}
 
 	public void setType(final Type type) {
@@ -255,4 +295,28 @@ public class Property extends PersistentEntity {
 		this.rooms = rooms;
 	}
 
+	public List<ContactRequest> getContactRequest() {
+		return this.contactRequests;
+	}
+
+	public void setContactRequest(final List<ContactRequest> contactRequests) {
+		this.contactRequests = contactRequests;
+	}
+
+	public void addContactRequest(final ContactRequest request) {
+		this.contactRequests.add(request);
+	}
+
+	public boolean removeContactRequest(final ContactRequest request) {
+
+		if (this.contactRequests.contains(request)) {
+			this.contactRequests.remove(request);
+			return true;
+		}
+		return false;
+	}
+
+	public void updateVisitCount() {
+		this.visitCount++;
+	}
 }

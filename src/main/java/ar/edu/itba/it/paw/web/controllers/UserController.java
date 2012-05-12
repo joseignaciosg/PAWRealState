@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.itba.it.paw.domain.entities.User;
+import ar.edu.itba.it.paw.domain.exceptions.InvalidLoginException;
 import ar.edu.itba.it.paw.domain.repositories.impl.HibernateUserRepository;
 import ar.edu.itba.it.paw.web.command.LoginForm;
 import ar.edu.itba.it.paw.web.command.RegistrationForm;
@@ -40,7 +41,6 @@ public class UserController {
 	protected ModelAndView login(final LoginForm loginForm,
 			final HttpServletRequest request, final HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO: Make this
 		final String username = loginForm.getUser_username();
 		final String password = loginForm.getUser_password();
 		final String remember = loginForm.getRemember();
@@ -48,18 +48,16 @@ public class UserController {
 		final UserManager manager = (UserManager) request
 				.getAttribute("userManager");
 
-		final User user = this.userRepository.getByNameAndPassword(username,
-				password);
-		final boolean loginValid = user != null;
-
-		if (loginValid) {
+		try {
+			final User user = this.userRepository.getByNameAndPassword(
+					username, password);
 			final ModelAndView mav = new ModelAndView("forward:/index");
 			final CookiesManager cookman = new CookiesManager(request, response);
 			cookman.setUser(username, password, remember);
 			manager.setCurrentUser(user);
 			mav.addObject("errors", new String[] { "Bienvenido " + username });
 			return mav;
-		} else {
+		} catch (final InvalidLoginException e) {
 			final ModelAndView mav = new ModelAndView("forward:/index");
 			mav.addObject("errors", new String[] { "Login inválido" });
 			return mav;
@@ -74,7 +72,7 @@ public class UserController {
 		final UserManager manager = (UserManager) req
 				.getAttribute("userManager");
 
-		manager.setCurrentUser(null);
+		manager.forgetCurrentUser();
 
 		final CookiesManager cookman = new CookiesManager(req, resp);
 		if (cookman.getRemember().equals("session")) {
