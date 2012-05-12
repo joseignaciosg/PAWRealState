@@ -17,18 +17,12 @@
 <div class="row-fluid" >
 	<div class="span12">
 		<div class="span8">
-			<!--<ul class="breadcrumb">
-				<li><a href="#">Inmuebles</a> <span class="divider">/</span></li>
-				<li><a href="#">Compra</a> <span class="divider">/</span></li>
-				<li class="active">Zona Oeste</li>
-			</ul>-->
 			<h1><c:out value=" ${property.address}" /></h1>
 			<h2><c:out value=" ${property.neighborhood}" /> </h2>
 			<h4>Cantidad de Visitas: <c:out value=" ${property.visitCount}" /> </h4>
 			
 			<br />
 			<ul class="thumbnails">
-				
 
 				<div class="span3">
 					<dl>
@@ -119,7 +113,11 @@
 				</tr>
 			</thead>
 			<tbody>
-				
+					<c:forEach items="${property.services}" var="service">
+						<tr>
+							<c:out value="${service}"/>
+						</tr>
+					</c:forEach>
 			</tbody>
 		</table>
 	</div>

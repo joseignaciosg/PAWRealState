@@ -148,7 +148,7 @@ public class PropertyController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	protected String delete(@RequestParam("ID") final Property property) {
+	protected String delete(@RequestParam("id") final Property property) {
 		// TODO: Security check
 		this.propertyRepository.delete(property);
 		return "redirect:/property/list";
@@ -224,9 +224,7 @@ public class PropertyController {
 	protected ModelAndView view(
 			@RequestParam(value = "id") final Property property)
 			throws ServletException, IOException {
-		System.out.println(property.getVisitCount());
 		property.updateVisitCount();
-		System.out.println(property.getVisitCount());
 
 		final ModelAndView mav = new ModelAndView("property/view");
 		mav.addObject("property", property);
