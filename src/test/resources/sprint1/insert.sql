@@ -17,7 +17,6 @@ SET search_path = public, pg_catalog;
 SELECT pg_catalog.setval('contact_requests_id_seq', 10, true);
 
 
-
 --
 -- Name: photos_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --

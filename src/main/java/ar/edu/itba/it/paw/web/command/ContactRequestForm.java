@@ -1,13 +1,16 @@
 package ar.edu.itba.it.paw.web.command;
 
-public class ContactRequestForm {
+import ar.edu.itba.it.paw.domain.entities.ContactRequest;
+import ar.edu.itba.it.paw.domain.entities.Property;
+
+public class ContactRequestForm implements BuilderForm<ContactRequest> {
 
 	private String firstName;
 	private String lastName;
 	private String email;
 	private String phone;
 	private String description;
-	private Integer propertyId;
+	private Property property;
 
 	public ContactRequestForm() {
 
@@ -15,14 +18,14 @@ public class ContactRequestForm {
 
 	public ContactRequestForm(final String first_name, final String last_name,
 			final String email, final String phone, final String description,
-			final Integer property_id) {
+			final Property property) {
 		super();
 		this.firstName = first_name;
 		this.lastName = last_name;
 		this.email = email;
 		this.phone = phone;
 		this.description = description;
-		this.propertyId = property_id;
+		this.setProperty(property);
 	}
 
 	public String getFirstName() {
@@ -65,20 +68,16 @@ public class ContactRequestForm {
 		this.description = description;
 	}
 
-	public Integer getPropertyId() {
-		return this.propertyId;
+	public Property getProperty() {
+		return this.property;
 	}
 
-	public void setPropertyId(final Integer propertyId) {
-		this.propertyId = propertyId;
+	public void setProperty(final Property property) {
+		this.property = property;
 	}
 
-	@Override
-	public String toString() {
-		return "ContactRequestForm [first_name=" + this.firstName
-				+ ", last_name=" + this.lastName + ", email=" + this.email
-				+ ", phone=" + this.phone + ", description=" + this.description
-				+ ", property_id=" + this.propertyId + "]";
+	public ContactRequest build() {
+		return new ContactRequest(this.firstName + this.lastName, this.email,
+				this.phone, this.description, this.property);
 	}
-
 }

@@ -1,23 +1,20 @@
 package ar.edu.itba.it.paw.web.command;
 
-import ar.edu.itba.it.paw.web.session.UserManager;
 
 public class LoginForm {
 
 	private String user_username;
 	private String user_password;
 	private String remember;
-	private UserManager userManager;
 
 	public LoginForm() {
 	}
 
 	public LoginForm(final String user_username, final String user_password,
-			final String remember, final UserManager userManager) {
+			final String remember) {
 		this.user_username = user_username;
 		this.user_password = user_password;
 		this.remember = remember;
-		this.userManager = userManager;
 	}
 
 	public String getUser_username() {
@@ -42,14 +39,6 @@ public class LoginForm {
 
 	public void setRemember(final String remember) {
 		this.remember = remember;
-	}
-
-	public UserManager getUserManager() {
-		return this.userManager;
-	}
-
-	public void setUserManager(final UserManager userManager) {
-		this.userManager = userManager;
 	}
 
 }

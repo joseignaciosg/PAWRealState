@@ -15,11 +15,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import ar.edu.itba.it.paw.domain.entities.ContactRequest;
 import ar.edu.itba.it.paw.domain.entities.Property;
+import ar.edu.itba.it.paw.domain.repositories.api.UserRepository;
 import ar.edu.itba.it.paw.domain.repositories.impl.HibernatePropertyRepository;
 import ar.edu.itba.it.paw.web.command.ContactRequestForm;
 import ar.edu.itba.it.paw.web.command.PropertyForm;
 import ar.edu.itba.it.paw.web.command.SearchForm;
+import ar.edu.itba.it.paw.web.command.validator.ContactRequestFormValidator;
 import ar.edu.itba.it.paw.web.command.validator.PropertyFormValidator;
 import ar.edu.itba.it.paw.web.command.validator.SearchFormValidator;
 
@@ -27,20 +30,16 @@ import ar.edu.itba.it.paw.web.command.validator.SearchFormValidator;
 @RequestMapping("/property")
 public class PropertyController {
 
-	private HibernatePropertyRepository propertyRepository;
-
-	private SearchFormValidator searchFormValidator;
-	private PropertyFormValidator propertyFormValidator;
-
 	@Autowired
-	public PropertyController(
-			final HibernatePropertyRepository propertyRepository,
-			final SearchFormValidator searchFormValidator,
-			final PropertyFormValidator propertyFormValidator) {
-		this.propertyRepository = propertyRepository;
-		this.searchFormValidator = searchFormValidator;
-		this.propertyFormValidator = propertyFormValidator;
-	}
+	private HibernatePropertyRepository propertyRepository;
+	@Autowired
+	private ContactRequestFormValidator contactRequestFormValidator;
+	@Autowired
+	private SearchFormValidator searchFormValidator;
+	@Autowired
+	private PropertyFormValidator propertyFormValidator;
+	@Autowired
+	private UserRepository userRepository;
 
 	@RequestMapping(method = RequestMethod.GET, value = "/search")
 	protected ModelAndView searchGET(@Valid final SearchForm searchForm,
@@ -96,32 +95,22 @@ public class PropertyController {
 			@Valid final ContactRequestForm contactRequestForm,
 			final Errors errors) throws ServletException, IOException {
 
-		final ContactRequestForm sessionSearchForm = contactRequestForm;
-		// this.searchFormValidator.validate(sessionSearchForm, errors);
-		final List<String> errorsList = new ArrayList<String>();
-		//
-		// final ContactRequestService contactService = ServiceProvider
-		// .getContactRequestService();
-		// final PropertyService propService = ServiceProvider
-		// .getPropertyService();
-		//
-		// final Property prop = propService.getPropertyByID(
-		// contactRequestForm.getPropertyId(), errorsList);
-		//
-		// final User user = prop.getOwner();
-		//
-		// contactService.saveContactRequest(contactRequestForm.getFirstName(),
-		// contactRequestForm.getLastName(),
-		// contactRequestForm.getEmail(), contactRequestForm.getPhone(),
-		// contactRequestForm.getDescription(), prop, errorsList);
+		this.contactRequestFormValidator.validate(contactRequestForm, errors);
 
-		final ModelAndView mav = new ModelAndView("property/contactrequest");
+		if (errors.hasErrors()) {
+			return new ModelAndView("property/view?propertyId="
+					+ contactRequestForm.getProperty().getId());
+		} else {
+			final ContactRequest request = contactRequestForm.build();
+			this.userRepository.sendContactRequest(request, request
+					.getPropRefered().getOwner());
+			final ModelAndView mav = new ModelAndView("property/contactrequest");
 
-		// mav.addObject("user", user);
-		// mav.addObject("property", prop);
-		mav.addObject("contactForm", sessionSearchForm);
-
-		return mav;
+			mav.addObject("user", request.getPropRefered().getOwner());
+			mav.addObject("property", request.getPropRefered().getOwner());
+			mav.addObject("contactForm", contactRequestForm);
+			return mav;
+		}
 	}
 
 	/*
@@ -229,13 +218,6 @@ public class PropertyController {
 	@RequestMapping(method = RequestMethod.GET)
 	protected String list() throws ServletException, IOException {
 		return "property/list";
-	}
-
-	// TODO: Broken, remake.
-	@RequestMapping(method = RequestMethod.POST)
-	protected String contactRequest() {
-		// TODO: Hacer contactRequestForm
-		return "/index";
 	}
 
 }
