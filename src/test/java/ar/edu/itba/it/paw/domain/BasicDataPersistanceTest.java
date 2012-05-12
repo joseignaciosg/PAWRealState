@@ -5,12 +5,9 @@ import junit.framework.Assert;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.transaction.annotation.Transactional;
 
+import ar.edu.itba.it.paw.BaseTest;
 import ar.edu.itba.it.paw.domain.entities.Photo;
 import ar.edu.itba.it.paw.domain.entities.Property;
 import ar.edu.itba.it.paw.domain.entities.Property.Service;
@@ -27,10 +24,8 @@ import ar.edu.itba.it.paw.domain.repositories.impl.HibernateUserRepository;
  * @author cris
  * 
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "classpath:data-test.xml" })
-@Transactional
-public class BasicDataPersistanceTest {
+
+public class BasicDataPersistanceTest extends BaseTest {
 	@Autowired
 	HibernateUserRepository userRepository;
 
@@ -40,6 +35,7 @@ public class BasicDataPersistanceTest {
 	@Autowired
 	SessionFactory factory;
 
+	@Test
 	public void basicTest() {
 		final User u = new User("name", "username", "bla", "bla", "bla", "bla");
 		this.userRepository.save(u);
@@ -56,7 +52,7 @@ public class BasicDataPersistanceTest {
 
 		final Property property = new Property(Property.Type.APARTMENT,
 				Property.Operation.RENT, "Flores", "Pedernera 35", 1233, 1, 23,
-				23, 12, null, "", u);
+				23, 12, null, null, "", u);
 
 		this.propertyRepository.save(property);
 
@@ -81,15 +77,19 @@ public class BasicDataPersistanceTest {
 
 		property.getServices().add(Service.PHONE);
 
-		this.propertyRepository.save(property);
-
 		session.flush();
-
 		session.refresh(property);
 
 		Assert.assertTrue(property.getServices().contains(Service.CABLE));
 		Assert.assertTrue(property.getServices().contains(Service.PHONE));
 		Assert.assertTrue(!property.getServices().contains(Service.SALON));
+
+		property.getServices().remove(Service.CABLE);
+
+		session.flush();
+		session.refresh(property);
+
+		Assert.assertTrue(!property.getServices().contains(Service.CABLE));
 	}
 
 	@Test
