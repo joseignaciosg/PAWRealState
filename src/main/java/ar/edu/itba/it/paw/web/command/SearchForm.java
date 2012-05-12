@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import ar.edu.itba.it.paw.domain.entities.Property.Operation;
 import ar.edu.itba.it.paw.domain.entities.Property.Service;
 import ar.edu.itba.it.paw.domain.entities.Property.Type;
+import ar.edu.itba.it.paw.domain.entities.User;
 import ar.edu.itba.it.paw.domain.repositories.api.PropertySearch;
 import ar.edu.itba.it.paw.domain.repositories.api.PropertySearch.Order;
 import ar.edu.itba.it.paw.domain.repositories.api.RoomSearch;
@@ -29,6 +30,7 @@ public class SearchForm implements BuilderForm<PropertySearch> {
 	private Integer pricehigh;
 	private Integer quant;
 	private Integer page;
+	private User user;
 	private List<Service> services;
 	private List<RoomSearch> rooms;
 
@@ -38,7 +40,8 @@ public class SearchForm implements BuilderForm<PropertySearch> {
 	public SearchForm(final Operation operation, final Type type,
 			final Order order, final Integer pricelow, final Integer pricehigh,
 			final Integer quant, final Integer page,
-			final List<Service> services, final List<RoomSearch> rooms) {
+			final List<Service> services, final List<RoomSearch> rooms,
+			final User u) {
 		this.operation = operation;
 		this.type = type;
 		this.order = order;
@@ -46,8 +49,9 @@ public class SearchForm implements BuilderForm<PropertySearch> {
 		this.pricehigh = pricehigh;
 		this.quant = quant;
 		this.page = page;
-		this.services = services;
-		this.rooms = rooms;
+		this.user = u;
+		this.setServices(services);
+		this.setRooms(rooms);
 	}
 
 	public Operation getOperation() {
@@ -109,6 +113,30 @@ public class SearchForm implements BuilderForm<PropertySearch> {
 	public PropertySearch build() {
 		return new PropertySearch(this.operation, this.type, this.pricelow,
 				this.pricehigh, this.page, this.quant, this.order, null, null,
-				true);
+				true, this.getUser());
+	}
+
+	public List<Service> getServices() {
+		return this.services;
+	}
+
+	public void setServices(final List<Service> services) {
+		this.services = services;
+	}
+
+	public List<RoomSearch> getRooms() {
+		return this.rooms;
+	}
+
+	public void setRooms(final List<RoomSearch> rooms) {
+		this.rooms = rooms;
+	}
+
+	public User getUser() {
+		return this.user;
+	}
+
+	public void setUser(final User user) {
+		this.user = user;
 	}
 }
