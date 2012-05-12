@@ -164,6 +164,20 @@ public class PropertyController {
 		return "redirect:/property/list";
 	}
 
+	@RequestMapping(method = RequestMethod.POST, value = "/reserve")
+	protected String reserve(@RequestParam("id") final Property property) {
+		property.reserve();
+		this.propertyRepository.save(property);
+		return "redirect:/property/list";
+	}
+
+	@RequestMapping(method = RequestMethod.POST, value = "/unreserve")
+	protected String unreserve(@RequestParam("id") final Property property) {
+		property.unreserve();
+		this.propertyRepository.save(property);
+		return "redirect:/property/list";
+	}
+
 	@RequestMapping(method = RequestMethod.GET, value = "/edit")
 	protected ModelAndView editGET(final ModelAndView mav,
 			@RequestParam(value = "id") final Property property) {
