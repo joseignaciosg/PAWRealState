@@ -138,6 +138,5 @@ public class SearchForm implements BuilderForm<PropertySearch> {
 
 	public void setUser(final User user) {
 		this.user = user;
->>>>>>> d3c16e945c928a22af36d8e5324517f226deda7f
 	}
 }

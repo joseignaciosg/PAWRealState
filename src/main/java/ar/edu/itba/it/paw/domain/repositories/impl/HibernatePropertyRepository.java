@@ -48,8 +48,8 @@ public class HibernatePropertyRepository extends AbstractHibernateRepository
 
 		// Si es una busqueda de un usuario
 		if (search.getUser() != null) {
-			q.add(Restrictions.eq("user_id", search.getUser().getId()));
-			return q.list();
+			System.out.println(search.getUser());
+			q.add(Restrictions.eq("user", search.getUser()));
 		}
 
 		// Si no es para un usuario sigo con la busqueda, Simple Elements
