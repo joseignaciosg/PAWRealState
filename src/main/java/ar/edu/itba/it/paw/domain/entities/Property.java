@@ -13,8 +13,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.CollectionOfElements;
 
 @Entity
@@ -35,7 +33,6 @@ public class Property extends PersistentEntity {
 	}
 
 	@CollectionOfElements
-	@Cascade(value = { CascadeType.ALL })
 	@JoinTable(name = "services", joinColumns = @JoinColumn(name = "property_id"))
 	@Enumerated(EnumType.STRING)
 	private List<Service> services = new ArrayList<Service>();
@@ -78,29 +75,12 @@ public class Property extends PersistentEntity {
 
 	}
 
-	/**
-	 * @deprecated Use {@link
-	 *             #Property(Type,Operation,String,String,Integer,Integer,
-	 *             Integer,Integer,Integer,List<String>,List,String,User)}
-	 *             instead
-	 */
-	@Deprecated
 	public Property(final Type type, final Operation operation,
 			final String neighborhood, final String address,
 			final Integer price, final Integer spaces,
 			final Integer coveredArea, final Integer freeArea,
-			final Integer age, final List<Service> services,
+			final Integer age, final List<String> services,
 			final String description, final User owner) {
-		this(type, operation, neighborhood, address, price, spaces,
-				coveredArea, freeArea, age, services, null, description, owner);
-	}
-
-	public Property(final Type type, final Operation operation,
-			final String neighborhood, final String address,
-			final Integer price, final Integer spaces,
-			final Integer coveredArea, final Integer freeArea,
-			final Integer age, final List<Service> services,
-			final List<Room> rooms, final String description, final User owner) {
 		this.type = type;
 		this.operation = operation;
 		this.neighborhood = neighborhood;
@@ -110,14 +90,9 @@ public class Property extends PersistentEntity {
 		this.coveredArea = coveredArea;
 		this.freeArea = freeArea;
 		this.age = age;
-		if (services != null) {
-			this.services = services;
-		}
+		// this.services = services;
 		this.description = description;
 		this.owner = owner;
-		if (rooms != null) {
-			this.rooms = rooms;
-		}
 	}
 
 	public String getPropertyType() {

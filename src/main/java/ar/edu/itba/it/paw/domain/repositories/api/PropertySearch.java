@@ -1,11 +1,7 @@
 package ar.edu.itba.it.paw.domain.repositories.api;
 
-import java.util.List;
-
 import ar.edu.itba.it.paw.domain.entities.Property.Operation;
-import ar.edu.itba.it.paw.domain.entities.Property.Service;
 import ar.edu.itba.it.paw.domain.entities.Property.Type;
-import ar.edu.itba.it.paw.domain.entities.Room;
 
 public final class PropertySearch {
 
@@ -20,13 +16,10 @@ public final class PropertySearch {
 	private Integer page;
 	private Integer quant;
 	private Order order;
-	private List<Service> services;
-	private List<Room> rooms;
 
 	public PropertySearch(final Operation operation, final Type type,
 			final Integer priceLow, final Integer priceHigh,
-			final Integer page, final Integer quant, final Order order,
-			final List<Service> services, final List<Room> rooms) {
+			final Integer page, final Integer quant, final Order order) {
 		this.operation = operation;
 		this.type = type;
 		this.priceLow = priceLow;
@@ -34,12 +27,10 @@ public final class PropertySearch {
 		this.page = page;
 		this.quant = quant;
 		this.order = order;
-		this.services = services;
-		this.rooms = rooms;
 	}
 
 	public PropertySearch(final Operation rent) {
-		this(rent, null, null, null, null, null, Order.DESC, null, null);
+		this(rent, null, -1, -1, 0, 2, Order.DESC);
 	}
 
 	public Operation getOperation() {
@@ -68,14 +59,6 @@ public final class PropertySearch {
 
 	public Order getOrder() {
 		return this.order;
-	}
-
-	public List<Service> getServices() {
-		return this.services;
-	}
-
-	public List<Room> getRooms() {
-		return this.rooms;
 	}
 
 }
