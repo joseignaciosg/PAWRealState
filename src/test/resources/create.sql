@@ -30,6 +30,13 @@ ALTER TABLE PROPERTIES DROP COLUMN has_quincho;
 ALTER TABLE PROPERTIES ADD COLUMN  visitcount integer NOT NULL DEFAULT 0;
 ALTER TABLE PROPERTIES ADD COLUMN  reserved boolean NOT NULL DEFAULT false;
 
+ALTER TABLE PHOTOS ADD COLUMN agent_id INTEGER;
+
+ALTER TABLE USERS ADD COLUMN tipo character varying;
+ALTER TABLE USERS ADD COLUMN agency_name character varying;
+
+UPDATE TABLE USERS SET tipo = "User";
+
 CREATE TABLE rooms (
   id SERIAL not null,
   size integer not null,

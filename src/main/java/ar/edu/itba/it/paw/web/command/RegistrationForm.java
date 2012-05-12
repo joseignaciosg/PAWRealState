@@ -1,8 +1,12 @@
 package ar.edu.itba.it.paw.web.command;
 
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
+
+import ar.edu.itba.it.paw.domain.entities.Photo;
+import ar.edu.itba.it.paw.domain.entities.RealStateAgency;
 import ar.edu.itba.it.paw.domain.entities.User;
 
-public class RegistrationForm implements BuilderForm<User> {
+public class RegistrationForm {
 
 	private String userName;
 	private String password;
@@ -11,13 +15,18 @@ public class RegistrationForm implements BuilderForm<User> {
 	private String firstName;
 	private String lastName;
 	private String phone;
+	private String type;
+	private String agencyName;
+	private CommonsMultipartFile photo;
 
 	public RegistrationForm() {
 	}
 
 	public RegistrationForm(final String username, final String password,
 			final String repeatedPassword, final String email,
-			final String name, final String lastName, final String phone) {
+			final String name, final String lastName, final String phone,
+			final String agencyName, final String type,
+			final CommonsMultipartFile photo) {
 		this.userName = username;
 		this.password = password;
 		this.repeatedPassword = repeatedPassword;
@@ -25,6 +34,9 @@ public class RegistrationForm implements BuilderForm<User> {
 		this.firstName = name;
 		this.lastName = lastName;
 		this.phone = phone;
+		this.setPhoto(photo);
+		this.setType(type);
+		this.setAgencyName(agencyName);
 	}
 
 	public String getUserName() {
@@ -83,8 +95,38 @@ public class RegistrationForm implements BuilderForm<User> {
 		this.phone = phone;
 	}
 
+	public String getType() {
+		return this.type;
+	}
+
+	public void setType(final String type) {
+		this.type = type;
+	}
+
+	public String getAgencyName() {
+		return this.agencyName;
+	}
+
+	public void setAgencyName(final String agencyName) {
+		this.agencyName = agencyName;
+	}
+
 	public User build() {
-		return new User(this.firstName, this.lastName, this.email, this.phone,
-				this.userName, this.password);
+		if (this.type != null) {
+			return new RealStateAgency(this.firstName, this.lastName,
+					this.email, this.phone, this.userName, this.password,
+					this.agencyName, new Photo(this.photo.getBytes(), "jpeg"));
+		} else {
+			return new User(this.firstName, this.lastName, this.email,
+					this.phone, this.userName, this.password);
+		}
+	}
+
+	public CommonsMultipartFile getPhoto() {
+		return this.photo;
+	}
+
+	public void setPhoto(final CommonsMultipartFile photo) {
+		this.photo = photo;
 	}
 }

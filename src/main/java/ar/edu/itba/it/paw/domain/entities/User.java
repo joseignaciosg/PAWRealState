@@ -3,12 +3,18 @@ package ar.edu.itba.it.paw.domain.entities;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "users")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "tipo", discriminatorType = DiscriminatorType.STRING)
 public class User extends PersistentEntity {
 
 	private String firstname;
@@ -34,32 +40,125 @@ public class User extends PersistentEntity {
 		this.password = password;
 	}
 
-	public String getPassword() {
-		return this.password;
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (this.getClass() != obj.getClass()) {
+			return false;
+		}
+		final User other = (User) obj;
+		if (this.email == null) {
+			if (other.email != null) {
+				return false;
+			}
+		} else if (!this.email.equals(other.email)) {
+			return false;
+		}
+		if (this.firstname == null) {
+			if (other.firstname != null) {
+				return false;
+			}
+		} else if (!this.firstname.equals(other.firstname)) {
+			return false;
+		}
+		if (this.lastname == null) {
+			if (other.lastname != null) {
+				return false;
+			}
+		} else if (!this.lastname.equals(other.lastname)) {
+			return false;
+		}
+		if (this.password == null) {
+			if (other.password != null) {
+				return false;
+			}
+		} else if (!this.password.equals(other.password)) {
+			return false;
+		}
+		if (this.phone == null) {
+			if (other.phone != null) {
+				return false;
+			}
+		} else if (!this.phone.equals(other.phone)) {
+			return false;
+		}
+		if (this.properties == null) {
+			if (other.properties != null) {
+				return false;
+			}
+		} else if (!this.properties.equals(other.properties)) {
+			return false;
+		}
+		if (this.username == null) {
+			if (other.username != null) {
+				return false;
+			}
+		} else if (!this.username.equals(other.username)) {
+			return false;
+		}
+		return true;
 	}
 
-	public String getTelephone() {
-		return this.phone;
-	}
-
-	public String getName() {
-		return this.firstname;
-	}
-
-	public String getSurname() {
-		return this.lastname;
+	@Override
+	public String toString() {
+		return "User [firstname=" + this.firstname + ", lastname="
+				+ this.lastname + ", email=" + this.email + ", phone="
+				+ this.phone + ", username=" + this.username + ", password="
+				+ this.password + ", properties=" + this.properties + "]";
 	}
 
 	public String getMail() {
 		return this.email;
 	}
 
-	public String getUsername() {
-		return this.username;
+	public String getName() {
+		return this.firstname;
+	}
+
+	public String getPassword() {
+		return this.password;
 	}
 
 	public List<Property> getProperties() {
 		return this.properties;
+	}
+
+	public String getSurname() {
+		return this.lastname;
+	}
+
+	public String getTelephone() {
+		return this.phone;
+	}
+
+	public String getUsername() {
+		return this.username;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((this.email == null) ? 0 : this.email.hashCode());
+		result = prime * result
+				+ ((this.firstname == null) ? 0 : this.firstname.hashCode());
+		result = prime * result
+				+ ((this.lastname == null) ? 0 : this.lastname.hashCode());
+		result = prime * result
+				+ ((this.password == null) ? 0 : this.password.hashCode());
+		result = prime * result
+				+ ((this.phone == null) ? 0 : this.phone.hashCode());
+		result = prime * result
+				+ ((this.properties == null) ? 0 : this.properties.hashCode());
+		result = prime * result
+				+ ((this.username == null) ? 0 : this.username.hashCode());
+		return result;
 	}
 
 }

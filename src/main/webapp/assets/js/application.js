@@ -20,5 +20,16 @@ $(document).ready(function(){
 		});
 		return false;
 	});
+	
+	
+	$(".js-toggle-usertype").on("change", function() {	
+		var $this = $(this);
+		
+		if ($this.val() == "User") {
+			$(".agency-control").hide();
+		} else {
+			$(".agency-control").show();
+		}
+	});	
 });
 
