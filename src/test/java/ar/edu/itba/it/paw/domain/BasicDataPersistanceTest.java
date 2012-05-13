@@ -63,29 +63,54 @@ public class BasicDataPersistanceTest {
 		final User u = new User("name", "username", "bla", "bla", "bla", "bla");
 		this.userRepository.save(u);
 
-		final Property property = new Property(Property.Type.APARTMENT,
-				Property.Operation.RENT, "Flores", "Pedernera 35", 1233, 1, 23,
-				23, 12, null, null, "", u);
+		final Property property = this.propertyRepository.getAll().get(0);
+
+		System.out.println(property);
+
+		Assert.assertTrue(!property.getServices().contains(Service.SWIMMING));
+
+		property.getServices().add(Service.SWIMMING);
 
 		final PropertySearch propSearch = new PropertySearch(null, null, null,
+				null, null, null, Order.ASC, null, null, true, null);
+
+		final PropertySearch propSearch2 = new PropertySearch(null, null, null,
 				null, null, null, Order.ASC, null, null, true, null);
 
 		final int oldVisibleCount = this.propertyRepository.getAll(propSearch)
 				.size();
 
+		System.out.println("Cuenta veija " + oldVisibleCount);
+
+		final int oldServiceCount = this.propertyRepository.getAll(propSearch2)
+				.size();
+
 		this.propertyRepository.save(property);
 
 		session.flush();
+		session.refresh(property);
 
 		int newVisibleCount = this.propertyRepository.getAll(propSearch).size();
 
 		Assert.assertEquals(oldVisibleCount, newVisibleCount);
 
-		this.propertyRepository.save(property);
+		property.toggleVisibility();
+
+		// this.propertyRepository.save(property);
 		session.flush();
+		session.refresh(property);
 
-		newVisibleCount = this.propertyRepository.getAll().size();
+		newVisibleCount = this.propertyRepository.getAll(propSearch).size();
 
+		Assert.assertEquals(oldVisibleCount + 1, newVisibleCount);
+
+		// final int servicesMatchCount = this.propertyRepository.getAll(
+		// propSearch2).size();
+
+		// Assert.assertEquals(1, servicesMatchCount);
+
+		Assert.assertEquals(oldServiceCount + 1, this.propertyRepository
+				.getAll(propSearch2).size());
 	}
 
 	@Test
