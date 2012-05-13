@@ -43,17 +43,13 @@ public class HibernatePropertyRepository extends AbstractHibernateRepository
 	@SuppressWarnings("unchecked")
 	public List<Property> getAll(final PropertySearch search) {
 
-		final Criteria q = this.sessionFactory.openSession().createCriteria(
-				Property.class);
+		final Criteria q = this.sessionFactory.getCurrentSession()
+				.createCriteria(Property.class);
 
 		// Si es una busqueda de un usuario
 		if (search.getUser() != null) {
-			System.out.println(search.getUser());
 			q.add(Restrictions.eq("owner", search.getUser()));
 			final List<Property> list = q.list();
-			for (int i = 0; i < list.size(); i++) {
-				System.out.println(list.get(i));
-			}
 			return list;
 		}
 
