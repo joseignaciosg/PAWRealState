@@ -170,7 +170,7 @@ public class BasicDataPersistanceTest {
 		final Property property = this.propertyRepository
 				.get(Property.class, 1);
 
-		final Room room = new Room(RoomType.A, 10, property);
+		final Room room = new Room(RoomType.BATHROOM, 10, property);
 
 		this.propertyRepository.save(room);
 
@@ -179,11 +179,11 @@ public class BasicDataPersistanceTest {
 		session.refresh(property);
 
 		Assert.assertTrue(property.getRooms().contains(
-				new Room(RoomType.A, 10, property)));
+				new Room(RoomType.BATHROOM, 10, property)));
 		Assert.assertTrue(!property.getRooms().contains(
-				new Room(RoomType.A, 11, property)));
+				new Room(RoomType.BATHROOM, 11, property)));
 		Assert.assertTrue(!property.getRooms().contains(
-				new Room(RoomType.B, 11, property)));
+				new Room(RoomType.DORM, 11, property)));
 
 	}
 

@@ -1,5 +1,7 @@
 package ar.edu.itba.it.paw.web.command;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
@@ -15,16 +17,8 @@ import ar.edu.itba.it.paw.domain.repositories.api.RoomSearch;
 @Component
 public class SearchForm implements BuilderForm<PropertySearch> {
 
-	@Override
-	public String toString() {
-		return "SearchForm [operation=" + this.operation + ", type="
-				+ this.type + ", order=" + this.order + ", pricelow="
-				+ this.pricelow + ", pricehigh=" + this.pricehigh + ", quant="
-				+ this.quant + ", page=" + this.page + ", user=" + this.user
-				+ ", services=" + this.services + ", rooms=" + this.rooms + "]";
-	}
-
 	private Operation operation;
+
 	private Type type;
 	private Order order;
 	private Integer pricelow;
@@ -32,8 +26,8 @@ public class SearchForm implements BuilderForm<PropertySearch> {
 	private Integer quant;
 	private Integer page;
 	private User user;
-	private List<Service> services;
-	private List<RoomSearch> rooms;
+	private Service[] services = new Service[] {};
+	private RoomSearch[] rooms = new RoomSearch[] {};
 
 	public SearchForm() {
 	}
@@ -51,93 +45,117 @@ public class SearchForm implements BuilderForm<PropertySearch> {
 		this.quant = quant;
 		this.page = page;
 		this.user = u;
-		this.setServices(services);
-		this.setRooms(rooms);
+		this.services = services.toArray(new Service[] {});
+
+		this.filterRooms(rooms);
+	}
+
+	private void filterRooms(final List<RoomSearch> rooms) {
+		final List<RoomSearch> roomList = new ArrayList<RoomSearch>();
+		for (final RoomSearch roomSearch : rooms) {
+			if (roomSearch.getType() != null) {
+				roomList.add(roomSearch);
+			}
+		}
+
+		this.rooms = roomList.toArray(new RoomSearch[] {});
+	}
+
+	public PropertySearch build() {
+		this.filterRooms(Arrays.asList(this.rooms));
+
+		return new PropertySearch(this.operation, this.type, this.pricelow,
+				this.pricehigh, this.page, this.quant, this.order,
+				Arrays.asList(this.services), Arrays.asList(this.rooms), true,
+				this.getUser());
 	}
 
 	public Operation getOperation() {
 		return this.operation;
 	}
 
-	public void setOperation(final Operation op) {
-		this.operation = op;
-	}
-
-	public Type getType() {
-		return this.type;
-	}
-
-	public void setType(final Type type) {
-		this.type = type;
-	}
-
 	public Order getOrder() {
 		return this.order;
-	}
-
-	public void setOrder(final Order order) {
-		this.order = order;
-	}
-
-	public Integer getPricelow() {
-		return this.pricelow;
-	}
-
-	public void setPricelow(final Integer pricelow) {
-		this.pricelow = pricelow;
-	}
-
-	public Integer getPricehigh() {
-		return this.pricehigh;
-	}
-
-	public void setPricehigh(final Integer pricehigh) {
-		this.pricehigh = pricehigh;
-	}
-
-	public Integer getQuant() {
-		return this.quant;
-	}
-
-	public void setQuant(final Integer quant) {
-		this.quant = quant;
 	}
 
 	public Integer getPage() {
 		return this.page;
 	}
 
-	public void setPage(final Integer page) {
-		this.page = page;
+	public Integer getPricehigh() {
+		return this.pricehigh;
 	}
 
-	public PropertySearch build() {
-		return new PropertySearch(this.operation, this.type, this.pricelow,
-				this.pricehigh, this.page, this.quant, this.order, null, null,
-				true, this.getUser());
+	public Integer getPricelow() {
+		return this.pricelow;
 	}
 
-	public List<Service> getServices() {
-		return this.services;
+	public Integer getQuant() {
+		return this.quant;
 	}
 
-	public void setServices(final List<Service> services) {
-		this.services = services;
-	}
-
-	public List<RoomSearch> getRooms() {
+	public RoomSearch[] getRooms() {
 		return this.rooms;
 	}
 
-	public void setRooms(final List<RoomSearch> rooms) {
-		this.rooms = rooms;
+	public Service[] getServices() {
+		return this.services;
+	}
+
+	public Type getType() {
+		return this.type;
 	}
 
 	public User getUser() {
 		return this.user;
 	}
 
+	public void setOperation(final Operation op) {
+		this.operation = op;
+	}
+
+	public void setOrder(final Order order) {
+		this.order = order;
+	}
+
+	public void setPage(final Integer page) {
+		this.page = page;
+	}
+
+	public void setPricehigh(final Integer pricehigh) {
+		this.pricehigh = pricehigh;
+	}
+
+	public void setPricelow(final Integer pricelow) {
+		this.pricelow = pricelow;
+	}
+
+	public void setQuant(final Integer quant) {
+		this.quant = quant;
+	}
+
+	public void setRooms(final RoomSearch[] rooms) {
+		this.rooms = rooms;
+	}
+
+	public void setServices(final Service[] services) {
+		this.services = services;
+	}
+
+	public void setType(final Type type) {
+		this.type = type;
+	}
+
 	public void setUser(final User user) {
 		this.user = user;
+	}
+
+	@Override
+	public String toString() {
+		return "SearchForm [operation=" + this.operation + ", type="
+				+ this.type + ", order=" + this.order + ", pricelow="
+				+ this.pricelow + ", pricehigh=" + this.pricehigh + ", quant="
+				+ this.quant + ", page=" + this.page + ", user=" + this.user
+				+ ", services=" + this.services + ", rooms=" + this.rooms + "]";
 	}
 }

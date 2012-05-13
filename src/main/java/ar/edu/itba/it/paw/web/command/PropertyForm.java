@@ -193,6 +193,19 @@ public class PropertyForm implements BuilderForm<Property> {
 		answer.setSpaces(this.spaces);
 		answer.setType(this.type);
 		answer.setServices(Arrays.asList(this.services));
+
+		answer.getRooms().clear();
+		if (this.rooms != null) {
+
+			for (final Room room : this.rooms) {
+				if (room.getType() == null) {
+					continue;
+				}
+				room.setProperty(answer);
+
+				answer.getRooms().add(room);
+			}
+		}
 		return answer;
 	}
 
