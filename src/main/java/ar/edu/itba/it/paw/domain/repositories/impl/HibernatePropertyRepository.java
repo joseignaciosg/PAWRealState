@@ -45,8 +45,18 @@ public class HibernatePropertyRepository extends AbstractHibernateRepository
 
 		final Criteria q = this.sessionFactory.openSession().createCriteria(
 				Property.class);
-		//
-		// // Simple Elements
+
+		// Si es una busqueda de un usuario
+		if (search.getUser() != null) {
+			final User u = search.getUser();
+			return this.find("from Property p where p.user = ?", u);
+			// final List<Property> list = q.list();
+			// for (int i = 0; i < list.size(); i++) {
+			// System.out.println(list.get(i));
+			// }
+		}
+
+		// Si no es para un usuario sigo con la busqueda, Simple Elements
 		if (search.getType() != null) {
 			q.add(Restrictions.eq("type", search.getType()));
 		}

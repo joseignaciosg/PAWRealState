@@ -20,7 +20,8 @@ public class SearchForm implements BuilderForm<PropertySearch> {
 		return "SearchForm [operation=" + this.operation + ", type="
 				+ this.type + ", order=" + this.order + ", pricelow="
 				+ this.pricelow + ", pricehigh=" + this.pricehigh + ", quant="
-				+ this.quant + ", page=" + this.page + "]";
+				+ this.quant + ", page=" + this.page + ", user=" + this.user
+				+ ", services=" + this.services + ", rooms=" + this.rooms + "]";
 	}
 
 	private Operation operation;
