@@ -12,7 +12,7 @@ import javax.persistence.Table;
 // TODO: use natural key
 public class Room extends PersistentEntity {
 	public enum RoomType {
-		A, B, C;
+		BATHROOM, DORM, KITCHEN, LIVING, PLAYROOM;
 	}
 
 	@Enumerated(EnumType.STRING)
@@ -24,33 +24,19 @@ public class Room extends PersistentEntity {
 	@JoinColumn(name = "property_id")
 	private Property property;
 
+	public Room() {
+
+	}
+
+	public Room(final RoomType type, final int size) {
+		this.type = type;
+		this.size = size;
+	}
+
 	public Room(final RoomType type, final int size, final Property property) {
 		this.type = type;
 		this.size = size;
 		this.setProperty(property);
-	}
-
-	public RoomType getType() {
-		return this.type;
-	}
-
-	public int getSize() {
-		return this.size;
-	}
-
-	@Override
-	public String toString() {
-		return "Room [type=" + this.type + ", size=" + this.size + "]";
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + this.size;
-		result = prime * result
-				+ ((this.type == null) ? 0 : this.type.hashCode());
-		return result;
 	}
 
 	@Override
@@ -78,8 +64,39 @@ public class Room extends PersistentEntity {
 		return this.property;
 	}
 
+	public int getSize() {
+		return this.size;
+	}
+
+	public RoomType getType() {
+		return this.type;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + this.size;
+		result = prime * result
+				+ ((this.type == null) ? 0 : this.type.hashCode());
+		return result;
+	}
+
 	public void setProperty(final Property property) {
 		this.property = property;
+	}
+
+	public void setSize(final int size) {
+		this.size = size;
+	}
+
+	public void setType(final RoomType type) {
+		this.type = type;
+	}
+
+	@Override
+	public String toString() {
+		return "Room [type=" + this.type + ", size=" + this.size + "]";
 	}
 
 }

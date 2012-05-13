@@ -42,7 +42,6 @@
 			       		<c:if test="${ propertyForm.operation != 'SELL' }">
 			       			<form:option value="SELL" >Venta</form:option> 
 			       		</c:if>
-			       		 
 					</form:select>  
 				</div>  
 			</div>
@@ -88,7 +87,7 @@
 				<label class="control-label" for="property_age">Antiguedad </label>
 				<div class="controls">
 					<form:input type="text" class="input-xlarge" id="age" path="age" name="property_age" value=""/>
-					<p>Aï¿½os</p>
+					<p>Años</p>
 				</div>
 			</div>
 			<div class="control-group">
@@ -99,9 +98,62 @@
 			</div>
 			
 			<div class="control-group">  
-			  <label class="control-label" for="property_service">Seleccione los servicios disponibles </label>  
+			  <label class="control-label" for="property_service">Seleccione los servicios disponibles</label>  
 			  <div class="controls"> 
                 <form:checkboxes path="services" items="${propertyServices}" />
 			  </div>  
-			</div>		
+			</div>
+			<div class="control-group">  
+			  <label class="control-label js-roomlist-init" for="property_service">Seleccione los ambientes de la propiedad</label>
+			  <c:if test="${ not empty propertyForm.rooms }">
+			  	<c:forEach items="${ propertyForm.rooms }" var="room" varStatus="i">
+			  		<div class="controls js-roomlist">
+				  	<h6>Ambiente</h6>
+				  	<br/> 
+				    <spring:bind path="rooms[${ i.index }].size">
+	                	<input type="text" class="input-xlarge" name="rooms[${ i.index }].size" placeholder="Tamaño del ambiente (metros cuadrados)"
+	                	value="${ room.size }"/>
+	                </spring:bind>
+	                <br/>
+	                <br/>
+	                <span>Tipo:</span>
+	                <form:select  path="rooms[${ i.index }].type">
+	                	<c:if test="${ room.type == 'BATHROOM' }">
+	                		<form:option selected="selected" value="BATHROOM">Baño</form:option>
+	                	</c:if>
+	                	<c:if test="${ room.type != 'BATHROOM' }">
+	                		<form:option value="BATHROOM">Baño</form:option>
+	                	</c:if>
+	                	<c:if test="${ room.type == 'DORM' }">
+	                		<form:option selected="selected" value="DORM">Dormitorio</form:option>
+	                	</c:if>
+	                	<c:if test="${ room.type != 'DORM' }">
+	                		<form:option value="DROM">Dormitorio</form:option>
+	                	</c:if>
+	                	<c:if test="${ room.type == 'KITCHEN' }">
+	                		<form:option selected="selected" value="KITCHEN">Cocina</form:option>
+	                	</c:if>
+	                	<c:if test="${ room.type != 'KITCHEN' }">
+	                		<form:option value="KITCHEN">Cocina</form:option>
+	                	</c:if>
+	                	<c:if test="${ room.type == 'LIVING' }">
+	                		<form:option selected="selected" value="LIVING">Living</form:option>
+	                	</c:if>
+	                	<c:if test="${ room.type != 'LIVING' }">
+	                		<form:option value="LIVING">Living</form:option>
+	                	</c:if>
+	                	<c:if test="${ room.type == 'PLAYROOM' }">
+	                		<form:option selected="selected" value="PLAYROOM">Playroom</form:option>
+	                	</c:if>
+	                	<c:if test="${ room.type != 'PLAYROOM' }">
+	                		<form:option value="PLAYROOM">Playroom</form:option>
+	                	</c:if>
+	                </form:select>
+	                <a href="javascript:;" class="btn btn-danger js-del-room">Eliminar</a>
+	                <hr/>
+				  </div>
+			  	</c:forEach>
+			  </c:if>
+			  <a href="javascript:;" class="btn btn-active js-add-room" style="margin-left: 20px">Agregar nuevo ambiente</a>    
+			</div>			
 			
