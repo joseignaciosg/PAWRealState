@@ -35,7 +35,7 @@ ALTER TABLE PHOTOS ADD COLUMN agent_id INTEGER;
 ALTER TABLE USERS ADD COLUMN tipo character varying;
 ALTER TABLE USERS ADD COLUMN agency_name character varying;
 
-UPDATE USERS SET tipo = 'User';
+UPDATE TABLE USERS SET tipo = "User";
 
 CREATE TABLE rooms (
   id SERIAL not null,

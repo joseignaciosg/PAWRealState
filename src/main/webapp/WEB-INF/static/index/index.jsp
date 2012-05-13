@@ -25,6 +25,9 @@
 </div>
 
 <hr />
+
+<h3><a href="${ basePath }/agency/list">Ver agencias</a></h3>
+
 <div class="row">
 	<div class="span5 offset1">
 		<h2>Propiedades en Alquiler</h2>

@@ -115,7 +115,9 @@
 			<tbody>
 					<c:forEach items="${property.services}" var="service">
 						<tr>
-							<c:out value="${service}"/>
+							<td>
+								<c:out value="${service}"/>
+							</td>
 						</tr>
 					</c:forEach>
 			</tbody>
@@ -147,10 +149,8 @@
   	 });
   	</script>
 		<form:form class="form-vertical" action="${ basePath }/property/contactrequest" method="POST" commandName="contactRequestForm">
-		
 		<fieldset>
 			<legend>Contacta al Publicador</legend>
-			<form:errors path="*"/>
 			<form:input type="hidden" class="input-xlarge" id="propertyId" name="propertyId" value="${ property.id }" path="property"/>
 			<div id="hiddenform" class="collapse" ></div>
 			
