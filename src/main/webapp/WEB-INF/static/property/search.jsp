@@ -83,6 +83,15 @@
 					value="${ searchForm.pricehigh == -1 ? '' : searchForm.pricehigh}"
 					placeholder="Hasta" /></li>
 				<li class="divider"></li>
+				<li><h6>Inmobiliaria:</h6></li>
+				<li><form:select path="user"
+						style="width: 100px">
+						<form:option value="any">Cualquiera</form:option>
+						<c:forEach var="agency" items="${ realStateAgencies }">
+							<form:option value="${ agency.id }">${ agency.agencyName }</form:option>
+						</c:forEach>
+					</form:select></li>
+				<li class="divider"></li>
 				<li>
 					<div class="btn-group servicesDrop">
 						<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
@@ -118,7 +127,6 @@
 								</li>
 								<hr/>
 							</c:forEach>
-							
 						</ul>
 					</div>
 				</li>
