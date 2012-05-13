@@ -12,7 +12,19 @@ import javax.persistence.Table;
 // TODO: use natural key
 public class Room extends PersistentEntity {
 	public enum RoomType {
-		BATHROOM, DORM, KITCHEN, LIVING, PLAYROOM;
+		BATHROOM("Baño"), DORM("Dormitorio"), KITCHEN("Cocina"), LIVING(
+				"Living"), PLAYROOM("Playroom");
+
+		private String humanName;
+
+		private RoomType(final String humanName) {
+			this.humanName = humanName;
+		}
+
+		public String getHumanName() {
+			return this.humanName;
+		}
+
 	}
 
 	@Enumerated(EnumType.STRING)

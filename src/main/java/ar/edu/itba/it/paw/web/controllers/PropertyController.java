@@ -68,6 +68,8 @@ public class PropertyController {
 		final ModelAndView mav = new ModelAndView("property/search");
 
 		mav.addObject("props", props);
+		mav.addObject("propertyServices", Property.getAllServices());
+		mav.addObject("roomTypes", Property.getAllRoomTypes());
 		mav.addObject("propertyForm", searchForm);
 		return mav;
 	}
