@@ -61,9 +61,9 @@ public class HibernatePropertyRepository extends AbstractHibernateRepository
 		if (search.getType() != null) {
 			q.add(Restrictions.eq("type", search.getType()));
 		}
-		// if (search.getOperation() != null) {
-		// q.add(Restrictions.eq("transaction", search.getOperation()));
-		// }
+		if (search.getOperation() != null) {
+			q.add(Restrictions.eq("operation", search.getOperation()));
+		}
 		if (search.getPriceHigh() != null && search.getPriceLow() != null) {
 			q.add(Restrictions.between("price", search.getPriceLow(),
 					search.getPriceHigh()));
