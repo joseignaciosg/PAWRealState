@@ -13,7 +13,6 @@ import org.springframework.stereotype.Repository;
 import ar.edu.itba.it.paw.domain.entities.ContactRequest;
 import ar.edu.itba.it.paw.domain.entities.Photo;
 import ar.edu.itba.it.paw.domain.entities.Property;
-import ar.edu.itba.it.paw.domain.entities.Property.Service;
 import ar.edu.itba.it.paw.domain.entities.User;
 import ar.edu.itba.it.paw.domain.exceptions.NoSuchEntityException;
 import ar.edu.itba.it.paw.domain.repositories.AbstractHibernateRepository;
@@ -101,15 +100,17 @@ public class HibernatePropertyRepository extends AbstractHibernateRepository
 		}
 		//
 		// // Services
-		final Disjunction disjServices = Restrictions.disjunction();
+		// final Disjunction disjServices = Restrictions.disjunction();
+		//
+		// if (search.getServices() != null) {
+		// for (int i = 0; i < search.getServices().size(); i++) {
+		// final Service service = search.getServices().get(0);
+		// disjServices.add(Restrictions.eq("services", service.name()));
+		// }
+		// q.add(disjServices);
+		// }
+		q.add(Restrictions.eq("services", search.getServices()));
 
-		if (search.getServices() != null) {
-			for (int i = 0; i < search.getServices().size(); i++) {
-				final Service service = search.getServices().get(0);
-				disjServices.add(Restrictions.eq("element", service.name()));
-			}
-			q.add(disjServices);
-		}
 		// Order
 		if (search.getOrder() == null || search.getOrder().equals("ASC")) {
 			q.addOrder(org.hibernate.criterion.Order.asc("price"));
