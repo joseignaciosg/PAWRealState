@@ -137,7 +137,11 @@
 			</tbody>
 		</table>
 	</div>
-			
+	<div class="span8"  style="margin: 0px;">
+		<!--<a class="btn" href="${ basePath }/property/search?user=${ property.owner.id }">Más propiedades del propietario de esta propiedad »</a-->
+		<a href="${ basePath }/property/search?user=${ property.owner.id }" class="btn btn-primary btn-small">Más propiedades del propietario de esta propiedad »</a>
+	</div>		
+	
 		</div>
 		<div class="span3">
 	<script type="text/javascript">

@@ -23,6 +23,7 @@ import ar.edu.itba.it.paw.domain.entities.User;
 import ar.edu.itba.it.paw.domain.exceptions.InvalidLoginException;
 import ar.edu.itba.it.paw.domain.exceptions.NoSuchEntityException;
 import ar.edu.itba.it.paw.domain.repositories.api.PropertySearch;
+import ar.edu.itba.it.paw.domain.repositories.api.PropertySearch.Order;
 import ar.edu.itba.it.paw.domain.repositories.impl.HibernatePropertyRepository;
 import ar.edu.itba.it.paw.domain.repositories.impl.HibernateUserRepository;
 
@@ -67,30 +68,23 @@ public class BasicDataPersistanceTest {
 				23, 12, null, null, "", u);
 
 		final PropertySearch propSearch = new PropertySearch(null, null, null,
-				null, null, null, null, null, null, true);
-
-		Assert.assertTrue(!property.getVisible());
+				null, null, null, Order.ASC, null, null, true, null);
 
 		final int oldVisibleCount = this.propertyRepository.getAll(propSearch)
 				.size();
 
 		this.propertyRepository.save(property);
+
 		session.flush();
 
 		int newVisibleCount = this.propertyRepository.getAll(propSearch).size();
 
 		Assert.assertEquals(oldVisibleCount, newVisibleCount);
 
-		property.toggleVisibility();
-
-		// Assert.assertEquals(property.getVisible(), true);
-
 		this.propertyRepository.save(property);
 		session.flush();
 
 		newVisibleCount = this.propertyRepository.getAll().size();
-
-		// Assert.assertEquals(oldVisibleCount + 1, newVisibleCount);
 
 	}
 
@@ -151,7 +145,7 @@ public class BasicDataPersistanceTest {
 		final Property property = this.propertyRepository
 				.get(Property.class, 1);
 
-		final Room room = new Room(RoomType.A, 10, property);
+		final Room room = new Room(RoomType.BATHROOM, 10, property);
 
 		this.propertyRepository.save(room);
 
@@ -160,11 +154,11 @@ public class BasicDataPersistanceTest {
 		session.refresh(property);
 
 		Assert.assertTrue(property.getRooms().contains(
-				new Room(RoomType.A, 10, property)));
+				new Room(RoomType.BATHROOM, 10, property)));
 		Assert.assertTrue(!property.getRooms().contains(
-				new Room(RoomType.A, 11, property)));
+				new Room(RoomType.BATHROOM, 11, property)));
 		Assert.assertTrue(!property.getRooms().contains(
-				new Room(RoomType.B, 11, property)));
+				new Room(RoomType.DORM, 11, property)));
 
 	}
 

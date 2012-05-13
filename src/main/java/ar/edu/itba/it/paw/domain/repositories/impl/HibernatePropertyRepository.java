@@ -43,16 +43,23 @@ public class HibernatePropertyRepository extends AbstractHibernateRepository
 	@SuppressWarnings("unchecked")
 	public List<Property> getAll(final PropertySearch search) {
 
-		final Criteria q = this.sessionFactory.openSession().createCriteria(
-				Property.class);
-		//
-		// // Simple Elements
+		final Criteria q = this.sessionFactory.getCurrentSession()
+				.createCriteria(Property.class);
+
+		// Si es una busqueda de un usuario
+		if (search.getUser() != null) {
+			q.add(Restrictions.eq("owner", search.getUser()));
+			final List<Property> list = q.list();
+			return list;
+		}
+
+		// Si no es para un usuario sigo con la busqueda, Simple Elements
 		if (search.getType() != null) {
 			q.add(Restrictions.eq("type", search.getType()));
 		}
-		// if (search.getOperation() != null) {
-		// q.add(Restrictions.eq("transaction", search.getOperation()));
-		// }
+		if (search.getOperation() != null) {
+			q.add(Restrictions.eq("operation", search.getOperation()));
+		}
 		if (search.getPriceHigh() != null && search.getPriceLow() != null) {
 			q.add(Restrictions.between("price", search.getPriceLow(),
 					search.getPriceHigh()));
