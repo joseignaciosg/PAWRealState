@@ -6,6 +6,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import ar.edu.itba.it.paw.domain.entities.RealStateAgency;
 import ar.edu.itba.it.paw.domain.entities.User;
 import ar.edu.itba.it.paw.domain.exceptions.InvalidLoginException;
 import ar.edu.itba.it.paw.domain.repositories.AbstractHibernateRepository;
@@ -42,5 +43,9 @@ public class HibernateUserRepository extends AbstractHibernateRepository
 			return null;
 		}
 		return (User) found.get(0);
+	}
+
+	public List<RealStateAgency> getAllAgencies() {
+		return this.find("from RealStateAgency");
 	}
 }
