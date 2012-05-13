@@ -141,3 +141,48 @@ h3.search-result {
 .home-thumbnails img {
 	margin-bottom: 4px;
 }
+
+.subnav-expanded {
+	height: 72px;
+}
+
+.servicesDrop {
+	margin-top: 5px;
+}
+
+
+
+
+.servicesDrop li label {
+	padding: 2px;
+	display: inline;
+}
+
+.servicesDrop li {
+	padding: 4px 10px;
+}
+
+.ambientsDrop {
+	margin-top: 5px;
+}
+
+.ambientsDrop hr {
+	margin: 2px 0 8px;
+}
+
+.ambientsDrop li label {
+	padding: 2px;
+	display: inline;
+}
+.ambientsDrop li input[type=text] {
+	width: 58px;
+}
+
+.ambientsDrop li {
+	padding: 0px 10px;
+}
+ 
+.divider {
+	width: 10px;
+	height: 1px;
+}

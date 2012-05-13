@@ -15,7 +15,6 @@
 			<jsp:include page="form.jsp"></jsp:include>
 			<div class="form-actions">
 				<input type="submit" class="btn btn-primary" value="Agregar" />
-
 			</div>
 		</fieldset>
 	</form:form>

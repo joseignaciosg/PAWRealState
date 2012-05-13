@@ -5,10 +5,28 @@ import ar.edu.itba.it.paw.domain.entities.Room.RoomType;
 public class RoomSearch {
 
 	private RoomType type;
-	private int minSize;
-	private int maxSize;
+	private Integer minSize;
 
-	public RoomSearch(final RoomType type, final int minSize, final int maxSize) {
+	public void setType(final RoomType type) {
+		this.type = type;
+	}
+
+	public void setMinSize(final Integer minSize) {
+		this.minSize = minSize;
+	}
+
+	public void setMaxSize(final Integer maxSize) {
+		this.maxSize = maxSize;
+	}
+
+	private Integer maxSize;
+
+	public RoomSearch() {
+
+	}
+
+	public RoomSearch(final RoomType type, final Integer minSize,
+			final Integer maxSize) {
 		this.type = type;
 		this.minSize = minSize;
 		this.maxSize = maxSize;
@@ -22,11 +40,11 @@ public class RoomSearch {
 		return this.type;
 	}
 
-	public int getMinSize() {
+	public Integer getMinSize() {
 		return this.minSize;
 	}
 
-	public int getMaxSize() {
+	public Integer getMaxSize() {
 		return this.maxSize;
 	}
 

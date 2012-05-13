@@ -1,22 +1,16 @@
 package ar.edu.itba.it.paw.domain.entities;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
+import java.util.Arrays;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
+import javax.persistence.*;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CollectionOfElements;
+
+import ar.edu.itba.it.paw.domain.entities.Room.RoomType;
 
 @Entity
 @Table(name = "properties")
@@ -41,6 +35,10 @@ public class Property extends PersistentEntity {
 
 		Service(final String name) {
 			this.name = name;
+		}
+
+		public String getEnumName() {
+			return this.name();
 		}
 
 		@Override
@@ -82,10 +80,16 @@ public class Property extends PersistentEntity {
 	private List<Photo> photos = new ArrayList<Photo>();
 
 	private boolean visible;
-	@OneToMany(mappedBy = "property")
+	@OneToMany(mappedBy = "property", cascade = { CascadeType.ALL,
+			CascadeType.REMOVE })
+	@Cascade(value = { org.hibernate.annotations.CascadeType.ALL,
+			org.hibernate.annotations.CascadeType.DELETE_ORPHAN })
 	private List<Room> rooms = new ArrayList<Room>();
 
-	@OneToMany(mappedBy = "property")
+	@OneToMany(mappedBy = "property", cascade = { CascadeType.ALL,
+			CascadeType.REMOVE })
+	@Cascade(value = { org.hibernate.annotations.CascadeType.ALL,
+			org.hibernate.annotations.CascadeType.DELETE_ORPHAN })
 	private List<ContactRequest> contactRequests = new ArrayList<ContactRequest>();
 
 	@ManyToOne
@@ -103,11 +107,11 @@ public class Property extends PersistentEntity {
 	}
 
 	public static List<Service> getAllServices() {
-		final List<Service> list = new LinkedList<Service>();
-		for (final Service srv : Service.values()) {
-			list.add(srv);
-		}
-		return list;
+		return Arrays.asList(Service.values());
+	}
+
+	public static List<RoomType> getAllRoomTypes() {
+		return Arrays.asList(RoomType.values());
 	}
 
 	/**
