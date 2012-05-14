@@ -18,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 import ar.edu.itba.it.paw.domain.entities.ContactRequest;
 import ar.edu.itba.it.paw.domain.entities.Property;
 import ar.edu.itba.it.paw.domain.repositories.impl.HibernatePropertyRepository;
+import ar.edu.itba.it.paw.domain.repositories.impl.HibernateUserRepository;
 import ar.edu.itba.it.paw.web.command.ContactRequestForm;
 import ar.edu.itba.it.paw.web.command.PropertyForm;
 import ar.edu.itba.it.paw.web.command.SearchForm;
@@ -31,6 +32,8 @@ public class PropertyController {
 
 	@Autowired
 	private HibernatePropertyRepository propertyRepository;
+	@Autowired
+	private HibernateUserRepository userRepository;
 	@Autowired
 	private ContactRequestFormValidator contactRequestFormValidator;
 	@Autowired
@@ -53,7 +56,6 @@ public class PropertyController {
 	@RequestMapping(method = RequestMethod.POST, value = "/search")
 	protected ModelAndView searchPOST(final SearchForm searchForm,
 			final Errors errors) throws ServletException, IOException {
-
 		this.searchFormValidator.validate(searchForm, errors);
 
 		final boolean valid = !errors.hasErrors();
@@ -64,12 +66,13 @@ public class PropertyController {
 		} else {
 			props = new ArrayList<Property>();
 		}
-		System.out.println(props);
+
 		final ModelAndView mav = new ModelAndView("property/search");
 
 		mav.addObject("props", props);
 		mav.addObject("propertyServices", Property.getAllServices());
 		mav.addObject("roomTypes", Property.getAllRoomTypes());
+		mav.addObject("realStateAgencies", this.userRepository.getAllAgencies());
 		mav.addObject("propertyForm", searchForm);
 		return mav;
 	}

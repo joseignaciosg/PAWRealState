@@ -115,9 +115,7 @@
 			<tbody>
 					<c:forEach items="${property.services}" var="service">
 						<tr>
-							<td>
-								<c:out value="${service}"/>
-							</td>
+							<td><c:out value="${service}"/></td>
 						</tr>
 					</c:forEach>
 			</tbody>

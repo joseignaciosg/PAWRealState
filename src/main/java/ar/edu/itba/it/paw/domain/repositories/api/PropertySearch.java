@@ -22,7 +22,7 @@ public final class PropertySearch {
 	private Order order;
 	private List<Service> services;
 	private List<RoomSearch> rooms;
-	private boolean visibility;
+	private Boolean visibility;
 	private User user;
 
 	public PropertySearch(final Operation operation, final Type type,
@@ -76,7 +76,7 @@ public final class PropertySearch {
 		return this.order;
 	}
 
-	public boolean getVisibility() {
+	public Boolean getVisibility() {
 		return this.visibility;
 	}
 
