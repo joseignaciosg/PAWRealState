@@ -14,6 +14,10 @@ public class UserConverter implements Converter<String, User> {
 	HibernateUserRepository repository;
 
 	public User convert(final String id) {
+		if (id.equals("any")) {
+			return null;
+		}
+
 		return this.repository.get(User.class, Integer.valueOf(id));
 	}
 

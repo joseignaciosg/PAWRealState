@@ -83,6 +83,20 @@
 					value="${ searchForm.pricehigh == -1 ? '' : searchForm.pricehigh}"
 					placeholder="Hasta" /></li>
 				<li class="divider"></li>
+				<li><h6>Inmobiliaria:</h6></li>
+				<li><form:select path="user"
+						style="width: 100px">
+						<form:option value="any">Cualquiera</form:option>
+						<c:forEach var="agency" items="${ realStateAgencies }">
+						<c:if test="${searchForm.user == agency}">
+							<form:option selected="selected" value="${ agency.id }">${ agency.agencyName }</form:option>
+						</c:if>
+						<c:if test="${searchForm.user != agency}">
+							<form:option value="${ agency.id }">${ agency.agencyName }</form:option>
+						</c:if>	
+						</c:forEach>
+					</form:select></li>
+				<li class="divider"></li>
 				<li>
 					<div class="btn-group servicesDrop">
 						<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
@@ -103,22 +117,20 @@
 						<ul class="dropdown-menu">
 							<c:forEach items="${ roomTypes }" var="roomType" varStatus="i">
 								<li>
-									<spring:bind path="searchForm.rooms[${i.index}].type">
-										<input type="checkbox" id="rooms[${i.index }].type" value="${ roomType }" name="rooms[${i.index}].type">
-									</spring:bind>
+									<c:if test="${ searchForm.rooms[i.index].type == roomType }">
+										<form:input type="checkbox" id="rooms[${i.index }].type" value="${ roomType }" checked="checked" path ="rooms[${i.index}].type"/>
+									</c:if>
+									<c:if test="${ searchForm.rooms[i.index].type != roomType }">
+										<form:input type="checkbox" id="rooms[${i.index }].type" value="${ roomType }" path ="rooms[${i.index}].type"/>
+									</c:if>
 									<label for="rooms[${i.index}]">${ roomType.humanName }</label>
 								</li>
 								<li>
-									<spring:bind path="searchForm.rooms[${i.index}].minSize">
-										<input type="text" id="rooms[${i.index }].minSize" class="span1 pull-left" name="rooms[${i.index}].minSize" placeholder="Desde m&#178;"/>
-									</spring:bind>
-									<spring:bind path="searchForm.rooms[${i.index}].maxSize"> 
-										<input type="text" id="rooms[${i.index }].maxSize" class="span1 pull-left" name="rooms[${i.index}].maxSize" placeholder="Hasta m&#178;"/>
-									</spring:bind>
+									<form:input type="text" id="rooms[${i.index }].minSize" class="span1 pull-left" path="rooms[${i.index}].minSize" placeholder="Desde m&#178;"/> 
+									<form:input type="text" id="rooms[${i.index }].maxSize" class="span1 pull-left" path="rooms[${i.index}].maxSize" placeholder="Hasta m&#178;"/>
 								</li>
 								<hr/>
 							</c:forEach>
-							
 						</ul>
 					</div>
 				</li>
