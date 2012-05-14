@@ -11,7 +11,6 @@
 
 	<form:form class="navbar-form pull-center" method="post"
 		action="search" commandName="searchForm">
-
 		<fieldset>
 			<ul class="nav nav-pills">
 				<li><h6>Operación:</h6></li>
@@ -71,6 +70,7 @@
 					id="js-advanced-search" value="Más opciones" /></li>
 				<li class="divider"></li>
 				<li><form:input type="hidden" value="0" name="page" path="page" />
+					<form:input type="hidden" value="5" name="quant" path="quant" />
 					<input type="submit" class="btn btn-primary" value="Buscar" /></li>
 			</ul>
 			<ul class="nav nav-pills hidden js-secondary-navbar">
@@ -202,11 +202,11 @@
 	<ul>
 		<c:if test="${pagenum-1 >= 0}">
 			<li><a
-				href='search?page=<c:out value="${pagenum-1}"/>&operation=<c:out value="${operation}"/>&type=<c:out value="${type}"/>&pricelow=<c:out value="${pricelow}"/>&pricehigh=<c:out value="${pricehigh}"/>&order=<c:out value="${order}"/>'>Anterior</a></li>
+				href='search?page=<c:out value="${pagenum-1}"/>&operation=<c:out value="${operation}"/>&type=<c:out value="${type}"/>&pricelow=<c:out value="${pricelow}"/>&pricehigh=<c:out value="${pricehigh}"/>&order=<c:out value="${order}"/>&quant=5'>Anterior</a></li>
 		</c:if>
 		<c:if test="${! empty props  }">
 			<li><a
-				href='search?page=<c:out value="${pagenum+1}"/>&operation=<c:out value="${operation}"/>&type=<c:out value="${type}"/>&pricelow=<c:out value="${pricelow}"/>&pricehigh=<c:out value="${pricehigh}"/>&order=<c:out value="${order}"/>'>Siguiente</a></li>
+				href='search?page=<c:out value="${pagenum+1}"/>&operation=<c:out value="${operation}"/>&type=<c:out value="${type}"/>&pricelow=<c:out value="${pricelow}"/>&pricehigh=<c:out value="${pricehigh}"/>&order=<c:out value="${order}"/>&quant=5'>Siguiente</a></li>
 		</c:if>
 	</ul>
 </div>
