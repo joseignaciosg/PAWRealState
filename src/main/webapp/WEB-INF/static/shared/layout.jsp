@@ -12,8 +12,6 @@
 	type="text/css" />
 	<link href="${ assetPath }/css/custom_style.css" rel="stylesheet"
 	type="text/css" />
-	<link href="${ assetPath }/css/jquery-ui-1.8.20.custom.css" rel="stylesheet"
-	type="text/css" />
 	<script type="text/javascript" src="${ assetPath }/js/jquery.js"></script>
 	<script type="text/javascript" src="${ assetPath }/js/jquery.placeholder.js"></script>
 	<script type="text/javascript" src="${ assetPath }/js/bootstrap-collapse.js"></script>
@@ -24,8 +22,6 @@
 	<script type="text/javascript" src="${ assetPath }/js/bootstrap-transition.js"></script>
 	<script type="text/javascript" src="${ assetPath }/js/bootstrap-dropdown.js"></script>
 	<script type="text/javascript" src="${ assetPath }/js/bootstrap-button.js"></script>
-	<script type="text/javascript" src="${ assetPath }/js/ui.core.js"></script>
-	<script type="text/javascript" src="${ assetPath }/js/ui.dropdownchecklist-1.4-min.js"></script>
 	
 	
 	<script type="text/javascript">
