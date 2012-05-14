@@ -22,8 +22,6 @@ import ar.edu.itba.it.paw.domain.entities.Room.RoomType;
 import ar.edu.itba.it.paw.domain.entities.User;
 import ar.edu.itba.it.paw.domain.exceptions.InvalidLoginException;
 import ar.edu.itba.it.paw.domain.exceptions.NoSuchEntityException;
-import ar.edu.itba.it.paw.domain.repositories.api.PropertySearch;
-import ar.edu.itba.it.paw.domain.repositories.api.PropertySearch.Order;
 import ar.edu.itba.it.paw.domain.repositories.impl.HibernatePropertyRepository;
 import ar.edu.itba.it.paw.domain.repositories.impl.HibernateUserRepository;
 
@@ -53,64 +51,6 @@ public class BasicDataPersistanceTest {
 		this.userRepository.save(u);
 		final User u2 = this.userRepository.get(User.class, u.getId());
 		Assert.assertEquals(u, u2);
-	}
-
-	@Test
-	public void propertiesSearch() {
-
-		final Session session = this.factory.getCurrentSession();
-
-		final User u = new User("name", "username", "bla", "bla", "bla", "bla");
-		this.userRepository.save(u);
-
-		final Property property = this.propertyRepository.getAll().get(0);
-
-		System.out.println(property);
-
-		Assert.assertTrue(!property.getServices().contains(Service.SWIMMING));
-
-		property.getServices().add(Service.SWIMMING);
-
-		final PropertySearch propSearch = new PropertySearch(null, null, null,
-				null, null, null, Order.ASC, null, null, true, null);
-
-		final PropertySearch propSearch2 = new PropertySearch(null, null, null,
-				null, null, null, Order.ASC, null, null, true, null);
-
-		final int oldVisibleCount = this.propertyRepository.getAll(propSearch)
-				.size();
-
-		System.out.println("Cuenta veija " + oldVisibleCount);
-
-		final int oldServiceCount = this.propertyRepository.getAll(propSearch2)
-				.size();
-
-		this.propertyRepository.save(property);
-
-		session.flush();
-		session.refresh(property);
-
-		int newVisibleCount = this.propertyRepository.getAll(propSearch).size();
-
-		Assert.assertEquals(oldVisibleCount, newVisibleCount);
-
-		property.toggleVisibility();
-
-		// this.propertyRepository.save(property);
-		session.flush();
-		session.refresh(property);
-
-		newVisibleCount = this.propertyRepository.getAll(propSearch).size();
-
-		Assert.assertEquals(oldVisibleCount + 1, newVisibleCount);
-
-		// final int servicesMatchCount = this.propertyRepository.getAll(
-		// propSearch2).size();
-
-		// Assert.assertEquals(1, servicesMatchCount);
-
-		Assert.assertEquals(oldServiceCount + 1, this.propertyRepository
-				.getAll(propSearch2).size());
 	}
 
 	@Test

@@ -104,6 +104,7 @@ public class Property extends PersistentEntity {
 
 	public Property() {
 		this.visitCount = 0;
+		this.visible = true;
 	}
 
 	public static List<Service> getAllServices() {
@@ -156,6 +157,7 @@ public class Property extends PersistentEntity {
 		}
 		this.visitCount = 0;
 		this.reserved = false;
+		this.visible = true;
 	}
 
 	public void setServices(final List<Service> services) {
