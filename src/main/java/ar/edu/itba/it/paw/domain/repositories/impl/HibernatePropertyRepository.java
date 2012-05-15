@@ -68,7 +68,7 @@ public class HibernatePropertyRepository extends AbstractHibernateRepository
 			q.add(Restrictions.ge("price", search.getPriceLow()));
 		}
 
-		q.add(Restrictions.eq("visible", Boolean.TRUE));
+		q.add(Restrictions.eq("visible", search.getVisibility()));
 
 		// Rooms
 
@@ -109,8 +109,11 @@ public class HibernatePropertyRepository extends AbstractHibernateRepository
 		// }
 		// q.add(disjServices);
 		// }
-		q.add(Restrictions.eq("services", search.getServices()));
 
+		if (search.getServices() != null) {
+			q.add(Restrictions.)
+			q.add(Restrictions.in("services", new String[] { "SWIMMING" }));
+		}
 		// Order
 		if (search.getOrder() == null || search.getOrder().equals("ASC")) {
 			q.addOrder(org.hibernate.criterion.Order.asc("price"));

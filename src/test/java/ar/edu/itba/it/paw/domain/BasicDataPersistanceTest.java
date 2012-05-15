@@ -1,5 +1,8 @@
 package ar.edu.itba.it.paw.domain;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import junit.framework.Assert;
 
 import org.hibernate.Session;
@@ -60,57 +63,57 @@ public class BasicDataPersistanceTest {
 
 		final Session session = this.factory.getCurrentSession();
 
-		final User u = new User("name", "username", "bla", "bla", "bla", "bla");
-		this.userRepository.save(u);
-
-		final Property property = this.propertyRepository.getAll().get(0);
-
-		System.out.println(property);
-
-		Assert.assertTrue(!property.getServices().contains(Service.SWIMMING));
-
-		property.getServices().add(Service.SWIMMING);
+		final List<Service> services = new ArrayList<Service>();
+		services.add(Service.SWIMMING);
 
 		final PropertySearch propSearch = new PropertySearch(null, null, null,
 				null, null, null, Order.ASC, null, null, true, null);
 
 		final PropertySearch propSearch2 = new PropertySearch(null, null, null,
-				null, null, null, Order.ASC, null, null, true, null);
+				null, null, null, Order.ASC, services, null, false, null);
 
-		final int oldVisibleCount = this.propertyRepository.getAll(propSearch)
-				.size();
+		final PropertySearch propSearch3 = new PropertySearch(null, null, null,
+				null, null, null, Order.ASC, services, null, true, null);
 
-		System.out.println("Cuenta veija " + oldVisibleCount);
+		final User u = new User("name", "username", "bla", "bla", "bla", "bla");
+		this.userRepository.save(u);
+
+		final Property property = new Property(Property.Type.APARTMENT,
+				Property.Operation.RENT, "Flores", "Pedernera 35", 1233, 1, 23,
+				23, 12, null, null, "", u);
+
+		property.setServices(services);
+
+		this.propertyRepository.save(property);
+		session.flush();
+		session.refresh(property);
+
+		// final int oldVisibleCount =
+		// this.propertyRepository.getAll(propSearch)
+		// .size();
 
 		final int oldServiceCount = this.propertyRepository.getAll(propSearch2)
 				.size();
 
-		this.propertyRepository.save(property);
-
-		session.flush();
-		session.refresh(property);
-
-		int newVisibleCount = this.propertyRepository.getAll(propSearch).size();
-
-		Assert.assertEquals(oldVisibleCount, newVisibleCount);
+		System.out.println("BOOLEAN: "
+				+ property.getServices().contains(Service.SWIMMING));
+		Assert.assertEquals(1, oldServiceCount);
 
 		property.toggleVisibility();
+		property.getServices().remove(Service.SWIMMING);
 
-		// this.propertyRepository.save(property);
+		this.propertyRepository.save(property);
 		session.flush();
 		session.refresh(property);
 
-		newVisibleCount = this.propertyRepository.getAll(propSearch).size();
+		final int newVisibleCount = this.propertyRepository.getAll(propSearch)
+				.size();
 
-		Assert.assertEquals(oldVisibleCount + 1, newVisibleCount);
+		final int newServiceCount = this.propertyRepository.getAll(propSearch3)
+				.size();
 
-		// final int servicesMatchCount = this.propertyRepository.getAll(
-		// propSearch2).size();
-
-		// Assert.assertEquals(1, servicesMatchCount);
-
-		Assert.assertEquals(oldServiceCount + 1, this.propertyRepository
-				.getAll(propSearch2).size());
+		// Assert.assertEquals(oldVisibleCount + 1, newVisibleCount);
+		Assert.assertEquals(0, newServiceCount);
 	}
 
 	@Test
