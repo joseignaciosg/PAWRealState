@@ -170,7 +170,7 @@
 								</c:forEach>
 							</c:if> <c:if test="${empty prop.photos}">
 								<img height="120" width="160"
-									src="${ basePath }/assets/img/no-picture.jpg" alt="house" />
+									src="${ assetPath }/img/no-picture.jpg" alt="house" />
 							</c:if>
 						</a>
 					</div>

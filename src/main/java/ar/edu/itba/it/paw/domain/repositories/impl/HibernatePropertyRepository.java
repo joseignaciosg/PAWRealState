@@ -145,15 +145,12 @@ public class HibernatePropertyRepository extends AbstractHibernateRepository
 		}
 
 		// q.addOrder(org.hibernate.criterion.Order.desc("price"));
-		List<Property> list;
 		if (search.getQuant() != null) {
-			list = q.list().subList(0, search.getQuant());
-		} else {
-			list = q.list();
+			q.setMaxResults(search.getQuant());
 		}
 		q.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 
-		return list;
+		return q.list();
 
 	}
 
