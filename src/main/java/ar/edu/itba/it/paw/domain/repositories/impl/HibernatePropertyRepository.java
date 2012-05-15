@@ -23,7 +23,6 @@ import ar.edu.itba.it.paw.domain.exceptions.NoSuchEntityException;
 import ar.edu.itba.it.paw.domain.repositories.AbstractHibernateRepository;
 import ar.edu.itba.it.paw.domain.repositories.api.PropertyRepository;
 import ar.edu.itba.it.paw.domain.repositories.api.PropertySearch;
-import ar.edu.itba.it.paw.domain.repositories.api.PropertySearch.Order;
 import ar.edu.itba.it.paw.domain.repositories.api.RoomSearch;
 import ar.edu.itba.it.paw.domain.services.MailService;
 
@@ -55,7 +54,7 @@ public class HibernatePropertyRepository extends AbstractHibernateRepository
 			q.add(Restrictions.ge("owner", search.getUser()));
 			return q.list();
 		}
-		
+
 		if (search.getOperation() != null) {
 			q.add(Restrictions.eq("operation", search.getOperation()));
 		}
@@ -72,11 +71,9 @@ public class HibernatePropertyRepository extends AbstractHibernateRepository
 			q.add(Restrictions.ge("price", search.getPriceLow()));
 		}
 
-		if (search.getVisibility() != null) {		
-		q.add(Restrictions.eq("visible", search.getVisibility()));
+		if (search.getVisibility() != null) {
+			q.add(Restrictions.eq("visible", search.getVisibility()));
 		}
-		
-
 
 		if (search.getRooms() != null && search.getRooms().size() > 0) {
 			// AND
@@ -139,12 +136,13 @@ public class HibernatePropertyRepository extends AbstractHibernateRepository
 
 		}
 
-// Order
-if (search.getOrder() == null || search.getOrder().equals("ASC")) {
-	q.addOrder(org.hibernate.criterion.Order.asc("price"));
-} else if (search.getOrder().equals("DESC")) {
-	q.addOrder(org.hibernate.criterion.Order.desc("price"));
-	
+		// Order
+		if (search.getOrder() == null || search.getOrder().equals("ASC")) {
+			q.addOrder(org.hibernate.criterion.Order.asc("price"));
+		} else if (search.getOrder().equals("DESC")) {
+			q.addOrder(org.hibernate.criterion.Order.desc("price"));
+		}
+
 		// q.addOrder(org.hibernate.criterion.Order.desc("price"));
 		List<Property> list;
 		if (search.getQuant() != null) {
