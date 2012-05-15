@@ -19,7 +19,7 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 	@Autowired
 	HibernateUserRepository repository;
 
-	private String filter = "(.*/assets/.*|.*/search(/)?|.*/contactrequest(/)?|.*/property/view(/)?$|.*/index(/)?|.*/register(/)?|.*/login(/)?|.*/photos.*(/)?|.*/|.*/photo.*(/)?)";
+	private String filter = "(.*/assets/.*|.*/search(/)?|.*/contactrequest(/)?|.*/property/view(/)?$|.*/index(/)?|.*/register(/)?|.*/login(/)?|.*/photos.*(/)?|.*/|.*/photo.*(/)?|.*/agency.*(/)?)";
 
 	@Override
 	public boolean preHandle(final HttpServletRequest request,
