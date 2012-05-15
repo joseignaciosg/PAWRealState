@@ -59,7 +59,6 @@ public class PropertyController {
 	protected ModelAndView searchPOST(final SearchForm searchForm,
 			final Errors errors, final Integer page) throws ServletException,
 			IOException {
-
 		this.searchFormValidator.validate(searchForm, errors);
 
 		final boolean valid = !errors.hasErrors();
