@@ -15,14 +15,14 @@ public class PropertyTest {
 		final Property prop2 = new Property(Type.APARTMENT, Operation.RENT,
 				"bla", "bla", 1000, 3, 200, 200, 23, null, "nice", null);
 
-		Assert.assertTrue(!prop.getVisible());
-		Assert.assertTrue(!prop2.getVisible());
+		Assert.assertTrue(prop.getVisible());
+		Assert.assertTrue(prop2.getVisible());
 
 		prop.toggleVisibility();
 		prop2.toggleVisibility();
 
-		Assert.assertTrue(prop.getVisible());
-		Assert.assertTrue(prop2.getVisible());
+		Assert.assertTrue(!prop.getVisible());
+		Assert.assertTrue(!prop2.getVisible());
 	}
 
 	@Test

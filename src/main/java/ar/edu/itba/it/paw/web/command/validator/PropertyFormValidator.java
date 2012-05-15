@@ -5,6 +5,7 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
+import ar.edu.itba.it.paw.domain.entities.Room;
 import ar.edu.itba.it.paw.web.command.PropertyForm;
 
 @Component
@@ -68,6 +69,13 @@ public class PropertyFormValidator implements Validator {
 				}
 			}
 		}
+		if (form.getRooms() != null) {
+			final Room[] rooms = form.getRooms();
+			for (final Room r : rooms) {
+				if (r.getSize() <= 0) {
+					errors.rejectValue("rooms", "notzero");
+				}
+			}
+		}
 	}
-
 }

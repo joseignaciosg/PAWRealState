@@ -11,7 +11,6 @@
 
 	<form:form class="navbar-form pull-center" method="post"
 		action="search" commandName="searchForm">
-
 		<fieldset>
 			<ul class="nav nav-pills">
 				<li><h6>Operación:</h6></li>
@@ -71,6 +70,7 @@
 					id="js-advanced-search" value="Más opciones" /></li>
 				<li class="divider"></li>
 				<li><form:input type="hidden" value="0" name="page" path="page" />
+					<form:input type="hidden" value="5" name="quant" path="quant" />
 					<input type="submit" class="btn btn-primary" value="Buscar" /></li>
 			</ul>
 			<ul class="nav nav-pills hidden js-secondary-navbar">
@@ -88,7 +88,12 @@
 						style="width: 100px">
 						<form:option value="any">Cualquiera</form:option>
 						<c:forEach var="agency" items="${ realStateAgencies }">
+						<c:if test="${searchForm.user == agency}">
+							<form:option selected="selected" value="${ agency.id }">${ agency.agencyName }</form:option>
+						</c:if>
+						<c:if test="${searchForm.user != agency}">
 							<form:option value="${ agency.id }">${ agency.agencyName }</form:option>
+						</c:if>	
 						</c:forEach>
 					</form:select></li>
 				<li class="divider"></li>
@@ -112,18 +117,17 @@
 						<ul class="dropdown-menu">
 							<c:forEach items="${ roomTypes }" var="roomType" varStatus="i">
 								<li>
-									<spring:bind path="searchForm.rooms[${i.index}].type">
-										<input type="checkbox" id="rooms[${i.index }].type" value="${ roomType }" name="rooms[${i.index}].type">
-									</spring:bind>
+									<c:if test="${ searchForm.rooms[i.index].type == roomType }">
+										<form:input type="checkbox" id="rooms[${i.index }].type" value="${ roomType }" checked="checked" path ="rooms[${i.index}].type"/>
+									</c:if>
+									<c:if test="${ searchForm.rooms[i.index].type != roomType }">
+										<form:input type="checkbox" id="rooms[${i.index }].type" value="${ roomType }" path ="rooms[${i.index}].type"/>
+									</c:if>
 									<label for="rooms[${i.index}]">${ roomType.humanName }</label>
 								</li>
 								<li>
-									<spring:bind path="searchForm.rooms[${i.index}].minSize">
-										<input type="text" id="rooms[${i.index }].minSize" class="span1 pull-left" name="rooms[${i.index}].minSize" placeholder="Desde m&#178;"/>
-									</spring:bind>
-									<spring:bind path="searchForm.rooms[${i.index}].maxSize"> 
-										<input type="text" id="rooms[${i.index }].maxSize" class="span1 pull-left" name="rooms[${i.index}].maxSize" placeholder="Hasta m&#178;"/>
-									</spring:bind>
+									<form:input type="text" id="rooms[${i.index }].minSize" class="span1 pull-left" path="rooms[${i.index}].minSize" placeholder="Desde m&#178;"/> 
+									<form:input type="text" id="rooms[${i.index }].maxSize" class="span1 pull-left" path="rooms[${i.index}].maxSize" placeholder="Hasta m&#178;"/>
 								</li>
 								<hr/>
 							</c:forEach>
@@ -210,11 +214,11 @@
 	<ul>
 		<c:if test="${pagenum-1 >= 0}">
 			<li><a
-				href='search?page=<c:out value="${pagenum-1}"/>&operation=<c:out value="${operation}"/>&type=<c:out value="${type}"/>&pricelow=<c:out value="${pricelow}"/>&pricehigh=<c:out value="${pricehigh}"/>&order=<c:out value="${order}"/>'>Anterior</a></li>
+				href='search?page=<c:out value="${pagenum-1}"/>&operation=<c:out value="${operation}"/>&type=<c:out value="${type}"/>&pricelow=<c:out value="${pricelow}"/>&pricehigh=<c:out value="${pricehigh}"/>&order=<c:out value="${order}"/>&quant=5'>Anterior</a></li>
 		</c:if>
 		<c:if test="${! empty props  }">
 			<li><a
-				href='search?page=<c:out value="${pagenum+1}"/>&operation=<c:out value="${operation}"/>&type=<c:out value="${type}"/>&pricelow=<c:out value="${pricelow}"/>&pricehigh=<c:out value="${pricehigh}"/>&order=<c:out value="${order}"/>'>Siguiente</a></li>
+				href='search?page=<c:out value="${pagenum+1}"/>&operation=<c:out value="${operation}"/>&type=<c:out value="${type}"/>&pricelow=<c:out value="${pricelow}"/>&pricehigh=<c:out value="${pricehigh}"/>&order=<c:out value="${order}"/>&quant=5'>Siguiente</a></li>
 		</c:if>
 	</ul>
 </div>

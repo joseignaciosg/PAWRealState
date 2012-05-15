@@ -1,23 +1,29 @@
 package ar.edu.itba.it.paw.domain.repositories.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Disjunction;
-import org.hibernate.criterion.Expression;
+import org.hibernate.criterion.Conjunction;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.criterion.Subqueries;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import ar.edu.itba.it.paw.domain.entities.ContactRequest;
 import ar.edu.itba.it.paw.domain.entities.Photo;
 import ar.edu.itba.it.paw.domain.entities.Property;
+import ar.edu.itba.it.paw.domain.entities.Room;
 import ar.edu.itba.it.paw.domain.entities.User;
 import ar.edu.itba.it.paw.domain.exceptions.NoSuchEntityException;
 import ar.edu.itba.it.paw.domain.repositories.AbstractHibernateRepository;
 import ar.edu.itba.it.paw.domain.repositories.api.PropertyRepository;
 import ar.edu.itba.it.paw.domain.repositories.api.PropertySearch;
+import ar.edu.itba.it.paw.domain.repositories.api.PropertySearch.Order;
 import ar.edu.itba.it.paw.domain.repositories.api.RoomSearch;
 import ar.edu.itba.it.paw.domain.services.MailService;
 
@@ -43,86 +49,111 @@ public class HibernatePropertyRepository extends AbstractHibernateRepository
 	public List<Property> getAll(final PropertySearch search) {
 
 		final Criteria q = this.sessionFactory.getCurrentSession()
-				.createCriteria(Property.class);
+				.createCriteria(Property.class, "property");
 
-		// Si es una busqueda de un usuario
 		if (search.getUser() != null) {
-			q.add(Restrictions.eq("owner", search.getUser()));
-			final List<Property> list = q.list();
-			return list;
+			q.add(Restrictions.ge("owner", search.getUser()));
+			return q.list();
 		}
-
-		// Si no es para un usuario sigo con la busqueda, Simple Elements
-		if (search.getType() != null) {
-			q.add(Restrictions.eq("type", search.getType()));
-		}
+		
 		if (search.getOperation() != null) {
 			q.add(Restrictions.eq("operation", search.getOperation()));
 		}
-		if (search.getPriceHigh() != null && search.getPriceLow() != null) {
-			q.add(Restrictions.between("price", search.getPriceLow(),
-					search.getPriceHigh()));
-		} else if (search.getPriceHigh() != null) {
+
+		if (search.getType() != null) {
+			q.add(Restrictions.eq("type", search.getType()));
+		}
+
+		if (search.getPriceHigh() != null) {
 			q.add(Restrictions.le("price", search.getPriceHigh()));
-		} else if (search.getPriceLow() != null) {
+		}
+
+		if (search.getPriceLow() != null) {
 			q.add(Restrictions.ge("price", search.getPriceLow()));
 		}
 
+		if (search.getVisibility() != null) {		
 		q.add(Restrictions.eq("visible", search.getVisibility()));
+		}
+		
 
-		// Rooms
 
-		// Esto sirve para armar un OR de Restrictions c/ Disjuntion
-		final Disjunction disjRooms = Restrictions.disjunction();
+		if (search.getRooms() != null && search.getRooms().size() > 0) {
+			// AND
+			final Conjunction bigAnd = Restrictions.conjunction();
+			// WHERE EXISTS()
+			for (final RoomSearch roomSearch : search.getRooms()) {
+				final DetachedCriteria subQuery = DetachedCriteria.forClass(
+						Room.class, "room").setProjection(
+						Projections.property("property.id"));
+				final Conjunction and = Restrictions.conjunction();
+				boolean valid = false;
 
-		final List<RoomSearch> roomList = search.getRooms();
-		if (roomList != null) {
-			for (int i = 0; i < roomList.size(); i++) {
-				final RoomSearch actualRoom = roomList.get(i);
-				if (actualRoom.getMinSize() > 0 && actualRoom.getMaxSize() != 0) {
-					disjRooms.add(Expression.and(
-							Restrictions.eq("type", actualRoom.getType()),
-							Restrictions.between("size",
-									actualRoom.getMinSize(),
-									actualRoom.getMaxSize())));
-				} else if (actualRoom.getMinSize() == 0) {
-					disjRooms.add(Expression.and(
-							Restrictions.eq("type", actualRoom.getType()),
-							Restrictions.le("size", actualRoom.getMaxSize())));
-				} else {
-					disjRooms.add(Expression.and(
-							Restrictions.eq("type", actualRoom.getType()),
-							Restrictions.ge("size", actualRoom.getMinSize())));
+				if (roomSearch.getMaxSize() != null) {
+					valid = true;
+					and.add(Restrictions.le("room.size",
+							roomSearch.getMaxSize()));
 				}
 
+				if (roomSearch.getMinSize() != null) {
+					valid = true;
+					and.add(Restrictions.ge("room.size",
+							roomSearch.getMinSize()));
+				}
+
+				if (valid && roomSearch.getType() != null) {
+					and.add(Restrictions.eq("room.type", roomSearch.getType()));
+					subQuery.add(and);
+					bigAnd.add(Subqueries.exists(subQuery));
+				}
 			}
-			q.add(disjRooms);
-		}
-		//
-		// // Services
-		// final Disjunction disjServices = Restrictions.disjunction();
-		//
-		// if (search.getServices() != null) {
-		// for (int i = 0; i < search.getServices().size(); i++) {
-		// final Service service = search.getServices().get(0);
-		// disjServices.add(Restrictions.eq("services", service.name()));
-		// }
-		// q.add(disjServices);
-		// }
 
-		if (search.getServices() != null) {
-			q.add(Restrictions.)
-			q.add(Restrictions.in("services", new String[] { "SWIMMING" }));
-		}
-		// Order
-		if (search.getOrder() == null || search.getOrder().equals("ASC")) {
-			q.addOrder(org.hibernate.criterion.Order.asc("price"));
-		} else if (search.getOrder().equals("DESC")) {
-			q.addOrder(org.hibernate.criterion.Order.desc("price"));
+			q.add(bigAnd);
 		}
 
+		if (search.getServices() != null && search.getServices().size() > 0) {
+
+			final Query query = this.sessionFactory
+					.getCurrentSession()
+					.createQuery(
+							"from Property p2 where exists(select 1 from Property p left join "
+									+ "p.services as service where service IN (:services) and p = p2 group by p.id "
+									+ "having count(service) = :servicesCount)");
+
+			final Long size = (long) search.getServices().size();
+			final List<Property> properties = query
+					.setParameterList("services", search.getServices())
+					.setParameter("servicesCount", size).list();
+
+			final List<Integer> propertiesInt = new ArrayList<Integer>();
+
+			for (final Property property : properties) {
+				propertiesInt.add(property.getId());
+			}
+
+			if (propertiesInt.size() == 0) {
+				return new ArrayList<Property>();
+			}
+			System.out.println(propertiesInt);
+			q.add(Restrictions.in("id", propertiesInt));
+
+		}
+
+// Order
+if (search.getOrder() == null || search.getOrder().equals("ASC")) {
+	q.addOrder(org.hibernate.criterion.Order.asc("price"));
+} else if (search.getOrder().equals("DESC")) {
+	q.addOrder(org.hibernate.criterion.Order.desc("price"));
+	
 		// q.addOrder(org.hibernate.criterion.Order.desc("price"));
-		final List<Property> list = q.list();
+		List<Property> list;
+		if (search.getQuant() != null) {
+			list = q.list().subList(0, search.getQuant());
+		} else {
+			list = q.list();
+		}
+		q.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+
 		return list;
 
 	}

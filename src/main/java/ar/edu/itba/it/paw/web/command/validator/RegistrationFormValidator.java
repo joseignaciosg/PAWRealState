@@ -70,6 +70,9 @@ public class RegistrationFormValidator implements Validator {
 
 		if (form.getType() != null && form.getType().equals("RealStateAgency")) {
 			ValidationUtils.rejectIfEmpty(errors, "agencyName", "empty");
+			if (file != null && file.getSize() > 10000000) {
+				errors.rejectValue("photo", "toobig");
+			}
 			if (file != null
 					&& !(file.getOriginalFilename().endsWith(".jpeg")
 							|| file.getOriginalFilename().endsWith(".jpg")
@@ -79,4 +82,5 @@ public class RegistrationFormValidator implements Validator {
 			}
 		}
 	}
+
 }

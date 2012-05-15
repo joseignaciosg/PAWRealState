@@ -39,8 +39,8 @@ public class PhotoController {
 			@RequestParam(value = "file") final MultipartFile file,
 			@RequestParam(value = "propertyId") final Property property,
 			final Object command, final Errors errors) {
-		final boolean valid = errors.hasErrors();
-		if (!valid) {
+		final boolean error = errors.hasErrors();
+		if (error) {
 			return "redirect:/photo/new?propertyId="
 					+ property.getId().toString();
 		}
