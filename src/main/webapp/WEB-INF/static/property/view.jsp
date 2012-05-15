@@ -208,15 +208,15 @@
 						<tr>
 					    <td>
 								<script type="text/javascript">
-	  $(document).ready(function () {
+	 $(document).ready(function () {
 		options = 
 		{ markers: [
-		                            { address: "<c:out value=" ${property.address}" />, <c:out value=" ${property.neighborhood}" />, Buenos Aires, Argentina",
-		                              html: "<c:out value=" ${property.address}" /> - <c:out value=" ${property.neighborhood}" /> <br/> Buenos Aires, Argentina" },],
+			{ address: "<c:out value=" ${property.address}" />, <c:out value=" ${property.neighborhood}" />, Buenos Aires, Argentina",
+		      html: "<c:out value=" ${property.address}" /> - <c:out value=" ${property.neighborhood}" /> <br/> Buenos Aires, Argentina" }],
 		                  address: "<c:out value=" ${property.address}" />, <c:out value=" ${property.neighborhood}" />, Buenos Aires, Argentina",
-		                  zoom: 15 }
+		                  zoom: 15 };
 	  	$("#map").gMap(options);
-	});
+	  }); 
 	  </script>
 							<div id="map"  style="height:380px; width:260px;"></div>	
 						</td>
@@ -225,7 +225,8 @@
 				</table>
 		</div>
 	</div>
-
-	
+	<!--[if IE]>
+		<link rel="stylesheet" type="text/css" href="${ assetPath }/css/ie.css" />
+	<![endif]-->
 </div>
 </div>

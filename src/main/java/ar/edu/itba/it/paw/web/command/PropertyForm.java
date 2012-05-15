@@ -201,6 +201,7 @@ public class PropertyForm implements BuilderForm<Property> {
 				if (room.getType() == null) {
 					continue;
 				}
+				// TODO: Fix this
 				room.setProperty(answer);
 
 				answer.getRooms().add(room);

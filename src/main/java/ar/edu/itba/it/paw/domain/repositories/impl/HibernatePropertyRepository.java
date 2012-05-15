@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.FetchMode;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Conjunction;
@@ -50,6 +51,8 @@ public class HibernatePropertyRepository extends AbstractHibernateRepository
 
 		final Criteria q = this.sessionFactory.getCurrentSession()
 				.createCriteria(Property.class, "property");
+
+		q.setFetchMode("property.photo", FetchMode.LAZY);
 
 		if (search.getVisibility() != null) {
 			q.add(Restrictions.eq("visible", search.getVisibility()));
@@ -140,7 +143,7 @@ public class HibernatePropertyRepository extends AbstractHibernateRepository
 			if (propertiesInt.size() == 0) {
 				return new ArrayList<Property>();
 			}
-			System.out.println(propertiesInt);
+
 			q.add(Restrictions.in("id", propertiesInt));
 		}
 
@@ -151,7 +154,6 @@ public class HibernatePropertyRepository extends AbstractHibernateRepository
 		} else {
 			list = q.list();
 		}
-		q.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 
 		return list;
 
