@@ -19,7 +19,9 @@
 	<p>Venta y Alquiler de Propiedades en Argentina. Su proxima casa
 		puede ser oriental.</p>
 	<p>
-		<a class="btn btn-primary btn-large" href='${ basePath }/property/search'> Buscar propiedades </a>
+		<a class="btn btn-primary btn-large" href='${ basePath }/property/search?page=0'> Buscar
+			propiedades </a>
+	
 	</p>
 	<p>
 		<a class="btn btn-primary btn-large" href="${ basePath }/agency/list"> Ver todas las agencias inmobiliarias </a>

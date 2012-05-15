@@ -143,10 +143,16 @@ public class HibernatePropertyRepository extends AbstractHibernateRepository
 			q.addOrder(org.hibernate.criterion.Order.desc("price"));
 		}
 
+		if (search.getPage() != null) {
+			q.setFirstResult(search.getPage() * 5);
+			q.setMaxResults(5);
+		}
+
 		// q.addOrder(org.hibernate.criterion.Order.desc("price"));
 		if (search.getQuant() != null) {
 			q.setMaxResults(search.getQuant());
 		}
+
 		q.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 
 		return q.list();
