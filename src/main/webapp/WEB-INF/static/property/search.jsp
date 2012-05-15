@@ -212,13 +212,12 @@
 
 <div class="pagination subnavbottom">
 	<ul>
-		<c:if test="${pagenum-1 >= 0}">
-			<li><a
-				href='search?page=<c:out value="${pagenum-1}"/>&operation=<c:out value="${operation}"/>&type=<c:out value="${type}"/>&pricelow=<c:out value="${pricelow}"/>&pricehigh=<c:out value="${pricehigh}"/>&order=<c:out value="${order}"/>&quant=5'>Anterior</a></li>
+		<c:if test="${ searchForm.page >= 1 }">
+			<li><a href='search?page=<c:out value="${searchForm.page - 1}"/>'>Anterior</a></li>
 		</c:if>
 		<c:if test="${! empty props  }">
 			<li><a
-				href='search?page=<c:out value="${pagenum+1}"/>&operation=<c:out value="${operation}"/>&type=<c:out value="${type}"/>&pricelow=<c:out value="${pricelow}"/>&pricehigh=<c:out value="${pricehigh}"/>&order=<c:out value="${order}"/>&quant=5'>Siguiente</a></li>
+				href='search?page=<c:out value="${searchForm.page + 1}"/>'>Siguiente</a></li>
 		</c:if>
 	</ul>
 </div>

@@ -42,9 +42,11 @@ public class PropertyController {
 	private PropertyFormValidator propertyFormValidator;
 
 	@RequestMapping(method = RequestMethod.GET, value = "/search")
-	protected ModelAndView searchGET(final SearchForm searchForm,
-			final Errors errors) throws ServletException, IOException {
-		return this.searchPOST(searchForm, errors);
+	protected ModelAndView searchGET(
+			@RequestParam(value = "page") final Integer page,
+			final SearchForm searchForm, final Errors errors)
+			throws ServletException, IOException {
+		return this.searchPOST(searchForm, errors, page);
 	}
 
 	/*
@@ -55,7 +57,8 @@ public class PropertyController {
 	 */
 	@RequestMapping(method = RequestMethod.POST, value = "/search")
 	protected ModelAndView searchPOST(final SearchForm searchForm,
-			final Errors errors) throws ServletException, IOException {
+			final Errors errors, final Integer page) throws ServletException,
+			IOException {
 
 		this.searchFormValidator.validate(searchForm, errors);
 
@@ -63,6 +66,8 @@ public class PropertyController {
 
 		final List<Property> props;
 		if (valid) {
+			System.out.println("PAGE QUE ME TRAIGO: " + page);
+			searchForm.setPage(page);
 			props = this.propertyRepository.getAll(searchForm.build());
 		} else {
 			props = new ArrayList<Property>();

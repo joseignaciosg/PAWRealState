@@ -64,6 +64,7 @@ public class SearchForm implements BuilderForm<PropertySearch> {
 	public PropertySearch build() {
 		this.filterRooms(Arrays.asList(this.rooms));
 
+		System.out.println("PAGES:    " + this.page);
 		return new PropertySearch(this.operation, this.type, this.pricelow,
 				this.pricehigh, this.page, this.quant, this.order,
 				Arrays.asList(this.services), Arrays.asList(this.rooms), true,

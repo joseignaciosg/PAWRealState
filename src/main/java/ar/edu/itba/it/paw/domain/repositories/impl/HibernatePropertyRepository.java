@@ -143,6 +143,11 @@ public class HibernatePropertyRepository extends AbstractHibernateRepository
 			q.addOrder(org.hibernate.criterion.Order.desc("price"));
 		}
 
+		if (search.getPage() != null) {
+			q.setFirstResult(search.getPage() * 5);
+			q.setMaxResults(5);
+		}
+
 		// q.addOrder(org.hibernate.criterion.Order.desc("price"));
 		List<Property> list;
 		if (search.getQuant() != null) {
@@ -150,6 +155,7 @@ public class HibernatePropertyRepository extends AbstractHibernateRepository
 		} else {
 			list = q.list();
 		}
+
 		q.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 
 		return list;
