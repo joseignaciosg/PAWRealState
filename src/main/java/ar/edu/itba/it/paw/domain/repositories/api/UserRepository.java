@@ -10,5 +10,8 @@ public interface UserRepository {
 	public User getByNameAndPassword(final String username,
 			final String password) throws InvalidLoginException;
 
+	public User getByName(final String username);
+
 	public List<RealStateAgency> getAllAgencies();
+
 }

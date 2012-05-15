@@ -56,7 +56,6 @@ public class PropertyController {
 	@RequestMapping(method = RequestMethod.POST, value = "/search")
 	protected ModelAndView searchPOST(final SearchForm searchForm,
 			final Errors errors) throws ServletException, IOException {
-
 		this.searchFormValidator.validate(searchForm, errors);
 
 		final boolean valid = !errors.hasErrors();
