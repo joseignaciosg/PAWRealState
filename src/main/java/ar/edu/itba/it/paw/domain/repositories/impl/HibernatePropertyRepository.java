@@ -19,12 +19,14 @@ import ar.edu.itba.it.paw.domain.entities.Photo;
 import ar.edu.itba.it.paw.domain.entities.Property;
 import ar.edu.itba.it.paw.domain.entities.Room;
 import ar.edu.itba.it.paw.domain.entities.User;
-import ar.edu.itba.it.paw.domain.exceptions.NoSuchEntityException;
 import ar.edu.itba.it.paw.domain.repositories.AbstractHibernateRepository;
 import ar.edu.itba.it.paw.domain.repositories.api.PropertyRepository;
 import ar.edu.itba.it.paw.domain.repositories.api.PropertySearch;
+import ar.edu.itba.it.paw.domain.repositories.api.PropertySearch.Order;
 import ar.edu.itba.it.paw.domain.repositories.api.RoomSearch;
 import ar.edu.itba.it.paw.domain.services.MailService;
+
+import com.sun.tools.internal.ws.wsdl.framework.NoSuchEntityException;
 
 @Repository
 public class HibernatePropertyRepository extends AbstractHibernateRepository
@@ -33,6 +35,8 @@ public class HibernatePropertyRepository extends AbstractHibernateRepository
 	@Autowired
 	private MailService mailService;
 	private SessionFactory sessionFactory;
+
+	private static int ITEMPERPAGE = 5;
 
 	@Autowired
 	public HibernatePropertyRepository(final SessionFactory sessionFactory) {
@@ -136,16 +140,16 @@ public class HibernatePropertyRepository extends AbstractHibernateRepository
 
 		}
 
-		// Order
-		if (search.getOrder() == null || search.getOrder().equals("ASC")) {
-			q.addOrder(org.hibernate.criterion.Order.asc("price"));
-		} else if (search.getOrder().equals("DESC")) {
-			q.addOrder(org.hibernate.criterion.Order.desc("price"));
+		if (search.getPage() != null) {
+			q.setFirstResult(search.getPage() * ITEMPERPAGE);
+			q.setMaxResults(ITEMPERPAGE);
 		}
 
-		if (search.getPage() != null) {
-			q.setFirstResult(search.getPage() * 5);
-			q.setMaxResults(5);
+		// Order
+		if (search.getOrder() == null || search.getOrder().equals(Order.ASC)) {
+			q.addOrder(org.hibernate.criterion.Order.asc("price"));
+		} else {
+			q.addOrder(org.hibernate.criterion.Order.desc("price"));
 		}
 
 		// q.addOrder(org.hibernate.criterion.Order.desc("price"));
