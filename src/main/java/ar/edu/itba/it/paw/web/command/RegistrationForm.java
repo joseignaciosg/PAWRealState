@@ -113,13 +113,18 @@ public class RegistrationForm {
 
 	public User build() {
 		if (this.type != null) {
-			return new RealStateAgency(this.firstName, this.lastName,
-					this.email, this.phone, this.userName, this.password,
-					this.agencyName, new Photo(this.photo.getBytes(), "jpeg"));
-		} else {
-			return new User(this.firstName, this.lastName, this.email,
-					this.phone, this.userName, this.password);
+			if (this.type.equals("RealStateAgency")) {
+				return new RealStateAgency(this.firstName, this.lastName,
+						this.email, this.phone, this.userName, this.password,
+						this.agencyName, new Photo(this.photo.getBytes(),
+								"jpeg"));
+			} else {
+				return new User(this.firstName, this.lastName, this.email,
+						this.phone, this.userName, this.password);
+			}
+
 		}
+		return null;
 	}
 
 	public CommonsMultipartFile getPhoto() {
