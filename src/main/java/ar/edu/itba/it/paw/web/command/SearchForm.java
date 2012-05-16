@@ -57,6 +57,12 @@ public class SearchForm implements BuilderForm<PropertySearch> {
 
 	public Type getType() {
 		return this.type;
+
+		// return new PropertySearch(this.operation, this.type, this.pricelow,
+		// this.pricehigh, this.getPage(), this.quant, this.order,
+		// Arrays.asList(this.services), Arrays.asList(this.rooms), true,
+		// this.getUser());
+
 	}
 
 	public void setType(final Type type) {

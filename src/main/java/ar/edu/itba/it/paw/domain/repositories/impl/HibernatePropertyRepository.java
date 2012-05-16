@@ -18,6 +18,7 @@ import ar.edu.itba.it.paw.domain.entities.User;
 import ar.edu.itba.it.paw.domain.repositories.AbstractHibernateRepository;
 import ar.edu.itba.it.paw.domain.repositories.api.PropertyRepository;
 import ar.edu.itba.it.paw.domain.repositories.api.PropertySearch;
+import ar.edu.itba.it.paw.domain.repositories.api.PropertySearch.Order;
 import ar.edu.itba.it.paw.domain.repositories.api.RoomSearch;
 import ar.edu.itba.it.paw.domain.services.MailService;
 
@@ -28,6 +29,8 @@ public class HibernatePropertyRepository extends AbstractHibernateRepository
 	@Autowired
 	private MailService mailService;
 	private SessionFactory sessionFactory;
+
+	private static int ITEMPERPAGE = 5;
 
 	@Autowired
 	public HibernatePropertyRepository(final SessionFactory sessionFactory) {
@@ -102,16 +105,22 @@ public class HibernatePropertyRepository extends AbstractHibernateRepository
 			}
 			q.add(disjServices);
 		}
+
+		if (search.getPage() != null) {
+			q.setFirstResult(search.getPage() * ITEMPERPAGE);
+			q.setMaxResults(ITEMPERPAGE);
+		}
+
 		// Order
-		if (search.getOrder() == null || search.getOrder().equals("ASC")) {
+		if (search.getOrder() == null || search.getOrder().equals(Order.ASC)) {
 			q.addOrder(org.hibernate.criterion.Order.asc("price"));
-		} else if (search.getOrder().equals("DESC")) {
+		} else {
 			q.addOrder(org.hibernate.criterion.Order.desc("price"));
 		}
 
-		// q.addOrder(org.hibernate.criterion.Order.desc("price"));
-		final List<Property> list = q.list();
-		return list;
+		q.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+
+		return q.list();
 
 	}
 

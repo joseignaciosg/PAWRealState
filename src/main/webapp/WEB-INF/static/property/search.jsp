@@ -6,10 +6,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <div class="subnav subnav-fixed">
-	
-	
-	<form:form class="navbar-form pull-center" method="post" action="search" commandName="searchForm">
-		
+
+	<form:form id="form" class="navbar-form pull-center" method="post"
+		action="search" commandName="searchForm">
 		<fieldset>
 			<ul class="nav nav-pills">
 				<li><input type="text" name="pricelow" class="span2"
@@ -68,10 +67,76 @@
 						<c:if test="${searchForm.order != 'DESC'}">
 							<form:option value="Desc">Descendiente</form:option>
 						</c:if>
-				</form:select></li>
-				<li class="divider-vertical"></li>
-				<li><form:input type="hidden" value="0" name="page" path="page"/> 
-					<input type="submit" class="btn btn-primary" value="Buscar"/>
+			</form:select></li>
+				<li class="divider"></li>
+				<li><input type="button" class="btn btn-info"
+					id="js-advanced-search" value="Más opciones" /></li>
+				<li class="divider"></li>
+				<li><form:input type="hidden" id="page" value="${searchForm.page}" name="page" path="page" />
+					<form:input type="hidden" value="5" name="quant" path="quant" />
+					<input type="submit" class="btn btn-primary" value="Buscar" /></li>
+			</ul>
+			<ul class="nav nav-pills hidden js-secondary-navbar">
+				<li><h6>Precio:</h6></li>
+				<li><input type="text" name="pricelow" class="span2"
+					value="${ searchForm.pricelow == -1 ? '' : searchForm.pricelow }"
+					placeholder="Desde"></li>
+				<li class="divider"></li>
+				<li><input type="text" name="pricehigh" class="span2"
+					value="${ searchForm.pricehigh == -1 ? '' : searchForm.pricehigh}"
+					placeholder="Hasta" /></li>
+				<li class="divider"></li>
+				<li><h6>Inmobiliaria:</h6></li>
+				<li><form:select path="user"
+						style="width: 100px">
+						<form:option value="any">Cualquiera</form:option>
+						<c:forEach var="agency" items="${ realStateAgencies }">
+						<c:if test="${searchForm.user == agency}">
+							<form:option selected="selected" value="${ agency.id }">${ agency.agencyName }</form:option>
+						</c:if>
+						<c:if test="${searchForm.user != agency}">
+							<form:option value="${ agency.id }">${ agency.agencyName }</form:option>
+						</c:if>	
+						</c:forEach>
+					</form:select></li>
+				<li class="divider"></li>
+				<li>
+					<div class="btn-group servicesDrop">
+						<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+							Servicios <span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<li><form:checkboxes path="services"
+									items="${propertyServices}" delimiter="</li><li>" /></li>
+						</ul>
+					</div>
+				</li>
+				<li class="divider"></li>
+				<li>
+					<div class="btn-group ambientsDrop">
+						<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+							Ambientes <span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<c:forEach items="${ roomTypes }" var="roomType" varStatus="i">
+								<li>
+									<c:if test="${ searchForm.rooms[i.index].type == roomType }">
+										<form:input type="checkbox" id="rooms[${i.index }].type" value="${ roomType }" checked="checked" path ="rooms[${i.index}].type"/>
+									</c:if>
+									<c:if test="${ searchForm.rooms[i.index].type != roomType }">
+										<form:input type="checkbox" id="rooms[${i.index }].type" value="${ roomType }" path ="rooms[${i.index}].type"/>
+									</c:if>
+									<label for="rooms[${i.index}]">${ roomType.humanName }</label>
+								</li>
+								<li>
+									<form:input type="text" id="rooms[${i.index }].minSize" class="span1 pull-left" path="rooms[${i.index}].minSize" placeholder="Desde m&#178;"/> 
+									<form:input type="text" id="rooms[${i.index }].maxSize" class="span1 pull-left" path="rooms[${i.index}].maxSize" placeholder="Hasta m&#178;"/>
+								</li>
+								<hr/>
+							</c:forEach>
+						</ul>
+					</div>
+>>>>>>> Stashed changes
 				</li>
 			</ul>
 		</fieldset>
@@ -150,13 +215,25 @@
 
 <div class="pagination subnavbottom">
 	<ul>
-		<c:if test="${pagenum-1 >= 0}">
-			<li><a
-				href='search?page=<c:out value="${pagenum-1}"/>&operation=<c:out value="${operation}"/>&type=<c:out value="${type}"/>&pricelow=<c:out value="${pricelow}"/>&pricehigh=<c:out value="${pricehigh}"/>&order=<c:out value="${order}"/>'>Anterior</a></li>
+
+		<c:if test="${ searchForm.page >= 1 }">
+			<div id="anterior"><li><a href='javascript:;"/>'>Anterior</a></li></div>
 		</c:if>
 		<c:if test="${! empty props  }">
-			<li><a
-				href='search?page=<c:out value="${pagenum+1}"/>&operation=<c:out value="${operation}"/>&type=<c:out value="${type}"/>&pricelow=<c:out value="${pricelow}"/>&pricehigh=<c:out value="${pricehigh}"/>&order=<c:out value="${order}"/>'>Siguiente</a></li>
+			<div id="siguiente"><li><a href="javascript:;">Siguiente</a></li></div>
+
 		</c:if>
 	</ul>
 </div>
+<script type="text/javascript">
+$("#siguiente a").click(function() {
+	$('#page').val(parseInt($('#page').val())+1);
+	$('#form').submit();
+});
+</script>
+<script type="text/javascript">
+$("#anterior a").click(function() {
+	$('#page').val(parseInt($('#page').val())-1);
+	$('#form').submit();
+});
+</script>
