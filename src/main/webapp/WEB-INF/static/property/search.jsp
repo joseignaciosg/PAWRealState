@@ -9,7 +9,7 @@
 <div class="subnav subnav-fixed">
 
 
-	<form:form class="navbar-form pull-center" method="post"
+	<form:form id="form" class="navbar-form pull-center" method="post"
 		action="search" commandName="searchForm">
 		<fieldset>
 			<ul class="nav nav-pills">
@@ -64,12 +64,12 @@
 						<c:if test="${searchForm.order != 'DESC'}">
 							<form:option value="Desc">Descendiente</form:option>
 						</c:if>
-					</form:select></li>
+			</form:select></li>
 				<li class="divider"></li>
 				<li><input type="button" class="btn btn-info"
 					id="js-advanced-search" value="Más opciones" /></li>
 				<li class="divider"></li>
-				<li><form:input type="hidden" value="0" name="page" path="page" />
+				<li><form:input type="hidden" id="page" value="${searchForm.page}" name="page" path="page" />
 					<form:input type="hidden" value="5" name="quant" path="quant" />
 					<input type="submit" class="btn btn-primary" value="Buscar" /></li>
 			</ul>
@@ -170,7 +170,7 @@
 								</c:forEach>
 							</c:if> <c:if test="${empty prop.photos}">
 								<img height="120" width="160"
-									src="${ basePath }/assets/img/no-picture.jpg" alt="house" />
+									src="${ assetPath }/img/no-picture.jpg" alt="house" />
 							</c:if>
 						</a>
 					</div>
@@ -212,13 +212,25 @@
 
 <div class="pagination subnavbottom">
 	<ul>
-		<c:if test="${pagenum-1 >= 0}">
-			<li><a
-				href='search?page=<c:out value="${pagenum-1}"/>&operation=<c:out value="${operation}"/>&type=<c:out value="${type}"/>&pricelow=<c:out value="${pricelow}"/>&pricehigh=<c:out value="${pricehigh}"/>&order=<c:out value="${order}"/>&quant=5'>Anterior</a></li>
+
+		<c:if test="${ searchForm.page >= 1 }">
+			<div id="anterior"><li><a href='javascript:;"/>'>Anterior</a></li></div>
 		</c:if>
 		<c:if test="${! empty props  }">
-			<li><a
-				href='search?page=<c:out value="${pagenum+1}"/>&operation=<c:out value="${operation}"/>&type=<c:out value="${type}"/>&pricelow=<c:out value="${pricelow}"/>&pricehigh=<c:out value="${pricehigh}"/>&order=<c:out value="${order}"/>&quant=5'>Siguiente</a></li>
+			<div id="siguiente"><li><a href="javascript:;">Siguiente</a></li></div>
+
 		</c:if>
 	</ul>
 </div>
+<script type="text/javascript">
+$("#siguiente a").click(function() {
+	$('#page').val(parseInt($('#page').val())+1);
+	$('#form').submit();
+});
+</script>
+<script type="text/javascript">
+$("#anterior a").click(function() {
+	$('#page').val(parseInt($('#page').val())-1);
+	$('#form').submit();
+});
+</script>

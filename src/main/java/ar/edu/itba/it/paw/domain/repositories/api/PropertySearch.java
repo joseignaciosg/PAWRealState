@@ -41,6 +41,7 @@ public final class PropertySearch {
 		this.rooms = roomSearch;
 		this.visibility = visibility;
 		this.user = user;
+
 	}
 
 	public PropertySearch(final Operation rent) {

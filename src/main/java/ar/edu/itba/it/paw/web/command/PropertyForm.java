@@ -25,7 +25,7 @@ public class PropertyForm implements BuilderForm<Property> {
 	private Service[] services;
 	private Room[] rooms;
 
-	private Property property = new Property();
+	private Property property;
 
 	// TODO: Rename a owner, current user no necesariamente lo es
 	private User owner;
@@ -180,6 +180,15 @@ public class PropertyForm implements BuilderForm<Property> {
 	}
 
 	public Property build() {
+		final Property answer = new Property(this.type, this.operation,
+				this.neighborhood, this.address, this.price, this.spaces,
+				this.coveredArea, this.freeArea, this.age,
+				Arrays.asList(this.services), Arrays.asList(this.rooms),
+				this.description, this.owner);
+		return answer;
+	}
+
+	public Property update() {
 		final Property answer = this.property;
 		answer.setAddress(this.address);
 		answer.setDescription(this.description);
@@ -201,10 +210,7 @@ public class PropertyForm implements BuilderForm<Property> {
 				if (room.getType() == null) {
 					continue;
 				}
-				// TODO: Fix this
-				room.setProperty(answer);
-
-				answer.getRooms().add(room);
+				answer.addRoom(room);
 			}
 		}
 		return answer;

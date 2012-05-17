@@ -15,16 +15,22 @@
 
 <div class="hero-unit" style="text-align: center;">
 	<h1>ChinuProp</h1>
-	<br />
+	<br/>
 	<p>Venta y Alquiler de Propiedades en Argentina. Su proxima casa
 		puede ser oriental.</p>
 	<p>
-		<a class="btn btn-primary btn-large" href='${ basePath }/property/search'> Buscar
+		<a class="btn btn-primary btn-large" href='${ basePath }/property/search?page=0'> Buscar
 			propiedades </a>
+	
 	</p>
+	<p>
+		<a class="btn btn-primary btn-large" href="${ basePath }/agency/list"> Ver todas las agencias inmobiliarias </a>
+	</p>
+	
 </div>
 
 <hr />
+
 <div class="row">
 	<div class="span5 offset1">
 		<h2>Propiedades en Alquiler</h2>

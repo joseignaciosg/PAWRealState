@@ -4,8 +4,16 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CollectionOfElements;
@@ -102,7 +110,7 @@ public class Property extends PersistentEntity {
 	@Column(name = "reserved")
 	private boolean reserved;
 
-	public Property() {
+	Property() {
 		this.visitCount = 0;
 		this.visible = true;
 	}
@@ -113,23 +121,6 @@ public class Property extends PersistentEntity {
 
 	public static List<RoomType> getAllRoomTypes() {
 		return Arrays.asList(RoomType.values());
-	}
-
-	/**
-	 * @deprecated Use {@link
-	 *             #Property(Type,Operation,String,String,Integer,Integer,
-	 *             Integer,Integer,Integer,List<String>,List,String,User)}
-	 *             instead
-	 */
-	@Deprecated
-	public Property(final Type type, final Operation operation,
-			final String neighborhood, final String address,
-			final Integer price, final Integer spaces,
-			final Integer coveredArea, final Integer freeArea,
-			final Integer age, final List<Service> services,
-			final String description, final User owner) {
-		this(type, operation, neighborhood, address, price, spaces,
-				coveredArea, freeArea, age, services, null, description, owner);
 	}
 
 	public Property(final Type type, final Operation operation,
@@ -344,5 +335,10 @@ public class Property extends PersistentEntity {
 
 	public void unreserve() {
 		this.reserved = false;
+	}
+
+	public void addRoom(final Room room) {
+		this.rooms.add(room);
+		room.setProperty(this);
 	}
 }

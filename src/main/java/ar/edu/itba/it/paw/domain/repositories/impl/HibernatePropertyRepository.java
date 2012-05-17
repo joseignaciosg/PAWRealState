@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Criteria;
-import org.hibernate.FetchMode;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Conjunction;
@@ -36,6 +35,8 @@ public class HibernatePropertyRepository extends AbstractHibernateRepository
 	private MailService mailService;
 	private SessionFactory sessionFactory;
 
+	private static int ITEMPERPAGE = 5;
+
 	@Autowired
 	public HibernatePropertyRepository(final SessionFactory sessionFactory) {
 		super(sessionFactory);
@@ -52,10 +53,8 @@ public class HibernatePropertyRepository extends AbstractHibernateRepository
 		final Criteria q = this.sessionFactory.getCurrentSession()
 				.createCriteria(Property.class, "property");
 
-		q.setFetchMode("property.photo", FetchMode.LAZY);
-
-		if (search.getVisibility() != null) {
-			q.add(Restrictions.eq("visible", search.getVisibility()));
+		if (search.getUser() != null) {
+			q.add(Restrictions.ge("owner", search.getUser()));
 		}
 
 		if (search.getOperation() != null) {
@@ -74,17 +73,8 @@ public class HibernatePropertyRepository extends AbstractHibernateRepository
 			q.add(Restrictions.ge("price", search.getPriceLow()));
 		}
 
-		if (search.getUser() != null) {
-			q.add(Restrictions.ge("owner", search.getUser()));
-		}
-
-		if (search.getOrder() != null) {
-			if (search.getOrder().equals(Order.ASC)) {
-				q.addOrder(org.hibernate.criterion.Order.asc("price"));
-			}
-			if (search.getOrder().equals(Order.DESC)) {
-				q.addOrder(org.hibernate.criterion.Order.desc("price"));
-			}
+		if (search.getVisibility() != null) {
+			q.add(Restrictions.eq("visible", search.getVisibility()));
 		}
 
 		if (search.getRooms() != null && search.getRooms().size() > 0) {
@@ -143,19 +133,30 @@ public class HibernatePropertyRepository extends AbstractHibernateRepository
 			if (propertiesInt.size() == 0) {
 				return new ArrayList<Property>();
 			}
-
 			q.add(Restrictions.in("id", propertiesInt));
+
+		}
+
+		if (search.getPage() != null) {
+			q.setFirstResult(search.getPage() * ITEMPERPAGE);
+			q.setMaxResults(ITEMPERPAGE);
+		}
+
+		// Order
+		if (search.getOrder() == null || search.getOrder().equals(Order.ASC)) {
+			q.addOrder(org.hibernate.criterion.Order.asc("price"));
+		} else {
+			q.addOrder(org.hibernate.criterion.Order.desc("price"));
 		}
 
 		// q.addOrder(org.hibernate.criterion.Order.desc("price"));
-		List<Property> list;
 		if (search.getQuant() != null) {
-			list = q.list().subList(0, search.getQuant());
-		} else {
-			list = q.list();
+			q.setMaxResults(search.getQuant());
 		}
 
-		return list;
+		q.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+
+		return q.list();
 
 	}
 
