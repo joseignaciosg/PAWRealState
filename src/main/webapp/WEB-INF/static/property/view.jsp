@@ -17,15 +17,13 @@
 <div class="row-fluid" >
 	<div class="span12">
 		<div class="span8">
-			
-			
 			<h1><c:out value=" ${property.address}" /></h1>
 			<h2><c:out value=" ${property.neighborhood}" /> </h2>
 			<h4>Cantidad de Visitas: <c:out value=" ${property.visitCount}" /> </h4>
 			
-		
 			<br />
-			<ul class="thumbnails">			
+			<ul class="thumbnails">
+
 				<div class="span3">
 					<dl>
 						<dt><h4>Tipo de Inmueble</h4></dt>
@@ -45,24 +43,13 @@
 							<dd>En Alquiler</dd>
 						</c:if>
 						<dt><h4>Precio</h4></dt>
-						<dd>$<c:out value="${property.price}" /> </dd>			
-					
-					<c:if test="${property.owner.class.name == 'ar.edu.itba.it.paw.domain.entities.RealStateAgency'}">
-						<dt><h4>Agencia</h4></dt>
-						<dd><c:out value=" ${property.owner.agencyName}" /> </dd>
-						<c:if test="${property.owner.photo != null}">
-							<img height="100" width="100" src="${ basePath }/photo/view?ID=${ property.owner.photo.id }" alt=""  />
-						</c:if>
-						<c:if test='${property.owner.photo == null}'>
-							<img height="100" width="100" src="${ assetPath }/img/realstate-no-picture.jpg" alt="" />
-						</c:if>					
+						<dd>$<c:out value=" ${property.price}" /> </dd>
 						
-					</c:if>
 					</dl>
+
 				</div>
-				
-				
 				<div class="span7"  >
+
 					<div id="myCarousel" class="carousel" style="overflow:hidden; height:260px;">
 						<c:if test="${property.reserved}">				
 							<img src="${ assetPath }/img/reservado_background.png" height="100" width="100" style="position: absolute; top: 0px; left: 0px;z-index: 100;"/>
@@ -94,7 +81,6 @@
 					</div>
 				
 				</div>
-				
 			</ul>
 			<div class="span6"  style="margin: 0px;">
 		<table class="table table-striped">

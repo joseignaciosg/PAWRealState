@@ -19,14 +19,13 @@ import ar.edu.itba.it.paw.domain.entities.Photo;
 import ar.edu.itba.it.paw.domain.entities.Property;
 import ar.edu.itba.it.paw.domain.entities.Room;
 import ar.edu.itba.it.paw.domain.entities.User;
+import ar.edu.itba.it.paw.domain.exceptions.NoSuchEntityException;
 import ar.edu.itba.it.paw.domain.repositories.AbstractHibernateRepository;
 import ar.edu.itba.it.paw.domain.repositories.api.PropertyRepository;
 import ar.edu.itba.it.paw.domain.repositories.api.PropertySearch;
 import ar.edu.itba.it.paw.domain.repositories.api.PropertySearch.Order;
 import ar.edu.itba.it.paw.domain.repositories.api.RoomSearch;
 import ar.edu.itba.it.paw.domain.services.MailService;
-
-import com.sun.tools.internal.ws.wsdl.framework.NoSuchEntityException;
 
 @Repository
 public class HibernatePropertyRepository extends AbstractHibernateRepository

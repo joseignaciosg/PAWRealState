@@ -6,26 +6,22 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.hibernate.exception.JDBCConnectionException;
 import org.springframework.stereotype.Component;
-import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.ModelAndView;
 
-import ar.edu.itba.it.paw.web.command.RegistrationForm;
-
 @Component
-public class MaxUploadSizeExceededExceptionResolver implements
+public class JDBCConnectionExceptionResolver implements
 		HandlerExceptionResolver {
 
 	public ModelAndView resolveException(final HttpServletRequest request,
 			final HttpServletResponse response, final Object handler,
 			final Exception ex) {
 		/* when someone uploads a too large image */
-		if (ex.getClass().equals(MaxUploadSizeExceededException.class)) {
-			final RegistrationForm registrationForm = (RegistrationForm) request
-					.getAttribute("registrationForm");
+		if (ex.getClass().equals(JDBCConnectionException.class)) {
 			final List<String> errors = new ArrayList<String>();
-			errors.add("Las imágen subida es demasiado grande");
+			errors.add("Hubo un problema con la conexión de la base de datos");
 			final ModelAndView mav = new ModelAndView("errors/errors");
 			mav.addObject("errors", errors);
 
@@ -33,4 +29,5 @@ public class MaxUploadSizeExceededExceptionResolver implements
 		}
 		return null;
 	}
+
 }
