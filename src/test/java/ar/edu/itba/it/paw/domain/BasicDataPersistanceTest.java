@@ -7,9 +7,8 @@ import org.hibernate.SessionFactory;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,8 +33,8 @@ import ar.edu.itba.it.paw.domain.repositories.impl.HibernateUserRepository;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:data-test.xml" })
 @Transactional
-@DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
-public class BasicDataPersistanceTest {
+public class BasicDataPersistanceTest extends
+		AbstractTransactionalJUnit4SpringContextTests {
 	@Autowired
 	HibernateUserRepository userRepository;
 
