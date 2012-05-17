@@ -38,10 +38,6 @@ public class ContactRequest extends PersistentEntity {
 		return this.comment;
 	}
 
-	public void setDescription(final String description) {
-		this.comment = description;
-	}
-
 	public String getName() {
 		return this.username;
 	}
@@ -56,9 +52,5 @@ public class ContactRequest extends PersistentEntity {
 
 	public Property getPropRefered() {
 		return this.property;
-	}
-
-	public void setPropRefered(final Property propRefered) {
-		this.property = propRefered;
 	}
 }
