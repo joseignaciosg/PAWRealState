@@ -45,7 +45,7 @@ public final class PropertySearch {
 	}
 
 	public PropertySearch(final Operation rent) {
-		this(rent, null, null, null, null, null, Order.DESC, null, null, true,
+		this(rent, null, null, null, null, 2, Order.DESC, null, null, true,
 				null);
 	}
 
