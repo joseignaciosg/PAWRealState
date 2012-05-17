@@ -55,7 +55,6 @@ public class HibernatePropertyRepository extends AbstractHibernateRepository
 
 		if (search.getUser() != null) {
 			q.add(Restrictions.ge("owner", search.getUser()));
-			return q.list();
 		}
 
 		if (search.getOperation() != null) {
@@ -134,7 +133,6 @@ public class HibernatePropertyRepository extends AbstractHibernateRepository
 			if (propertiesInt.size() == 0) {
 				return new ArrayList<Property>();
 			}
-			System.out.println(propertiesInt);
 			q.add(Restrictions.in("id", propertiesInt));
 
 		}

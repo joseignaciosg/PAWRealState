@@ -20,8 +20,6 @@ public class ErrorFilter implements Filter {
 		try {
 			chain.doFilter(request, response);
 		} catch (final Exception e) {
-			System.out.println("type online");
-			e.printStackTrace();
 		}
 
 	}

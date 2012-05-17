@@ -210,9 +210,7 @@ public class PropertyForm implements BuilderForm<Property> {
 				if (room.getType() == null) {
 					continue;
 				}
-				room.setProperty(answer);
-
-				answer.getRooms().add(room);
+				answer.addRoom(room);
 			}
 		}
 		return answer;

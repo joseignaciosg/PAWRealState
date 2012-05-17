@@ -336,4 +336,9 @@ public class Property extends PersistentEntity {
 	public void unreserve() {
 		this.reserved = false;
 	}
+
+	public void addRoom(final Room room) {
+		this.rooms.add(room);
+		room.setProperty(this);
+	}
 }
