@@ -94,7 +94,7 @@ public class Room extends PersistentEntity {
 		return result;
 	}
 
-	public void setProperty(final Property property) {
+	void setProperty(final Property property) {
 		this.property = property;
 	}
 
