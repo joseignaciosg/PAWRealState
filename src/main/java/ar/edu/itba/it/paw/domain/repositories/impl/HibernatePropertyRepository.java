@@ -54,7 +54,7 @@ public class HibernatePropertyRepository extends AbstractHibernateRepository
 				.createCriteria(Property.class, "property");
 
 		if (search.getUser() != null) {
-			q.add(Restrictions.ge("owner", search.getUser()));
+			q.add(Restrictions.eq("owner", search.getUser()));
 		}
 
 		if (search.getOperation() != null) {
