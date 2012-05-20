@@ -71,7 +71,7 @@
 					Usuario</label>
 				<div class="controls">
 					<select id="user_type" name="type" class="js-toggle-usertype">
-						<option selected="selected" value="User">Usuario
+						<option selected="selected" value="&nbsp;">Usuario
 							Particular</option>
 						<option value="RealStateAgency">Agente Inmobiliario</option>
 					</select>

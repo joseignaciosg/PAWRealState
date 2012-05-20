@@ -211,8 +211,7 @@ public class PropertyController {
 		this.propertyFormValidator.validate(propertyForm, errors);
 		if (!errors.hasErrors()) {
 			// TODO: Security check
-			final Property built = propertyForm.build();
-			this.propertyRepository.save(built);
+			propertyForm.update();
 			saved = true;
 		}
 		final ModelAndView mav = new ModelAndView();

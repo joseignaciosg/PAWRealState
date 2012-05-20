@@ -17,11 +17,14 @@
 	<script type="text/javascript" src="../../assets/js/bootstrap-collapse.js"></script>
 	<script type="text/javascript" src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=AIzaSyBUU88FRtPaYJqd6RHpeLKqUEIvbTc5GC4"></script>
 	<script type="text/javascript" src="../../assets/js/jquery.gmap-1.1.0-min.js"></script>
+	<script type="text/javascript" src="../../assets/js/bootstrap-tooltip.js"></script>
+	<script type="text/javascript" src="../../assets/js/bootstrap-popover.js"></script>
 	<script type="text/javascript" src="../../assets/js/bootstrap-carousel.js"></script>
 	<script type="text/javascript" src="../../assets/js/bootstrap-modal.js"></script>
 	<script type="text/javascript" src="../../assets/js/bootstrap-transition.js"></script>
 	<script type="text/javascript" src="../../assets/js/bootstrap-dropdown.js"></script>
 	<script type="text/javascript" src="../../assets/js/bootstrap-button.js"></script>
+	
 	
 	<script type="text/javascript">
 		basePath = "../..";

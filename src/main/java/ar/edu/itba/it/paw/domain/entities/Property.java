@@ -110,7 +110,7 @@ public class Property extends PersistentEntity {
 	@Column(name = "reserved")
 	private boolean reserved;
 
-	public Property() {
+	Property() {
 		this.visitCount = 0;
 		this.visible = true;
 	}
@@ -121,23 +121,6 @@ public class Property extends PersistentEntity {
 
 	public static List<RoomType> getAllRoomTypes() {
 		return Arrays.asList(RoomType.values());
-	}
-
-	/**
-	 * @deprecated Use {@link
-	 *             #Property(Type,Operation,String,String,Integer,Integer,
-	 *             Integer,Integer,Integer,List<String>,List,String,User)}
-	 *             instead
-	 */
-	@Deprecated
-	public Property(final Type type, final Operation operation,
-			final String neighborhood, final String address,
-			final Integer price, final Integer spaces,
-			final Integer coveredArea, final Integer freeArea,
-			final Integer age, final List<Service> services,
-			final String description, final User owner) {
-		this(type, operation, neighborhood, address, price, spaces,
-				coveredArea, freeArea, age, services, null, description, owner);
 	}
 
 	public Property(final Type type, final Operation operation,

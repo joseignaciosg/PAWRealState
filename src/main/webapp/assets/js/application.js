@@ -1,4 +1,9 @@
 $(document).ready(function(){
+	var options = new Object();
+	options.placement='left';
+	options.animation='true';
+	
+	$('.js-popover').popover(options);
 	$('input, textarea').placeholder();
 	$('.tabs').button();
 	$('.tabs').click(function(e) {

@@ -14,8 +14,7 @@
 		<fieldset>
 			<ul class="nav nav-pills">
 				<li><h6>Operación:</h6></li>
-				<li><form:select id="operation" name="operation"
-						path="operation" style="width: 100px">
+				<li><form:select id="operation" name="operation" path="operation" style="width: 100px">
 						<form:option value="All">Todos</form:option>
 						<c:if test="${searchForm.operation == 'SELL'}">
 							<form:option value="SELL" selected="selected">Venta</form:option>
@@ -196,9 +195,9 @@
 						<p style="color: #2F5D9F; font-size: 30px;">
 							$
 							<c:out value=" ${prop.price}" />
+							
 						<p>
-							<br /> <a class="btn btn-large"
-								href="${ basePath }/property/view?id=${prop.id}">Ver detalle</a>
+							<br /> 	<a href="${ basePath }/property/view?id=${prop.id}" class="btn btn-large btn-danger js-popover" rel="popover" data-content='Servicios<ul><c:forEach var="service" items="${ prop.services }"><li>${service}</li></c:forEach></ul>' data-original-title="Información adicional" >Ver detalle</a>
 					</div>
 				</div>
 				<div class="clear"></div>

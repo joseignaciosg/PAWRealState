@@ -14,14 +14,17 @@
 	type="text/css" />
 	<script type="text/javascript" src="${ assetPath }/js/jquery.js"></script>
 	<script type="text/javascript" src="${ assetPath }/js/jquery.placeholder.js"></script>
-	<script type="text/javascript" src="${ assetPath }/js/bootstrap-collapse.js"></script>
-	<script type="text/javascript" src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=AIzaSyBUU88FRtPaYJqd6RHpeLKqUEIvbTc5GC4"></script>
-	<script type="text/javascript" src="${ assetPath }/js/jquery.gmap-1.1.0-min.js"></script>
-	<script type="text/javascript" src="${ assetPath }/js/bootstrap-carousel.js"></script>
+	<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
+	<script type="text/javascript" src="${ assetPath }/js/jquery.gmap.min.js"></script>
 	<script type="text/javascript" src="${ assetPath }/js/bootstrap-modal.js"></script>
 	<script type="text/javascript" src="${ assetPath }/js/bootstrap-transition.js"></script>
 	<script type="text/javascript" src="${ assetPath }/js/bootstrap-dropdown.js"></script>
 	<script type="text/javascript" src="${ assetPath }/js/bootstrap-button.js"></script>
+	<script type="text/javascript" src="${ assetPath }/js/bootstrap-carousel.js"></script>
+	<script type="text/javascript" src="${ assetPath }/js/bootstrap-collapse.js"></script>
+	<script type="text/javascript" src="${ assetPath }/js/bootstrap-tooltip.js"></script>
+	<script type="text/javascript" src="${ assetPath }/js/bootstrap-popover.js"></script>
+	
 	
 	
 	<script type="text/javascript">

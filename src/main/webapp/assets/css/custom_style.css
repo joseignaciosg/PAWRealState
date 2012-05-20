@@ -151,6 +151,9 @@ h3.search-result {
 }
 
 
+.subnav-fixed {
+	z-index: 3000;
+}
 
 
 .servicesDrop li label {
@@ -160,6 +163,11 @@ h3.search-result {
 
 .servicesDrop li {
 	padding: 4px 10px;
+	
+}
+
+.servicesDrop .dropdown-menu {
+	z-index: -1;
 }
 
 .ambientsDrop {
