@@ -94,10 +94,10 @@
 					<td>Cantidad de Ambientes: <c:out value=" ${property.spaces}" /></td>
 				</tr>
 				<tr>
-					<td>Area cubierta: <c:out value=" ${property.coveredArea}" /></td>
+					<td>Area cubierta: <c:out value=" ${property.coveredArea}" />m2</td>
 				</tr>
 				<tr>
-					<td>Area Libre: <c:out value=" ${property.freeArea}" /></td>
+					<td>Area Libre: <c:out value=" ${property.freeArea}" />m2</td>
 				</tr>
 				<tr>
 					<td>Antiguedad: <c:out value=" ${property.age}"/></td>
@@ -120,8 +120,26 @@
 					</c:forEach>
 			</tbody>
 		</table>
+	</div> 
+	<div class="span11"  style="margin: 0px;">
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>Espacios</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<c:forEach items="${property.rooms}" var="room">
+						<tr>
+							<td><c:out value="${room.type.humanName}"/>: <c:out value="${room.size}m2"/> </td>
+						</tr>
+					</c:forEach>
+				</tr>
+			</tbody>
+		</table>
 	</div>
-	<div class="span8"  style="margin: 0px;">
+	<div class="span11"  style="margin: 0px;">
 		<table class="table table-striped">
 			<thead>
 				<tr>
