@@ -2,12 +2,20 @@
 -- PostgreSQL database dump
 --
 
+
+--
+-- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO users (id, firstname, lastname, email, phone, username, password,tipo,agency_name) VALUES (18, 'jose', 'ramos', 'jgalindo@alu.itba.edu.ar', '1111-1111', 'inmobiliaria', 'inmobiliaria','RealStateAgency','Inmobiliaria Ramos');
+
+
 --
 -- Data for Name: properties; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 INSERT INTO properties (id, type, transaction, address, neighborhood, price, rooms, csqm, usqm, age, description, visible, user_id) VALUES (9, 'APARTMENT', 'SELL', 'Corrientes 325', 'Microcentro', 75000, 4, 120, 15, 30,'El dpto de nico', true, 13);
-INSERT INTO properties (id, type, transaction, address, neighborhood, price, rooms, csqm, usqm, age, description, visible, user_id) VALUES (10, 'APARTMENT', 'RENT', 'Corrientes 2000', 'Recoleta', 10000, 4, 70, 10, 50, 'El dpto de fede', true, 14);
+INSERT INTO properties (id, type, transaction, address, neighborhood, price, rooms, csqm, usqm, age, description, visible, user_id) VALUES (10, 'APARTMENT', 'RENT', 'Corrientes 2000', 'Recoleta', 10000, 4, 70, 10, 50, 'El dpto de fede', true, 18);
 
 
 --
@@ -25,6 +33,8 @@ INSERT INTO services (property_id,element) VALUES (9,'PHONE');
 INSERT INTO services (property_id,element) VALUES (10,'QUINCHO');
 INSERT INTO services (property_id,element) VALUES (10,'CABLE');
 INSERT INTO services (property_id,element) VALUES (10,'PADDLE');
+INSERT INTO services (property_id,element) VALUES (18,'CABLE');
+INSERT INTO services (property_id,element) VALUES (18,'PHONE');
 
 --
 -- Data for Name: rooms; Type: TABLE DATA; Schema: public; Owner: postgres
@@ -41,6 +51,8 @@ INSERT INTO rooms (size,property_id,type) VALUES (12,9,'KITCHEN');
 INSERT INTO rooms (size,property_id,type) VALUES (11,9,'BATHROOM');
 INSERT INTO rooms (size,property_id,type) VALUES (24,10,'DORM');
 INSERT INTO rooms (size,property_id,type) VALUES (34,10,'PLAYROOM');
+INSERT INTO rooms (size,property_id,type) VALUES (20,18,'DORM');
+INSERT INTO rooms (size,property_id,type) VALUES (20,18,'PLAYROOM');
 
 
 --
