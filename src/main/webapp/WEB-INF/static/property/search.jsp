@@ -195,9 +195,8 @@
 						<p style="color: #2F5D9F; font-size: 30px;">
 							$
 							<c:out value=" ${prop.price}" />
-							
 						<p>
-							<br /> 	<a href="${ basePath }/property/view?id=${prop.id}" class="btn btn-large btn-danger js-popover" rel="popover" data-content='Servicios<ul><c:forEach var="service" items="${ prop.services }"><li>${service}</li></c:forEach></ul>' data-original-title="Información adicional" >Ver detalle</a>
+							<br /> 	<a href="${ basePath }/property/view?id=${prop.id}" class="btn btn-large btn-danger js-popover" rel="popover" data-content='Servicios<ul><c:forEach var="service" items="${ prop.services }"><li><c:out value="${service}"/></li></c:forEach></ul>' data-original-title="Información adicional" >Ver detalle</a>
 					</div>
 				</div>
 				<div class="clear"></div>
@@ -211,13 +210,11 @@
 
 <div class="pagination subnavbottom">
 	<ul>
-
 		<c:if test="${ searchForm.page >= 1 }">
-			<div id="anterior"><li><a href='javascript:;"/>'>Anterior</a></li></div>
+			<div id="anterior"><li><a href='javascript:;"/>'>Anterior</a></li></div
 		</c:if>
 		<c:if test="${! empty props  }">
 			<div id="siguiente"><li><a href="javascript:;">Siguiente</a></li></div>
-
 		</c:if>
 	</ul>
 </div>

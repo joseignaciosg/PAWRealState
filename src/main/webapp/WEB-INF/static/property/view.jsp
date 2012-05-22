@@ -9,7 +9,6 @@
 	 $(document).ready(function () {
   		$('.carousel').carousel('next',{
   				interval: 4000
-  			
   		});
   	 });
 </script>
