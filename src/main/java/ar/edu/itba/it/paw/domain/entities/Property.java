@@ -308,10 +308,6 @@ public class Property extends PersistentEntity {
 		return this.contactRequests;
 	}
 
-	public void setContactRequest(final List<ContactRequest> contactRequests) {
-		this.contactRequests = contactRequests;
-	}
-
 	public void addContactRequest(final ContactRequest request) {
 		this.contactRequests.add(request);
 	}
