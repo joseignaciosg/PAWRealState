@@ -144,6 +144,9 @@ public class Property extends PersistentEntity {
 		this.description = description;
 		this.owner = owner;
 		if (rooms != null) {
+			for (final Room room : rooms) {
+				room.setProperty(this);
+			}
 			this.rooms = rooms;
 		}
 		this.visitCount = 0;
@@ -306,10 +309,6 @@ public class Property extends PersistentEntity {
 
 	public List<ContactRequest> getContactRequest() {
 		return this.contactRequests;
-	}
-
-	public void setContactRequest(final List<ContactRequest> contactRequests) {
-		this.contactRequests = contactRequests;
 	}
 
 	public void addContactRequest(final ContactRequest request) {

@@ -53,4 +53,5 @@ public class ContactRequest extends PersistentEntity {
 	public Property getPropRefered() {
 		return this.property;
 	}
+
 }
