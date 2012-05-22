@@ -63,14 +63,18 @@
 						<c:if test="${searchForm.order != 'DESC'}">
 							<form:option value="Desc">Descendiente</form:option>
 						</c:if>
+						
 			</form:select></li>
 				<li class="divider"></li>
 				<li><input type="button" class="btn btn-info"
 					id="js-advanced-search" value="Más opciones" /></li>
 				<li class="divider"></li>
 				<li><form:input type="hidden" id="page" value="${searchForm.page}" name="page" path="page" />
+				<c:if test="${searchForm.user != null}">
+				<input type="hidden" id="user" value="${searchForm.user.id}" name="user" path="user"/>			
+				</c:if>
 					<form:input type="hidden" value="5" name="quant" path="quant" />
-					<input type="submit" class="btn btn-primary" value="Buscar" /></li>
+					<input id="buscar" type="submit" class="btn btn-primary" value="Buscar" /></li>
 			</ul>
 			<ul class="nav nav-pills hidden js-secondary-navbar">
 				<li><h6>Precio:</h6></li>
@@ -83,7 +87,7 @@
 					placeholder="Hasta" /></li>
 				<li class="divider"></li>
 				<li><h6>Inmobiliaria:</h6></li>
-				<li><form:select path="user"
+				<li><form:select id="select" path="user"
 						style="width: 100px">
 						<form:option value="any">Cualquiera</form:option>
 						<c:forEach var="agency" items="${ realStateAgencies }">
@@ -95,6 +99,7 @@
 						</c:if>	
 						</c:forEach>
 					</form:select></li>
+					
 				<li class="divider"></li>
 				<li>
 					<div class="btn-group servicesDrop">
@@ -208,13 +213,14 @@
 	</c:forEach>
 </c:if>
 
-<div class="pagination subnavbottom">
-	<ul>
+<div class="pagination subnavbottom" style="width:180px;margin-left:10px;">
+	
 		<c:if test="${ searchForm.page >= 1 }">
-			<div id="anterior"><li><a href='javascript:;"/>'>Anterior</a></li></div
+			<div id="anterior"><a href='javascript:;"/>'>Anterior</a></div>
 		</c:if>
+	
 		<c:if test="${! empty props  }">
-			<div id="siguiente"><li><a href="javascript:;">Siguiente</a></li></div>
+			<div id="siguiente"><a href="javascript:;">Siguiente</a></div>
 		</c:if>
 	</ul>
 </div>
@@ -227,6 +233,13 @@ $("#siguiente a").click(function() {
 <script type="text/javascript">
 $("#anterior a").click(function() {
 	$('#page').val(parseInt($('#page').val())-1);
+	$('#form').submit();
+});
+</script>
+<script type="text/javascript">
+$("#buscar").click(function() {
+	$('#user').val($('#select').val());
+	$('#page').val(0);
 	$('#form').submit();
 });
 </script>
