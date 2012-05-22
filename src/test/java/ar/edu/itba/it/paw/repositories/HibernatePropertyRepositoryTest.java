@@ -137,6 +137,40 @@ public class HibernatePropertyRepositoryTest extends BaseTest {
 
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@Test
+	public void userSearchTest() {
+
+		final User u = new User("name", "username", "bla", "bla", "bla", "bla");
+		this.userRepository.save(u);
+
+		final Property property = new Property(Type.APARTMENT, Operation.RENT,
+				"flores", "somewhere", 1000, 4, 120, 120, 10,
+				(List) Collections.emptyList(), (List) Collections.emptyList(),
+				"salida", u);
+
+		final Property property2 = new Property(Type.APARTMENT, Operation.RENT,
+				"Caballito", "Caballito", 1500, 4, 120, 120, 10,
+				(List) Collections.emptyList(), (List) Collections.emptyList(),
+				"salida", u);
+
+		this.userRepository.save(property);
+
+		final PropertySearch propSearch = new PropertySearch(null, null, null,
+				null, null, null, Order.ASC, null, null, true, u);
+
+		List<Property> list = this.propertyRepository.getAll(propSearch);
+
+		Assert.assertEquals(1, list.size());
+
+		this.userRepository.save(property2);
+
+		list = this.propertyRepository.getAll(propSearch);
+
+		Assert.assertEquals(2, list.size());
+
+	}
+
 	@Test
 	public void roomSearchTest() {
 		final User u = new User("name", "username", "bla", "bla", "bla", "bla");

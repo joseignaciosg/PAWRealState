@@ -55,7 +55,8 @@ public class UserController {
 			final CookiesManager cookman = new CookiesManager(request, response);
 			cookman.setUser(username, password, remember);
 			manager.setCurrentUser(user);
-			mav.addObject("errors", new String[] { "Bienvenido " + username });
+			mav.addObject("successes",
+					new String[] { "Bienvenido " + username });
 			return mav;
 		} catch (final InvalidLoginException e) {
 			final ModelAndView mav = new ModelAndView("forward:/index");
@@ -93,17 +94,25 @@ public class UserController {
 	@RequestMapping(method = RequestMethod.POST, value = "/register")
 	protected ModelAndView registerPost(
 			final RegistrationForm registrationForm,
-			final Errors validationErrors) throws ServletException, IOException {
-
+			final Errors validationErrors, final HttpServletRequest request,
+			final HttpServletResponse response) throws ServletException,
+			IOException {
+		final UserManager manager = (UserManager) request
+				.getAttribute("userManager");
 		this.registrationFormValidator.validate(registrationForm,
 				validationErrors);
-
 		final boolean valid = !validationErrors.hasErrors();
+		final ModelAndView mav = new ModelAndView("forward:/index");
 
 		if (valid) {
 			final User user = registrationForm.build();
 			this.userRepository.save(user);
-			return new ModelAndView("redirect:/index");
+			final CookiesManager cookman = new CookiesManager(request, response);
+			cookman.setUser(user.getName(), user.getPassword(), "no");
+			manager.setCurrentUser(user);
+			mav.addObject("successes",
+					new String[] { "Usted se ha registrado correctamente" });
+			return mav;
 		} else {
 			return this.registerGet(registrationForm);
 		}

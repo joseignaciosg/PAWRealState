@@ -52,48 +52,6 @@ public class User extends PersistentEntity {
 			return false;
 		}
 		final User other = (User) obj;
-		if (this.email == null) {
-			if (other.email != null) {
-				return false;
-			}
-		} else if (!this.email.equals(other.email)) {
-			return false;
-		}
-		if (this.firstname == null) {
-			if (other.firstname != null) {
-				return false;
-			}
-		} else if (!this.firstname.equals(other.firstname)) {
-			return false;
-		}
-		if (this.lastname == null) {
-			if (other.lastname != null) {
-				return false;
-			}
-		} else if (!this.lastname.equals(other.lastname)) {
-			return false;
-		}
-		if (this.password == null) {
-			if (other.password != null) {
-				return false;
-			}
-		} else if (!this.password.equals(other.password)) {
-			return false;
-		}
-		if (this.phone == null) {
-			if (other.phone != null) {
-				return false;
-			}
-		} else if (!this.phone.equals(other.phone)) {
-			return false;
-		}
-		if (this.properties == null) {
-			if (other.properties != null) {
-				return false;
-			}
-		} else if (!this.properties.equals(other.properties)) {
-			return false;
-		}
 		if (this.username == null) {
 			if (other.username != null) {
 				return false;
