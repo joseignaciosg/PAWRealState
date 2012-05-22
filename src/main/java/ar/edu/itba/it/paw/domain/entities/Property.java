@@ -144,6 +144,9 @@ public class Property extends PersistentEntity {
 		this.description = description;
 		this.owner = owner;
 		if (rooms != null) {
+			for (final Room room : rooms) {
+				room.setProperty(this);
+			}
 			this.rooms = rooms;
 		}
 		this.visitCount = 0;
