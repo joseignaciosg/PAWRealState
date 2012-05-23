@@ -5,52 +5,68 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.itba.it.paw.domain.entities.Photo;
 import ar.edu.itba.it.paw.domain.entities.Property;
 import ar.edu.itba.it.paw.domain.repositories.impl.HibernatePropertyRepository;
+import ar.edu.itba.it.paw.web.command.PropertyPhotoForm;
+import ar.edu.itba.it.paw.web.command.validator.PropertyPhotoFormValidator;
 
 @Controller
 @RequestMapping("/photo")
 public class PhotoController {
 
-	@Autowired
+	PropertyPhotoFormValidator validator;
 	HibernatePropertyRepository propertyRepository;
+
+	@Autowired
+	public PhotoController(final PropertyPhotoFormValidator validator,
+			final HibernatePropertyRepository propertyRepository) {
+		this.validator = validator;
+		this.propertyRepository = propertyRepository;
+	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/new")
 	protected ModelAndView addGET(
 			@RequestParam("propertyId") final Property property,
-			final ModelAndView mav) {
+			final ModelAndView mav, final PropertyPhotoForm propertyphotoform) {
 		mav.setViewName("photo/new");
 		mav.addObject("property", property);
+		mav.addObject("photoForm", propertyphotoform);
 		return mav;
 	}
 
 	@RequestMapping(method = RequestMethod.POST, value = "/new")
-	protected String addPOST(
-			@RequestParam(value = "file") final MultipartFile file,
-			@RequestParam(value = "propertyId") final Property property,
-			final Object command, final Errors errors) {
+	protected ModelAndView addPOST(final PropertyPhotoForm propertyphotoform,
+			final Errors errors, final ModelAndView mav) {
+		this.validator.validate(propertyphotoform, errors);
 		final boolean error = errors.hasErrors();
 		if (error) {
-			return "redirect:/photo/new?propertyId="
-					+ property.getId().toString();
+			mav.addObject("propertyId", propertyphotoform.getProperty().getId());
+			return this.addGET(propertyphotoform.getProperty(), mav,
+					propertyphotoform);
 		}
 		try {
-			property.addPhoto(new Photo(file.getBytes(), "jpeg", property));
+			propertyphotoform.getProperty().addPhoto(
+					new Photo(propertyphotoform.getFile().getBytes(), "jpeg",
+							propertyphotoform.getProperty()));
 		} catch (final IOException e) {
-			// TODO: Log this
+			final Logger log = Logger.getLogger("ERROR");
+			log.debug("Error adding photo");
 		}
 
-		return "redirect:/photo/list?propertyId=" + property.getId().toString();
+		mav.setViewName("redirect:/photo/list");
+		mav.addObject("propertyId", propertyphotoform.getProperty().getId()
+				.toString());
+		return mav;
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
