@@ -171,11 +171,13 @@ public class HibernatePropertyRepositoryTest extends BaseTest {
 
 	}
 
+	@SuppressWarnings("unchecked")
 	@Test
 	public void roomSearchTest() {
 		final User u = new User("name", "username", "bla", "bla", "bla", "bla");
 		this.userRepository.save(u);
 
+		@SuppressWarnings("rawtypes")
 		final Property property = new Property(Type.APARTMENT, Operation.RENT,
 				"flores", "somewhere", 1000, 4, 120, 120, 10,
 				(List) Collections.emptyList(), new ArrayList<Room>(),
