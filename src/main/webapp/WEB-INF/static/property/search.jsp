@@ -213,7 +213,7 @@
 	</c:forEach>
 </c:if>
 
-<div class="pagination subnavbottom" style="width:180px;margin-left:10px;">
+<div class="pagination subnavbottom" style="width:160px;margin-left:-10px;">
 	
 		<c:if test="${ searchForm.page >= 1 }">
 			<div id="anterior"><a href='javascript:;"/>'>Anterior</a></div>
