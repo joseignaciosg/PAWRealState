@@ -28,7 +28,6 @@ public class ContactRequestFormValidator implements Validator {
 		ValidationUtils.rejectIfEmpty(errors, "lastName", "empty");
 		ValidationUtils.rejectIfEmpty(errors, "email", "empty");
 		ValidationUtils.rejectIfEmpty(errors, "phone", "empty");
-		ValidationUtils.rejectIfEmpty(errors, "description", "empty");
 		if (form.getEmail() != null) {
 			if (!this.emailPattern.matcher(form.getEmail()).find()) {
 				errors.rejectValue("email", "notvalid");

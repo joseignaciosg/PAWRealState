@@ -19,7 +19,7 @@ public class HibernateAgencyRepository extends AbstractHibernateRepository {
 	@SuppressWarnings("rawtypes")
 	public List getAllWithProp() {
 		final List found = this
-				.find("select new ar.edu.itba.it.paw.domain.entities.RealStateView(photo.id, a.username, a.id, count(p)) from RealStateAgency a inner join a.properties p inner join a.photo photo where p.visible = true group by a.id, photo.id, a.username");
+				.find("select new ar.edu.itba.it.paw.domain.entities.RealStateView(photo.id, a.agencyName, a.id, count(p)) from RealStateAgency a inner join a.properties p inner join a.photo photo where p.visible = true group by a.id, photo.id, a.username");
 		if (found.isEmpty()) {
 			return null;
 		}

@@ -59,7 +59,6 @@ public class MailService {
 			this.mailSender.send(mimeMessage);
 			return true;
 		} catch (final Exception e) {
-			// TODO: Improve this
 			e.printStackTrace();
 			return false;
 		}

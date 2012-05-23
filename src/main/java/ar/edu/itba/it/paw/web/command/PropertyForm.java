@@ -27,7 +27,6 @@ public class PropertyForm implements BuilderForm<Property> {
 
 	private Property property;
 
-	// TODO: Rename a owner, current user no necesariamente lo es
 	private User owner;
 
 	public PropertyForm() {
