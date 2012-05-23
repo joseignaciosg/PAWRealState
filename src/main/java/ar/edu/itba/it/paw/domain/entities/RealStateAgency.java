@@ -17,7 +17,7 @@ public class RealStateAgency extends User {
 	@Cascade(value = { CascadeType.ALL, CascadeType.DELETE_ORPHAN })
 	private Photo photo;
 
-	public RealStateAgency() {
+	RealStateAgency() {
 
 	}
 
