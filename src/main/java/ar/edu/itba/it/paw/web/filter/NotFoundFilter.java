@@ -30,6 +30,7 @@ public class NotFoundFilter implements Filter {
 				httpResponse.sendRedirect(((HttpServletRequest) request)
 						.getContextPath() + "/assets/404.html");
 				httpResponse.setStatus(404);
+				e.printStackTrace();
 			} catch (final IOException e1) {
 				e1.printStackTrace();
 			}

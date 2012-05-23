@@ -87,7 +87,7 @@
 				<label class="control-label" for="property_age">Antiguedad </label>
 				<div class="controls">
 					<form:input type="text" class="input-xlarge" id="age" path="age" name="property_age" value=""/>
-					<p>Años</p>
+					<p>Aï¿½os</p>
 				</div>
 			</div>
 			<div class="control-group">
@@ -111,7 +111,7 @@
 				  	<h6>Ambiente</h6>
 				  	<br/> 
 				    <spring:bind path="rooms[${ i.index }].size">
-	                	<input type="text" class="input-xlarge" name="rooms[${ i.index }].size" placeholder="Tamaño del ambiente (metros cuadrados)"
+	                	<input type="text" class="input-xlarge" name="rooms[${ i.index }].size" placeholder="Tamaï¿½o del ambiente (metros cuadrados)"
 	                	value="${ room.size }"/>
 	                </spring:bind>
 	                <br/>
@@ -119,16 +119,16 @@
 	                <span>Tipo:</span>
 	                <form:select  path="rooms[${ i.index }].type">
 	                	<c:if test="${ room.type == 'BATHROOM' }">
-	                		<form:option selected="selected" value="BATHROOM">Baño</form:option>
+	                		<form:option selected="selected" value="BATHROOM">Baï¿½o</form:option>
 	                	</c:if>
 	                	<c:if test="${ room.type != 'BATHROOM' }">
-	                		<form:option value="BATHROOM">Baño</form:option>
+	                		<form:option value="BATHROOM">Baï¿½o</form:option>
 	                	</c:if>
 	                	<c:if test="${ room.type == 'DORM' }">
 	                		<form:option selected="selected" value="DORM">Dormitorio</form:option>
 	                	</c:if>
 	                	<c:if test="${ room.type != 'DORM' }">
-	                		<form:option value="DROM">Dormitorio</form:option>
+	                		<form:option value="DORM">Dormitorio</form:option>
 	                	</c:if>
 	                	<c:if test="${ room.type == 'KITCHEN' }">
 	                		<form:option selected="selected" value="KITCHEN">Cocina</form:option>
