@@ -32,23 +32,23 @@
 		<url-pattern>/bin/*</url-pattern>
 	</filter-mapping>
 
-	<filter>
-		<filter-name>errorFilter</filter-name>
-		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
-		<init-param>
-			<param-name>targetBeanName</param-name>
-			<param-value>errorFilter</param-value>
-		</init-param>
-		<init-param>
-			<param-name>contextAttribute</param-name>
-			<param-value>org.springframework.web.servlet.FrameworkServlet.CONTEXT.bin</param-value>
-		</init-param>
-	</filter>
+<!-- 	<filter> -->
+<!-- 		<filter-name>errorFilter</filter-name> -->
+<!-- 		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class> -->
+<!-- 		<init-param> -->
+<!-- 			<param-name>targetBeanName</param-name> -->
+<!-- 			<param-value>errorFilter</param-value> -->
+<!-- 		</init-param> -->
+<!-- 		<init-param> -->
+<!-- 			<param-name>contextAttribute</param-name> -->
+<!-- 			<param-value>org.springframework.web.servlet.FrameworkServlet.CONTEXT.bin</param-value> -->
+<!-- 		</init-param> -->
+<!-- 	</filter> -->
 
- 	<filter-mapping>
-		<filter-name>errorFilter</filter-name>
-		<url-pattern>/bin/*</url-pattern>
-	</filter-mapping>
+<!--  	<filter-mapping> -->
+<!-- 		<filter-name>errorFilter</filter-name> -->
+<!-- 		<url-pattern>/bin/*</url-pattern> -->
+<!-- 	</filter-mapping> -->
 
 
 

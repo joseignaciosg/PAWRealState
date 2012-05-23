@@ -12,9 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
-import org.springframework.stereotype.Component;
 
-@Component
+//@Component
 public class ErrorFilter implements Filter {
 
 	final Logger log = Logger.getLogger(this.getClass());
