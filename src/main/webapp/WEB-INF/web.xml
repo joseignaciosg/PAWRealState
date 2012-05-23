@@ -59,7 +59,6 @@
 		<url-pattern>/bin/*</url-pattern>
 	</filter-mapping>
 
-
 	<filter-mapping>
 		<filter-name>transactionFilter</filter-name>
 		<url-pattern>/bin/*</url-pattern>

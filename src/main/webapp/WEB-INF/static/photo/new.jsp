@@ -6,17 +6,17 @@
 
 <div class="row">
 	<form:form name="property_newphoto" class="form-horizontal span8 offset2"
-		action="new" method="POST" commandName="file" enctype="multipart/form-data">
-		<form:errors path="*"/>
+		action="new" method="POST" commandName="propertyphotoform" enctype="multipart/form-data">
+		<form:errors path="*" />
 		<fieldset>
 			<legend>Agregar Nueva Foto a la Propiedad</legend>
 			<input type="hidden" class="input-xlarge" id="freeArea"
-				name="propertyId" value="${ property.id }" /> 
+				name="property" value="${ property.id }" /> 
 			<div class="control-group">
 				<label class="control-label" for="property_freeArea">Foto </label>
 
 				<div class="controls">
-					<input type="file" class="input-xlarge" id="photo"
+					<input type="file" path="file" class="input-xlarge" id="photo"
 						name="file" />
 				</div>
 			</div>
