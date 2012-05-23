@@ -21,7 +21,6 @@
 	top: 40px;
 	left: 0;
 	right: 0;
-	//z-index: 1020;
 	border-color: #D5D5D5;
 	border-width: 0 0 1px;
 	-webkit-border-radius: 0;
@@ -150,12 +149,6 @@ h3.search-result {
 	margin-top: 5px;
 }
 
-
-.subnav-fixed {
-	//z-index: 3000;
-}
-
-
 .servicesDrop li label {
 	padding: 2px;
 	display: inline;
@@ -166,9 +159,6 @@ h3.search-result {
 	
 }
 
-.servicesDrop .dropdown-menu {
-	//z-index: -1;
-}
 
 .ambientsDrop {
 	margin-top: 5px;

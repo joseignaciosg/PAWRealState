@@ -12,9 +12,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
+import org.springframework.stereotype.Component;
 
-//@Component
-public class ErrorFilter implements Filter {
+@Component
+public class GeneralErrorFilter implements Filter {
 
 	final Logger log = Logger.getLogger(this.getClass());
 
@@ -25,9 +26,11 @@ public class ErrorFilter implements Filter {
 			chain.doFilter(request, response);
 		} catch (final Exception e) {
 			try {
-				((HttpServletResponse) response)
-						.sendRedirect(((HttpServletRequest) request)
-								.getContextPath() + "/assets/404.html");
+				final HttpServletResponse httpResponse = ((HttpServletResponse) response);
+				httpResponse.sendRedirect(((HttpServletRequest) request)
+						.getContextPath() + "/assets/500.html");
+				httpResponse.setStatus(500);
+				e.printStackTrace();
 			} catch (final IOException e1) {
 				e1.printStackTrace();
 			}

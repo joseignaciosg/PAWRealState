@@ -181,7 +181,7 @@ public class BasicDataPersistanceTest extends
 		thrown = false;
 
 		try {
-			final Photo photo3 = this.propertyRepository.getPhotoById(100);
+			this.propertyRepository.getPhotoById(100);
 		} catch (final NoSuchEntityException e) {
 			thrown = true;
 		}

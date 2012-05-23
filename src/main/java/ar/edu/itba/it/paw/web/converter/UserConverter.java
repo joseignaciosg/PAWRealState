@@ -17,6 +17,9 @@ public class UserConverter implements Converter<String, User> {
 		if (id.equals("any")) {
 			return null;
 		}
+		if (id.equals("")) {
+			return null;
+		}
 
 		return this.repository.get(User.class, Integer.valueOf(id));
 	}
