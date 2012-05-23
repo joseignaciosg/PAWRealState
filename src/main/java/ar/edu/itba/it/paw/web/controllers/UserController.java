@@ -55,8 +55,6 @@ public class UserController {
 			final CookiesManager cookman = new CookiesManager(request, response);
 			cookman.setUser(username, password, remember);
 			manager.setCurrentUser(user);
-			mav.addObject("successes",
-					new String[] { "Bienvenido " + username });
 			return mav;
 		} catch (final InvalidLoginException e) {
 			final ModelAndView mav = new ModelAndView("forward:/index");

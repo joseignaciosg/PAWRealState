@@ -17,6 +17,7 @@ public class CookiesManager {
 
 	public CookiesManager(final ServletRequest request,
 			final ServletResponse response) {
+
 		this.response = (HttpServletResponse) response;
 
 		final Cookie[] cookies = ((HttpServletRequest) request).getCookies();
@@ -33,11 +34,6 @@ public class CookiesManager {
 					}
 					break;
 				}
-			}
-			if (this.name == null) {
-				this.name = request.getParameter("name");
-				this.pass = request.getParameter("pass");
-				this.remember = request.getParameter("remember");
 			}
 		}
 	}
@@ -60,6 +56,7 @@ public class CookiesManager {
 		this.remember = null;
 		final Cookie c = new Cookie(COOKIE_NAME, "");
 		c.setMaxAge(0);
+		c.setPath("/");
 		this.response.addCookie(c);
 	}
 
@@ -71,6 +68,7 @@ public class CookiesManager {
 		final Cookie c = new Cookie(COOKIE_NAME, name + "&" + pass + "&"
 				+ remember);
 		c.setMaxAge(604800);
+		c.setPath("/");
 		this.response.addCookie(c);
 	}
 

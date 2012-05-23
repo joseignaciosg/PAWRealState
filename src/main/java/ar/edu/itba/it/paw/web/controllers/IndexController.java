@@ -37,7 +37,7 @@ public class IndexController {
 	public ModelAndView index(final HttpServletRequest req,
 			final HttpServletResponse resp) throws ServletException,
 			IOException {
-		final CookiesManager manager = new CookiesManager(req, resp);
+		final CookiesManager cookman = new CookiesManager(req, resp);
 
 		final List<Property> rentProperties = this.repository
 				.getAll(new PropertySearch(Operation.RENT));
@@ -49,8 +49,8 @@ public class IndexController {
 		mav.getModelMap().put("rentProperties", rentProperties);
 		mav.getModelMap().put("sellProperties", sellProperties);
 
-		mav.getModelMap().put("user_cookie_username", manager.getName());
-		mav.getModelMap().put("user_remember", manager.getRemember());
+		mav.getModelMap().put("user_cookie_username", cookman.getName());
+		mav.getModelMap().put("user_remember", cookman.getRemember());
 
 		return mav;
 	}

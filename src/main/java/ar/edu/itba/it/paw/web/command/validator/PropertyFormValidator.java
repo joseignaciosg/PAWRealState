@@ -72,6 +72,9 @@ public class PropertyFormValidator implements Validator {
 		if (form.getRooms() != null) {
 			final Room[] rooms = form.getRooms();
 			for (final Room r : rooms) {
+				if (r.getType() == null) {
+					continue;
+				}
 				if (r.getSize() <= 0) {
 					errors.rejectValue("rooms", "notzero");
 				}
