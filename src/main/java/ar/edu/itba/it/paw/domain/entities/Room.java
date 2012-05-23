@@ -9,7 +9,6 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "rooms")
-// TODO: use natural key
 public class Room extends PersistentEntity {
 	public enum RoomType {
 		BATHROOM("Baño"), DORM("Dormitorio"), KITCHEN("Cocina"), LIVING(
@@ -36,7 +35,7 @@ public class Room extends PersistentEntity {
 	@JoinColumn(name = "property_id")
 	private Property property;
 
-	public Room() {
+	Room() {
 
 	}
 
@@ -63,6 +62,13 @@ public class Room extends PersistentEntity {
 			return false;
 		}
 		final Room other = (Room) obj;
+		if (this.property == null) {
+			if (other.property != null) {
+				return false;
+			}
+		} else if (!this.property.equals(other.property)) {
+			return false;
+		}
 		if (this.size != other.size) {
 			return false;
 		}
@@ -88,6 +94,8 @@ public class Room extends PersistentEntity {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result
+				+ ((this.property == null) ? 0 : this.property.hashCode());
 		result = prime * result + this.size;
 		result = prime * result
 				+ ((this.type == null) ? 0 : this.type.hashCode());

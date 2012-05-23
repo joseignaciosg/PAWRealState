@@ -4,16 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
+import javax.persistence.*;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CollectionOfElements;
@@ -154,10 +146,6 @@ public class Property extends PersistentEntity {
 		this.visible = true;
 	}
 
-	public void setServices(final List<Service> services) {
-		this.services = services;
-	}
-
 	public String getPropertyType() {
 		return this.type.toString();
 	}
@@ -275,16 +263,8 @@ public class Property extends PersistentEntity {
 		this.description = description;
 	}
 
-	public void setPhotos(final List<Photo> photos) {
-		this.photos = photos;
-	}
-
 	public void toggleVisibility() {
 		this.visible = !this.visible;
-	}
-
-	public void setOwner(final User owner) {
-		this.owner = owner;
 	}
 
 	public void addPhoto(final Photo photo) {
@@ -301,10 +281,6 @@ public class Property extends PersistentEntity {
 
 	public List<Room> getRooms() {
 		return this.rooms;
-	}
-
-	public void setRooms(final List<Room> rooms) {
-		this.rooms = rooms;
 	}
 
 	public List<ContactRequest> getContactRequest() {

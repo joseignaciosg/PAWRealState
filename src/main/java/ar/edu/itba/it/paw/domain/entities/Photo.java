@@ -70,7 +70,7 @@ public class Photo extends PersistentEntity {
 	@JoinColumn(name = "agent_id")
 	private RealStateAgency agency;
 
-	public Photo() {
+	Photo() {
 
 	}
 
@@ -101,7 +101,7 @@ public class Photo extends PersistentEntity {
 		return this.agency;
 	}
 
-	public void setAgency(final RealStateAgency agency) {
+	void setAgency(final RealStateAgency agency) {
 		this.agency = agency;
 	}
 
