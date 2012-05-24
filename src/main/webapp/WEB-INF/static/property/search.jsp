@@ -130,8 +130,8 @@
 									<label for="rooms[${i.index}]">${ roomType.humanName }</label>
 								</li>
 								<li>
-									<form:input type="text" id="rooms[${i.index }].minSize" class="span1 pull-left" path="rooms[${i.index}].minSize" placeholder="Desde m&#178;"/> 
-									<form:input type="text" id="rooms[${i.index }].maxSize" class="span1 pull-left" path="rooms[${i.index}].maxSize" placeholder="Hasta m&#178;"/>
+									<form:input type="text" id="rooms[${i.index }].minSize" class="span1 pull-left" path="rooms[${i.index}].minSize" placeholder="Desde m2"/> 
+									<form:input type="text" id="rooms[${i.index }].maxSize" class="span1 pull-left" path="rooms[${i.index}].maxSize" placeholder="Hasta m2"/>
 								</li>
 								<hr/>
 							</c:forEach>

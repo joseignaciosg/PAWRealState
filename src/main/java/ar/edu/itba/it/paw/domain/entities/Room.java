@@ -35,7 +35,8 @@ public class Room extends PersistentEntity {
 	@JoinColumn(name = "property_id")
 	private Property property;
 
-	Room() {
+	// Spring requires it!
+	public Room() {
 
 	}
 
@@ -78,6 +79,7 @@ public class Room extends PersistentEntity {
 		return true;
 	}
 
+	// Spring requires it!
 	public Property getProperty() {
 		return this.property;
 	}
@@ -102,7 +104,7 @@ public class Room extends PersistentEntity {
 		return result;
 	}
 
-	void setProperty(final Property property) {
+	public void setProperty(final Property property) {
 		this.property = property;
 	}
 

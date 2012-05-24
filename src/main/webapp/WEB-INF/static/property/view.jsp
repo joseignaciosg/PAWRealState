@@ -2,6 +2,7 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ page isELIgnored="false"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <script type="text/javascript">
@@ -44,7 +45,7 @@
 						<dt><h4>Precio</h4></dt>
 						<dd>$<c:out value="${property.price}" /> </dd>            
                     
-	                    <c:if test="${property.owner.class.name == 'ar.edu.itba.it.paw.domain.entities.RealStateAgency'}">
+	                    <c:if test="${property['owner']['class']['name'] == 'ar.edu.itba.it.paw.domain.entities.RealStateAgency'}">
 	                        <dt><h4>Agencia</h4></dt>
 	                        <dd><c:out value=" ${property.owner.agencyName}" /> </dd>
 	                        <c:if test="${property.owner.photo != null}">
