@@ -1,61 +1,46 @@
-CREATE TABLE users
-(
-  id serial NOT NULL,
-  firstname character varying NOT NULL,
-  lastname character varying NOT NULL,
-  email character varying NOT NULL,
-  phone character varying NOT NULL,
-  username character varying,
-  "password" character varying NOT NULL,
-  CONSTRAINT users_pkey PRIMARY KEY (id),
-  CONSTRAINT users_username_key UNIQUE (username)
+-- Creamos la tabla de los servicios para moverlos dentro de la data
+
+CREATE TABLE services (
+  property_id integer not null,
+  element character varying not null,
+  primary key(property_id, element)
 );
 
+ -- has_cable boolean NOT NULL,
+ --  has_phone boolean NOT NULL,
+ --  has_swimmingpool boolean NOT NULL,
+ --  has_salon boolean NOT NULL,
+ --  has_paddle boolean NOT NULL,
+ --  has_quincho boolean NOT NULL,
 
-CREATE TABLE properties
-(
-  id serial NOT NULL,
-  "type" character varying NOT NULL,
-  "transaction" character varying NOT NULL,
-  address character varying NOT NULL,
-  neighborhood character varying NOT NULL,
-  price integer NOT NULL,
-  rooms integer NOT NULL,
-  csqm integer NOT NULL,
-  usqm integer NOT NULL DEFAULT 0,
-  age integer NOT NULL,
-  has_cable boolean NOT NULL,
-  has_phone boolean NOT NULL,
-  has_swimmingpool boolean NOT NULL,
-  has_salon boolean NOT NULL,
-  has_paddle boolean NOT NULL,
-  has_quincho boolean NOT NULL,
-  description character varying,
-  visible boolean NOT NULL,
-  user_id integer references users(id),
-  CONSTRAINT property_pkey PRIMARY KEY (id),
-  CONSTRAINT property_transaction_check CHECK (transaction::text = ANY (ARRAY['SELL'::character varying::text, 'RENT'::character varying::text])),
-  CONSTRAINT property_type_check CHECK (type::text = ANY (ARRAY['APARTMENT'::character varying::text, 'HOUSE'::character varying::text]))
-);
+-- CABLE, PHONE, SWIMMING, SALON, PADDLE, QUINCHO
+INSERT INTO services (SELECT id, text 'CABLE' as "element" FROM PROPERTIES P  WHERE P.has_cable = true);
+INSERT INTO services (SELECT id, text 'PHONE' as "element" FROM PROPERTIES P  WHERE P.has_phone = true);
+INSERT INTO services (SELECT id, text 'SWIMMING' as "element" FROM PROPERTIES P  WHERE P.has_swimmingpool = true);
+INSERT INTO services (SELECT id, text 'SALON' as "element" FROM PROPERTIES P  WHERE P.has_salon = true);
+INSERT INTO services (SELECT id, text 'PADDLE' as "element" FROM PROPERTIES P  WHERE P.has_paddle = true);
+INSERT INTO services (SELECT id, text 'QUINCHO' as "element" FROM PROPERTIES P  WHERE P.has_quincho = true);
 
-CREATE TABLE contact_requests
-(
-  id serial NOT NULL,
-  username character varying NOT NULL,
-  email character varying NOT NULL,
-  phone character varying NOT NULL,
-  "comment" character varying,
-  prop_id integer references properties(id),
-  CONSTRAINT contact_request_pkey PRIMARY KEY (id)
-);
+ALTER TABLE PROPERTIES DROP COLUMN has_cable;
+ALTER TABLE PROPERTIES DROP COLUMN has_phone;
+ALTER TABLE PROPERTIES DROP COLUMN has_swimmingpool;
+ALTER TABLE PROPERTIES DROP COLUMN has_salon;
+ALTER TABLE PROPERTIES DROP COLUMN has_paddle;
+ALTER TABLE PROPERTIES DROP COLUMN has_quincho;
+ALTER TABLE PROPERTIES ADD COLUMN  visitcount integer NOT NULL DEFAULT 0;
+ALTER TABLE PROPERTIES ADD COLUMN  reserved boolean NOT NULL DEFAULT false;
 
+ALTER TABLE PHOTOS ADD COLUMN agent_id INTEGER;
 
+ALTER TABLE USERS ADD COLUMN tipo character varying;
+ALTER TABLE USERS ADD COLUMN agency_name character varying;
 
-CREATE TABLE photos
-(
-  id serial NOT NULL,
-  data bytea NOT NULL,
-  type character varying NOT NULL,
-  property_id integer references properties(id),
-  CONSTRAINT photos_pkey PRIMARY KEY (id)
+UPDATE USERS SET tipo = 'User';
+
+CREATE TABLE rooms (
+  id SERIAL not null,
+  size integer not null,
+  property_id integer not null,
+  type character varying not null,
+  primary key(id)
 );
