@@ -182,7 +182,8 @@ public class PropertyForm implements BuilderForm<Property> {
 		final Property answer = new Property(this.type, this.operation,
 				this.neighborhood, this.address, this.price, this.spaces,
 				this.coveredArea, this.freeArea, this.age,
-				Arrays.asList(this.services), Arrays.asList(this.rooms),
+				(this.services != null) ? Arrays.asList(this.services) : null,
+				(this.rooms != null) ? Arrays.asList(this.rooms) : null,
 				this.description, this.owner);
 		return answer;
 	}
