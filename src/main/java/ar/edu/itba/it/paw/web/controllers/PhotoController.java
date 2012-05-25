@@ -37,23 +37,22 @@ public class PhotoController {
 	@RequestMapping(method = RequestMethod.GET, value = "/new")
 	protected ModelAndView addGET(
 			@RequestParam("propertyId") final Property property,
-			final ModelAndView mav) {
+			final ModelAndView mav, final PropertyPhotoForm propertyphotoform) {
 		mav.setViewName("photo/new");
 		mav.addObject("property", property);
+		mav.addObject("photoForm", propertyphotoform);
 		return mav;
 	}
 
 	@RequestMapping(method = RequestMethod.POST, value = "/new")
 	protected ModelAndView addPOST(final PropertyPhotoForm propertyphotoform,
-			final Errors errors) {
+			final Errors errors, final ModelAndView mav) {
 		this.validator.validate(propertyphotoform, errors);
 		final boolean error = errors.hasErrors();
-		final ModelAndView mav;
 		if (error) {
-			mav = new ModelAndView("redirect:/photo/new");
-			mav.addObject("propertyId", propertyphotoform.getProperty().getId()
-					.toString());
-			return mav;
+			mav.addObject("propertyId", propertyphotoform.getProperty().getId());
+			return this.addGET(propertyphotoform.getProperty(), mav,
+					propertyphotoform);
 		}
 		try {
 			propertyphotoform.getProperty().addPhoto(
@@ -64,7 +63,7 @@ public class PhotoController {
 			log.debug("Error adding photo");
 		}
 
-		mav = new ModelAndView("redirect:/photo/list");
+		mav.setViewName("redirect:/photo/list");
 		mav.addObject("propertyId", propertyphotoform.getProperty().getId()
 				.toString());
 		return mav;
