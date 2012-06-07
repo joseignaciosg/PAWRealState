@@ -18,7 +18,6 @@ public class SessionManager implements UserManager {
 
 	public User getCurrentUser() {
 		final Integer id = (Integer) this.session.getAttribute("user_id");
-
 		if (id == null) {
 			return null;
 		} else {

@@ -38,7 +38,6 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 
 				final User u = this.repository.getByNameAndPassword(name,
 						password);
-
 				userManager.setCurrentUser(u);
 			}
 		}

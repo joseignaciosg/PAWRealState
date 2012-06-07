@@ -4,68 +4,49 @@
 	version="2.4">
 	<display-name>ChinuProp</display-name>
 
+	<context-param>
+		<param-name>configuration</param-name>
+		<param-value>development</param-value>
+	</context-param>
+
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>/WEB-INF/applicationContext.xml</param-value>
+	</context-param>
+	
+	<filter>
+		<filter-name>wicketFilter</filter-name>
+		<filter-class>org.apache.wicket.protocol.http.WicketFilter</filter-class>
+		<init-param>
+			<param-name>applicationFactoryClassName</param-name>
+			<param-value>org.apache.wicket.spring.SpringWebApplicationFactory</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>wicketFilter</filter-name>
+		<url-pattern>/bin/*</url-pattern>
+	</filter-mapping>
+	
+
 	<servlet>
-		<servlet-name>bin</servlet-name>
-		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-		<load-on-startup>1</load-on-startup>
+		<servlet-name>HomeRedirector</servlet-name>
+		<servlet-class>ar.edu.itba.it.paw.web.common.HomeRedirectServlet</servlet-class>
+		<init-param>
+			<param-name>homeUrl</param-name>
+			<param-value>bin/</param-value>
+		</init-param>
 	</servlet>
-
 	<servlet-mapping>
-		<servlet-name>bin</servlet-name>
-		<url-pattern>/bin/*</url-pattern>
+		<servlet-name>HomeRedirector</servlet-name>
+		<url-pattern>/index.html</url-pattern>
 	</servlet-mapping>
-
-	<filter>
-		<filter-name>transactionFilter</filter-name>
-		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
-		<init-param>
-			<param-name>targetBeanName</param-name>
-			<param-value>transactionFilter</param-value>
-		</init-param>
-		<init-param>
-			<param-name>contextAttribute</param-name>
-			<param-value>org.springframework.web.servlet.FrameworkServlet.CONTEXT.bin</param-value>
-		</init-param>
-	</filter>
-
-	<filter>
-		<filter-name>notFoundFilter</filter-name>
-		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
-		<init-param>
-			<param-name>targetBeanName</param-name>
-			<param-value>notFoundFilter</param-value>
-		</init-param>
-		<init-param>
-			<param-name>contextAttribute</param-name>
-			<param-value>org.springframework.web.servlet.FrameworkServlet.CONTEXT.bin</param-value>
-		</init-param>
-	</filter>
 	
-	<filter>
-		<filter-name>generalErrorFilter</filter-name>
-		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
-		<init-param>
-			<param-name>targetBeanName</param-name>
-			<param-value>generalErrorFilter</param-value>
-		</init-param>
-		<init-param>
-			<param-name>contextAttribute</param-name>
-			<param-value>org.springframework.web.servlet.FrameworkServlet.CONTEXT.bin</param-value>
-		</init-param>
-	</filter>
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+	</welcome-file-list>
 
-	<filter-mapping>
-		<filter-name>generalErrorFilter</filter-name>
-		<url-pattern>/bin/*</url-pattern>
-	</filter-mapping>
-
-	<filter-mapping>
-		<filter-name>transactionFilter</filter-name>
-		<url-pattern>/bin/*</url-pattern>
-	</filter-mapping>
-	
-	<filter-mapping>
-		<filter-name>notFoundFilter</filter-name>
-		<url-pattern>/bin/*</url-pattern>
-	</filter-mapping>
 </web-app>
