@@ -1,0 +1,61 @@
+<wicket:extend>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('.carousel').carousel('next', {
+				interval : 4000
+	
+			});
+		});
+	</script>
+	
+	<br />
+	
+	<div class="hero-unit" style="text-align: center;">
+		<h1><wicket:message key="site_name"/></h1>
+		<br />
+		<p><wicket:message key="site_disclaimer"/></p>
+		<p>
+			<a class="btn btn-primary btn-large" wicket:id="search_properties">
+				<wicket:message key="search_properties"/>
+			</a>
+		</p>
+		<p>
+			<a class="btn btn-primary btn-large" wicket:id="search_agencies">
+				<wicket:message key="search_agencies"/>
+			</a>
+		</p>
+	</div>
+	
+	<hr />
+	
+	<div class="row">
+		<div class="span5 offset1">
+			<h2>Propiedades en Alquiler</h2>
+			<h5>
+				<a wicket:id="all_on_rent">
+					<wicket:message key="see_all"/>
+				</a>
+			</h5>
+			<p>
+			<ul class="thumbnails home-thumbnails">
+				<li wicket:id="rents">
+					<div wicket:id="item"></div>
+				</li>
+			</ul>
+		</div>
+		<div class="offset1 span5">
+			<h2>Propiedades en Venta</h2>
+			<h5>
+				<a wicket:id="all_on_sale">
+					<wicket:message key="see_all"/>
+				</a>
+			</h5>
+			<p>
+			<ul class="thumbnails home-thumbnails">
+				<li wicket:id="sells">
+					<div wicket:id="item"></div>
+				</li>
+			</ul>
+		</div>
+	</div>
+</wicket:extend>

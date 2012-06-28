@@ -13,8 +13,42 @@
          http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
 
 	<context:component-scan base-package="ar.edu.itba.it.paw.domain" />
+	
+	<bean id="properties" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="ignoreResourceNotFound" value="true" />
+		<property name="locations">
+			<list>
+				<value>classpath:setup.properties</value>
+			</list>
+		</property>
+	</bean>
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<property name="driverClassName" value="org.hsqldb.jdbcDriver" />
+		<property name="url" value="jdbc:hsqldb:mem:db" />
+		<property name="username" value="sa" />
+		<property name="password" value="" />
+	</bean>
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="hibernateProperties">
+			<value>
+				hibernate.dialect=${hibernate.dialect}
+				hibernate.hbm2ddl.auto=${hibernate.hbm2ddl.auto}
+				hibernate.show_sql=${hibernate.show_sql}
+				hibernate.current_session_context_class=managed
+				hibernate.max_fetch_depth=2
+				hibernate.jdbc.batch_size=30  
+			</value>
+		</property>
+		<property name="packagesToScan">
+			<list>
+				<value>ar.edu.itba.it.paw.domain</value>
+			</list>
+		</property>
+	</bean>
 
-	<context:annotation-config />
+	<!-- <context:annotation-config />
 	
 	<bean id="transactionManager"
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">		
@@ -34,13 +68,7 @@
 		</property>
 	</bean>
 
-	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
-		destroy-method="close">
-		<property name="driverClassName" value="org.hsqldb.jdbcDriver" />
-		<property name="url" value="jdbc:hsqldb:mem:db" />
-		<property name="username" value="sa" />
-		<property name="password" value="" />
-	</bean>
+	
 
 	<bean id="sessionFactory"
 		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
@@ -55,7 +83,7 @@
 				use_sql_comments=true
 			</value>
 		</property>
-	</bean>
+	</bean> -->
 
 
 </beans>
