@@ -8,18 +8,17 @@
 	type="text/css" />
 	<link href="css/custom_style.css" rel="stylesheet"
 	type="text/css" />
+	<script type="text/javascript" src="js/jquery.js"></script>
+	<script type="text/javascript" src="js/jquery.placeholder.js"></script>
+	<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
 </head>
 <body>
 	
-	<!-- <div class="navbar navbar-fixed-top">
-		<div class="navbar-inner">
-			<div class="container">
-				<jsp:include page="navbar.jsp"></jsp:include>
-			</div>
-		</div>
-	</div> -->
+	<div wicket:id="navbar">
+	</div>
+	
 	<div class="container" id="errors">
-		<!-- <jsp:include page="errors.jsp"></jsp:include> -->
+	
 	</div>
 	<div class="container" id="main">
 		<wicket:child/>

@@ -126,11 +126,17 @@ h3.search-result {
 
 .remember-me {
 	margin-right:5px;
+	float:left;
 }
 
 .remember-me-label {
 	margin-top:10px;
 	color:#3E6FB1;
+	float:left;
+}
+
+.hero-unit {
+	margin-top: 20px;
 }
 
 .home-thumbnails a {

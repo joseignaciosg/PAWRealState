@@ -1,13 +1,14 @@
 package ar.edu.itba.it.paw.domain.repositories.api;
 
-import java.util.List;
+import java.io.*;
+import java.util.*;
 
 import ar.edu.itba.it.paw.domain.entities.Property.Operation;
 import ar.edu.itba.it.paw.domain.entities.Property.Service;
 import ar.edu.itba.it.paw.domain.entities.Property.Type;
-import ar.edu.itba.it.paw.domain.entities.User;
+import ar.edu.itba.it.paw.domain.entities.*;
 
-public final class PropertySearch {
+public final class PropertySearch implements Serializable {
 
 	public enum Order {
 		ASC, DESC

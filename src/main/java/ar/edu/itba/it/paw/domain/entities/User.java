@@ -1,15 +1,9 @@
 package ar.edu.itba.it.paw.domain.entities;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.DiscriminatorType;
+import javax.persistence.*;
 import javax.persistence.Entity;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
 @Entity
 @Table(name = "users")
@@ -159,6 +153,10 @@ public class User extends PersistentEntity {
 		result = prime * result
 				+ ((this.username == null) ? 0 : this.username.hashCode());
 		return result;
+	}
+
+	public boolean checkPassword(final String password) {
+		return this.password.equals(password);
 	}
 
 }

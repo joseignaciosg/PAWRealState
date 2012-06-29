@@ -1,7 +1,9 @@
 package ar.edu.itba.it.paw.web;
 
 import org.apache.wicket.*;
+import org.apache.wicket.Session;
 import org.apache.wicket.protocol.http.*;
+import org.apache.wicket.request.*;
 import org.apache.wicket.request.resource.*;
 import org.apache.wicket.spring.injection.annot.*;
 import org.hibernate.*;
@@ -33,11 +35,17 @@ public class RealStateApp extends WebApplication {
 	}
 
 	@Override
+	public Session newSession(final Request request, final Response response) {
+		return new RealStateSession(request);
+	}
+
+	@Override
 	protected void init() {
 		super.init();
 		this.getComponentInstantiationListeners().add(
 				new SpringComponentInjector(this));
 		this.getRequestCycleListeners().add(
 				new HibernateRequestCycleListener(this.sessionFactory));
+		this.getMarkupSettings().setStripWicketTags(true);
 	}
 }

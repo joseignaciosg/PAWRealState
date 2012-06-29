@@ -1,0 +1,50 @@
+<wicket:panel>
+	<div class="navbar navbar-fixed-top">
+		<div class="navbar-inner">
+			<div class="container">
+				<a class="brand" wicket:id="base_path"><wicket:message
+						key="site_name" /></a>
+
+				<ul class="nav pull-right">
+					<wicket:enclosure child="login_form">
+						<li><form class="navbar-form pull-right span7" wicket:id="login_form">
+								<div class="pull-right">
+									<input type="hidden" name="remember" id="remember" value="name" />
+									<input type="text" name="user_username" class="span2"
+										value="${ user_cookie_username }" placeholder="Usuario" /> <input
+										type="password" name="user_password" class="span2"
+										placeholder="Contrase&ntilde;a" /> <input type="submit"
+										class="btn btn-primary" value="Entrar" />
+								</div>
+								<div class="remember-me-label">Recordar:</div>
+								<div data-toggle="buttons-radio" id="remember"
+									class="btn-group tpull-right tabs remember-me">
+									<input type="button" class="btn btn-primary active"
+										id="remember_name" name="remember_name" value="Nombre" /> <input
+										type="button" class="btn btn-primary" id="remember_session"
+										name="remember_session" value="Sesi&oacute;n" />
+								</div>
+								
+							</form></li>
+						<li class="divider-vertical"></li>
+						<li><a class="register-link" href="${ basePath }/user/register">Registrarse</a></li>
+					</wicket:enclosure>
+					<wicket:enclosure child="user_dropdown">
+						<li class="dropdown"><a href="#" wicket:id="user_dropdown"
+							class="dropdown-toggle" data-toggle="dropdown"> ${
+							current_user.username } <b class="caret"></b>
+						</a>
+						<ul class="dropdown-menu">
+							<li><a href="${ basePath }/property/list"> Mis
+									Propiedades </a></li>
+							<li><a href="${ basePath }/property/new"> Crear
+									Propiedad </a></li>
+							<li><a href="${ basePath }/user/logout">Salir </a></li>
+						</ul></li>
+					</wicket:enclosure>
+				</ul>
+
+			</div>
+		</div>
+	</div>
+</wicket:panel>
