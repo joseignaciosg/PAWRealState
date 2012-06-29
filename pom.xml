@@ -35,19 +35,20 @@
 				<enabled>false</enabled>
 			</snapshots>
 		</repository>
+		<repository>
+			<id>googlecode</id>
+			<url>http://jqwicket.googlecode.com/svn/m2-repo/releases/</url>
+		</repository>
 	</repositories>
+
+
 
 
 	<dependencies>
 		<dependency>
-			<groupId>com.55minutes</groupId>
-			<artifactId>fiftyfive-wicket-core</artifactId>
-			<version>4.0-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>com.55minutes</groupId>
-			<artifactId>fiftyfive-wicket-js</artifactId>
-			<version>4.0-SNAPSHOT</version>
+			<groupId>com.google.code.jqwicket</groupId>
+			<artifactId>jqwicket</artifactId>
+			<version>0.7</version>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>

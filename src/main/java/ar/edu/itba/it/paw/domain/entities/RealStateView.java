@@ -1,6 +1,8 @@
 package ar.edu.itba.it.paw.domain.entities;
 
-public class RealStateView {
+import java.io.*;
+
+public class RealStateView implements Serializable {
 
 	private Integer photoID;
 	private String agencyName;

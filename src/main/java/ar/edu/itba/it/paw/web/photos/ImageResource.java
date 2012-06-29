@@ -11,8 +11,6 @@ public class ImageResource extends DynamicImageResource {
 
 	private PropertyRepository repo;
 
-	private byte[] data;
-
 	public ImageResource(final PropertyRepository repo) {
 		this.repo = repo;
 	}

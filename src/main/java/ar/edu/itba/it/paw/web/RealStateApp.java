@@ -13,6 +13,8 @@ import org.springframework.stereotype.Component;
 import ar.edu.itba.it.paw.domain.repositories.impl.*;
 import ar.edu.itba.it.paw.web.common.*;
 
+import com.google.code.jqwicket.*;
+
 @Component
 public class RealStateApp extends WebApplication {
 
@@ -47,5 +49,17 @@ public class RealStateApp extends WebApplication {
 		this.getRequestCycleListeners().add(
 				new HibernateRequestCycleListener(this.sessionFactory));
 		this.getMarkupSettings().setStripWicketTags(true);
+
+		// TODO: Hacer que funcione local
+		final JQContributionConfig config = new JQContributionConfig(
+				new JavaScriptResourceReference(this.getClass(), "jquery.js"))
+				.withJQueryUiJs(
+						new JavaScriptResourceReference(this.getClass(),
+								"jquery-ui.js")).withJQueryUiCss(
+						new CssResourceReference(this.getClass(),
+								"jquery-ui.css"));
+
+		this.getComponentPreOnBeforeRenderListeners().add(
+				new JQComponentOnBeforeRenderListener(config));
 	}
 }

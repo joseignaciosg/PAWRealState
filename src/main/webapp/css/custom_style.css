@@ -200,3 +200,15 @@ h3.search-result {
 	width: 160px;
 	height: 120px;
 }
+
+.ui-accordion h3 p {
+	margin:0!important;
+} 
+
+.clear {
+	clear:both;
+}
+
+.agency-thumb {
+	width: 80px;
+}

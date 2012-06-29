@@ -4,6 +4,7 @@ import org.apache.wicket.request.resource.*;
 
 import ar.edu.itba.it.paw.domain.repositories.api.*;
 
+// TODO: Hacer este ResourceReference shared!
 public class ImageResourceReference extends ResourceReference {
 
 	PropertyRepository repo;
