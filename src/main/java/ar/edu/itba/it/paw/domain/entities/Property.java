@@ -1,20 +1,21 @@
 package ar.edu.itba.it.paw.domain.entities;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.io.*;
+import java.util.*;
 
 import javax.persistence.*;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.Table;
 
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CollectionOfElements;
+import org.hibernate.annotations.*;
 
 import ar.edu.itba.it.paw.domain.entities.Room.RoomType;
 
+@SuppressWarnings("serial")
 @Entity
 @Table(name = "properties")
-public class Property extends PersistentEntity {
+public class Property extends PersistentEntity implements Serializable {
 
 	public enum Type {
 		APARTMENT, HOUSE;

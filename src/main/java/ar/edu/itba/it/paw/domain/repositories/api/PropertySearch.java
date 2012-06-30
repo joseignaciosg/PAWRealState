@@ -45,6 +45,10 @@ public final class PropertySearch implements Serializable {
 
 	}
 
+	public PropertySearch() {
+		this(null, null, null, null, 0, 2, Order.DESC, null, null, true, null);
+	}
+
 	public PropertySearch(final Operation rent) {
 		this(rent, null, null, null, null, 2, Order.DESC, null, null, true,
 				null);

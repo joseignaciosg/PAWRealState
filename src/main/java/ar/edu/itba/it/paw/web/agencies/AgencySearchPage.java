@@ -13,8 +13,8 @@ import org.apache.wicket.spring.injection.annot.*;
 import ar.edu.itba.it.paw.domain.entities.*;
 import ar.edu.itba.it.paw.domain.repositories.api.*;
 import ar.edu.itba.it.paw.domain.repositories.impl.*;
+import ar.edu.itba.it.paw.web.*;
 import ar.edu.itba.it.paw.web.base.*;
-import ar.edu.itba.it.paw.web.photos.*;
 import ar.edu.itba.it.paw.web.properties.*;
 
 import com.google.code.jqwicket.ui.accordion.*;
@@ -64,8 +64,7 @@ public class AgencySearchPage extends BasePage {
 				params.add("id", item.getModelObject().getPhotoID());
 
 				link.add(new Image("agency_picture",
-						new ImageResourceReference(
-								AgencySearchPage.this.properties), params));
+						RealStateApp.imageReference, params));
 
 				item.add(new Label(
 						"agency_name_header",

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import ar.edu.itba.it.paw.domain.repositories.impl.*;
 import ar.edu.itba.it.paw.web.common.*;
+import ar.edu.itba.it.paw.web.photos.*;
 
 import com.google.code.jqwicket.*;
 
@@ -20,6 +21,8 @@ public class RealStateApp extends WebApplication {
 
 	public static final PackageResourceReference NO_PROP_PICTURE = new PackageResourceReference(
 			RealStateApp.class, "realstate-no-picture.jpg");
+
+	public static final ImageResourceReference imageReference = new ImageResourceReference();
 
 	private SessionFactory sessionFactory;
 	private HibernatePropertyRepository repo;
@@ -44,6 +47,7 @@ public class RealStateApp extends WebApplication {
 	@Override
 	protected void init() {
 		super.init();
+
 		this.getComponentInstantiationListeners().add(
 				new SpringComponentInjector(this));
 		this.getRequestCycleListeners().add(
@@ -61,5 +65,6 @@ public class RealStateApp extends WebApplication {
 
 		this.getComponentPreOnBeforeRenderListeners().add(
 				new JQComponentOnBeforeRenderListener(config));
+
 	}
 }

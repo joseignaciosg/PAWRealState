@@ -1,5 +1,6 @@
 package ar.edu.itba.it.paw.domain.repositories.impl;
 
+import java.io.*;
 import java.util.*;
 
 import org.hibernate.*;
@@ -10,7 +11,8 @@ import ar.edu.itba.it.paw.domain.entities.*;
 import ar.edu.itba.it.paw.domain.repositories.*;
 
 @Repository
-public class HibernateAgencyRepository extends AbstractHibernateRepository {
+public class HibernateAgencyRepository extends AbstractHibernateRepository
+		implements Serializable {
 
 	public HibernateAgencyRepository() {
 		super(null);

@@ -21,6 +21,9 @@ import ar.edu.itba.it.paw.web.properties.*;
 @SuppressWarnings("serial")
 public class HomePage extends BasePage {
 
+	@SpringBean
+	private PropertyRepository repo;
+
 	public HomePage() {
 
 		this.add(link("search_properties", PropertySearchPage.class));
@@ -28,30 +31,59 @@ public class HomePage extends BasePage {
 		this.add(link("all_on_rent", PropertySearchPage.class));
 		this.add(link("all_on_sale", PropertySearchPage.class));
 
-		this.add(new ThumbnailView("rents", new PropertySearch(Operation.RENT,
-				null, null, null, 0, 2, Order.DESC, null, null, true, null)));
+		// final IModel<List<Property>> professorsModel = new
+		// LoadableDetachableModel<List<Property>>() {
+		//
+		// public LoadableDetachableModel<List<Property>>(PropertySearch) {
+		//
+		// }
+		//
+		// @Override
+		// protected List<Property> load() {
+		// return HomePage.this.repo
+		// }
+		// };
 
-		this.add(new ThumbnailView("sells", new PropertySearch(Operation.SELL,
-				null, null, null, 0, 2, Order.DESC, null, null, true, null)));
+		this.add(new ThumbnailView("rents", new ThumbnailDetachableModel(
+				new PropertySearch(Operation.RENT, null, null, null, 0, 2,
+						Order.DESC, null, null, true, null))));
+
+		this.add(new ThumbnailView("sells", new ThumbnailDetachableModel(
+				new PropertySearch(Operation.SELL, null, null, null, 0, 2,
+						Order.DESC, null, null, true, null))));
+
+	}
+
+	private class ThumbnailDetachableModel extends
+			LoadableDetachableModel<List<Property>> {
+
+		PropertySearch search;
+
+		public ThumbnailDetachableModel(final PropertySearch search) {
+			this.search = search;
+		}
+
+		@Override
+		protected List<Property> load() {
+			return HomePage.this.repo.getAll(this.search);
+		}
 
 	}
 
 	private static class ThumbnailView extends RefreshingView<Property> {
 
-		@SpringBean
-		PropertyRepository repo;
+		private ThumbnailDetachableModel model;
 
-		private PropertySearch searchObject;
-
-		public ThumbnailView(final String id, final PropertySearch search) {
+		public ThumbnailView(final String id,
+				final ThumbnailDetachableModel model) {
 			super(id);
-			this.searchObject = search;
+			this.model = model;
 		}
 
 		@Override
 		protected Iterator<IModel<Property>> getItemModels() {
 			final List<IModel<Property>> result = new ArrayList<IModel<Property>>();
-			for (final Property d : this.repo.getAll(this.searchObject)) {
+			for (final Property d : this.model.load()) {
 				result.add(new EntityModel<Property>(Property.class, d));
 			}
 			return result.iterator();

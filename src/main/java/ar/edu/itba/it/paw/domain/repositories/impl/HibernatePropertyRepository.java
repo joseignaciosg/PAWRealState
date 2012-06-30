@@ -14,17 +14,11 @@ import ar.edu.itba.it.paw.domain.repositories.*;
 import ar.edu.itba.it.paw.domain.repositories.api.*;
 import ar.edu.itba.it.paw.domain.repositories.api.PropertySearch.Order;
 
-@Repository
+@Component
 public class HibernatePropertyRepository extends AbstractHibernateRepository
 		implements PropertyRepository {
 
 	private SessionFactory sessionFactory;
-
-	private static int ITEMPERPAGE = 5;
-
-	public HibernatePropertyRepository() {
-		super(null);
-	}
 
 	@Autowired
 	public HibernatePropertyRepository(final SessionFactory sessionFactory) {
@@ -127,8 +121,8 @@ public class HibernatePropertyRepository extends AbstractHibernateRepository
 		}
 
 		if (search.getPage() != null) {
-			q.setFirstResult(search.getPage() * ITEMPERPAGE);
-			q.setMaxResults(ITEMPERPAGE);
+			q.setFirstResult(search.getPage() * search.getQuant());
+			q.setMaxResults(search.getQuant());
 		}
 
 		// Order

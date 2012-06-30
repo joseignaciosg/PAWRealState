@@ -212,3 +212,22 @@ h3.search-result {
 .agency-thumb {
 	width: 80px;
 }
+
+.properties-table {
+	margin-top: 20px;
+}
+
+.properties-table tr td {
+	vertical-align:middle;
+}
+
+.properties-table .navigator{
+	float:right;
+}
+
+.properties-table .navigatorLabel {
+	float:left;
+	font-size: 12px;
+	color: #3E6FB1;
+	text-transform: uppercase;
+}

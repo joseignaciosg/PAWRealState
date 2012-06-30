@@ -1,20 +1,23 @@
 package ar.edu.itba.it.paw.domain.repositories.impl;
 
-import java.util.List;
+import java.util.*;
 
-import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
+import org.hibernate.*;
+import org.springframework.beans.factory.annotation.*;
+import org.springframework.stereotype.*;
 
-import ar.edu.itba.it.paw.domain.entities.RealStateAgency;
-import ar.edu.itba.it.paw.domain.entities.User;
-import ar.edu.itba.it.paw.domain.exceptions.InvalidLoginException;
-import ar.edu.itba.it.paw.domain.repositories.AbstractHibernateRepository;
-import ar.edu.itba.it.paw.domain.repositories.api.UserRepository;
+import ar.edu.itba.it.paw.domain.entities.*;
+import ar.edu.itba.it.paw.domain.exceptions.*;
+import ar.edu.itba.it.paw.domain.repositories.*;
+import ar.edu.itba.it.paw.domain.repositories.api.*;
 
 @Repository
 public class HibernateUserRepository extends AbstractHibernateRepository
 		implements UserRepository {
+
+	public HibernateUserRepository() {
+		super(null);
+	}
 
 	@Autowired
 	public HibernateUserRepository(final SessionFactory sessionFactory) {

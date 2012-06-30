@@ -1,0 +1,13 @@
+<html xmlns:wicket="http://wicket.apache.org/dtds.data/wicket-xhtml1.4-strict.dtd" >
+<wicket:extend>
+	<table wicket:id="properties" class="properties"></table>
+	<script>
+		$(document).ready(function() {
+			$(".properties-table .navigator > span > span > em").addClass("btn").addClass("disabled");
+			$(".properties-table .navigator > span > span > span").addClass("btn").addClass("disabled");
+			$(".properties-table .navigator > span > span > a").addClass("btn");
+			$(".properties-table .navigator > span > a").addClass("btn");
+		});
+	</script>
+</wicket:extend>
+</html>
