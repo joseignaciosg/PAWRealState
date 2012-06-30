@@ -5,6 +5,7 @@ import org.apache.wicket.model.*;
 import org.apache.wicket.request.component.*;
 import org.apache.wicket.request.mapper.parameter.*;
 
+import ar.edu.itba.it.paw.domain.entities.*;
 import ar.edu.itba.it.paw.web.properties.*;
 
 public class WicketShortcuts {
@@ -22,13 +23,14 @@ public class WicketShortcuts {
 
 	@SuppressWarnings("serial")
 	public static Link<Void> linkProperty(final String name,
-			final PropertyModel<Integer> model) {
+			final IModel<?> model) {
 		return new Link<Void>(name) {
 			@Override
 			public void onClick() {
 				final PageParameters parameters = new PageParameters();
 				parameters.add("id", model.getObject());
-				this.setResponsePage(PropertyPage.class, parameters);
+				this.setResponsePage(new PropertyPage((Property) model
+						.getObject()));
 			}
 
 		};

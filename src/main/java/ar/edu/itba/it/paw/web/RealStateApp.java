@@ -10,8 +10,10 @@ import org.hibernate.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.Component;
 
+import ar.edu.itba.it.paw.domain.entities.*;
 import ar.edu.itba.it.paw.domain.repositories.impl.*;
 import ar.edu.itba.it.paw.web.common.*;
+import ar.edu.itba.it.paw.web.converters.*;
 import ar.edu.itba.it.paw.web.photos.*;
 
 import com.google.code.jqwicket.*;
@@ -66,5 +68,12 @@ public class RealStateApp extends WebApplication {
 		this.getComponentPreOnBeforeRenderListeners().add(
 				new JQComponentOnBeforeRenderListener(config));
 
+	}
+
+	@Override
+	protected IConverterLocator newConverterLocator() {
+		final ConverterLocator converterLocator = new ConverterLocator();
+		converterLocator.set(Property.class, new PropertyConverter(this.repo));
+		return converterLocator;
 	}
 }

@@ -13,7 +13,7 @@ public class ThumbnailPanel extends Panel {
 		super(id, model);
 
 		final Link<Void> link = WicketShortcuts.linkProperty("thumbnail_link",
-				new PropertyModel<Integer>(model, "id"));
+				model);
 
 		link.add(new PropertyImagePanel("img", model));
 

@@ -231,3 +231,11 @@ h3.search-result {
 	color: #3E6FB1;
 	text-transform: uppercase;
 }
+
+.property-container {
+	padding: 20px 0;
+}
+
+.thumbnails li.override {
+	width:100%!important;	
+}

@@ -1,0 +1,221 @@
+<wicket:extend>
+	<div class="row property-container">
+		<div class="span9">
+			<div class="row">
+				<div class="span9">
+					<h1>
+						<span wicket:id="property_address"></span>
+					</h1>
+					<h2>
+						<span wicket:id="property_neighborhood"></span>
+					</h2>
+					<h4>
+						<wicket:message key="label_property_visit_count_label" />
+						: <span wicket:id="property_visit_count"></span>
+					</h4>
+				</div>
+			</div>
+			<div class="row">
+				<div class="span3">
+					<dl>
+						<dt>
+							<h4>
+								<wicket:message key="label_property_type" />
+							</h4>
+						</dt>
+						<dd>
+							<span wicket:id="property_type"></span>
+						</dd>
+						<dt>
+							<h4>
+								<wicket:message key="label_property_operation" />
+							</h4>
+						</dt>
+						<dd>
+							<span wicket:id="property_operation"></span>
+						</dd>
+						<dt>
+							<h4>
+								<wicket:message key="label_property_price" />
+							</h4>
+						</dt>
+						<dd>
+							$<span wicket:id="property_price"></span>
+						</dd>
+
+						<wicket:enclosure child="property_agency_name">
+							<dt>
+								<h4>
+									<wicket:message key="label_property_agency_name" />
+								</h4>
+							</dt>
+							<dd>
+								<span wicket:id="property_agency_name" /> <img
+									wicket:id="property_agency_image" />
+							</dd>
+
+						</wicket:enclosure>
+					</dl>
+				</div>
+				<div class="span6">
+					<ul class="thumbnails">
+						<li class="override">
+							<a rel="picture_group" wicket:id="property_image" class="thumbnail" style="width:120px; float:left">
+								<img wicket:id="property_image_tag"/>
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="row">
+				<div class="span4">
+					<table class="table table-striped">
+						<thead>
+							<tr>
+								<th><wicket:message key="label_property_characteristics" /></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td><wicket:message key="label_property_spaces_count" />:
+									<span wicket:id="property_spaces_count"></span></td>
+							</tr>
+							<tr>
+								<td><wicket:message key="label_property_covered_area" />:
+									<span wicket:id="property_covered_area"></span></td>
+							</tr>
+							<tr>
+								<td><wicket:message key="label_property_free_area" />: <span
+									wicket:id="property_free_area"></span></td>
+							</tr>
+							<tr>
+								<td><wicket:message key="label_property_age" />: <span
+									wicket:id="property_age"></span></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="span4">
+					<table class="table table-striped">
+						<thead>
+							<tr>
+								<th><wicket:message key="label_property_services" /></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr wicket:id="property_service">
+								<td><span wicket:id="property_service_name"></span></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="row">
+				<div class="span4">
+					<table class="table table-striped">
+						<thead>
+							<tr>
+								<th><wicket:message key="label_property_rooms" /></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr wicket:id="property_room">
+								<td><span wicket:id="property_room_name"></span></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="span4">
+					<table class="table table-striped">
+						<thead>
+							<tr>
+								<th><wicket:message key="label_property_description" /></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td><span wicket:id="property_description"></span></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+			</div>
+			<div class="row">
+				<div class="span9" style="margin: 0px;">
+					<a wicket:id="property_more_of_same_user" class="btn btn-active">
+						<wicket:message key="label_property_more_of_same" />
+					</a>
+				</div>
+			</div>
+		</div>
+
+		<div class="span3">
+			<form:form class="form-vertical"
+				action="${ basePath }/property/contactrequest" method="POST"
+				commandName="contactRequestForm">
+				<fieldset>
+					<form:errors path="*" />
+
+					<legend>Contacta al Publicador</legend>
+					<form:input type="hidden" class="input-xlarge" id="propertyId"
+						name="propertyId" value="${ property.id }" path="property" />
+					<div id="hiddenform" class="collapse"></div>
+
+					<div class="control-group">
+						<form:label class="control-label" path="firstName">Nombre</form:label>
+						<div class="controls">
+							<form:input class="input-xlarge" id="firstName" name="firstName"
+								path="firstName" />
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="lastName">Apellido</label>
+						<div class="controls">
+							<form:input type="text" class="input-xlarge" id="lastName"
+								name="lastName" path="lastName" />
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="email">Email</label>
+						<div class="controls">
+							<form:input type="text" class="input-xlarge" id="email"
+								name="email" path="email" />
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="phone">Teléfono</label>
+						<div class="controls">
+							<form:input type="text" class="input-xlarge" id="phone"
+								name="phone" path="phone" />
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="phone">Descripcion</label>
+						<div class="controls">
+							<form:input type="text" class="input-xlarge" id="description"
+								name="description" path="description" />
+						</div>
+					</div>
+
+					<button type="submit" class="btn btn-primary">Obtener
+						datos del Publicador</button>
+
+
+				</fieldset>
+			</form:form>
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th><wicket:message key="label_property_geolocation" /></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>TODO</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</wicket:extend>

@@ -6,7 +6,6 @@ import org.apache.wicket.*;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.*;
 import org.apache.wicket.markup.html.link.*;
 import org.apache.wicket.model.*;
-import org.apache.wicket.request.mapper.parameter.*;
 import org.apache.wicket.spring.injection.annot.*;
 
 import ar.edu.itba.it.paw.domain.entities.*;
@@ -44,11 +43,8 @@ public class PropertySearchPage extends BasePage {
 			@Override
 			protected void onClick(final Link<Void> owner,
 					final IModel<Property> clicked) {
-				final PageParameters params = new PageParameters();
 
-				params.add("id", clicked.getObject().getId());
-
-				owner.setResponsePage(PropertyPage.class, params);
+				owner.setResponsePage(new PropertyPage(clicked.getObject()));
 			}
 		});
 

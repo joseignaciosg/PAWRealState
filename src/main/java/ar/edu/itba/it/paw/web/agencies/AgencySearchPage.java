@@ -41,8 +41,6 @@ public class AgencySearchPage extends BasePage {
 				for (final RealStateView view : AgencySearchPage.this.agencies
 						.getAllWithProp()) {
 					result.add(Model.of(view));
-					result.add(Model.of(view));
-					result.add(Model.of(view));
 				}
 				return result.iterator();
 			}
