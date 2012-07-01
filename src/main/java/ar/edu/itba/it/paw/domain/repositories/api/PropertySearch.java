@@ -25,7 +25,7 @@ public final class PropertySearch implements Serializable {
 	private List<Service> services;
 	private List<RoomSearch> rooms;
 	private Boolean visibility;
-	private User user;
+	private transient User user;
 	private Currency currency;
 
 	public PropertySearch(final Operation operation, final Type type,
@@ -112,5 +112,29 @@ public final class PropertySearch implements Serializable {
 
 	public Currency getCurrency() {
 		return this.currency;
+	}
+
+	public void setOperation(final Operation operation) {
+		this.operation = operation;
+	}
+
+	public void setOrder(final Order order) {
+		this.order = order;
+	}
+
+	public void setCurrency(final Currency currency) {
+		this.currency = currency;
+	}
+
+	public void setType(final Type type) {
+		this.type = type;
+	}
+
+	public void setPriceHigh(final Integer priceHigh) {
+		this.priceHigh = priceHigh;
+	}
+
+	public void setPriceLow(final Integer priceLow) {
+		this.priceLow = priceLow;
 	}
 }

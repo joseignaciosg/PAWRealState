@@ -80,11 +80,14 @@ public class PropertySearchPage extends BasePage {
 				final Order order = (PropertySearchPage.this.search_form_order == null) ? search
 						.getOrder() : PropertySearchPage.this.search_form_order;
 
-				final PropertySearch nextSearch = new PropertySearch(priceLow,
-						priceHigh, currency, type, operation, order,
-						search.getUser());
+				search.setOperation(operation);
+				search.setOrder(order);
+				search.setCurrency(currency);
+				search.setType(type);
+				search.setPriceHigh(priceHigh);
+				search.setPriceLow(priceLow);
 
-				this.setResponsePage(new PropertySearchPage(nextSearch));
+				this.setResponsePage(PropertySearchPage.this);
 			}
 		};
 
@@ -104,7 +107,7 @@ public class PropertySearchPage extends BasePage {
 
 		f.add(new DropDownChoice<Order>("search_form_order", Arrays
 				.asList(Order.values()), new EnumChoiceRenderer<Order>())
-				.setNullValid(false).setRequired(true));
+				.setNullValid(false));
 
 		final Button doSearch = new Button("search_form_submit");
 

@@ -1,6 +1,5 @@
 package ar.edu.itba.it.paw.web.utils;
 
-import org.apache.wicket.markup.html.*;
 import org.apache.wicket.markup.html.link.*;
 import org.apache.wicket.model.*;
 import org.apache.wicket.request.component.*;
@@ -14,16 +13,6 @@ public class WicketShortcuts {
 	@SuppressWarnings("serial")
 	public static Link<Void> link(final String name,
 			final Class<? extends IRequestablePage> target) {
-		return new Link<Void>(name) {
-			@Override
-			public void onClick() {
-				this.setResponsePage(target);
-			}
-		};
-	}
-
-	@SuppressWarnings("serial")
-	public static Link<Void> link(final String name, final WebPage target) {
 		return new Link<Void>(name) {
 			@Override
 			public void onClick() {

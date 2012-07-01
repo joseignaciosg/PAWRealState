@@ -4,6 +4,7 @@ import static ar.edu.itba.it.paw.web.utils.WicketShortcuts.*;
 
 import java.util.*;
 
+import org.apache.wicket.markup.html.link.*;
 import org.apache.wicket.markup.repeater.*;
 import org.apache.wicket.model.*;
 import org.apache.wicket.spring.injection.annot.*;
@@ -28,10 +29,21 @@ public class HomePage extends BasePage {
 
 		this.add(link("search_properties", PropertySearchPage.class));
 		this.add(link("search_agencies", AgencySearchPage.class));
-		this.add(link("all_on_rent", new PropertySearchPage(new PropertySearch(
-				Operation.RENT))));
-		this.add(link("all_on_sale", new PropertySearchPage(new PropertySearch(
-				Operation.SELL))));
+		this.add(new Link<Void>("all_on_rent") {
+			@Override
+			public void onClick() {
+				this.setResponsePage(new PropertySearchPage(new PropertySearch(
+						Operation.RENT)));
+			}
+		});
+
+		this.add(new Link<Void>("all_on_sale") {
+			@Override
+			public void onClick() {
+				this.setResponsePage(new PropertySearchPage(new PropertySearch(
+						Operation.SELL)));
+			}
+		});
 
 		this.add(new ThumbnailView("rents", new ThumbnailDetachableModel(
 				new PropertySearch(Operation.RENT, null, null, null, 0, 2,

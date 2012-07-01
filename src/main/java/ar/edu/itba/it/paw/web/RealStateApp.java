@@ -56,7 +56,8 @@ public class RealStateApp extends WebApplication {
 				new HibernateRequestCycleListener(this.sessionFactory));
 		this.getMarkupSettings().setStripWicketTags(true);
 
-		// TODO: Hacer que funcione local
+		this.getDebugSettings().setAjaxDebugModeEnabled(false);
+
 		final JQContributionConfig config = new JQContributionConfig(
 				new JavaScriptResourceReference(this.getClass(), "jquery.js"))
 				.withJQueryUiJs(
