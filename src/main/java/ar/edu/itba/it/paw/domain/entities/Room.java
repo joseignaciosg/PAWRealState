@@ -1,11 +1,7 @@
 package ar.edu.itba.it.paw.domain.entities;
 
+import javax.persistence.*;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 
 @Entity
 @Table(name = "rooms")
@@ -35,7 +31,6 @@ public class Room extends PersistentEntity {
 	@JoinColumn(name = "property_id")
 	private Property property;
 
-	// Spring requires it!
 	public Room() {
 
 	}
@@ -79,7 +74,6 @@ public class Room extends PersistentEntity {
 		return true;
 	}
 
-	// Spring requires it!
 	public Property getProperty() {
 		return this.property;
 	}
@@ -104,16 +98,8 @@ public class Room extends PersistentEntity {
 		return result;
 	}
 
-	public void setProperty(final Property property) {
+	void setProperty(final Property property) {
 		this.property = property;
-	}
-
-	public void setSize(final int size) {
-		this.size = size;
-	}
-
-	public void setType(final RoomType type) {
-		this.type = type;
 	}
 
 	@Override

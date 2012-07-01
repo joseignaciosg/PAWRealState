@@ -5,25 +5,24 @@
 		<form id="form" class="navbar-form pull-center" wicket:id="search_form">
 			<fieldset>
 				<ul class="nav nav-pills">
-					<li><h6>Precio:</h6></li>
+					<li><h6><wicket:message key="label_search_form_price"/></h6></li>
 					<li><input type="text" wicket:id="search_form_pricelow" class="span_thin"
 						placeholder="Desde"/></li>
 					<li class="divider"></li>
 					<li><input type="text" wicket:id="search_form_pricehigh" class="span_thin"
 						placeholder="Hasta"/></li>
 					<li class="divider"></li>	
-					<li><select wicket:id="search_form_pricecurrency" class="span_thin"
-					placeholder="Hasta"></select></li>
+					<li><select wicket:id="search_form_pricecurrency" class="span_thin"></select></li>
 					<li class="divider"></li>
-					<li><h6>Operación:</h6></li>
+					<li><h6><wicket:message key="label_search_form_operation"/></h6></li>
 					<li><select class="span_thin" wicket:id="search_form_operation"></select></li>
 					<li class="divider"><hr /></li>
-					<li><h6>Tipo:</h6></li>
+					<li><h6><wicket:message key="label_search_form_type"/></h6></li>
 					<li>
 						<select class="span_thin" wicket:id="search_form_type"></select>
 					</li>
 					<li class="divider"></li>
-					<li><h6>Orden:</h6></li>
+					<li><h6><wicket:message key="label_search_form_order"/></h6></li>
 					<li>
 						<select class="span_thin" wicket:id="search_form_order"></select>
 					</li>

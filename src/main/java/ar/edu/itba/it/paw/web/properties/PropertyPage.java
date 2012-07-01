@@ -18,6 +18,7 @@ import org.apache.wicket.validation.validator.*;
 import ar.edu.itba.it.paw.domain.*;
 import ar.edu.itba.it.paw.domain.entities.*;
 import ar.edu.itba.it.paw.domain.entities.Property.Service;
+import ar.edu.itba.it.paw.domain.repositories.api.*;
 import ar.edu.itba.it.paw.domain.repositories.impl.*;
 import ar.edu.itba.it.paw.web.*;
 import ar.edu.itba.it.paw.web.base.*;
@@ -52,7 +53,7 @@ public class PropertyPage extends BasePage {
 
 		this.renderImageList(modelProp);
 
-		renderContactForm(modelProp);
+		this.renderContactForm(modelProp);
 	}
 
 	private void renderContactForm(final EntityModel<Property> modelProp) {
@@ -134,9 +135,9 @@ public class PropertyPage extends BasePage {
 
 			@Override
 			protected void populateItem(final ListItem<Service> item) {
-				// TODO: I18n
-				item.add(new Label("property_service_name",
-						new PropertyModel<String>(item.getModel(), "enumName")));
+				item.add(new Label("property_service_name", Model.of(this
+						.getString("Service."
+								+ item.getModelObject().toString()))));
 			}
 
 		});
@@ -146,9 +147,10 @@ public class PropertyPage extends BasePage {
 
 			@Override
 			protected void populateItem(final ListItem<Room> item) {
-				// TODO: Hacer i18n
-				item.add(new Label("property_room_name",
-						new PropertyModel<String>(item.getModel(), "type")));
+				item.add(new Label("property_room_name", Model.of(this
+						.getString("RoomType."
+								+ item.getModelObject().getType().toString())
+						+ " " + item.getModelObject().getSize() + " m2")));
 			}
 		});
 	}
@@ -166,11 +168,10 @@ public class PropertyPage extends BasePage {
 		this.add(new Label("property_description", new PropertyModel<Property>(
 				modelProp, "description")));
 		this.add(new Link<Void>("property_more_of_same_user") {
-
 			@Override
 			public void onClick() {
-				// TODO: parameterize this
-				this.setResponsePage(new PropertySearchPage());
+				this.setResponsePage(new PropertySearchPage(new PropertySearch(
+						modelProp.getObject().getOwner())));
 			}
 		});
 	}
@@ -204,10 +205,10 @@ public class PropertyPage extends BasePage {
 				new PropertyModel<Property>(modelProp, "neighborhood")));
 		this.add(new Label("property_visit_count", new PropertyModel<Property>(
 				modelProp, "visitCount")));
-		this.add(new Label("property_type", new PropertyModel<Property>(
-				modelProp, "type")));
-		this.add(new Label("property_operation", new PropertyModel<Property>(
-				modelProp, "operation")));
+		this.add(new Label("property_type", this.getString("Type."
+				+ modelProp.getObject().getType())));
+		this.add(new Label("property_operation", this.getString("Operation."
+				+ modelProp.getObject().getOperation())));
 		this.add(new Label("property_price", new PropertyModel<Property>(
 				modelProp, "price")));
 	}

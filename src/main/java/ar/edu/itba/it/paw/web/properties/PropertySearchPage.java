@@ -4,10 +4,13 @@ import java.util.*;
 
 import org.apache.wicket.*;
 import org.apache.wicket.behavior.*;
+import org.apache.wicket.extensions.markup.html.repeater.data.grid.*;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.*;
+import org.apache.wicket.markup.html.basic.*;
 import org.apache.wicket.markup.html.form.*;
 import org.apache.wicket.markup.html.link.*;
 import org.apache.wicket.markup.html.panel.*;
+import org.apache.wicket.markup.repeater.*;
 import org.apache.wicket.model.*;
 import org.apache.wicket.spring.injection.annot.*;
 
@@ -42,9 +45,9 @@ public class PropertySearchPage extends BasePage {
 		final IModel<PropertySearchPage> model = new CompoundPropertyModel<PropertySearchPage>(
 				this);
 
-		populateFormWithSearch(search);
+		this.populateFormWithSearch(search);
 
-		renderForm(search, model);
+		this.renderForm(search, model);
 
 		this.buildDataTable(search);
 	}
@@ -135,6 +138,27 @@ public class PropertySearchPage extends BasePage {
 
 		columns.add(new PropertyColumn<Property>(Model.of(this
 				.getString("property_price")), "price"));
+
+		columns.add(new PropertyColumn<Property>(Model.of(this
+				.getString("property_type")), "type") {
+			@Override
+			public void populateItem(final Item<ICellPopulator<Property>> item,
+					final String componentId, final IModel<Property> rowModel) {
+				item.add(new Label(componentId, PropertySearchPage.this
+						.getString("Type." + rowModel.getObject().getType())));
+			}
+		});
+
+		columns.add(new PropertyColumn<Property>(Model.of(this
+				.getString("property_operation")), "operation") {
+			@Override
+			public void populateItem(final Item<ICellPopulator<Property>> item,
+					final String componentId, final IModel<Property> rowModel) {
+				item.add(new Label(componentId, PropertySearchPage.this
+						.getString("Operation."
+								+ rowModel.getObject().getOperation())));
+			}
+		});
 
 		columns.add(new ClickableColumn<Property>(Model.of(this
 				.getString("property_actions")), Model.of("Ver esta propiedad")) {

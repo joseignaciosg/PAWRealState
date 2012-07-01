@@ -43,11 +43,6 @@ public class Property extends PersistentEntity {
 		public String getEnumName() {
 			return this.name();
 		}
-
-		@Override
-		public String toString() {
-			return this.name;
-		}
 	}
 
 	@CollectionOfElements

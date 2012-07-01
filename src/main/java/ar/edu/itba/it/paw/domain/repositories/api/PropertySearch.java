@@ -62,6 +62,10 @@ public final class PropertySearch implements Serializable {
 				true, user);
 	}
 
+	public PropertySearch(final User owner) {
+		this(null, null, null, null, 0, 2, Order.DESC, null, null, true, owner);
+	}
+
 	public Operation getOperation() {
 		return this.operation;
 	}

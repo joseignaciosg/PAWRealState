@@ -10,6 +10,7 @@ import org.apache.wicket.model.*;
 import org.apache.wicket.request.mapper.parameter.*;
 import org.apache.wicket.spring.injection.annot.*;
 
+import ar.edu.itba.it.paw.domain.*;
 import ar.edu.itba.it.paw.domain.entities.*;
 import ar.edu.itba.it.paw.domain.repositories.api.*;
 import ar.edu.itba.it.paw.domain.repositories.impl.*;
@@ -50,10 +51,7 @@ public class AgencySearchPage extends BasePage {
 				final Link<Void> link = new Link<Void>("agency_picture_link") {
 					@Override
 					public void onClick() {
-						final PageParameters parameters = new PageParameters();
-						parameters.add("user", item.getModelObject().getId());
-						this.setResponsePage(PropertySearchPage.class,
-								parameters);
+						AgencySearchPage.this.linkToSearchPage(this, item);
 					}
 				};
 
@@ -74,10 +72,7 @@ public class AgencySearchPage extends BasePage {
 				item.add(new Link<Void>("agency_link") {
 					@Override
 					public void onClick() {
-						final PageParameters parameters = new PageParameters();
-						parameters.add("user", item.getModelObject().getId());
-						this.setResponsePage(PropertySearchPage.class,
-								parameters);
+						AgencySearchPage.this.linkToSearchPage(this, item);
 					}
 				});
 				item.add(link);
@@ -95,5 +90,15 @@ public class AgencySearchPage extends BasePage {
 		a1.add(accordionView);
 		this.add(l);
 		this.add(a1);
+	}
+
+	private void linkToSearchPage(final Link<Void> link,
+			final Item<RealStateView> item) {
+		final IModel<RealStateAgency> model = new EntityModel<RealStateAgency>(
+				RealStateAgency.class, item.getModelObject().getId());
+
+		final PropertySearch search = new PropertySearch(model.getObject());
+
+		link.setResponsePage(new PropertySearchPage(search));
 	}
 }
