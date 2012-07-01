@@ -28,21 +28,10 @@ public class HomePage extends BasePage {
 
 		this.add(link("search_properties", PropertySearchPage.class));
 		this.add(link("search_agencies", AgencySearchPage.class));
-		this.add(link("all_on_rent", PropertySearchPage.class));
-		this.add(link("all_on_sale", PropertySearchPage.class));
-
-		// final IModel<List<Property>> professorsModel = new
-		// LoadableDetachableModel<List<Property>>() {
-		//
-		// public LoadableDetachableModel<List<Property>>(PropertySearch) {
-		//
-		// }
-		//
-		// @Override
-		// protected List<Property> load() {
-		// return HomePage.this.repo
-		// }
-		// };
+		this.add(link("all_on_rent", new PropertySearchPage(new PropertySearch(
+				Operation.RENT))));
+		this.add(link("all_on_sale", new PropertySearchPage(new PropertySearch(
+				Operation.SELL))));
 
 		this.add(new ThumbnailView("rents", new ThumbnailDetachableModel(
 				new PropertySearch(Operation.RENT, null, null, null, 0, 2,

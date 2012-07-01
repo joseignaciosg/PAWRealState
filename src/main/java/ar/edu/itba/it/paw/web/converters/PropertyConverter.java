@@ -21,6 +21,7 @@ public class PropertyConverter implements IConverter<Property> {
 	}
 
 	public String convertToString(final Property value, final Locale locale) {
-		return value.toString();
+		return value.getId().toString();
 	}
+
 }

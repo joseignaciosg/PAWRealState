@@ -1,6 +1,5 @@
 package ar.edu.itba.it.paw.domain.entities;
 
-import java.io.*;
 import java.util.*;
 
 import javax.persistence.*;
@@ -12,10 +11,13 @@ import org.hibernate.annotations.*;
 
 import ar.edu.itba.it.paw.domain.entities.Room.RoomType;
 
-@SuppressWarnings("serial")
 @Entity
 @Table(name = "properties")
-public class Property extends PersistentEntity implements Serializable {
+public class Property extends PersistentEntity {
+
+	public enum Currency {
+		PESO, DOLLAR;
+	}
 
 	public enum Type {
 		APARTMENT, HOUSE;

@@ -214,7 +214,11 @@ h3.search-result {
 }
 
 .properties-table {
-	margin-top: 20px;
+	margin-top: 40px;
+}
+
+.span_thin {
+	width: 90px;	
 }
 
 .properties-table tr td {
@@ -234,6 +238,7 @@ h3.search-result {
 
 .property-container {
 	padding: 20px 0;
+	
 }
 
 .thumbnails li.override {

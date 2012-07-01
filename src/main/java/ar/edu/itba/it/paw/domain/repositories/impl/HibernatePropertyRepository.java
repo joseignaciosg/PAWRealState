@@ -20,6 +20,10 @@ public class HibernatePropertyRepository extends AbstractHibernateRepository
 
 	private SessionFactory sessionFactory;
 
+	public HibernatePropertyRepository() {
+		super(null);
+	}
+
 	@Autowired
 	public HibernatePropertyRepository(final SessionFactory sessionFactory) {
 		super(sessionFactory);

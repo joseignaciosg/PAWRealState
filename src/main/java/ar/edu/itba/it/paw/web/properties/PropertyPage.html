@@ -151,59 +151,59 @@
 		</div>
 
 		<div class="span3">
-			<form:form class="form-vertical"
-				action="${ basePath }/property/contactrequest" method="POST"
-				commandName="contactRequestForm">
+			<form class="form-vertical" wicket:id="contact_form">
 				<fieldset>
-					<form:errors path="*" />
-
-					<legend>Contacta al Publicador</legend>
-					<form:input type="hidden" class="input-xlarge" id="propertyId"
-						name="propertyId" value="${ property.id }" path="property" />
-					<div id="hiddenform" class="collapse"></div>
-
+					<div wicket:id="feedback_panel"></div>
+					<legend><wicket:message key="label_property_contact_form"/></legend>
 					<div class="control-group">
-						<form:label class="control-label" path="firstName">Nombre</form:label>
+						<label class="control-label" for="firstName">
+							<wicket:message key="label_contact_firstname"/>
+						</label>
 						<div class="controls">
-							<form:input class="input-xlarge" id="firstName" name="firstName"
-								path="firstName" />
+							<input class="input-xlarge" id="firstName" name="firstName"
+								wicket:id="contact_form_firstname" />
 						</div>
 					</div>
 					<div class="control-group">
-						<label class="control-label" for="lastName">Apellido</label>
+						<label class="control-label" for="lastName">
+							<wicket:message key="label_contact_lastname"/>
+						</label>
 						<div class="controls">
-							<form:input type="text" class="input-xlarge" id="lastName"
-								name="lastName" path="lastName" />
+							<input class="input-xlarge" id="lastName" name="lastName"
+								wicket:id="contact_form_lastname" />
 						</div>
 					</div>
 					<div class="control-group">
-						<label class="control-label" for="email">Email</label>
+						<label class="control-label" for="email">
+							<wicket:message key="label_contact_email"/>
+						</label>
 						<div class="controls">
-							<form:input type="text" class="input-xlarge" id="email"
-								name="email" path="email" />
+							<input class="input-xlarge" id="email" name="email"
+								wicket:id="contact_form_email" />
 						</div>
 					</div>
 					<div class="control-group">
-						<label class="control-label" for="phone">Teléfono</label>
+						<label class="control-label" for="phone">
+							<wicket:message key="label_contact_phone"/>
+						</label>
 						<div class="controls">
-							<form:input type="text" class="input-xlarge" id="phone"
-								name="phone" path="phone" />
+							<input type="text" class="input-xlarge" id="phone"
+								name="phone" wicket:id="contact_form_phone" />
 						</div>
 					</div>
 					<div class="control-group">
-						<label class="control-label" for="phone">Descripcion</label>
+						<label class="control-label" for="description">
+							<wicket:message key="label_contact_description"/>
+						</label>
 						<div class="controls">
-							<form:input type="text" class="input-xlarge" id="description"
-								name="description" path="description" />
+							<input type="text" class="input-xlarge" id="description"
+								name="description" wicket:id="contact_form_description" />
 						</div>
 					</div>
-
-					<button type="submit" class="btn btn-primary">Obtener
-						datos del Publicador</button>
-
-
+					
+					<input type="submit" wicket:id="contact_form_submit" class="btn btn-primary"/> 
 				</fieldset>
-			</form:form>
+			</form>
 			<table class="table table-striped">
 				<thead>
 					<tr>

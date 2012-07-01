@@ -3,6 +3,7 @@ package ar.edu.itba.it.paw.domain.repositories.api;
 import java.io.*;
 import java.util.*;
 
+import ar.edu.itba.it.paw.domain.entities.Property.Currency;
 import ar.edu.itba.it.paw.domain.entities.Property.Operation;
 import ar.edu.itba.it.paw.domain.entities.Property.Service;
 import ar.edu.itba.it.paw.domain.entities.Property.Type;
@@ -25,6 +26,7 @@ public final class PropertySearch implements Serializable {
 	private List<RoomSearch> rooms;
 	private Boolean visibility;
 	private User user;
+	private Currency currency;
 
 	public PropertySearch(final Operation operation, final Type type,
 			final Integer priceLow, final Integer priceHigh,
@@ -45,13 +47,19 @@ public final class PropertySearch implements Serializable {
 
 	}
 
+	public PropertySearch(final Operation o) {
+		this(o, null, null, null, 0, 2, Order.DESC, null, null, true, null);
+	}
+
 	public PropertySearch() {
 		this(null, null, null, null, 0, 2, Order.DESC, null, null, true, null);
 	}
 
-	public PropertySearch(final Operation rent) {
-		this(rent, null, null, null, null, 2, Order.DESC, null, null, true,
-				null);
+	public PropertySearch(final Integer priceLow, final Integer priceHigh,
+			final Currency currency2, final Type type,
+			final Operation operation, final Order order, final User user) {
+		this(operation, type, priceLow, priceHigh, null, 2, order, null, null,
+				true, user);
 	}
 
 	public Operation getOperation() {
@@ -98,4 +106,7 @@ public final class PropertySearch implements Serializable {
 		return this.user;
 	}
 
+	public Currency getCurrency() {
+		return this.currency;
+	}
 }
