@@ -11,9 +11,10 @@ import com.google.code.jqwicket.api.*;
 public class BasePage extends WebPage {
 	public BasePage() {
 		final NavbarPanel panel = new NavbarPanel("navbar");
-
-		// Esto carga jQuery...
 		panel.add(new JQBehavior(JQuery.$(panel)));
+		final AdsPanel adpanel = new AdsPanel("ads_bar");
+
+		this.add(adpanel);
 		this.add(panel);
 	}
 }

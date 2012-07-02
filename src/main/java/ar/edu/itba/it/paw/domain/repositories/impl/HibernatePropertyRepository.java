@@ -13,21 +13,25 @@ import ar.edu.itba.it.paw.domain.exceptions.*;
 import ar.edu.itba.it.paw.domain.repositories.*;
 import ar.edu.itba.it.paw.domain.repositories.api.*;
 import ar.edu.itba.it.paw.domain.repositories.api.PropertySearch.Order;
+import ar.edu.itba.it.paw.domain.services.*;
 
 @Component
 public class HibernatePropertyRepository extends AbstractHibernateRepository
 		implements PropertyRepository {
 
 	private SessionFactory sessionFactory;
+	private MailService mailService;
 
 	public HibernatePropertyRepository() {
 		super(null);
 	}
 
 	@Autowired
-	public HibernatePropertyRepository(final SessionFactory sessionFactory) {
+	public HibernatePropertyRepository(final SessionFactory sessionFactory,
+			final MailService service) {
 		super(sessionFactory);
 		this.sessionFactory = sessionFactory;
+		this.mailService = service;
 	}
 
 	public List<Property> getAll() {
@@ -58,6 +62,10 @@ public class HibernatePropertyRepository extends AbstractHibernateRepository
 
 		if (search.getPriceLow() != null) {
 			q.add(Restrictions.ge("price", search.getPriceLow()));
+		}
+
+		if (search.getCurrency() != null) {
+			q.add(Restrictions.eq("currency", search.getCurrency()));
 		}
 
 		if (search.getVisibility() != null) {
@@ -160,8 +168,6 @@ public class HibernatePropertyRepository extends AbstractHibernateRepository
 	}
 
 	public boolean sendContactRequest(final ContactRequest request) {
-		// TODO: Email service
-		return false;
-		// return this.mailService.sendMail(request);
+		return this.mailService.sendMail(request);
 	}
 }

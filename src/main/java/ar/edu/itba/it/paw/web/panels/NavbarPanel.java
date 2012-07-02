@@ -3,6 +3,7 @@ package ar.edu.itba.it.paw.web.panels;
 import org.apache.wicket.*;
 import org.apache.wicket.ajax.*;
 import org.apache.wicket.ajax.markup.html.*;
+import org.apache.wicket.feedback.*;
 import org.apache.wicket.markup.html.*;
 import org.apache.wicket.markup.html.basic.*;
 import org.apache.wicket.markup.html.form.*;
@@ -24,7 +25,8 @@ public class NavbarPanel extends Panel {
 
 	AjaxFallbackLink<Void> rsession;
 
-	private transient String login_form_remember;
+	TextField<String> hiddenRemember;
+
 	private transient String login_form_username;
 	private transient String login_form_password;
 
@@ -40,6 +42,8 @@ public class NavbarPanel extends Panel {
 
 		final RealStateSession session = (RealStateSession) this.getSession();
 
+		this.login_form_username = session.getUsername();
+
 		final Form<NavbarPanel> loginForm = new Form<NavbarPanel>("login_form",
 				new CompoundPropertyModel<NavbarPanel>(this));
 
@@ -48,19 +52,19 @@ public class NavbarPanel extends Panel {
 		loginForm.add(new PasswordTextField("login_form_password")
 				.setRequired(true));
 
-		final HiddenField<String> hiddenRemember = new HiddenField<String>(
-				"login_form_remember");
+		this.hiddenRemember = new HiddenField<String>("login_remember");
 
-		hiddenRemember.setOutputMarkupId(true);
+		this.hiddenRemember.setModel(Model.of("USERNAME"));
+		this.hiddenRemember.setOutputMarkupId(true);
 
-		loginForm.add(hiddenRemember);
+		loginForm.add(this.hiddenRemember);
 
 		this.rname = new AjaxFallbackLink<Void>("login_form_rname") {
 			@Override
 			public void onClick(final AjaxRequestTarget target) {
 				target.add(this);
 				target.add(NavbarPanel.this.rsession);
-				target.add(hiddenRemember);
+				target.add(NavbarPanel.this.hiddenRemember);
 
 				NavbarPanel.this.rsession.add(new AttributeModifier("class",
 						Model.of("btn btn-primary")));
@@ -68,7 +72,7 @@ public class NavbarPanel extends Panel {
 				this.add(new AttributeModifier("class", Model
 						.of("btn btn-primary active")));
 
-				hiddenRemember.setModelObject("USERNAME");
+				NavbarPanel.this.hiddenRemember.setModelObject("USERNAME");
 			}
 		};
 
@@ -77,7 +81,7 @@ public class NavbarPanel extends Panel {
 			public void onClick(final AjaxRequestTarget target) {
 				target.add(this);
 				target.add(NavbarPanel.this.rname);
-				target.add(hiddenRemember);
+				target.add(NavbarPanel.this.hiddenRemember);
 
 				NavbarPanel.this.rname.add(new AttributeModifier("class", Model
 						.of("btn btn-primary")));
@@ -85,21 +89,23 @@ public class NavbarPanel extends Panel {
 				this.add(new AttributeModifier("class", Model
 						.of("btn btn-primary active")));
 
-				hiddenRemember.setModelObject("SESSION");
+				NavbarPanel.this.hiddenRemember.setModelObject("SESSION");
 
 			}
 		};
 
 		loginForm.add(this.rname);
 		loginForm.add(this.rsession);
-		loginForm.add(new FeedbackPanel("feedback_panel"));
+		loginForm.add(new FeedbackPanel("login_feedback_panel",
+				new ContainerFeedbackMessageFilter(loginForm)));
 
 		loginForm.add(new Button("login_form_submit") {
 			@Override
 			public void onSubmit() {
 				if (!session.signIn(NavbarPanel.this.login_form_username,
 						NavbarPanel.this.login_form_password,
-						NavbarPanel.this.repo)) {
+						NavbarPanel.this.repo,
+						NavbarPanel.this.hiddenRemember.getConvertedInput())) {
 					this.error("invalid.login");
 				} else {
 					this.setResponsePage(HomePage.class);

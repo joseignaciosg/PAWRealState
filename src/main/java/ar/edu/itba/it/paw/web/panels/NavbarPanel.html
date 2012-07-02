@@ -9,8 +9,8 @@
 					<wicket:enclosure child="login_form">
 						<li><form class="navbar-form pull-right span7"
 								wicket:id="login_form">
-								<input type="hidden" wicket:id="login_form_remember"/>
 								<div class="pull-right">
+								<input type="hidden" wicket:id="login_remember"/>
 									<input type="text" name="user_username" class="span2" placeholder="Usuario" wicket:id="login_form_username"/> 
 									<input
 										type="password" name="user_password" class="span2" wicket:id="login_form_password"
@@ -27,7 +27,7 @@
 										type="button" class="btn btn-primary" id="remember_session" wicket:id="login_form_rsession"
 										name="remember_session" value="Sesi&oacute;n" />
 								</div>
-								<div wicket:id="feedback_panel"></div>
+								<div wicket:id="login_feedback_panel"></div>
 							</form></li>
 						<li class="divider-vertical"></li>
 						<li><a class="register-link" wicket:id="register_link">Registrarse</a></li>

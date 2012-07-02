@@ -33,12 +33,11 @@
 		<property name="dataSource" ref="dataSource" />
 		<property name="hibernateProperties">
 			<value>
-				hibernate.dialect=${hibernate.dialect}
-				hibernate.hbm2ddl.auto=${hibernate.hbm2ddl.auto}
-				hibernate.show_sql=${hibernate.show_sql}
-				hibernate.current_session_context_class=managed
-				hibernate.max_fetch_depth=2
-				hibernate.jdbc.batch_size=30  
+				hibernate.dialect=org.hibernate.dialect.HSQLDialect
+				hibernate.format_sql=true
+				hibernate.hbm2ddl.auto=create
+				hibernate.show_sql=true
+				use_sql_comments=true
 			</value>
 		</property>
 		<property name="packagesToScan">
@@ -47,8 +46,6 @@
 			</list>
 		</property>
 	</bean>
-
-	<!-- <context:annotation-config />
 	
 	<bean id="transactionManager"
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">		
@@ -67,23 +64,6 @@
 			<util:properties location="classpath:javamail.properties" />
 		</property>
 	</bean>
-
-	
-
-	<bean id="sessionFactory"
-		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
-		<property name="dataSource" ref="dataSource" />
-		<property name="packagesToScan" value="ar.edu.itba.it.paw.domain.entities" />
-		<property name="hibernateProperties">
-			<value>
-				hibernate.dialect=org.hibernate.dialect.HSQLDialect
-				hibernate.format_sql=true
-				hibernate.hbm2ddl.auto=create
-				hibernate.show_sql=true
-				use_sql_comments=true
-			</value>
-		</property>
-	</bean> -->
 
 
 </beans>
