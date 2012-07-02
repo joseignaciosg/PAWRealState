@@ -47,11 +47,11 @@ public class HomePage extends BasePage {
 
 		this.add(new ThumbnailView("rents", new ThumbnailDetachableModel(
 				new PropertySearch(Operation.RENT, null, null, null, 0, 2,
-						Order.DESC, null, null, true, null))));
+						Order.DESC, null, null, true, null, null))));
 
 		this.add(new ThumbnailView("sells", new ThumbnailDetachableModel(
 				new PropertySearch(Operation.SELL, null, null, null, 0, 2,
-						Order.DESC, null, null, true, null))));
+						Order.DESC, null, null, true, null, null))));
 
 	}
 

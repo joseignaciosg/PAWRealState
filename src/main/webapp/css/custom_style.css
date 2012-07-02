@@ -244,3 +244,16 @@ h3.search-result {
 .thumbnails li.override {
 	width:100%!important;	
 }
+
+.ads {
+	margin: 0 auto;
+	text-align:center;
+}
+
+.ads li {
+	display:inline-block;
+	margin: 10px;
+	border: 1px solid black;
+	width: auto;
+	padding: 0;
+}

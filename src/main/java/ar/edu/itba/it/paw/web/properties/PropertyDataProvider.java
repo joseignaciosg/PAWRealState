@@ -32,7 +32,8 @@ public class PropertyDataProvider extends SortableDataProvider<Property> {
 				this.searchObject.getPriceHigh(), page, count,
 				this.searchObject.getOrder(), this.searchObject.getServices(),
 				this.searchObject.getRooms(),
-				this.searchObject.getVisibility(), this.searchObject.getUser());
+				this.searchObject.getVisibility(),
+				this.searchObject.getCurrency(), this.searchObject.getUser());
 
 		return this.properties.getAll(modifiedSearch).iterator();
 	}
@@ -44,7 +45,8 @@ public class PropertyDataProvider extends SortableDataProvider<Property> {
 				this.searchObject.getPriceHigh(), null, null,
 				this.searchObject.getOrder(), this.searchObject.getServices(),
 				this.searchObject.getRooms(),
-				this.searchObject.getVisibility(), this.searchObject.getUser());
+				this.searchObject.getVisibility(),
+				this.searchObject.getCurrency(), this.searchObject.getUser());
 
 		// TODO: Improve this
 		return this.properties.getAll(modifiedSearch).size();

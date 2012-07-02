@@ -61,7 +61,7 @@ public class BasicDataPersistanceTest extends
 
 		final Property property = new Property(Property.Type.APARTMENT,
 				Property.Operation.RENT, "Flores", "Pedernera 35", 1233, 1, 23,
-				23, 12, null, null, "", u);
+				23, 12, null, null, "", u, null);
 
 		this.propertyRepository.save(property);
 

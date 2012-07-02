@@ -43,7 +43,7 @@ public class RealStateApp extends WebApplication {
 
 	@Override
 	public Session newSession(final Request request, final Response response) {
-		return new RealStateSession(request);
+		return new RealStateSession(request, response);
 	}
 
 	@Override

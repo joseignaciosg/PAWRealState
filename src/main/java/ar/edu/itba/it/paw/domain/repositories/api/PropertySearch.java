@@ -32,7 +32,7 @@ public final class PropertySearch implements Serializable {
 			final Integer priceLow, final Integer priceHigh,
 			final Integer page, final Integer quant, final Order order,
 			final List<Service> services, final List<RoomSearch> roomSearch,
-			final boolean visibility, final User user) {
+			final boolean visibility, final Currency currency, final User user) {
 		this.operation = operation;
 		this.type = type;
 		this.priceLow = priceLow;
@@ -44,26 +44,22 @@ public final class PropertySearch implements Serializable {
 		this.rooms = roomSearch;
 		this.visibility = visibility;
 		this.user = user;
-
+		this.currency = currency;
 	}
 
 	public PropertySearch(final Operation o) {
-		this(o, null, null, null, 0, 2, Order.DESC, null, null, true, null);
+		this(o, null, null, null, 0, 2, Order.DESC, null, null, true, null,
+				null);
 	}
 
 	public PropertySearch() {
-		this(null, null, null, null, 0, 2, Order.DESC, null, null, true, null);
-	}
-
-	public PropertySearch(final Integer priceLow, final Integer priceHigh,
-			final Currency currency2, final Type type,
-			final Operation operation, final Order order, final User user) {
-		this(operation, type, priceLow, priceHigh, null, 2, order, null, null,
-				true, user);
+		this(null, null, null, null, 0, 2, Order.DESC, null, null, true, null,
+				null);
 	}
 
 	public PropertySearch(final User owner) {
-		this(null, null, null, null, 0, 2, Order.DESC, null, null, true, owner);
+		this(null, null, null, null, 0, 2, Order.DESC, null, null, true, null,
+				owner);
 	}
 
 	public Operation getOperation() {

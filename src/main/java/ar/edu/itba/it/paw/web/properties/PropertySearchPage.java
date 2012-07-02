@@ -140,7 +140,13 @@ public class PropertySearchPage extends BasePage {
 				.getString("property_address")), "address"));
 
 		columns.add(new PropertyColumn<Property>(Model.of(this
+				.getString("property_currency")), "currency"));
+
+		columns.add(new PropertyColumn<Property>(Model.of(this
 				.getString("property_price")), "price"));
+
+		columns.add(new PropertyColumn<Property>(Model.of(this
+				.getString("property_sq_meter_price")), "squareMeterPrice"));
 
 		columns.add(new PropertyColumn<Property>(Model.of(this
 				.getString("property_type")), "type") {

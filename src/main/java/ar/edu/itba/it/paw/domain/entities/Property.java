@@ -16,7 +16,22 @@ import ar.edu.itba.it.paw.domain.entities.Room.RoomType;
 public class Property extends PersistentEntity {
 
 	public enum Currency {
-		PESO, DOLLAR;
+		PESO("$"), DOLLAR("U$S");
+
+		private String prefix;
+
+		Currency(final String prefix) {
+			this.prefix = prefix;
+		}
+
+		public String getPrefix() {
+			return this.prefix;
+		}
+
+		@Override
+		public String toString() {
+			return this.getPrefix();
+		}
 	}
 
 	public enum Type {
@@ -44,6 +59,10 @@ public class Property extends PersistentEntity {
 			return this.name();
 		}
 	}
+
+	@Column(nullable = false)
+	@Enumerated(EnumType.STRING)
+	private Currency currency;
 
 	@CollectionOfElements
 	@Cascade(value = { org.hibernate.annotations.CascadeType.ALL })
@@ -118,7 +137,8 @@ public class Property extends PersistentEntity {
 			final Integer price, final Integer spaces,
 			final Integer coveredArea, final Integer freeArea,
 			final Integer age, final List<Service> services,
-			final List<Room> rooms, final String description, final User owner) {
+			final List<Room> rooms, final String description, final User owner,
+			final Currency currency) {
 		this.type = type;
 		this.operation = operation;
 		this.neighborhood = neighborhood;
@@ -147,6 +167,7 @@ public class Property extends PersistentEntity {
 		this.visitCount = 0;
 		this.reserved = false;
 		this.visible = true;
+		this.currency = (currency == null) ? currency : Currency.DOLLAR;
 	}
 
 	public String getPropertyType() {
@@ -318,5 +339,21 @@ public class Property extends PersistentEntity {
 	public void addRoom(final Room room) {
 		this.rooms.add(room);
 		room.setProperty(this);
+	}
+
+	public Currency getCurrency() {
+		return this.currency;
+	}
+
+	public void setCurrency(final Currency currency) {
+		this.currency = currency;
+	}
+
+	public int getSquareMeterPrice() {
+		int dividing = this.coveredArea + this.freeArea;
+		if (dividing == 0) {
+			dividing = 1;
+		}
+		return this.price / (this.coveredArea + this.freeArea);
 	}
 }

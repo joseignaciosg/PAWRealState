@@ -4,6 +4,7 @@ import java.util.*;
 
 import org.apache.wicket.*;
 import org.apache.wicket.behavior.*;
+import org.apache.wicket.feedback.*;
 import org.apache.wicket.markup.html.basic.*;
 import org.apache.wicket.markup.html.form.*;
 import org.apache.wicket.markup.html.image.*;
@@ -79,7 +80,8 @@ public class PropertyPage extends BasePage {
 
 		};
 
-		f.add(new FeedbackPanel("feedback_panel"));
+		f.add(new FeedbackPanel("feedback_panel",
+				new ContainerFeedbackMessageFilter(f)));
 
 		f.add(new TextField<String>("contact_form_firstname").setRequired(true));
 		f.add(new TextField<String>("contact_form_lastname").setRequired(true));
@@ -209,7 +211,13 @@ public class PropertyPage extends BasePage {
 				+ modelProp.getObject().getType())));
 		this.add(new Label("property_operation", this.getString("Operation."
 				+ modelProp.getObject().getOperation())));
+		this.add(new Label("property_currency", new PropertyModel<Property>(
+				modelProp, "currency")));
 		this.add(new Label("property_price", new PropertyModel<Property>(
 				modelProp, "price")));
+		this.add(new Label("property_currency_2", new PropertyModel<Property>(
+				modelProp, "currency")));
+		this.add(new Label("property_price_m2", new PropertyModel<Property>(
+				modelProp, "squareMeterPrice")));
 	}
 }
