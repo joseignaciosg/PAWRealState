@@ -31,6 +31,7 @@ public class HibernateRequestCycleListener extends AbstractRequestCycleListener 
 			this.commit();
 		} else {
 			this.rollback();
+			this.error = false;
 		}
 	}
 

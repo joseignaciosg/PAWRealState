@@ -155,6 +155,10 @@ public class HibernatePropertyRepository extends AbstractHibernateRepository
 
 	}
 
+	public void delete(final Property property) {
+		super.delete(property);
+	}
+
 	public List<Property> getByUser(final User user) {
 		return this.find("from Property p where p.user = ?", user);
 	}

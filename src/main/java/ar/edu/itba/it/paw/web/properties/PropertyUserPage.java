@@ -1,35 +1,31 @@
 package ar.edu.itba.it.paw.web.properties;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
-import org.apache.wicket.AttributeModifier;
-import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.markup.html.AjaxFallbackLink;
-import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.image.Image;
-import org.apache.wicket.markup.html.link.Link;
-import org.apache.wicket.markup.repeater.Item;
-import org.apache.wicket.markup.repeater.RefreshingView;
-import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.LoadableDetachableModel;
-import org.apache.wicket.model.Model;
-import org.apache.wicket.model.PropertyModel;
-import org.apache.wicket.request.mapper.parameter.PageParameters;
-import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.apache.wicket.*;
+import org.apache.wicket.ajax.*;
+import org.apache.wicket.ajax.markup.html.*;
+import org.apache.wicket.markup.html.basic.*;
+import org.apache.wicket.markup.html.image.*;
+import org.apache.wicket.markup.html.link.*;
+import org.apache.wicket.markup.repeater.*;
+import org.apache.wicket.model.*;
+import org.apache.wicket.request.mapper.parameter.*;
+import org.apache.wicket.spring.injection.annot.*;
 
-import ar.edu.itba.it.paw.domain.EntityModel;
-import ar.edu.itba.it.paw.domain.entities.Property;
-import ar.edu.itba.it.paw.domain.entities.User;
-import ar.edu.itba.it.paw.domain.repositories.api.PropertyRepository;
-import ar.edu.itba.it.paw.web.RealStateApp;
-import ar.edu.itba.it.paw.web.base.BasePage;
+import ar.edu.itba.it.paw.domain.*;
+import ar.edu.itba.it.paw.domain.entities.*;
+import ar.edu.itba.it.paw.domain.repositories.api.*;
+import ar.edu.itba.it.paw.web.*;
+import ar.edu.itba.it.paw.web.base.*;
 
-import com.google.code.jqwicket.ui.accordion.AccordionWebMarkupContainer;
+import com.google.code.jqwicket.ui.accordion.*;
 
 @SuppressWarnings("serial")
 public class PropertyUserPage extends BasePage {
+
+	@SpringBean
+	UserRepository users;
 
 	@SpringBean
 	PropertyRepository properties;
@@ -82,6 +78,8 @@ public class PropertyUserPage extends BasePage {
 					link.add(new Image("property_picture",
 							RealStateApp.imageReference, params));
 
+				} else {
+					link.setVisible(false);
 				}
 
 				item.add(new Label("property_name_header",
@@ -121,12 +119,19 @@ public class PropertyUserPage extends BasePage {
 
 						target.add(item);
 
-						PropertyUserPage.this.properties.delete(item.getModel()
-								.getObject());
+						final String username = ((RealStateSession) Session
+								.get()).getUsername();
 
-						item.add(new AttributeModifier("style", Model
-								.of("display:none;")));
+						final User u = PropertyUserPage.this.users
+								.getByName(username);
 
+						if (u != null
+								&& u.getProperties().contains(
+										item.getModelObject())) {
+							u.getProperties().remove(item.getModelObject());
+							item.add(new AttributeModifier("style", Model
+									.of("display:none;")));
+						}
 					}
 				};
 
@@ -164,7 +169,10 @@ public class PropertyUserPage extends BasePage {
 
 		@Override
 		protected List<Property> load() {
-			return (this.user.getObject()).getProperties();
+			this.user.detach();
+			final List<Property> props = (this.user.getObject())
+					.getProperties();
+			return props;
 		}
 	}
 

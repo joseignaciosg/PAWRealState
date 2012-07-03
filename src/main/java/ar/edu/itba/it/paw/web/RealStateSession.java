@@ -39,7 +39,8 @@ public class RealStateSession extends WebSession {
 	}
 
 	public String getRememberKey() {
-		if (this.request.getCookie("remember_key") != null) {
+		if (this.request != null
+				&& this.request.getCookie("remember_key") != null) {
 			return this.request.getCookie("remember_key").getValue();
 		} else {
 			return "";

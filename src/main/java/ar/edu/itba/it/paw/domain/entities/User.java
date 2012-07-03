@@ -1,15 +1,13 @@
 package ar.edu.itba.it.paw.domain.entities;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.DiscriminatorType;
+import javax.persistence.*;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.*;
 
 @Entity
 @Table(name = "users")
@@ -24,7 +22,10 @@ public class User extends PersistentEntity {
 	private String username;
 	private String password;
 
-	@OneToMany(mappedBy = "owner")
+	@OneToMany(mappedBy = "owner", cascade = { CascadeType.ALL,
+			CascadeType.REMOVE })
+	@Cascade(value = { org.hibernate.annotations.CascadeType.ALL,
+			org.hibernate.annotations.CascadeType.DELETE_ORPHAN })
 	private List<Property> properties = new ArrayList<Property>();
 
 	protected User() {

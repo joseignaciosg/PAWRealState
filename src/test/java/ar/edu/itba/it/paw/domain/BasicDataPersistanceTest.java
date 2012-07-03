@@ -2,27 +2,19 @@ package ar.edu.itba.it.paw.domain;
 
 import junit.framework.Assert;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
+import org.hibernate.*;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.transaction.annotation.Transactional;
+import org.junit.runner.*;
+import org.springframework.beans.factory.annotation.*;
+import org.springframework.test.context.*;
+import org.springframework.test.context.junit4.*;
+import org.springframework.transaction.annotation.*;
 
-import ar.edu.itba.it.paw.domain.entities.Photo;
-import ar.edu.itba.it.paw.domain.entities.Property;
+import ar.edu.itba.it.paw.domain.entities.*;
 import ar.edu.itba.it.paw.domain.entities.Property.Service;
-import ar.edu.itba.it.paw.domain.entities.RealStateAgency;
-import ar.edu.itba.it.paw.domain.entities.Room;
 import ar.edu.itba.it.paw.domain.entities.Room.RoomType;
-import ar.edu.itba.it.paw.domain.entities.User;
-import ar.edu.itba.it.paw.domain.exceptions.InvalidLoginException;
-import ar.edu.itba.it.paw.domain.exceptions.NoSuchEntityException;
-import ar.edu.itba.it.paw.domain.repositories.impl.HibernatePropertyRepository;
-import ar.edu.itba.it.paw.domain.repositories.impl.HibernateUserRepository;
+import ar.edu.itba.it.paw.domain.exceptions.*;
+import ar.edu.itba.it.paw.domain.repositories.impl.*;
 
 /**
  * Checks the consistency of the ORM mappings
@@ -190,25 +182,25 @@ public class BasicDataPersistanceTest extends
 
 	}
 
-	// public void removeUsersTest() {
-	// this.propertiesListTest();
-	//
-	// final Session session = this.factory.getCurrentSession();
-	//
-	// final User oldUser = this.userRepository.getByName("username");
-	//
-	// final int oldSize = oldUser.getProperties().size();
-	//
-	// oldUser.getProperties().remove(0);
-	//
-	// session.flush();
-	//
-	// final User newUser = this.userRepository.getByName("username");
-	// final int newSize = newUser.getProperties().size();
-	//
-	// Assert.assertEquals(newSize, oldSize + 1);
-	//
-	// }
+	public void removeUsersTest() {
+		this.propertiesListTest();
+
+		final Session session = this.factory.getCurrentSession();
+
+		final User oldUser = this.userRepository.getByName("username");
+
+		final int oldSize = oldUser.getProperties().size();
+
+		oldUser.getProperties().remove(0);
+
+		session.flush();
+
+		final User newUser = this.userRepository.getByName("username");
+		final int newSize = newUser.getProperties().size();
+
+		Assert.assertEquals(newSize, oldSize + 1);
+
+	}
 
 	public void userAndAgencyTest() throws InvalidLoginException {
 
