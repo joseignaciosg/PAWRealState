@@ -45,14 +45,14 @@ public class HibernatePropertyRepositoryTest extends BaseTest {
 		final Property property = new Property(Type.APARTMENT, Operation.RENT,
 				"flores", "somewhere", 1000, 4, 120, 120, 10,
 				(List) Collections.emptyList(), (List) Collections.emptyList(),
-				"salida", u);
+				"salida", u, null);
 
 		this.userRepository.save(property);
 
 		// Visibility
 
 		PropertySearch propSearch = new PropertySearch(null, null, null, null,
-				null, null, Order.ASC, null, null, true, null);
+				null, null, Order.ASC, null, null, true, null, null);
 
 		List<Property> result = this.propertyRepository.getAll(propSearch);
 
@@ -61,7 +61,7 @@ public class HibernatePropertyRepositoryTest extends BaseTest {
 		// Operation type
 
 		propSearch = new PropertySearch(Operation.RENT, null, null, null, null,
-				null, Order.ASC, null, null, true, null);
+				null, Order.ASC, null, null, true, null, null);
 
 		result = this.propertyRepository.getAll(propSearch);
 
@@ -70,7 +70,7 @@ public class HibernatePropertyRepositoryTest extends BaseTest {
 		// Sell type
 
 		propSearch = new PropertySearch(Operation.RENT, Type.APARTMENT, null,
-				null, null, null, Order.ASC, null, null, true, null);
+				null, null, null, Order.ASC, null, null, true, null, null);
 
 		result = this.propertyRepository.getAll(propSearch);
 
@@ -79,21 +79,21 @@ public class HibernatePropertyRepositoryTest extends BaseTest {
 		// Negative test
 
 		propSearch = new PropertySearch(Operation.RENT, Type.HOUSE, null, null,
-				null, null, Order.ASC, null, null, true, null);
+				null, null, Order.ASC, null, null, true, null, null);
 
 		result = this.propertyRepository.getAll(propSearch);
 
 		Assert.assertTrue(!result.contains(property));
 
 		propSearch = new PropertySearch(Operation.SELL, Type.HOUSE, null, null,
-				null, null, Order.ASC, null, null, false, null);
+				null, null, Order.ASC, null, null, false, null, null);
 
 		result = this.propertyRepository.getAll(propSearch);
 
 		Assert.assertTrue(!result.contains(property));
 
 		propSearch = new PropertySearch(Operation.SELL, Type.APARTMENT, null,
-				null, null, null, Order.ASC, null, null, false, null);
+				null, null, null, Order.ASC, null, null, false, null, null);
 
 		result = this.propertyRepository.getAll(propSearch);
 
@@ -102,7 +102,7 @@ public class HibernatePropertyRepositoryTest extends BaseTest {
 		// Price high search
 
 		propSearch = new PropertySearch(Operation.RENT, Type.APARTMENT, null,
-				1100, null, null, Order.ASC, null, null, true, null);
+				1100, null, null, Order.ASC, null, null, true, null, null);
 
 		result = this.propertyRepository.getAll(propSearch);
 
@@ -111,7 +111,7 @@ public class HibernatePropertyRepositoryTest extends BaseTest {
 		// Price low search
 
 		propSearch = new PropertySearch(Operation.RENT, Type.APARTMENT, 900,
-				1100, null, null, Order.ASC, null, null, true, null);
+				1100, null, null, Order.ASC, null, null, true, null, null);
 
 		result = this.propertyRepository.getAll(propSearch);
 
@@ -120,7 +120,7 @@ public class HibernatePropertyRepositoryTest extends BaseTest {
 		// Price invalid
 
 		propSearch = new PropertySearch(Operation.RENT, Type.APARTMENT, 900,
-				950, null, null, Order.ASC, null, null, true, null);
+				950, null, null, Order.ASC, null, null, true, null, null);
 
 		result = this.propertyRepository.getAll(propSearch);
 
@@ -129,7 +129,7 @@ public class HibernatePropertyRepositoryTest extends BaseTest {
 		// By user
 
 		propSearch = new PropertySearch(Operation.RENT, Type.APARTMENT, 900,
-				null, null, null, Order.ASC, null, null, true, u);
+				null, null, null, Order.ASC, null, null, true, null, u);
 
 		result = this.propertyRepository.getAll(propSearch);
 
@@ -147,17 +147,17 @@ public class HibernatePropertyRepositoryTest extends BaseTest {
 		final Property property = new Property(Type.APARTMENT, Operation.RENT,
 				"flores", "somewhere", 1000, 4, 120, 120, 10,
 				(List) Collections.emptyList(), (List) Collections.emptyList(),
-				"salida", u);
+				"salida", u, null);
 
 		final Property property2 = new Property(Type.APARTMENT, Operation.RENT,
 				"Caballito", "Caballito", 1500, 4, 120, 120, 10,
 				(List) Collections.emptyList(), (List) Collections.emptyList(),
-				"salida", u);
+				"salida", u, null);
 
 		this.userRepository.save(property);
 
 		final PropertySearch propSearch = new PropertySearch(null, null, null,
-				null, null, null, Order.ASC, null, null, true, u);
+				null, null, null, Order.ASC, null, null, true, null, u);
 
 		List<Property> list = this.propertyRepository.getAll(propSearch);
 
@@ -181,7 +181,7 @@ public class HibernatePropertyRepositoryTest extends BaseTest {
 		final Property property = new Property(Type.APARTMENT, Operation.RENT,
 				"flores", "somewhere", 1000, 4, 120, 120, 10,
 				(List) Collections.emptyList(), new ArrayList<Room>(),
-				"salida", u);
+				"salida", u, null);
 
 		this.userRepository.save(property);
 
@@ -199,7 +199,7 @@ public class HibernatePropertyRepositoryTest extends BaseTest {
 
 		PropertySearch propSearch = new PropertySearch(null, null, null, null,
 				null, null, Order.ASC, null,
-				Arrays.asList(new RoomSearch[] { roomSearch }), true, null);
+				Arrays.asList(new RoomSearch[] { roomSearch }), true, null, null);
 
 		List<Property> result = this.propertyRepository.getAll(propSearch);
 
@@ -211,7 +211,7 @@ public class HibernatePropertyRepositoryTest extends BaseTest {
 		propSearch = new PropertySearch(Operation.RENT, Type.APARTMENT, 900,
 				null, null, null, Order.ASC, null,
 				Arrays.asList(new RoomSearch[] { roomSearch, roomSearch2 }),
-				true, u);
+				true, null, u);
 
 		result = this.propertyRepository.getAll(propSearch);
 
@@ -222,7 +222,7 @@ public class HibernatePropertyRepositoryTest extends BaseTest {
 		propSearch = new PropertySearch(Operation.RENT, Type.APARTMENT, 900,
 				null, null, null, Order.ASC, null,
 				Arrays.asList(new RoomSearch[] { roomSearch, roomSearch2 }),
-				true, u);
+				true, null, u);
 
 		result = this.propertyRepository.getAll(propSearch);
 
@@ -237,7 +237,7 @@ public class HibernatePropertyRepositoryTest extends BaseTest {
 
 		final Property property = new Property(Type.APARTMENT, Operation.RENT,
 				"flores", "somewhere", 1000, 4, 120, 120, 10,
-				new ArrayList<Service>(), new ArrayList<Room>(), "salida", u);
+				new ArrayList<Service>(), new ArrayList<Room>(), "salida", u, null);
 
 		this.userRepository.save(property);
 
@@ -249,7 +249,7 @@ public class HibernatePropertyRepositoryTest extends BaseTest {
 		PropertySearch propSearch = new PropertySearch(null, null, null, null,
 				null, null, Order.ASC,
 				Arrays.asList(new Service[] { Service.LAUNDRY }), null, true,
-				null);
+				null, null);
 
 		List<Property> result = this.propertyRepository.getAll(propSearch);
 
@@ -257,7 +257,7 @@ public class HibernatePropertyRepositoryTest extends BaseTest {
 
 		propSearch = new PropertySearch(Operation.RENT, Type.APARTMENT, 900,
 				null, null, null, Order.ASC, Arrays.asList(new Service[] {
-						Service.CABLE, Service.PADDLE }), null, true, u);
+						Service.CABLE, Service.PADDLE }), null, true, null, u);
 
 		result = this.propertyRepository.getAll(propSearch);
 
@@ -265,7 +265,7 @@ public class HibernatePropertyRepositoryTest extends BaseTest {
 
 		propSearch = new PropertySearch(Operation.RENT, Type.APARTMENT, 900,
 				null, null, null, Order.ASC, Arrays.asList(new Service[] {
-						Service.CABLE, Service.QUINCHO }), null, true, u);
+						Service.CABLE, Service.QUINCHO }), null, true, null, u);
 
 		result = this.propertyRepository.getAll(propSearch);
 

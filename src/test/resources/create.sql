@@ -1,46 +1,19 @@
--- Creamos la tabla de los servicios para moverlos dentro de la data
+ALTER TABLE PROPERTIES ADD COLUMN currency character varying NOT NULL DEFAULT 'DOLLAR';
+UPDATE PROPERTIES SET currency = 'DOLLAR';
 
-CREATE TABLE services (
-  property_id integer not null,
-  element character varying not null,
-  primary key(property_id, element)
+CREATE TABLE ads
+(
+  url character varying,
+  weight integer,
+  id serial NOT NULL,
+  CONSTRAINT id PRIMARY KEY (id)
 );
 
- -- has_cable boolean NOT NULL,
- --  has_phone boolean NOT NULL,
- --  has_swimmingpool boolean NOT NULL,
- --  has_salon boolean NOT NULL,
- --  has_paddle boolean NOT NULL,
- --  has_quincho boolean NOT NULL,
-
--- CABLE, PHONE, SWIMMING, SALON, PADDLE, QUINCHO
-INSERT INTO services (SELECT id, text 'CABLE' as "element" FROM PROPERTIES P  WHERE P.has_cable = true);
-INSERT INTO services (SELECT id, text 'PHONE' as "element" FROM PROPERTIES P  WHERE P.has_phone = true);
-INSERT INTO services (SELECT id, text 'SWIMMING' as "element" FROM PROPERTIES P  WHERE P.has_swimmingpool = true);
-INSERT INTO services (SELECT id, text 'SALON' as "element" FROM PROPERTIES P  WHERE P.has_salon = true);
-INSERT INTO services (SELECT id, text 'PADDLE' as "element" FROM PROPERTIES P  WHERE P.has_paddle = true);
-INSERT INTO services (SELECT id, text 'QUINCHO' as "element" FROM PROPERTIES P  WHERE P.has_quincho = true);
-
-ALTER TABLE PROPERTIES DROP COLUMN has_cable;
-ALTER TABLE PROPERTIES DROP COLUMN has_phone;
-ALTER TABLE PROPERTIES DROP COLUMN has_swimmingpool;
-ALTER TABLE PROPERTIES DROP COLUMN has_salon;
-ALTER TABLE PROPERTIES DROP COLUMN has_paddle;
-ALTER TABLE PROPERTIES DROP COLUMN has_quincho;
-ALTER TABLE PROPERTIES ADD COLUMN  visitcount integer NOT NULL DEFAULT 0;
-ALTER TABLE PROPERTIES ADD COLUMN  reserved boolean NOT NULL DEFAULT false;
-
-ALTER TABLE PHOTOS ADD COLUMN agent_id INTEGER;
-
-ALTER TABLE USERS ADD COLUMN tipo character varying;
-ALTER TABLE USERS ADD COLUMN agency_name character varying;
-
-UPDATE USERS SET tipo = 'User';
-
-CREATE TABLE rooms (
-  id SERIAL not null,
-  size integer not null,
-  property_id integer not null,
-  type character varying not null,
-  primary key(id)
-);
+INSERT INTO ads (url, weight) VALUES ('https://dl.dropbox.com/u/1283975/paw/ad1.png', 10);
+INSERT INTO ads (url, weight) VALUES ('https://dl.dropbox.com/u/1283975/paw/ad2.png', 20);
+INSERT INTO ads (url, weight) VALUES ('https://dl.dropbox.com/u/1283975/paw/ad3.png', 10);
+INSERT INTO ads (url, weight) VALUES ('https://dl.dropbox.com/u/1283975/paw/ad4.png', 30);
+INSERT INTO ads (url, weight) VALUES ('https://dl.dropbox.com/u/1283975/paw/ad5.png', 10);
+INSERT INTO ads (url, weight) VALUES ('https://dl.dropbox.com/u/1283975/paw/ad6.png', 40);
+INSERT INTO ads (url, weight) VALUES ('https://dl.dropbox.com/u/1283975/paw/ad7.png', 10);
+INSERT INTO ads (url, weight) VALUES ('https://dl.dropbox.com/u/1283975/paw/ad8.png', 100);
