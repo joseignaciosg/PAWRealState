@@ -190,6 +190,26 @@ public class BasicDataPersistanceTest extends
 
 	}
 
+	// public void removeUsersTest() {
+	// this.propertiesListTest();
+	//
+	// final Session session = this.factory.getCurrentSession();
+	//
+	// final User oldUser = this.userRepository.getByName("username");
+	//
+	// final int oldSize = oldUser.getProperties().size();
+	//
+	// oldUser.getProperties().remove(0);
+	//
+	// session.flush();
+	//
+	// final User newUser = this.userRepository.getByName("username");
+	// final int newSize = newUser.getProperties().size();
+	//
+	// Assert.assertEquals(newSize, oldSize + 1);
+	//
+	// }
+
 	public void userAndAgencyTest() throws InvalidLoginException {
 
 		final Session session = this.factory.getCurrentSession();

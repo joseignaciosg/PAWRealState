@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxFallbackLink;
 import org.apache.wicket.markup.html.basic.Label;
@@ -13,6 +14,7 @@ import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.markup.repeater.RefreshingView;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.LoadableDetachableModel;
+import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
@@ -46,18 +48,24 @@ public class PropertyUserPage extends BasePage {
 			PropertyDetachableModel model = new PropertyDetachableModel(
 					this.userModel);
 
+			List<IModel<Property>> result;
+
 			@Override
 			protected Iterator<IModel<Property>> getItemModels() {
-				final List<IModel<Property>> result = new ArrayList<IModel<Property>>();
+				this.result = new ArrayList<IModel<Property>>();
 				for (final Property view : this.model.load()) {
-					result.add(new EntityModel<Property>(Property.class, view
-							.getId()));
+					final IModel<Property> item = new EntityModel<Property>(
+							Property.class, view.getId());
+					this.result.add(item);
 				}
-				return result.iterator();
+				return this.result.iterator();
 			}
 
 			@Override
 			protected void populateItem(final Item<Property> item) {
+
+				item.setOutputMarkupId(true);
+
 				final Link<Void> link = new Link<Void>("property_picture_link") {
 					@Override
 					public void onClick() {
@@ -67,11 +75,14 @@ public class PropertyUserPage extends BasePage {
 
 				final PageParameters params = new PageParameters();
 
-				params.add("id", item.getModelObject().getPhotos().get(0)
-						.getId());
+				if (item.getModelObject().getPhotos().size() > 0) {
+					params.add("id", item.getModelObject().getPhotos().get(0)
+							.getId());
 
-				link.add(new Image("property_picture",
-						RealStateApp.imageReference, params));
+					link.add(new Image("property_picture",
+							RealStateApp.imageReference, params));
+
+				}
 
 				item.add(new Label("property_name_header",
 						new PropertyModel<String>(item.getModel(), "address")));
@@ -102,15 +113,20 @@ public class PropertyUserPage extends BasePage {
 					}
 				};
 
-				final Link<Void> deletelink = new Link<Void>(
+				final AjaxFallbackLink<Void> deletelink = new AjaxFallbackLink<Void>(
 						"property_delete_link") {
 					@Override
-					public void onClick() {
-						// PropertyUserPage.this.deleteProperty(item);
-						userModel.getObject().getProperties()
-								.remove(item.getModel().getObject());
-						// user.getProperties()
-						// .remove(item.getModel().getObject());
+					public void onClick(final AjaxRequestTarget target) {
+						target.add(this);
+
+						target.add(item);
+
+						PropertyUserPage.this.properties.delete(item.getModel()
+								.getObject());
+
+						item.add(new AttributeModifier("style", Model
+								.of("display:none;")));
+
 					}
 				};
 

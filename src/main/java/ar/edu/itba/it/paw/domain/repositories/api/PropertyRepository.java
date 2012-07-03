@@ -18,5 +18,7 @@ public interface PropertyRepository {
 
 	public Photo getPhotoById(Integer id) throws NoSuchEntityException;
 
+	public void delete(Object property);
+
 	public boolean sendContactRequest(ContactRequest request);
 }
