@@ -251,9 +251,9 @@ h3.search-result {
 }
 
 .ads li {
-	display:inline-block;
-	margin: 10px;
+	margin: 12px;
 	border: 1px solid black;
 	width: auto;
 	padding: 0;
+	height:120px;
 }

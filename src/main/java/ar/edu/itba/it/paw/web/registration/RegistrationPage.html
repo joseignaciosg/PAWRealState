@@ -1,0 +1,108 @@
+<wicket:extend>
+	<div class="row">
+		<form class="form-horizontal span8 offset2"
+			wicket:id="registration_form">
+			<div wicket:id="feedback_panel"></div>
+			<fieldset>
+				<legend>
+					<wicket:message key="label_reg_form_register_user" />
+				</legend>
+				<div class="control-group">
+					<label class="control-label" for="user_username"> 
+						<wicket:message key="label_reg_form_username" />
+					</label>
+					<div class="controls">
+						<input type="text" class="input-xlarge" id="user_username" wicket:id="registration_form_username"/>
+						<p class="help-block">
+							<wicket:message key="label_reg_form_username_hint" />
+						</p>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="user_password"> 
+						<wicket:message key="label_reg_form_password" />
+					</label>
+					<div class="controls">
+						<input type="password" class="input-xlarge" id="user_password" wicket:id="registration_form_password"/>
+						<p class="help-block">
+							<wicket:message key="label_reg_form_password_hint" />
+						</p>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="user_password"> 
+						<wicket:message key="label_reg_form_password_repeat" />
+					</label>
+					<div class="controls">
+						<input type="password" class="input-xlarge" wicket:id="registration_form_password_repeated"
+							id="user_password_repeated">
+						<p class="help-block">
+							<wicket:message key="label_reg_form_password_repeat_hint" />
+						</p>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="user_email">
+						<wicket:message key="label_reg_form_email" />
+					</label>
+					<div class="controls">
+						<input type="text" class="input-xlarge" id="user_email" wicket:id="registration_form_email"/>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="user_first_name">
+						<wicket:message key="label_reg_form_first_name" />
+					</label>
+					<div class="controls">
+						<input type="text" class="input-xlarge" id="user_first_name" wicket:id="registration_form_first_name"/>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="user_last_name">
+						<wicket:message key="label_reg_form_last_name" />
+					</label>
+					<div class="controls">
+						<input type="text" class="input-xlarge" id="user_last_name" wicket:id="registration_form_last_name"/>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="user_phone">
+						<wicket:message key="label_reg_form_phone" />
+					</label>
+					<div class="controls">
+						<input type="text" class="input-xlarge" id="user_phone" wicket:id="registration_form_phone"/>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="user_type">
+						<wicket:message key="label_reg_form_type" />
+					</label>
+					<div class="controls">
+						<select id="user_type" name="type" class="js-toggle-usertype" wicket:id="registration_form_user_type">
+
+						</select>
+					</div>
+				</div>
+				<div class="control-group hidden agency-control" wicket:id="agency_name_div">
+					<label class="control-label" for="user_agency_name">
+						<wicket:message key="label_reg_form_agency_name" />
+					</label>
+					<div class="controls">
+						<input type="text" class="input-xlarge" wicket:id="registration_form_agency_name"/>
+					</div>
+				</div>
+				<div class="control-group hidden agency-control" wicket:id="agency_logo_div">
+					<label class="control-label" for="user_logo">
+						<wicket:message key="label_reg_form_logo" />
+					</label>
+					<div class="controls">
+						<input type="file" class="input-xlarge" id="user_logo" wicket:id="registration_form_logo"/>
+					</div>
+				</div>
+				<div class="form-actions">
+					<input type="submit" class="btn btn-primary" wicket:id="registration_form_submit"/>
+				</div>
+			</fieldset>
+		</form>
+	</div>
+</wicket:extend>

@@ -10,6 +10,7 @@ import org.apache.wicket.request.http.*;
 import ar.edu.itba.it.paw.domain.entities.*;
 import ar.edu.itba.it.paw.domain.repositories.api.*;
 
+@SuppressWarnings("serial")
 public class RealStateSession extends WebSession {
 
 	private final int MONTH_IN_SECONDS = 2678400;
@@ -96,9 +97,9 @@ public class RealStateSession extends WebSession {
 	}
 
 	public void signOut() {
-		this.createCookie("remember_name", this.username);
-		this.createCookie("remember_session", this.username);
-		this.createCookie("remember_key", this.username);
+		this.deleteCookie("remember_name", this.username);
+		this.deleteCookie("remember_session", this.username);
+		this.deleteCookie("remember_key", this.username);
 		this.invalidate();
 		this.clear();
 	}

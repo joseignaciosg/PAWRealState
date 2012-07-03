@@ -167,7 +167,7 @@ public class Property extends PersistentEntity {
 		this.visitCount = 0;
 		this.reserved = false;
 		this.visible = true;
-		this.currency = (currency == null) ? currency : Currency.DOLLAR;
+		this.currency = (currency != null) ? currency : Currency.DOLLAR;
 	}
 
 	public String getPropertyType() {

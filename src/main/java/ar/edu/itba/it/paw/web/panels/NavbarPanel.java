@@ -1,29 +1,21 @@
 package ar.edu.itba.it.paw.web.panels;
 
-import org.apache.wicket.AttributeModifier;
-import org.apache.wicket.MarkupContainer;
-import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.markup.html.AjaxFallbackLink;
-import org.apache.wicket.feedback.ContainerFeedbackMessageFilter;
-import org.apache.wicket.markup.html.WebMarkupContainer;
-import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.form.Button;
-import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.markup.html.form.HiddenField;
-import org.apache.wicket.markup.html.form.PasswordTextField;
-import org.apache.wicket.markup.html.form.TextField;
-import org.apache.wicket.markup.html.link.Link;
-import org.apache.wicket.markup.html.panel.FeedbackPanel;
-import org.apache.wicket.markup.html.panel.Panel;
-import org.apache.wicket.model.CompoundPropertyModel;
-import org.apache.wicket.model.Model;
-import org.apache.wicket.model.PropertyModel;
-import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.apache.wicket.*;
+import org.apache.wicket.ajax.*;
+import org.apache.wicket.ajax.markup.html.*;
+import org.apache.wicket.feedback.*;
+import org.apache.wicket.markup.html.*;
+import org.apache.wicket.markup.html.basic.*;
+import org.apache.wicket.markup.html.form.*;
+import org.apache.wicket.markup.html.link.*;
+import org.apache.wicket.markup.html.panel.*;
+import org.apache.wicket.model.*;
+import org.apache.wicket.spring.injection.annot.*;
 
-import ar.edu.itba.it.paw.domain.repositories.api.UserRepository;
-import ar.edu.itba.it.paw.web.HomePage;
-import ar.edu.itba.it.paw.web.RealStateSession;
-import ar.edu.itba.it.paw.web.properties.PropertyUserPage;
+import ar.edu.itba.it.paw.domain.repositories.api.*;
+import ar.edu.itba.it.paw.web.*;
+import ar.edu.itba.it.paw.web.properties.*;
+import ar.edu.itba.it.paw.web.registration.*;
 
 @SuppressWarnings("serial")
 public class NavbarPanel extends Panel {
@@ -129,7 +121,7 @@ public class NavbarPanel extends Panel {
 		this.add(new Link<Void>("register_link") {
 			@Override
 			public void onClick() {
-
+				this.setResponsePage(RegistrationPage.class);
 			}
 		}.setVisible(!session.isSignedIn()));
 
