@@ -1,46 +1,37 @@
 package ar.edu.itba.it.paw.domain.repositories.impl;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
-import org.hibernate.Criteria;
-import org.hibernate.Query;
-import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Conjunction;
-import org.hibernate.criterion.DetachedCriteria;
-import org.hibernate.criterion.Projections;
-import org.hibernate.criterion.Restrictions;
-import org.hibernate.criterion.Subqueries;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
+import org.hibernate.*;
+import org.hibernate.criterion.*;
+import org.springframework.beans.factory.annotation.*;
+import org.springframework.stereotype.*;
 
-import ar.edu.itba.it.paw.domain.entities.ContactRequest;
-import ar.edu.itba.it.paw.domain.entities.Photo;
+import ar.edu.itba.it.paw.domain.entities.*;
 import ar.edu.itba.it.paw.domain.entities.Property;
-import ar.edu.itba.it.paw.domain.entities.Room;
-import ar.edu.itba.it.paw.domain.entities.User;
-import ar.edu.itba.it.paw.domain.exceptions.NoSuchEntityException;
-import ar.edu.itba.it.paw.domain.repositories.AbstractHibernateRepository;
-import ar.edu.itba.it.paw.domain.repositories.api.PropertyRepository;
-import ar.edu.itba.it.paw.domain.repositories.api.PropertySearch;
+import ar.edu.itba.it.paw.domain.exceptions.*;
+import ar.edu.itba.it.paw.domain.repositories.*;
+import ar.edu.itba.it.paw.domain.repositories.api.*;
 import ar.edu.itba.it.paw.domain.repositories.api.PropertySearch.Order;
-import ar.edu.itba.it.paw.domain.repositories.api.RoomSearch;
-import ar.edu.itba.it.paw.domain.services.MailService;
+import ar.edu.itba.it.paw.domain.services.*;
 
-@Repository
+@Component
 public class HibernatePropertyRepository extends AbstractHibernateRepository
 		implements PropertyRepository {
 
-	@Autowired
-	private MailService mailService;
 	private SessionFactory sessionFactory;
+	private MailService mailService;
 
-	private static int ITEMPERPAGE = 5;
+	public HibernatePropertyRepository() {
+		super(null);
+	}
 
 	@Autowired
-	public HibernatePropertyRepository(final SessionFactory sessionFactory) {
+	public HibernatePropertyRepository(final SessionFactory sessionFactory,
+			final MailService service) {
 		super(sessionFactory);
 		this.sessionFactory = sessionFactory;
+		this.mailService = service;
 	}
 
 	public List<Property> getAll() {
@@ -71,6 +62,10 @@ public class HibernatePropertyRepository extends AbstractHibernateRepository
 
 		if (search.getPriceLow() != null) {
 			q.add(Restrictions.ge("price", search.getPriceLow()));
+		}
+
+		if (search.getCurrency() != null) {
+			q.add(Restrictions.eq("currency", search.getCurrency()));
 		}
 
 		if (search.getVisibility() != null) {
@@ -138,8 +133,8 @@ public class HibernatePropertyRepository extends AbstractHibernateRepository
 		}
 
 		if (search.getPage() != null) {
-			q.setFirstResult(search.getPage() * ITEMPERPAGE);
-			q.setMaxResults(ITEMPERPAGE);
+			q.setFirstResult(search.getPage() * search.getQuant());
+			q.setMaxResults(search.getQuant());
 		}
 
 		// Order
@@ -158,6 +153,10 @@ public class HibernatePropertyRepository extends AbstractHibernateRepository
 
 		return q.list();
 
+	}
+
+	public void delete(final Property property) {
+		super.delete(property);
 	}
 
 	public List<Property> getByUser(final User user) {

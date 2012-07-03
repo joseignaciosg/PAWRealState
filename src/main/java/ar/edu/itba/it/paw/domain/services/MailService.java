@@ -1,14 +1,12 @@
 package ar.edu.itba.it.paw.domain.services;
 
-import javax.mail.internet.MimeMessage;
+import javax.mail.internet.*;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.*;
+import org.springframework.mail.javamail.*;
+import org.springframework.stereotype.*;
 
-import ar.edu.itba.it.paw.domain.entities.ContactRequest;
-import ar.edu.itba.it.paw.domain.entities.Property;
+import ar.edu.itba.it.paw.domain.entities.*;
 
 @Service
 public class MailService {

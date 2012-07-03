@@ -13,8 +13,53 @@
          http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
 
 	<context:component-scan base-package="ar.edu.itba.it.paw" />
+	
+	<bean id="properties" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="ignoreResourceNotFound" value="true" />
+		<property name="locations">
+			<list>
+				<value>classpath:setup.properties</value>
+			</list>
+		</property>
+	</bean>
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="${jdbc.driverClassName}" />
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+	</bean>
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="hibernateProperties">
+			<value>
+				hibernate.dialect=${hibernate.dialect}
+				hibernate.hbm2ddl.auto=${hibernate.hbm2ddl.auto}
+				hibernate.show_sql=${hibernate.show_sql}
+				hibernate.current_session_context_class=managed
+				hibernate.max_fetch_depth=2
+				hibernate.jdbc.batch_size=30  
+			</value>
+		</property>
+		<property name="packagesToScan">
+			<list>
+				<value>ar.edu.itba.it.paw.domain</value>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="${mail.server.host}" />
+		<property name="port" value="${mail.server.port}" />
+		<property name="protocol" value="${mail.server.protocol}" />
+		<property name="username" value="${mail.server.username}" />
+		<property name="password" value="${mail.server.password}" />
+        <property name="javaMailProperties">
+            <util:properties location="classpath:javamail.properties" />
+        </property>
+        
+	</bean>
 
-	<bean id="sessionInterceptor" class="ar.edu.itba.it.paw.web.interceptors.SessionInterceptor" />
+	<!-- <bean id="sessionInterceptor" class="ar.edu.itba.it.paw.web.interceptors.SessionInterceptor" />
 	<bean id="layoutInterceptor" class="ar.edu.itba.it.paw.web.interceptors.LayoutInterceptor">
 		<property name="layoutView" value="shared/layout"></property>
 		<property name="prefix" value="/WEB-INF/static/" />
@@ -82,6 +127,6 @@
 		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
 		<property name="basename" value="/WEB-INF/i18n/messages" />
 		<property name="cacheSeconds" value="0" />
-	</bean>
+	</bean> -->
 
 </beans>

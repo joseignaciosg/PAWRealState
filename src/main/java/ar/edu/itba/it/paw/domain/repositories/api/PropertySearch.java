@@ -1,13 +1,15 @@
 package ar.edu.itba.it.paw.domain.repositories.api;
 
-import java.util.List;
+import java.io.*;
+import java.util.*;
 
+import ar.edu.itba.it.paw.domain.entities.Property.Currency;
 import ar.edu.itba.it.paw.domain.entities.Property.Operation;
 import ar.edu.itba.it.paw.domain.entities.Property.Service;
 import ar.edu.itba.it.paw.domain.entities.Property.Type;
-import ar.edu.itba.it.paw.domain.entities.User;
+import ar.edu.itba.it.paw.domain.entities.*;
 
-public final class PropertySearch {
+public final class PropertySearch implements Serializable {
 
 	public enum Order {
 		ASC, DESC
@@ -23,13 +25,14 @@ public final class PropertySearch {
 	private List<Service> services;
 	private List<RoomSearch> rooms;
 	private Boolean visibility;
-	private User user;
+	private transient User user;
+	private Currency currency;
 
 	public PropertySearch(final Operation operation, final Type type,
 			final Integer priceLow, final Integer priceHigh,
 			final Integer page, final Integer quant, final Order order,
 			final List<Service> services, final List<RoomSearch> roomSearch,
-			final boolean visibility, final User user) {
+			final boolean visibility, final Currency currency, final User user) {
 		this.operation = operation;
 		this.type = type;
 		this.priceLow = priceLow;
@@ -41,12 +44,22 @@ public final class PropertySearch {
 		this.rooms = roomSearch;
 		this.visibility = visibility;
 		this.user = user;
-
+		this.currency = currency;
 	}
 
-	public PropertySearch(final Operation rent) {
-		this(rent, null, null, null, null, 2, Order.DESC, null, null, true,
+	public PropertySearch(final Operation o) {
+		this(o, null, null, null, 0, 2, Order.DESC, null, null, true, null,
 				null);
+	}
+
+	public PropertySearch() {
+		this(null, null, null, null, 0, 2, Order.DESC, null, null, true, null,
+				null);
+	}
+
+	public PropertySearch(final User owner) {
+		this(null, null, null, null, 0, 2, Order.DESC, null, null, true, null,
+				owner);
 	}
 
 	public Operation getOperation() {
@@ -93,4 +106,31 @@ public final class PropertySearch {
 		return this.user;
 	}
 
+	public Currency getCurrency() {
+		return this.currency;
+	}
+
+	public void setOperation(final Operation operation) {
+		this.operation = operation;
+	}
+
+	public void setOrder(final Order order) {
+		this.order = order;
+	}
+
+	public void setCurrency(final Currency currency) {
+		this.currency = currency;
+	}
+
+	public void setType(final Type type) {
+		this.type = type;
+	}
+
+	public void setPriceHigh(final Integer priceHigh) {
+		this.priceHigh = priceHigh;
+	}
+
+	public void setPriceLow(final Integer priceLow) {
+		this.priceLow = priceLow;
+	}
 }

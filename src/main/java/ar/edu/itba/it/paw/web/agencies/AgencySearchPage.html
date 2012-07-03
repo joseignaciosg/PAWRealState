@@ -1,0 +1,37 @@
+<html>
+<body>
+<wicket:extend>
+	<h3>
+		<wicket:message key="page_title" />
+	</h3>
+
+	<wicket:enclosure child="no_agencies_message">
+		<p>
+			<h3>
+				<wicket:message key="no_agencies_message" wicket:id="no_agencies_message" />		
+			</h3>
+		</p>
+	</wicket:enclosure>
+
+	<wicket:enclosure child="agencies_accordion">
+		<div wicket:id="agencies_accordion">
+			<wicket:container wicket:id="agency">
+				<h3>
+					<a href="#">
+						<p wicket:id="agency_name_header"></p>
+					</a>
+				</h3>
+				<div>
+					<a wicket:id="agency_picture_link" class="thumbnail agency-thumb pull-left">
+						<img wicket:id="agency_picture" width="80px" height="60px"/>
+					</a>	
+					<p class="pull-left offset1"><b><wicket:message key="property_count"/></b><span wicket:id="agency_property_count"></span></p>					
+					<a wicket:id="agency_link" class="btn btn-active pull-right"><wicket:message key="agency_link_message"/></a>
+					<div class="clear"></div>
+				</div>					
+			</wicket:container>
+		</div>
+	</wicket:enclosure>
+</wicket:extend>
+</body>
+</html>
