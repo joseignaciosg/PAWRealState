@@ -17,3 +17,5 @@ INSERT INTO ads (url, weight) VALUES ('https://dl.dropbox.com/u/1283975/paw/ad5.
 INSERT INTO ads (url, weight) VALUES ('https://dl.dropbox.com/u/1283975/paw/ad6.png', 40);
 INSERT INTO ads (url, weight) VALUES ('https://dl.dropbox.com/u/1283975/paw/ad7.png', 10);
 INSERT INTO ads (url, weight) VALUES ('https://dl.dropbox.com/u/1283975/paw/ad8.png', 100);
+
+ALTER TABLE PROPERTIES ADD COLUMN  sold boolean NOT NULL DEFAULT FALSE;

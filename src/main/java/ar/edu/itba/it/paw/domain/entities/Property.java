@@ -1,13 +1,22 @@
 package ar.edu.itba.it.paw.domain.entities;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
-import javax.persistence.*;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.*;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CollectionOfElements;
 
 import ar.edu.itba.it.paw.domain.entities.Room.RoomType;
 
@@ -60,6 +69,35 @@ public class Property extends PersistentEntity {
 		}
 	}
 
+	@Table(name = "states")
+	private class State {
+
+		@Column(name = "previous")
+		private String previous;
+
+		@Column(name = "actual")
+		private String actual;
+
+		State(final String previous, final String next) {
+			this.previous = previous;
+			this.actual = this.actual;
+		}
+
+		public String getPrevious() {
+			return this.previous;
+		}
+
+		public String getActual() {
+			return this.actual;
+		}
+
+	}
+
+	@CollectionOfElements
+	@Cascade(value = { org.hibernate.annotations.CascadeType.ALL })
+	@JoinTable(name = "states", joinColumns = @JoinColumn(name = "property_id"))
+	private List<State> states = new ArrayList<State>();
+
 	@Column(nullable = false)
 	@Enumerated(EnumType.STRING)
 	private Currency currency;
@@ -69,6 +107,7 @@ public class Property extends PersistentEntity {
 	@JoinTable(name = "services", joinColumns = @JoinColumn(name = "property_id"))
 	@Enumerated(EnumType.STRING)
 	private List<Service> services = new ArrayList<Service>();
+
 	@Enumerated(EnumType.STRING)
 	private Type type;
 
@@ -118,6 +157,9 @@ public class Property extends PersistentEntity {
 
 	@Column(name = "reserved")
 	private boolean reserved;
+
+	@Column(name = "sold")
+	private boolean sold;
 
 	Property() {
 		this.visitCount = 0;
@@ -243,8 +285,24 @@ public class Property extends PersistentEntity {
 		this.reserved = reserved;
 	}
 
+	public boolean isSold() {
+		return this.sold;
+	}
+
+	public void setSold(final boolean sold) {
+		this.sold = sold;
+	}
+
+	public void toggleSold() {
+		this.sold = !this.sold;
+	}
+
 	public void setVisitCount(final int visitCount) {
 		this.visitCount = visitCount;
+	}
+
+	public void addVisit() {
+		this.visitCount++;
 	}
 
 	public void setType(final Type type) {
@@ -301,6 +359,10 @@ public class Property extends PersistentEntity {
 
 	public List<Service> getServices() {
 		return this.services;
+	}
+
+	public List<State> getStates() {
+		return this.states;
 	}
 
 	public List<Room> getRooms() {
