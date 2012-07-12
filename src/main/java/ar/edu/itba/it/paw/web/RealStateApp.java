@@ -1,22 +1,26 @@
 package ar.edu.itba.it.paw.web;
 
-import org.apache.wicket.*;
+import org.apache.wicket.ConverterLocator;
+import org.apache.wicket.IConverterLocator;
+import org.apache.wicket.Page;
 import org.apache.wicket.Session;
-import org.apache.wicket.protocol.http.*;
-import org.apache.wicket.request.*;
-import org.apache.wicket.request.resource.*;
-import org.apache.wicket.spring.injection.annot.*;
-import org.hibernate.*;
-import org.springframework.beans.factory.annotation.*;
+import org.apache.wicket.protocol.http.WebApplication;
+import org.apache.wicket.request.Request;
+import org.apache.wicket.request.Response;
+import org.apache.wicket.request.resource.PackageResourceReference;
+import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import ar.edu.itba.it.paw.domain.entities.*;
-import ar.edu.itba.it.paw.domain.repositories.impl.*;
-import ar.edu.itba.it.paw.web.common.*;
-import ar.edu.itba.it.paw.web.converters.*;
-import ar.edu.itba.it.paw.web.photos.*;
+import ar.edu.itba.it.paw.domain.entities.Property;
+import ar.edu.itba.it.paw.domain.repositories.impl.HibernatePropertyRepository;
+import ar.edu.itba.it.paw.web.common.HibernateRequestCycleListener;
+import ar.edu.itba.it.paw.web.converters.PropertyConverter;
+import ar.edu.itba.it.paw.web.photos.ImageResourceReference;
 
-import com.google.code.jqwicket.*;
+import com.google.code.jqwicket.JQComponentOnBeforeRenderListener;
+import com.google.code.jqwicket.JQContributionConfig;
 
 @Component
 public class RealStateApp extends WebApplication {
@@ -58,13 +62,18 @@ public class RealStateApp extends WebApplication {
 
 		this.getDebugSettings().setAjaxDebugModeEnabled(false);
 
-		final JQContributionConfig config = new JQContributionConfig(
-				new JavaScriptResourceReference(this.getClass(), "jquery.js"))
-				.withJQueryUiJs(
-						new JavaScriptResourceReference(this.getClass(),
-								"jquery-ui.js")).withJQueryUiCss(
-						new CssResourceReference(this.getClass(),
-								"jquery-ui.css"));
+		final JQContributionConfig config = new JQContributionConfig()
+				.withDefaultJQueryUi();
+		this.getComponentPreOnBeforeRenderListeners().add(
+				new JQComponentOnBeforeRenderListener(config));
+
+		// final JQContributionConfig config = new JQContributionConfig(
+		// new JavaScriptResourceReference(this.getClass(), "jquery.js"))
+		// .withJQueryUiJs(
+		// new JavaScriptResourceReference(this.getClass(),
+		// "jquery-ui.js")).withJQueryUiCss(
+		// new CssResourceReference(this.getClass(),
+		// "jquery-ui.css"));
 
 		this.getComponentPreOnBeforeRenderListeners().add(
 				new JQComponentOnBeforeRenderListener(config));

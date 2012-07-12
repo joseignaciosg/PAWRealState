@@ -37,6 +37,9 @@ import ar.edu.itba.it.paw.web.common.TelephoneValidator;
 
 import com.google.code.jqwicket.ui.fancybox.FancyBoxOptions;
 import com.google.code.jqwicket.ui.fancybox.GenericFancyBoxBehavior;
+import com.google.code.jqwicket.ui.gmap.GMapMarker;
+import com.google.code.jqwicket.ui.gmap.GMapOptions;
+import com.google.code.jqwicket.ui.gmap.GMapWebMarkupContainer;
 
 @SuppressWarnings("serial")
 public class PropertyPage extends BasePage {
@@ -49,6 +52,8 @@ public class PropertyPage extends BasePage {
 	private transient String contact_form_email;
 	private transient String contact_form_phone;
 	private transient String contact_form_description;
+
+	private String key = "AIzaSyBUU88FRtPaYJqd6RHpeLKqUEIvbTc5GC4";
 
 	final EntityModel<Property> modelProp;
 
@@ -65,7 +70,23 @@ public class PropertyPage extends BasePage {
 
 		this.renderImageList(this.modelProp);
 
+		this.renderMap(this.modelProp);
+
 		this.renderContactForm(this.modelProp);
+	}
+
+	private void renderMap(final EntityModel<Property> modelProp) {
+		this.add(new GMapWebMarkupContainer("map1", new GMapOptions(this.key)
+				.markers(
+						new GMapMarker().address(
+								modelProp.getObject().getAddress()
+										+ ", "
+										+ modelProp.getObject()
+												.getNeighborhood()).html(
+								modelProp.getObject().getAddress()
+										+ ", "
+										+ modelProp.getObject()
+												.getNeighborhood())).zoom(15)));
 	}
 
 	@Override
@@ -168,7 +189,7 @@ public class PropertyPage extends BasePage {
 		});
 
 		this.add(new PropertyListView<Room>("property_room",
-				new PropertyModel<List<Room>>(modelProp, "listView")) {
+				new PropertyModel<List<Room>>(modelProp, "rooms")) {
 
 			@Override
 			protected void populateItem(final ListItem<Room> item) {

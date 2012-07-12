@@ -387,17 +387,29 @@ public class Property extends PersistentEntity {
 		this.visitCount++;
 	}
 
-	public void reserve() {
-		this.addStates(new State(State.StateType.UNRESERVED,
-				State.StateType.RESERVED));
-		this.reserved = true;
+	public void toggleReserve() {
+		if (this.reserved == true) {
+			this.addStates(new State(State.StateType.RESERVED,
+					State.StateType.UNRESERVED));
+		} else {
+			this.addStates(new State(State.StateType.UNRESERVED,
+					State.StateType.RESERVED));
+		}
+
+		this.reserved = !this.reserved;
 	}
 
-	public void unreserve() {
-		this.addStates(new State(State.StateType.RESERVED,
-				State.StateType.UNRESERVED));
-		this.reserved = false;
-	}
+	// public void reserve() {
+	// this.addStates(new State(State.StateType.UNRESERVED,
+	// State.StateType.RESERVED));
+	// this.reserved = true;
+	// }
+	//
+	// public void unreserve() {
+	// this.addStates(new State(State.StateType.RESERVED,
+	// State.StateType.UNRESERVED));
+	// this.reserved = false;
+	// }
 
 	public void addRoom(final Room room) {
 		this.rooms.add(room);
