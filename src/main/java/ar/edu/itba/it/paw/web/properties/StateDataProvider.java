@@ -1,29 +1,28 @@
 package ar.edu.itba.it.paw.web.properties;
 
-import java.util.Iterator;
+import java.util.*;
 
-import org.apache.wicket.extensions.markup.html.repeater.util.SortableDataProvider;
-import org.apache.wicket.model.IModel;
+import org.apache.wicket.extensions.markup.html.repeater.util.*;
+import org.apache.wicket.model.*;
 
-import ar.edu.itba.it.paw.domain.EntityModel;
-import ar.edu.itba.it.paw.domain.entities.Property;
-import ar.edu.itba.it.paw.domain.entities.State;
+import ar.edu.itba.it.paw.domain.*;
+import ar.edu.itba.it.paw.domain.entities.*;
 
 @SuppressWarnings("serial")
 public class StateDataProvider extends SortableDataProvider<State> {
 
-	Property property;
+	private EntityModel<Property> propertyModel;
 
 	public StateDataProvider(final Property property) {
-		this.property = property;
+		this.propertyModel = new EntityModel<Property>(Property.class, property);
 	}
 
 	public Iterator<? extends State> iterator(final int first, final int count) {
-		return this.property.getStates().iterator();
+		return this.propertyModel.getObject().getStates().iterator();
 	}
 
 	public int size() {
-		return this.property.getStates().size();
+		return this.propertyModel.getObject().getStates().size();
 	}
 
 	public IModel<State> model(final State object) {

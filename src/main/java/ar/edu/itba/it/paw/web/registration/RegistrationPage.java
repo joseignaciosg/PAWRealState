@@ -21,6 +21,7 @@ import ar.edu.itba.it.paw.domain.repositories.impl.*;
 import ar.edu.itba.it.paw.web.base.*;
 import ar.edu.itba.it.paw.web.common.*;
 
+@SuppressWarnings({ "unused", "serial" })
 public class RegistrationPage extends BasePage {
 
 	public enum UserType {

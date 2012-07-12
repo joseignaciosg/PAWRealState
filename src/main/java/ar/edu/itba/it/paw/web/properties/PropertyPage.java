@@ -168,7 +168,7 @@ public class PropertyPage extends BasePage {
 		});
 
 		this.add(new PropertyListView<Room>("property_room",
-				new PropertyModel<List<Room>>(modelProp, "rooms")) {
+				new PropertyModel<List<Room>>(modelProp, "listView")) {
 
 			@Override
 			protected void populateItem(final ListItem<Room> item) {

@@ -43,7 +43,7 @@
 	background-image: -webkit-linear-gradient(top, whiteSmoke 0%, #EEE 100%);
 	background-image: -ms-linear-gradient(top, whiteSmoke 0%, #EEE 100%);
 	background-image: -o-linear-gradient(top, whiteSmoke 0%, #EEE 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient(    startColorstr='#f5f5f5',
+	filter: progid:DXImageTransform.Microsoft.gradient(     startColorstr='#f5f5f5',
 		endColorstr='#eeeeee', GradientType=0 );
 	background-image: linear-gradient(top, whiteSmoke 0%, #EEE 100%);
 	border: 1px solid #E5E5E5;
@@ -58,7 +58,7 @@
 }
 
 .centered {
-	text-align:center;
+	text-align: center;
 }
 
 .subnavbottom {
@@ -86,7 +86,6 @@
 h3.property-title {
 	margin-bottom: 5px;
 }
-	
 
 h3.search-result {
 	margin: 30px 0;
@@ -97,27 +96,32 @@ h3.search-result {
 	background-color: #10214a;
 	background-image: -moz-linear-gradient(top, #14285b, #0b1631);
 	background-image: -ms-linear-gradient(top, #14285b, #0b1631);
-	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#14285b), to(#0b1631));
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#14285b),
+		to(#0b1631) );
 	background-image: -webkit-linear-gradient(top, #14285b, #0b1631);
 	background-image: -o-linear-gradient(top, #14285b, #0b1631);
-	background-image: linear-gradient(top, #14285b, #0b1631); 
+	background-image: linear-gradient(top, #14285b, #0b1631);
 	background-repeat: repeat-x;
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#14285b', endColorstr='#0b1631', GradientType=0);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#14285b',
+		endColorstr='#0b1631', GradientType=0 );
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
 	border-radius: 4px;
-	-webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25), inset 0 -1px 0 rgba(0, 0, 0, 0.1);
-	-moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25), inset 0 -1px 0 rgba(0, 0, 0, 0.1);
-	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25), inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+	-webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25), inset 0 -1px 0
+		rgba(0, 0, 0, 0.1);
+	-moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25), inset 0 -1px 0
+		rgba(0, 0, 0, 0.1);
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25), inset 0 -1px 0
+		rgba(0, 0, 0, 0.1);
 	color: #e4e4e4;
 	text-shadow: 0 1px 0 black;
 	text-align: center;
 	position: relative;
-	height:50px;
+	height: 50px;
 }
 
-#footer a{
-	color:#e4e4e4;
+#footer a {
+	color: #e4e4e4;
 }
 
 #footer .container {
@@ -125,14 +129,14 @@ h3.search-result {
 }
 
 .remember-me {
-	margin-right:5px;
-	float:left;
+	margin-right: 5px;
+	float: left;
 }
 
 .remember-me-label {
-	margin-top:10px;
-	color:#3E6FB1;
-	float:left;
+	margin-top: 10px;
+	color: #3E6FB1;
+	float: left;
 }
 
 .hero-unit {
@@ -162,9 +166,7 @@ h3.search-result {
 
 .servicesDrop li {
 	padding: 4px 10px;
-	
 }
-
 
 .ambientsDrop {
 	margin-top: 5px;
@@ -178,6 +180,7 @@ h3.search-result {
 	padding: 2px;
 	display: inline;
 }
+
 .ambientsDrop li input[type=text] {
 	width: 58px;
 }
@@ -185,15 +188,15 @@ h3.search-result {
 .ambientsDrop li {
 	padding: 0px 10px;
 }
- 
+
 .divider {
 	width: 10px;
 	height: 1px;
 }
 
 .thumbnails li {
-	width:160px;
-	float:left;
+	width: 160px;
+	float: left;
 }
 
 .property-thumbnail img {
@@ -202,11 +205,11 @@ h3.search-result {
 }
 
 .ui-accordion h3 p {
-	margin:0!important;
-} 
+	margin: 0 !important;
+}
 
 .clear {
-	clear:both;
+	clear: both;
 }
 
 .agency-thumb {
@@ -218,19 +221,19 @@ h3.search-result {
 }
 
 .span_thin {
-	width: 90px;	
+	width: 90px;
 }
 
 .properties-table tr td {
-	vertical-align:middle;
+	vertical-align: middle;
 }
 
-.properties-table .navigator{
-	float:right;
+.properties-table .navigator {
+	float: right;
 }
 
 .properties-table .navigatorLabel {
-	float:left;
+	float: left;
 	font-size: 12px;
 	color: #3E6FB1;
 	text-transform: uppercase;
@@ -238,16 +241,15 @@ h3.search-result {
 
 .property-container {
 	padding: 20px 0;
-	
 }
 
 .thumbnails li.override {
-	width:100%!important;	
+	width: 100% !important;
 }
 
 .ads {
 	margin: 0 auto;
-	text-align:center;
+	text-align: center;
 }
 
 .ads li {
@@ -255,5 +257,17 @@ h3.search-result {
 	border: 1px solid black;
 	width: auto;
 	padding: 0;
-	height:120px;
+	height: 120px;
+}
+
+form .services input {
+	float: left;
+	margin-right: 10px;
+}
+
+form .rooms span.room-label {
+	display: block;
+	float: left;
+	width: 120px;
+	margin-top: 4px;
 }

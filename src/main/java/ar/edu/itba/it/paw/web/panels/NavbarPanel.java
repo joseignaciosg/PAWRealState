@@ -173,7 +173,7 @@ public class NavbarPanel extends Panel {
 		dropdownMenu.add(new Link("create_property_link") {
 			@Override
 			public void onClick() {
-				// TODO Ir a crear propiedad
+				this.setResponsePage(new PropertySavePage());
 			}
 		});
 

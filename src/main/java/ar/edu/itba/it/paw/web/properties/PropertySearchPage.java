@@ -53,7 +53,6 @@ public class PropertySearchPage extends BasePage {
 	}
 
 	public PropertySearchPage(final PropertySearch search) {
-
 		final IModel<PropertySearchPage> model = new CompoundPropertyModel<PropertySearchPage>(
 				this);
 

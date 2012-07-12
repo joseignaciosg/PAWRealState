@@ -54,7 +54,7 @@ public class HibernatePropertyRepository extends AbstractHibernateRepository
 	public List<Property> getAll(final PropertySearch search) {
 
 		final Criteria q = this.sessionFactory.getCurrentSession()
-				.createCriteria(Property.class, "property");
+				.createCriteria(Property.class, "propertyModel");
 
 		if (search.getUser() != null) {
 			q.add(Restrictions.eq("owner", search.getUser()));

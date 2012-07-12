@@ -36,13 +36,13 @@ public class Room extends PersistentEntity {
 	}
 
 	public Room(final RoomType type, final int size) {
-		this.type = type;
-		this.size = size;
+		this.setType(type);
+		this.setSize(size);
 	}
 
 	public Room(final RoomType type, final int size, final Property property) {
-		this.type = type;
-		this.size = size;
+		this.setType(type);
+		this.setSize(size);
 		this.setProperty(property);
 	}
 
@@ -65,10 +65,10 @@ public class Room extends PersistentEntity {
 		} else if (!this.property.equals(other.property)) {
 			return false;
 		}
-		if (this.size != other.size) {
+		if (this.getSize() != other.getSize()) {
 			return false;
 		}
-		if (this.type != other.type) {
+		if (this.getType() != other.getType()) {
 			return false;
 		}
 		return true;
@@ -92,9 +92,9 @@ public class Room extends PersistentEntity {
 		int result = 1;
 		result = prime * result
 				+ ((this.property == null) ? 0 : this.property.hashCode());
-		result = prime * result + this.size;
+		result = prime * result + this.getSize();
 		result = prime * result
-				+ ((this.type == null) ? 0 : this.type.hashCode());
+				+ ((this.getType() == null) ? 0 : this.getType().hashCode());
 		return result;
 	}
 
@@ -104,7 +104,16 @@ public class Room extends PersistentEntity {
 
 	@Override
 	public String toString() {
-		return "Room [type=" + this.type + ", size=" + this.size + "]";
+		return "Room [type=" + this.getType() + ", size=" + this.getSize()
+				+ "]";
+	}
+
+	public void setType(final RoomType type) {
+		this.type = type;
+	}
+
+	public void setSize(final int size) {
+		this.size = size;
 	}
 
 }
