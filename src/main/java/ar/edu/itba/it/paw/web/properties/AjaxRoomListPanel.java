@@ -15,6 +15,7 @@ import ar.edu.itba.it.paw.domain.*;
 import ar.edu.itba.it.paw.domain.entities.*;
 import ar.edu.itba.it.paw.domain.entities.Room.RoomType;
 
+@SuppressWarnings("serial")
 public class AjaxRoomListPanel extends Panel {
 
 	private IModel<Property> property;
@@ -56,7 +57,8 @@ public class AjaxRoomListPanel extends Panel {
 			protected void populateItem(final ListItem<RoomRepresentation> item) {
 				item.add(new DropDownChoice<RoomType>("type", Model.of(item
 						.getModel().getObject().getType()), Arrays
-						.asList(RoomType.values())));
+						.asList(RoomType.values()),
+						new EnumChoiceRenderer<RoomType>()));
 				item.add(new TextField<Integer>("meters", Model.of(item
 						.getModel().getObject().getSize())));
 

@@ -1,13 +1,25 @@
 <wicket:panel>
-	<div wicket:id="rooms_container">
+	<div wicket:id="rooms_container" class="rooms">
 		<div wicket:id="room"> 
-			<input type="text" wicket:id="meters"></input>
-			<br/>
-			<select wicket:id="type"></select>
-			<br/>
-			<a wicket:id="remove_item">Eliminar item</a>
+			<p>
+				<span class="room-label">
+					<wicket:message key="meters"/>
+				</span>	
+				<input class="span2"type="text" wicket:id="meters"></input>
+			</p>
+			<p>
+				<span class="room-label">
+					<wicket:message key="type"/>
+				</span>	
+				<select class="span2" wicket:id="type"></select>
+			</p>
+			<a wicket:id="remove_item" class="btn btn-danger">
+				<wicket:message key="remove_item"/>	
+			</a>
 			<hr/>
 		</div>
-		<a wicket:id="add_item">Agregar items</a>
+		<a wicket:id="add_item" class="btn btn-active">
+			<wicket:message key="add_items"/>
+		</a>
 	</div>
 </wicket:panel>

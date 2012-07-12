@@ -52,7 +52,7 @@ public class PropertyUserPage extends BasePage {
 				"properties_accordion");
 
 		final RefreshingView<Property> accordionView = new RefreshingView<Property>(
-				"property") {
+				"propertyModel") {
 
 			IModel<User> userModel = new EntityModel<User>(User.class,
 					user.getId());
