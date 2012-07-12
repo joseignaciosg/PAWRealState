@@ -11,11 +11,11 @@ CREATE TABLE ads
 
 CREATE TABLE states
 (
-  id serial NOT NULL,
+id serial NOT NULL,
   actual character varying(255),
+  date timestamp without time zone,
   previous character varying(255),
   property_id integer,
-  date timestamp without time zone,
   CONSTRAINT states_pkey PRIMARY KEY (id ),
   CONSTRAINT fkcacdce0212a105d9 FOREIGN KEY (property_id)
       REFERENCES properties (id) MATCH SIMPLE
