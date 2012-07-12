@@ -1,9 +1,12 @@
 package ar.edu.itba.it.paw.domain.entities;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -12,14 +15,34 @@ import javax.persistence.Table;
 @Table(name = "states")
 public class State extends PersistentEntity {
 
+	public enum StateType {
+		RESERVED("Reservado"), UNRESERVED("Sin Reservar"), SOLD("Vendido"), ONSALE(
+				"En venta"), VISIBLE("Visible"), UNVISIBLE("Oculto");
+
+		private String prefix;
+
+		StateType(final String prefix) {
+			this.prefix = prefix;
+		}
+
+		public String getPrefix() {
+			return this.prefix;
+		}
+
+		@Override
+		public String toString() {
+			return this.getPrefix();
+		}
+	}
+
 	@Column(name = "date")
 	private Date date;
 
-	@Column(name = "previous")
-	private String previous;
+	@Enumerated(EnumType.STRING)
+	private StateType previous;
 
-	@Column(name = "actual")
-	private String actual;
+	@Enumerated(EnumType.STRING)
+	private StateType actual;
 
 	@ManyToOne
 	@JoinColumn(name = "property_id")
@@ -29,17 +52,17 @@ public class State extends PersistentEntity {
 
 	}
 
-	State(final Date date, final String previous, final String next) {
-		this.date = date;
+	State(final StateType previous, final StateType actual) {
+		this.date = Calendar.getInstance().getTime();
 		this.previous = previous;
-		this.actual = next;
+		this.actual = actual;
 	}
 
-	State(final Date date, final String previous, final String next,
+	State(final Date date, final StateType previous, final StateType actual,
 			final Property property) {
 		this.date = date;
 		this.previous = previous;
-		this.actual = next;
+		this.actual = actual;
 		this.property = property;
 	}
 
@@ -47,7 +70,7 @@ public class State extends PersistentEntity {
 		return this.property;
 	}
 
-	public String getPrevious() {
+	public StateType getPrevious() {
 		return this.previous;
 	}
 
@@ -55,8 +78,12 @@ public class State extends PersistentEntity {
 		return this.date;
 	}
 
-	public String getActual() {
+	public StateType getActual() {
 		return this.actual;
+	}
+
+	void setProperty(final Property property) {
+		this.property = property;
 	}
 
 	@Override

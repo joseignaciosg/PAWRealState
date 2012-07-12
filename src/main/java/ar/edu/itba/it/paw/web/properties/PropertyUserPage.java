@@ -7,8 +7,6 @@ import java.util.List;
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.Session;
-import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.markup.html.AjaxFallbackLink;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.DefaultDataTable;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.PropertyColumn;
@@ -101,14 +99,11 @@ public class PropertyUserPage extends BasePage {
 				item.add(new Label("property_name_header",
 						new PropertyModel<String>(item.getModel(), "address")));
 
-				final AjaxFallbackLink<Void> toggleLink = new AjaxFallbackLink<Void>(
-						"toggle_link") {
+				final Link<Void> toggleLink = new Link<Void>("toggle_link") {
 
 					@Override
-					public void onClick(final AjaxRequestTarget target) {
-						target.add(this);
+					public void onClick() {
 						item.getModelObject().toggleVisibility();
-
 					}
 				};
 

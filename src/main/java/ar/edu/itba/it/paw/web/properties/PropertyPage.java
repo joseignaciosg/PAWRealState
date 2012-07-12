@@ -50,24 +50,29 @@ public class PropertyPage extends BasePage {
 	private transient String contact_form_phone;
 	private transient String contact_form_description;
 
+	final EntityModel<Property> modelProp;
+
 	public PropertyPage(final Property prop) {
 
-		final EntityModel<Property> modelProp = new EntityModel<Property>(
-				Property.class, prop);
+		this.modelProp = new EntityModel<Property>(Property.class, prop);
+		this.basicLabels(this.modelProp);
 
-		this.addCount(modelProp);
+		this.agencyLabel(this.modelProp);
 
-		this.basicLabels(modelProp);
+		this.basicInfoLabels(this.modelProp);
 
-		this.agencyLabel(modelProp);
+		this.renderLists(this.modelProp);
 
-		this.basicInfoLabels(modelProp);
+		this.renderImageList(this.modelProp);
 
-		this.renderLists(modelProp);
+		this.renderContactForm(this.modelProp);
+	}
 
-		this.renderImageList(modelProp);
+	@Override
+	protected void onBeforeRender() {
+		super.onBeforeRender();
+		this.addCount(this.modelProp);
 
-		this.renderContactForm(modelProp);
 	}
 
 	private void renderContactForm(final EntityModel<Property> modelProp) {
@@ -116,6 +121,7 @@ public class PropertyPage extends BasePage {
 
 	private void addCount(final EntityModel<Property> modelProp) {
 		modelProp.getObject().addVisit();
+
 	}
 
 	private void renderImageList(final EntityModel<Property> modelProp) {

@@ -2,7 +2,6 @@ package ar.edu.itba.it.paw.domain.entities;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -272,9 +271,14 @@ public class Property extends PersistentEntity {
 	}
 
 	public void toggleSold() {
-		this.addStates("Toggle:" + this.sold, "Toggle:" + !this.sold);
+		if (this.sold == true) {
+			this.addStates(new State(State.StateType.SOLD,
+					State.StateType.ONSALE));
+		} else {
+			this.addStates(new State(State.StateType.ONSALE,
+					State.StateType.SOLD));
+		}
 		this.sold = !this.sold;
-
 	}
 
 	public void setVisitCount(final int visitCount) {
@@ -326,7 +330,14 @@ public class Property extends PersistentEntity {
 	}
 
 	public void toggleVisibility() {
-		this.addStates("visible:" + this.visible, "Reserved:" + !this.visible);
+		if (this.visible == true) {
+			this.addStates(new State(State.StateType.VISIBLE,
+					State.StateType.UNVISIBLE));
+		} else {
+			this.addStates(new State(State.StateType.UNVISIBLE,
+					State.StateType.VISIBLE));
+		}
+
 		this.visible = !this.visible;
 	}
 
@@ -346,9 +357,9 @@ public class Property extends PersistentEntity {
 		return this.states;
 	}
 
-	public void addStates(final String previous, final String actual) {
-		this.states.add(new State(Calendar.getInstance().getTime(), previous,
-				actual, this));
+	public void addStates(final State state) {
+		this.states.add(state);
+		state.setProperty(this);
 	}
 
 	public List<Room> getRooms() {
@@ -377,12 +388,14 @@ public class Property extends PersistentEntity {
 	}
 
 	public void reserve() {
-		this.addStates("Reserved:" + this.reserved, "Reserved:" + true);
+		this.addStates(new State(State.StateType.UNRESERVED,
+				State.StateType.RESERVED));
 		this.reserved = true;
 	}
 
 	public void unreserve() {
-		this.addStates("Reserved:" + this.reserved, "Reserved:" + false);
+		this.addStates(new State(State.StateType.RESERVED,
+				State.StateType.UNRESERVED));
 		this.reserved = false;
 	}
 
