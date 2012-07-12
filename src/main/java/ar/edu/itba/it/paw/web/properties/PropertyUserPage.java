@@ -9,6 +9,9 @@ import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.Session;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxFallbackLink;
+import org.apache.wicket.extensions.markup.html.repeater.data.table.DefaultDataTable;
+import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
+import org.apache.wicket.extensions.markup.html.repeater.data.table.PropertyColumn;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.image.Image;
@@ -24,6 +27,7 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import ar.edu.itba.it.paw.domain.EntityModel;
 import ar.edu.itba.it.paw.domain.entities.Property;
+import ar.edu.itba.it.paw.domain.entities.State;
 import ar.edu.itba.it.paw.domain.entities.User;
 import ar.edu.itba.it.paw.domain.repositories.api.PropertyRepository;
 import ar.edu.itba.it.paw.domain.repositories.api.UserRepository;
@@ -217,6 +221,25 @@ public class PropertyUserPage extends BasePage {
 				soldLink.setVisible(isSold);
 				unsoldLink.setVisible(!isSold);
 
+				final List<IColumn<State>> columns = new ArrayList<IColumn<State>>();
+
+				columns.add(new PropertyColumn<State>(Model.of(this
+						.getString("state_date")), "date"));
+
+				columns.add(new PropertyColumn<State>(Model.of(this
+						.getString("state_previous")), "previous"));
+
+				columns.add(new PropertyColumn<State>(Model.of(this
+						.getString("state_actual")), "actual"));
+
+				final DefaultDataTable<State> stateTable = new DefaultDataTable<State>(
+						"states", columns, new StateDataProvider(
+								item.getModelObject()), item.getModelObject()
+								.getStates().size());
+
+				stateTable.add(new AttributeModifier("class", Model
+						.of("table table-striped properties-table")));
+
 				item.add(link);
 				item.add(editlink);
 				item.add(toggleLink);
@@ -226,6 +249,7 @@ public class PropertyUserPage extends BasePage {
 				item.add(unsoldLink);
 				item.add(deletelink);
 				item.add(viewlink);
+				item.add(stateTable);
 
 			}
 		};

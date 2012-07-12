@@ -50,6 +50,15 @@ public final class PropertySearch implements Serializable {
 		this.sold = sold;
 	}
 
+	public PropertySearch(final Operation operation, final Type type,
+			final Integer priceLow, final Integer priceHigh,
+			final Integer page, final Integer quant, final Order order,
+			final List<Service> services, final List<RoomSearch> roomSearch,
+			final boolean visibility, final Currency currency, final User user) {
+		this(operation, type, priceLow, priceHigh, page, quant, order,
+				services, roomSearch, visibility, currency, user, false);
+	}
+
 	public PropertySearch(final Operation o) {
 		this(o, null, null, null, 0, 2, Order.DESC, null, null, true, null,
 				null, false);

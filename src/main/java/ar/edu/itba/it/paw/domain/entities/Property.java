@@ -2,6 +2,7 @@ package ar.edu.itba.it.paw.domain.entities;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -69,33 +70,10 @@ public class Property extends PersistentEntity {
 		}
 	}
 
-	@Table(name = "states")
-	private class State {
-
-		@Column(name = "previous")
-		private String previous;
-
-		@Column(name = "actual")
-		private String actual;
-
-		State(final String previous, final String next) {
-			this.previous = previous;
-			this.actual = this.actual;
-		}
-
-		public String getPrevious() {
-			return this.previous;
-		}
-
-		public String getActual() {
-			return this.actual;
-		}
-
-	}
-
-	@CollectionOfElements
-	@Cascade(value = { org.hibernate.annotations.CascadeType.ALL })
-	@JoinTable(name = "states", joinColumns = @JoinColumn(name = "property_id"))
+	@OneToMany(mappedBy = "property", cascade = { CascadeType.ALL,
+			CascadeType.REMOVE })
+	@Cascade(value = { org.hibernate.annotations.CascadeType.ALL,
+			org.hibernate.annotations.CascadeType.DELETE_ORPHAN })
 	private List<State> states = new ArrayList<State>();
 
 	@Column(nullable = false)
@@ -294,7 +272,9 @@ public class Property extends PersistentEntity {
 	}
 
 	public void toggleSold() {
+		this.addStates("Toggle:" + this.sold, "Toggle:" + !this.sold);
 		this.sold = !this.sold;
+
 	}
 
 	public void setVisitCount(final int visitCount) {
@@ -346,6 +326,7 @@ public class Property extends PersistentEntity {
 	}
 
 	public void toggleVisibility() {
+		this.addStates("visible:" + this.visible, "Reserved:" + !this.visible);
 		this.visible = !this.visible;
 	}
 
@@ -363,6 +344,11 @@ public class Property extends PersistentEntity {
 
 	public List<State> getStates() {
 		return this.states;
+	}
+
+	public void addStates(final String previous, final String actual) {
+		this.states.add(new State(Calendar.getInstance().getTime(), previous,
+				actual, this));
 	}
 
 	public List<Room> getRooms() {
@@ -391,10 +377,12 @@ public class Property extends PersistentEntity {
 	}
 
 	public void reserve() {
+		this.addStates("Reserved:" + this.reserved, "Reserved:" + true);
 		this.reserved = true;
 	}
 
 	public void unreserve() {
+		this.addStates("Reserved:" + this.reserved, "Reserved:" + false);
 		this.reserved = false;
 	}
 
