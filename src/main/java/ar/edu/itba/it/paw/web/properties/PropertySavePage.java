@@ -33,6 +33,9 @@ public class PropertySavePage extends BasePage {
 	private transient Integer property_age;
 	private transient String property_description;
 	private transient List<Service> property_service;
+	private transient Object room;
+	private transient Object type;
+	private transient Object meters;
 
 	public PropertySavePage(final Property property) {
 		final Form<PropertySavePage> propertyForm = new Form<PropertySavePage>(
@@ -75,6 +78,10 @@ public class PropertySavePage extends BasePage {
 				"property_service", Arrays.asList(Service.values()),
 				new EnumChoiceRenderer<Service>()));
 
+		propertyForm.add(new Button("property_submit", Model.of(this
+				.getString("label_property_create"))));
+
+		propertyForm.add(new AjaxRoomListPanel("property_rooms", propertyForm));
 		this.add(propertyForm);
 	}
 }
