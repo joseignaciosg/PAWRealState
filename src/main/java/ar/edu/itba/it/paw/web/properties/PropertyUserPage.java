@@ -1,39 +1,25 @@
 package ar.edu.itba.it.paw.web.properties;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
-import org.apache.wicket.AttributeModifier;
-import org.apache.wicket.MarkupContainer;
-import org.apache.wicket.Session;
-import org.apache.wicket.extensions.markup.html.repeater.data.table.DefaultDataTable;
-import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
-import org.apache.wicket.extensions.markup.html.repeater.data.table.PropertyColumn;
-import org.apache.wicket.markup.html.WebMarkupContainer;
-import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.image.Image;
-import org.apache.wicket.markup.html.link.Link;
-import org.apache.wicket.markup.repeater.Item;
-import org.apache.wicket.markup.repeater.RefreshingView;
-import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.LoadableDetachableModel;
-import org.apache.wicket.model.Model;
-import org.apache.wicket.model.PropertyModel;
-import org.apache.wicket.request.mapper.parameter.PageParameters;
-import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.apache.wicket.*;
+import org.apache.wicket.extensions.markup.html.repeater.data.table.*;
+import org.apache.wicket.markup.html.*;
+import org.apache.wicket.markup.html.basic.*;
+import org.apache.wicket.markup.html.image.*;
+import org.apache.wicket.markup.html.link.*;
+import org.apache.wicket.markup.repeater.*;
+import org.apache.wicket.model.*;
+import org.apache.wicket.request.mapper.parameter.*;
+import org.apache.wicket.spring.injection.annot.*;
 
-import ar.edu.itba.it.paw.domain.EntityModel;
-import ar.edu.itba.it.paw.domain.entities.Property;
-import ar.edu.itba.it.paw.domain.entities.State;
-import ar.edu.itba.it.paw.domain.entities.User;
-import ar.edu.itba.it.paw.domain.repositories.api.PropertyRepository;
-import ar.edu.itba.it.paw.domain.repositories.api.UserRepository;
-import ar.edu.itba.it.paw.web.RealStateApp;
-import ar.edu.itba.it.paw.web.RealStateSession;
-import ar.edu.itba.it.paw.web.base.BasePage;
+import ar.edu.itba.it.paw.domain.*;
+import ar.edu.itba.it.paw.domain.entities.*;
+import ar.edu.itba.it.paw.domain.repositories.api.*;
+import ar.edu.itba.it.paw.web.*;
+import ar.edu.itba.it.paw.web.base.*;
 
-import com.google.code.jqwicket.ui.accordion.AccordionWebMarkupContainer;
+import com.google.code.jqwicket.ui.accordion.*;
 
 @SuppressWarnings("serial")
 public class PropertyUserPage extends BasePage {
@@ -44,8 +30,24 @@ public class PropertyUserPage extends BasePage {
 	@SpringBean
 	PropertyRepository properties;
 
-	public PropertyUserPage(final User user) {
+	public PropertyUserPage() {
+		final RealStateSession session = (RealStateSession) this.getSession();
 
+		final String username = session.getUsername();
+
+		if (username == null) {
+			this.setResponsePage(InvalidPermissionPage.class);
+		} else {
+			this.loadComponents(this.users.getByName(username));
+		}
+
+	}
+
+	public PropertyUserPage(final User user) {
+		this.loadComponents(user);
+	}
+
+	private void loadComponents(final User user) {
 		final AccordionWebMarkupContainer a1 = new AccordionWebMarkupContainer(
 				"properties_accordion");
 
@@ -146,6 +148,15 @@ public class PropertyUserPage extends BasePage {
 					}
 				};
 
+				final Link<Void> photoLink = new Link<Void>(
+						"property_photo_link") {
+
+					@Override
+					public void onClick() {
+						this.setResponsePage(new PhotoEditPage(item.getModel()));
+					}
+				};
+
 				final MarkupContainer unsold_link = new WebMarkupContainer(
 						"unsold_link");
 
@@ -175,8 +186,8 @@ public class PropertyUserPage extends BasePage {
 				final Link<Void> editlink = new Link<Void>("property_edit_link") {
 					@Override
 					public void onClick() {
-						// Mandar a la pagina de edicion.
-
+						this.setResponsePage(new PropertySavePage(item
+								.getModelObject()));
 					}
 				};
 
@@ -249,14 +260,14 @@ public class PropertyUserPage extends BasePage {
 				item.add(deletelink);
 				item.add(viewlink);
 				item.add(stateTable);
+				item.add(photoLink);
 
 			}
 		};
 
 		final Label l = new Label("no_properties_message");
 
-		final int propertiesSize = PropertyUserPage.this.properties.getAll()
-				.size();
+		final int propertiesSize = user.getProperties().size();
 
 		accordionView.setVisible(propertiesSize > 0);
 		l.setVisible(!accordionView.isVisible());
@@ -264,7 +275,6 @@ public class PropertyUserPage extends BasePage {
 		a1.add(accordionView);
 		this.add(l);
 		this.add(a1);
-
 	}
 
 	private class PropertyDetachableModel extends

@@ -271,3 +271,17 @@ form .rooms span.room-label {
 	width: 120px;
 	margin-top: 4px;
 }
+
+.photo-label {
+	margin-top: 4px;
+}
+
+.photo_listing {
+	list-style: none;
+	
+}
+
+.photo_listing  li {
+	float:left;
+	padding: 5px;	
+}

@@ -23,7 +23,6 @@ import com.google.code.jqwicket.ui.accordion.*;
 @SuppressWarnings("serial")
 public class AgencySearchPage extends BasePage {
 
-	// TODO: Sacar este repo, solo interfacesss.
 	@SpringBean
 	HibernateAgencyRepository agencies;
 

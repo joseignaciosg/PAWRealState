@@ -2,7 +2,6 @@ package ar.edu.itba.it.paw.web.photos;
 
 import org.apache.wicket.request.resource.*;
 
-// TODO: Hacer este ResourceReference shared!
 @SuppressWarnings("serial")
 public class ImageResourceReference extends ResourceReference {
 

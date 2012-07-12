@@ -96,13 +96,6 @@ public class User extends PersistentEntity {
 		} else if (!this.phone.equals(other.phone)) {
 			return false;
 		}
-		if (this.properties == null) {
-			if (other.properties != null) {
-				return false;
-			}
-		} else if (!this.properties.equals(other.properties)) {
-			return false;
-		}
 		if (this.username == null) {
 			if (other.username != null) {
 				return false;
