@@ -14,7 +14,7 @@
 
 	<wicket:enclosure child="properties_accordion">
 		<div wicket:id="properties_accordion">
-			<wicket:container wicket:id="property">
+			<wicket:container wicket:id="propertyModel">
 				<h3>
 					<a href="#">
 						<p wicket:id="property_name_header"></p>
@@ -25,12 +25,18 @@
 					<a wicket:id="property_picture_link" class="thumbnail agency-thumb pull-left">
 						<img wicket:id="property_picture" width="80px" height="60px"/>
 					</a>	
-					<div class="btn-group span5" style="float:right; margin-top:22px; text-align:right">		
+					<div class="btn-group span6" style="float:right; margin-top:22px; text-align:right">		
 						<a wicket:id="toggle_link"  class="btn btn-mini"><wicket:message key="property_toggle_message"/></a>		
 						<a wicket:id="property_edit_link" class="btn btn-mini"><wicket:message key="property_edit_message"/></a>
+						<a wicket:id="reserved_link" class="btn btn-mini"><wicket:message key="property_reserved_message"/></a>
+						<a wicket:id="unreserved_link" class="btn btn-mini"><wicket:message key="property_unreserved_message"/></a>
+						<a wicket:id="sold_link" class="btn btn-mini"><wicket:message key="property_sold_message"/></a>
+						<a wicket:id="unsold_link" class="btn btn-mini"><wicket:message key="property_unsold_message"/></a>
+						
 						<a wicket:id="property_delete_link" class="btn btn-mini btn-danger" style="color:white"><wicket:message key="property_delete_message"/></a>
 						<a wicket:id="property_view_link" class="btn btn-mini"><wicket:message key="property_view_message"/></a>		
-					</div>
+					</div><br/>
+					<table wicket:id="states" class="states"></table>
 					<div class="clear"></div>
 				</div>					
 			</wicket:container>

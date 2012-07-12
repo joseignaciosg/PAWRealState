@@ -1,31 +1,42 @@
 package ar.edu.itba.it.paw.web.properties;
 
-import java.util.*;
+import java.util.List;
 
-import org.apache.wicket.*;
-import org.apache.wicket.behavior.*;
-import org.apache.wicket.feedback.*;
-import org.apache.wicket.markup.html.basic.*;
-import org.apache.wicket.markup.html.form.*;
-import org.apache.wicket.markup.html.image.*;
-import org.apache.wicket.markup.html.link.*;
-import org.apache.wicket.markup.html.list.*;
-import org.apache.wicket.markup.html.panel.*;
-import org.apache.wicket.model.*;
-import org.apache.wicket.request.mapper.parameter.*;
-import org.apache.wicket.spring.injection.annot.*;
-import org.apache.wicket.validation.validator.*;
+import org.apache.wicket.AttributeModifier;
+import org.apache.wicket.behavior.AttributeAppender;
+import org.apache.wicket.feedback.ContainerFeedbackMessageFilter;
+import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.form.Button;
+import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.markup.html.image.Image;
+import org.apache.wicket.markup.html.link.Link;
+import org.apache.wicket.markup.html.list.ListItem;
+import org.apache.wicket.markup.html.list.PropertyListView;
+import org.apache.wicket.markup.html.panel.FeedbackPanel;
+import org.apache.wicket.model.CompoundPropertyModel;
+import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.Model;
+import org.apache.wicket.model.PropertyModel;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.apache.wicket.validation.validator.EmailAddressValidator;
 
-import ar.edu.itba.it.paw.domain.*;
-import ar.edu.itba.it.paw.domain.entities.*;
+import ar.edu.itba.it.paw.domain.EntityModel;
+import ar.edu.itba.it.paw.domain.entities.ContactRequest;
+import ar.edu.itba.it.paw.domain.entities.Photo;
+import ar.edu.itba.it.paw.domain.entities.Property;
 import ar.edu.itba.it.paw.domain.entities.Property.Service;
-import ar.edu.itba.it.paw.domain.repositories.api.*;
-import ar.edu.itba.it.paw.domain.repositories.impl.*;
-import ar.edu.itba.it.paw.web.*;
-import ar.edu.itba.it.paw.web.base.*;
-import ar.edu.itba.it.paw.web.common.*;
+import ar.edu.itba.it.paw.domain.entities.RealStateAgency;
+import ar.edu.itba.it.paw.domain.entities.Room;
+import ar.edu.itba.it.paw.domain.repositories.api.PropertySearch;
+import ar.edu.itba.it.paw.domain.repositories.impl.HibernatePropertyRepository;
+import ar.edu.itba.it.paw.web.RealStateApp;
+import ar.edu.itba.it.paw.web.base.BasePage;
+import ar.edu.itba.it.paw.web.common.TelephoneValidator;
 
-import com.google.code.jqwicket.ui.fancybox.*;
+import com.google.code.jqwicket.ui.fancybox.FancyBoxOptions;
+import com.google.code.jqwicket.ui.fancybox.GenericFancyBoxBehavior;
 
 @SuppressWarnings("serial")
 public class PropertyPage extends BasePage {
@@ -43,6 +54,8 @@ public class PropertyPage extends BasePage {
 
 		final EntityModel<Property> modelProp = new EntityModel<Property>(
 				Property.class, prop);
+
+		this.addCount(modelProp);
 
 		this.basicLabels(modelProp);
 
@@ -101,6 +114,10 @@ public class PropertyPage extends BasePage {
 		this.add(f);
 	}
 
+	private void addCount(final EntityModel<Property> modelProp) {
+		modelProp.getObject().addVisit();
+	}
+
 	private void renderImageList(final EntityModel<Property> modelProp) {
 		this.add(new PropertyListView<Photo>("property_image",
 				new PropertyModel<List<Photo>>(modelProp, "photos")) {
@@ -145,7 +162,7 @@ public class PropertyPage extends BasePage {
 		});
 
 		this.add(new PropertyListView<Room>("property_room",
-				new PropertyModel<List<Room>>(modelProp, "rooms")) {
+				new PropertyModel<List<Room>>(modelProp, "listView")) {
 
 			@Override
 			protected void populateItem(final ListItem<Room> item) {

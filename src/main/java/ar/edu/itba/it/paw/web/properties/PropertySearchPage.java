@@ -1,27 +1,39 @@
 package ar.edu.itba.it.paw.web.properties;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
-import org.apache.wicket.*;
-import org.apache.wicket.behavior.*;
-import org.apache.wicket.extensions.markup.html.repeater.data.grid.*;
-import org.apache.wicket.extensions.markup.html.repeater.data.table.*;
-import org.apache.wicket.markup.html.basic.*;
-import org.apache.wicket.markup.html.form.*;
-import org.apache.wicket.markup.html.link.*;
-import org.apache.wicket.markup.html.panel.*;
-import org.apache.wicket.markup.repeater.*;
-import org.apache.wicket.model.*;
-import org.apache.wicket.spring.injection.annot.*;
+import org.apache.wicket.AttributeModifier;
+import org.apache.wicket.behavior.AttributeAppender;
+import org.apache.wicket.extensions.markup.html.repeater.data.grid.ICellPopulator;
+import org.apache.wicket.extensions.markup.html.repeater.data.table.DefaultDataTable;
+import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
+import org.apache.wicket.extensions.markup.html.repeater.data.table.PropertyColumn;
+import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.form.Button;
+import org.apache.wicket.markup.html.form.DropDownChoice;
+import org.apache.wicket.markup.html.form.EnumChoiceRenderer;
+import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.markup.html.link.Link;
+import org.apache.wicket.markup.html.panel.FeedbackPanel;
+import org.apache.wicket.markup.repeater.Item;
+import org.apache.wicket.model.CompoundPropertyModel;
+import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.Model;
+import org.apache.wicket.spring.injection.annot.SpringBean;
 
-import ar.edu.itba.it.paw.domain.entities.*;
+import ar.edu.itba.it.paw.domain.entities.Property;
 import ar.edu.itba.it.paw.domain.entities.Property.Currency;
 import ar.edu.itba.it.paw.domain.entities.Property.Operation;
 import ar.edu.itba.it.paw.domain.entities.Property.Type;
-import ar.edu.itba.it.paw.domain.repositories.api.*;
+import ar.edu.itba.it.paw.domain.repositories.api.PropertyRepository;
+import ar.edu.itba.it.paw.domain.repositories.api.PropertySearch;
 import ar.edu.itba.it.paw.domain.repositories.api.PropertySearch.Order;
-import ar.edu.itba.it.paw.web.base.*;
-import ar.edu.itba.it.paw.web.utils.customcolumns.*;
+import ar.edu.itba.it.paw.web.base.BasePage;
+import ar.edu.itba.it.paw.web.utils.customcolumns.ClickableColumn;
+import ar.edu.itba.it.paw.web.utils.customcolumns.PhotoPropertyColumn;
 
 @SuppressWarnings("serial")
 public class PropertySearchPage extends BasePage {
@@ -41,7 +53,6 @@ public class PropertySearchPage extends BasePage {
 	}
 
 	public PropertySearchPage(final PropertySearch search) {
-
 		final IModel<PropertySearchPage> model = new CompoundPropertyModel<PropertySearchPage>(
 				this);
 

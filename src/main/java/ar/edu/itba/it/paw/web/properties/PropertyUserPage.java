@@ -1,25 +1,41 @@
 package ar.edu.itba.it.paw.web.properties;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
-import org.apache.wicket.*;
-import org.apache.wicket.ajax.*;
-import org.apache.wicket.ajax.markup.html.*;
-import org.apache.wicket.markup.html.basic.*;
-import org.apache.wicket.markup.html.image.*;
-import org.apache.wicket.markup.html.link.*;
-import org.apache.wicket.markup.repeater.*;
-import org.apache.wicket.model.*;
-import org.apache.wicket.request.mapper.parameter.*;
-import org.apache.wicket.spring.injection.annot.*;
+import org.apache.wicket.AttributeModifier;
+import org.apache.wicket.MarkupContainer;
+import org.apache.wicket.Session;
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.markup.html.AjaxFallbackLink;
+import org.apache.wicket.extensions.markup.html.repeater.data.table.DefaultDataTable;
+import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
+import org.apache.wicket.extensions.markup.html.repeater.data.table.PropertyColumn;
+import org.apache.wicket.markup.html.WebMarkupContainer;
+import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.image.Image;
+import org.apache.wicket.markup.html.link.Link;
+import org.apache.wicket.markup.repeater.Item;
+import org.apache.wicket.markup.repeater.RefreshingView;
+import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.LoadableDetachableModel;
+import org.apache.wicket.model.Model;
+import org.apache.wicket.model.PropertyModel;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.spring.injection.annot.SpringBean;
 
-import ar.edu.itba.it.paw.domain.*;
-import ar.edu.itba.it.paw.domain.entities.*;
-import ar.edu.itba.it.paw.domain.repositories.api.*;
-import ar.edu.itba.it.paw.web.*;
-import ar.edu.itba.it.paw.web.base.*;
+import ar.edu.itba.it.paw.domain.EntityModel;
+import ar.edu.itba.it.paw.domain.entities.Property;
+import ar.edu.itba.it.paw.domain.entities.State;
+import ar.edu.itba.it.paw.domain.entities.User;
+import ar.edu.itba.it.paw.domain.repositories.api.PropertyRepository;
+import ar.edu.itba.it.paw.domain.repositories.api.UserRepository;
+import ar.edu.itba.it.paw.web.RealStateApp;
+import ar.edu.itba.it.paw.web.RealStateSession;
+import ar.edu.itba.it.paw.web.base.BasePage;
 
-import com.google.code.jqwicket.ui.accordion.*;
+import com.google.code.jqwicket.ui.accordion.AccordionWebMarkupContainer;
 
 @SuppressWarnings("serial")
 public class PropertyUserPage extends BasePage {
@@ -36,7 +52,7 @@ public class PropertyUserPage extends BasePage {
 				"properties_accordion");
 
 		final RefreshingView<Property> accordionView = new RefreshingView<Property>(
-				"property") {
+				"propertyModel") {
 
 			IModel<User> userModel = new EntityModel<User>(User.class,
 					user.getId());
@@ -96,6 +112,71 @@ public class PropertyUserPage extends BasePage {
 					}
 				};
 
+				final MarkupContainer unreserved_link = new WebMarkupContainer(
+						"unreserved_link");
+
+				final Link<Void> reservedLink = new Link<Void>("reserved_link") {
+
+					@Override
+					public void onClick() {
+						final boolean isReserved = item.getModelObject()
+								.isReserved();
+						if (isReserved) {
+							item.getModelObject().unreserve();
+						} else {
+							item.getModelObject().reserve();
+						}
+
+						this.setVisible(isReserved);
+						unreserved_link.setVisible(!isReserved);
+
+					}
+				};
+
+				final Link<Void> unreservedLink = new Link<Void>(
+						"unreserved_link") {
+
+					@Override
+					public void onClick() {
+						final boolean isReserved = item.getModelObject()
+								.isReserved();
+						if (isReserved) {
+							item.getModelObject().unreserve();
+						} else {
+							item.getModelObject().reserve();
+						}
+						reservedLink.setVisible(isReserved);
+						this.setVisible(!isReserved);
+
+					}
+				};
+
+				final MarkupContainer unsold_link = new WebMarkupContainer(
+						"unsold_link");
+
+				final Link<Void> soldLink = new Link<Void>("sold_link") {
+
+					@Override
+					public void onClick() {
+						final boolean isSold = item.getModelObject().isSold();
+						item.getModelObject().toggleSold();
+						this.setVisible(isSold);
+						unsold_link.setVisible(!isSold);
+					}
+
+				};
+
+				final Link<Void> unsoldLink = new Link<Void>("unsold_link") {
+
+					@Override
+					public void onClick() {
+						final boolean isSold = item.getModelObject().isSold();
+						item.getModelObject().toggleSold();
+						this.setVisible(isSold);
+						soldLink.setVisible(!isSold);
+					}
+				};
+
 				final Link<Void> editlink = new Link<Void>("property_edit_link") {
 					@Override
 					public void onClick() {
@@ -111,14 +192,10 @@ public class PropertyUserPage extends BasePage {
 					}
 				};
 
-				final AjaxFallbackLink<Void> deletelink = new AjaxFallbackLink<Void>(
+				final Link<Void> deletelink = new Link<Void>(
 						"property_delete_link") {
 					@Override
-					public void onClick(final AjaxRequestTarget target) {
-						target.add(this);
-
-						target.add(item);
-
+					public void onClick() {
 						final String username = ((RealStateSession) Session
 								.get()).getUsername();
 
@@ -132,14 +209,51 @@ public class PropertyUserPage extends BasePage {
 							item.add(new AttributeModifier("style", Model
 									.of("display:none;")));
 						}
+
 					}
 				};
+
+				final boolean isReserved = item.getModelObject().isReserved();
+				reservedLink.setVisible(isReserved);
+				unreservedLink.setVisible(!isReserved);
+
+				final boolean isSold = item.getModelObject().isSold();
+				soldLink.setVisible(isSold);
+				unsoldLink.setVisible(!isSold);
+
+				final List<IColumn<State>> columns = new ArrayList<IColumn<State>>();
+
+				columns.add(new PropertyColumn<State>(Model.of(this
+						.getString("state_date")), "date"));
+
+				columns.add(new PropertyColumn<State>(Model.of(this
+						.getString("state_previous")), "previous"));
+
+				columns.add(new PropertyColumn<State>(Model.of(this
+						.getString("state_actual")), "actual"));
+
+				int size = item.getModelObject().getStates().size();
+				if (size == 0) {
+					size = 1;
+				}
+
+				final DefaultDataTable<State> stateTable = new DefaultDataTable<State>(
+						"states", columns, new StateDataProvider(
+								item.getModelObject()), size);
+
+				stateTable.add(new AttributeModifier("class", Model
+						.of("table table-striped properties-table")));
 
 				item.add(link);
 				item.add(editlink);
 				item.add(toggleLink);
+				item.add(reservedLink);
+				item.add(unreservedLink);
+				item.add(soldLink);
+				item.add(unsoldLink);
 				item.add(deletelink);
 				item.add(viewlink);
+				item.add(stateTable);
 
 			}
 		};
