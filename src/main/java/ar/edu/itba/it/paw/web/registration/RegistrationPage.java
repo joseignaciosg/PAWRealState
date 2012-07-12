@@ -1,41 +1,28 @@
 package ar.edu.itba.it.paw.web.registration;
 
+import java.util.*;
 import java.util.Arrays;
-import java.util.List;
 
-import org.apache.wicket.AttributeModifier;
-import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.extensions.markup.html.captcha.CaptchaImageResource;
-import org.apache.wicket.feedback.ContainerFeedbackMessageFilter;
-import org.apache.wicket.markup.html.WebMarkupContainer;
-import org.apache.wicket.markup.html.form.Button;
-import org.apache.wicket.markup.html.form.EnumChoiceRenderer;
-import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.markup.html.form.PasswordTextField;
-import org.apache.wicket.markup.html.form.RequiredTextField;
-import org.apache.wicket.markup.html.form.TextField;
-import org.apache.wicket.markup.html.form.upload.FileUpload;
-import org.apache.wicket.markup.html.form.upload.FileUploadField;
-import org.apache.wicket.markup.html.form.validation.EqualPasswordInputValidator;
-import org.apache.wicket.markup.html.image.NonCachingImage;
-import org.apache.wicket.markup.html.panel.FeedbackPanel;
-import org.apache.wicket.model.CompoundPropertyModel;
-import org.apache.wicket.model.Model;
-import org.apache.wicket.model.PropertyModel;
-import org.apache.wicket.spring.injection.annot.SpringBean;
-import org.apache.wicket.util.lang.Bytes;
-import org.apache.wicket.util.value.ValueMap;
-import org.apache.wicket.validation.validator.EmailAddressValidator;
+import org.apache.wicket.*;
+import org.apache.wicket.ajax.*;
+import org.apache.wicket.extensions.markup.html.captcha.*;
+import org.apache.wicket.feedback.*;
+import org.apache.wicket.markup.html.*;
+import org.apache.wicket.markup.html.form.*;
+import org.apache.wicket.markup.html.form.upload.*;
+import org.apache.wicket.markup.html.form.validation.*;
+import org.apache.wicket.markup.html.image.*;
+import org.apache.wicket.markup.html.panel.*;
+import org.apache.wicket.model.*;
+import org.apache.wicket.spring.injection.annot.*;
+import org.apache.wicket.util.lang.*;
+import org.apache.wicket.util.value.*;
+import org.apache.wicket.validation.validator.*;
 
-import ar.edu.itba.it.paw.domain.entities.Photo;
-import ar.edu.itba.it.paw.domain.entities.RealStateAgency;
-import ar.edu.itba.it.paw.domain.entities.User;
-import ar.edu.itba.it.paw.domain.repositories.impl.HibernateUserRepository;
-import ar.edu.itba.it.paw.web.base.BasePage;
-import ar.edu.itba.it.paw.web.common.AjaxFallbackDropDown;
-import ar.edu.itba.it.paw.web.common.MultipleFileTypeValidator;
-import ar.edu.itba.it.paw.web.common.TelephoneValidator;
-import ar.edu.itba.it.paw.web.common.UsernameNotRepeatedValidator;
+import ar.edu.itba.it.paw.domain.entities.*;
+import ar.edu.itba.it.paw.domain.repositories.impl.*;
+import ar.edu.itba.it.paw.web.base.*;
+import ar.edu.itba.it.paw.web.common.*;
 
 @SuppressWarnings({ "unused", "serial" })
 public class RegistrationPage extends BasePage {
@@ -223,8 +210,8 @@ public class RegistrationPage extends BasePage {
 		final RequiredTextField<String> code = new RequiredTextField<String>(
 				"registration_form_code", new PropertyModel<String>(this,
 						"registration_form_code"));
-		registerForm.add(code.add(new CaptchaValidator(this.imagePass)));
-		// registerForm.add(new ComponentFeedbackPanel("feedback", code));
+		registerForm
+				.add(code.add(new CaptchaValidator<String>(this.imagePass)));
 	}
 
 	private static final long serialVersionUID = 1L;

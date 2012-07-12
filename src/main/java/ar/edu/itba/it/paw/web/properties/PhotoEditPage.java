@@ -19,7 +19,7 @@ import ar.edu.itba.it.paw.web.*;
 import ar.edu.itba.it.paw.web.base.*;
 
 @SuppressWarnings("serial")
-public class PhotoEditPage extends BasePage {
+public class PhotoEditPage extends SecuredPage {
 
 	@SpringBean
 	HibernatePropertyRepository properties;

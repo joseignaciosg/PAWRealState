@@ -20,7 +20,7 @@ import ar.edu.itba.it.paw.web.*;
 import ar.edu.itba.it.paw.web.base.*;
 
 @SuppressWarnings("serial")
-public class PropertySavePage extends BasePage {
+public class PropertySavePage extends SecuredPage {
 
 	@SpringBean
 	UserRepository users;

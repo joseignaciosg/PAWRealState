@@ -1,9 +1,9 @@
 package ar.edu.itba.it.paw.web.registration;
 
-import org.apache.wicket.validation.IValidatable;
-import org.apache.wicket.validation.validator.AbstractValidator;
+import org.apache.wicket.validation.*;
+import org.apache.wicket.validation.validator.*;
 
-public class CaptchaValidator extends AbstractValidator {
+public class CaptchaValidator<T> extends AbstractValidator<T> {
 
 	/**
 	 * 
@@ -17,7 +17,7 @@ public class CaptchaValidator extends AbstractValidator {
 	}
 
 	@Override
-	protected void onValidate(final IValidatable validatable) {
+	protected void onValidate(final IValidatable<T> validatable) {
 		if (!this.randomString.equals(validatable.getValue())) {
 			this.error(validatable, "CaptchaValidators.invalidcaptcha");
 		}

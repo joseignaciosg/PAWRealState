@@ -22,7 +22,7 @@ import ar.edu.itba.it.paw.web.base.*;
 import com.google.code.jqwicket.ui.accordion.*;
 
 @SuppressWarnings("serial")
-public class PropertyUserPage extends BasePage {
+public class PropertyUserPage extends SecuredPage {
 
 	@SpringBean
 	UserRepository users;
@@ -118,6 +118,7 @@ public class PropertyUserPage extends BasePage {
 					public void onClick() {
 						final boolean isReserved = item.getModelObject()
 								.isReserved();
+
 						if (isReserved) {
 							item.getModelObject().unreserve();
 						} else {

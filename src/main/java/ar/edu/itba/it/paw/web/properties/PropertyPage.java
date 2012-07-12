@@ -5,6 +5,7 @@ import java.util.*;
 import org.apache.wicket.*;
 import org.apache.wicket.behavior.*;
 import org.apache.wicket.feedback.*;
+import org.apache.wicket.markup.html.*;
 import org.apache.wicket.markup.html.basic.*;
 import org.apache.wicket.markup.html.form.*;
 import org.apache.wicket.markup.html.image.*;
@@ -212,6 +213,13 @@ public class PropertyPage extends BasePage {
 	}
 
 	private void basicLabels(final EntityModel<Property> modelProp) {
+
+		final WebMarkupContainer reservedLabel = new WebMarkupContainer(
+				"property_reserved");
+
+		reservedLabel.setVisible(!modelProp.getObject().isReserved());
+
+		this.add(reservedLabel);
 
 		this.add(new Label("property_address", new PropertyModel<Property>(
 				modelProp, "address")));
