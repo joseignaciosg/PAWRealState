@@ -1,0 +1,132 @@
+<wicket:extend>
+	<div class="row">
+		<form wicket:id="property_form" class="form-horizontal span8 offset2">
+			<div wicket:id="feedback_panel"></div>
+			<legend>Agregar Nueva Propiedad</legend>
+			<fieldset>
+				<div class="control-group">
+					<label class="control-label" for="property_type"> <wicket:message
+							key="label_property_type" />
+					</label>
+					<div class="controls">
+						<select id="type" wicket:id="property_type">
+						</select>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="property_operation"> <wicket:message
+							key="label_property_operation" />
+					</label>
+					<div class="controls">
+						<select id="operation" wicket:id="property_operation">
+						</select>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="property_address"> <wicket:message
+							key="label_property_address" />
+					</label>
+					<div class="controls">
+						<input type="text" class="input-xlarge"
+							wicket:id="property_address" />
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="property_neighborhood"> <wicket:message
+							key="label_property_neighborhood" />
+					</label>
+					<div class="controls">
+						<input type="text" class="input-xlarge"
+							wicket:id="property_neighborhood" />
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="property_price"> <wicket:message
+							key="label_property_price" />
+					</label>
+					<div class="controls">
+						<input type="text" class="input-xlarge" wicket:id="property_price" />
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="property_currency"> <wicket:message
+							key="label_property_currency" />
+					</label>
+					<div class="controls">
+						<select type="text" class="input-xlarge"
+							wicket:id="property_currency"></select>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="property_spaces"> <wicket:message
+							key="label_property_spaces_count" />
+					</label>
+					<div class="controls">
+						<input type="text" class="input-xlarge"
+							wicket:id="property_spaces" />
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="property_coveredArea"> <wicket:message
+							key="label_property_covered_area" />
+					</label>
+					<div class="controls">
+						<input type="text" class="input-xlarge"
+							wicket:id="property_covered_area" />
+						<p>
+							<wicket:message key="label_property_m2_hint" />
+						</p>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="property_freeArea"> <wicket:message
+							key="label_property_free_area" />
+					</label>
+					<div class="controls">
+						<input type="text" class="input-xlarge"
+							wicket:id="property_free_area" />
+						<p>
+							<wicket:message key="label_property_years_hint" />
+						</p>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="property_age"> <wicket:message
+							key="label_property_age" />
+					</label>
+					<div class="controls">
+						<input type="text" class="input-xlarge" wicket:id="property_age" />
+						<p>
+							<wicket:message key="label_property_years_hint" />
+						</p>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="property_description"> <wicket:message
+							key="label_property_description" />
+					</label>
+					<div class="controls">
+						<input type="text" class="input-xlarge"
+							wicket:id="property_description" />
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="property_services"> <wicket:message
+							key="label_property_services" />
+					</label>
+					<div class="controls">
+						<span valign="top" wicket:id="property_service"> </span>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="property_rooms"> <wicket:message
+							key="label_property_rooms" />
+					</label>
+					<div class="controls">
+						<!-- <select wicket:id="property_rooms"></select> -->
+					</div>
+				</div>
+			</fieldset>
+		</form>
+	</div>
+</wicket:extend>
