@@ -1,23 +1,28 @@
 package ar.edu.itba.it.paw.web;
 
-import static ar.edu.itba.it.paw.web.utils.WicketShortcuts.*;
+import static ar.edu.itba.it.paw.web.utils.WicketShortcuts.link;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
-import org.apache.wicket.markup.html.link.*;
-import org.apache.wicket.markup.repeater.*;
-import org.apache.wicket.model.*;
-import org.apache.wicket.spring.injection.annot.*;
+import org.apache.wicket.markup.html.link.Link;
+import org.apache.wicket.markup.repeater.Item;
+import org.apache.wicket.markup.repeater.RefreshingView;
+import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.LoadableDetachableModel;
+import org.apache.wicket.spring.injection.annot.SpringBean;
 
-import ar.edu.itba.it.paw.domain.*;
-import ar.edu.itba.it.paw.domain.entities.*;
+import ar.edu.itba.it.paw.domain.EntityModel;
+import ar.edu.itba.it.paw.domain.entities.Property;
 import ar.edu.itba.it.paw.domain.entities.Property.Operation;
-import ar.edu.itba.it.paw.domain.repositories.api.*;
+import ar.edu.itba.it.paw.domain.repositories.api.PropertyRepository;
+import ar.edu.itba.it.paw.domain.repositories.api.PropertySearch;
 import ar.edu.itba.it.paw.domain.repositories.api.PropertySearch.Order;
-import ar.edu.itba.it.paw.web.agencies.*;
-import ar.edu.itba.it.paw.web.base.*;
-import ar.edu.itba.it.paw.web.panels.*;
-import ar.edu.itba.it.paw.web.properties.*;
+import ar.edu.itba.it.paw.web.agencies.AgencySearchPage;
+import ar.edu.itba.it.paw.web.base.BasePage;
+import ar.edu.itba.it.paw.web.panels.ThumbnailPanel;
+import ar.edu.itba.it.paw.web.properties.PropertySearchPage;
 
 @SuppressWarnings("serial")
 public class HomePage extends BasePage {
@@ -47,11 +52,11 @@ public class HomePage extends BasePage {
 
 		this.add(new ThumbnailView("rents", new ThumbnailDetachableModel(
 				new PropertySearch(Operation.RENT, null, null, null, 0, 2,
-						Order.DESC, null, null, true, null, null))));
+						Order.DESC, null, null, true, null, null, false))));
 
 		this.add(new ThumbnailView("sells", new ThumbnailDetachableModel(
 				new PropertySearch(Operation.SELL, null, null, null, 0, 2,
-						Order.DESC, null, null, true, null, null))));
+						Order.DESC, null, null, true, null, null, false))));
 
 	}
 

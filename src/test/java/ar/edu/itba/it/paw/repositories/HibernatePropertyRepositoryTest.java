@@ -199,7 +199,8 @@ public class HibernatePropertyRepositoryTest extends BaseTest {
 
 		PropertySearch propSearch = new PropertySearch(null, null, null, null,
 				null, null, Order.ASC, null,
-				Arrays.asList(new RoomSearch[] { roomSearch }), true, null, null);
+				Arrays.asList(new RoomSearch[] { roomSearch }), true, null,
+				null);
 
 		List<Property> result = this.propertyRepository.getAll(propSearch);
 
@@ -237,7 +238,8 @@ public class HibernatePropertyRepositoryTest extends BaseTest {
 
 		final Property property = new Property(Type.APARTMENT, Operation.RENT,
 				"flores", "somewhere", 1000, 4, 120, 120, 10,
-				new ArrayList<Service>(), new ArrayList<Room>(), "salida", u, null);
+				new ArrayList<Service>(), new ArrayList<Room>(), "salida", u,
+				null);
 
 		this.userRepository.save(property);
 

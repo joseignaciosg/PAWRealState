@@ -1,13 +1,14 @@
 package ar.edu.itba.it.paw.web.properties;
 
-import java.util.*;
+import java.util.Iterator;
 
-import org.apache.wicket.extensions.markup.html.repeater.util.*;
-import org.apache.wicket.model.*;
+import org.apache.wicket.extensions.markup.html.repeater.util.SortableDataProvider;
+import org.apache.wicket.model.IModel;
 
-import ar.edu.itba.it.paw.domain.*;
-import ar.edu.itba.it.paw.domain.entities.*;
-import ar.edu.itba.it.paw.domain.repositories.api.*;
+import ar.edu.itba.it.paw.domain.EntityModel;
+import ar.edu.itba.it.paw.domain.entities.Property;
+import ar.edu.itba.it.paw.domain.repositories.api.PropertyRepository;
+import ar.edu.itba.it.paw.domain.repositories.api.PropertySearch;
 
 @SuppressWarnings("serial")
 public class PropertyDataProvider extends SortableDataProvider<Property> {
@@ -33,7 +34,8 @@ public class PropertyDataProvider extends SortableDataProvider<Property> {
 				this.searchObject.getOrder(), this.searchObject.getServices(),
 				this.searchObject.getRooms(),
 				this.searchObject.getVisibility(),
-				this.searchObject.getCurrency(), this.searchObject.getUser());
+				this.searchObject.getCurrency(), this.searchObject.getUser(),
+				false);
 
 		return this.properties.getAll(modifiedSearch).iterator();
 	}
@@ -46,7 +48,8 @@ public class PropertyDataProvider extends SortableDataProvider<Property> {
 				this.searchObject.getOrder(), this.searchObject.getServices(),
 				this.searchObject.getRooms(),
 				this.searchObject.getVisibility(),
-				this.searchObject.getCurrency(), this.searchObject.getUser());
+				this.searchObject.getCurrency(), this.searchObject.getUser(),
+				false);
 
 		// TODO: Improve this
 		return this.properties.getAll(modifiedSearch).size();

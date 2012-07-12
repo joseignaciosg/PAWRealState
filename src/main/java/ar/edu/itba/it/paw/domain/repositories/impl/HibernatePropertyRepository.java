@@ -1,19 +1,31 @@
 package ar.edu.itba.it.paw.domain.repositories.impl;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
-import org.hibernate.*;
-import org.hibernate.criterion.*;
-import org.springframework.beans.factory.annotation.*;
-import org.springframework.stereotype.*;
+import org.hibernate.Criteria;
+import org.hibernate.Query;
+import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Conjunction;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
+import org.hibernate.criterion.Subqueries;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-import ar.edu.itba.it.paw.domain.entities.*;
+import ar.edu.itba.it.paw.domain.entities.ContactRequest;
+import ar.edu.itba.it.paw.domain.entities.Photo;
 import ar.edu.itba.it.paw.domain.entities.Property;
-import ar.edu.itba.it.paw.domain.exceptions.*;
-import ar.edu.itba.it.paw.domain.repositories.*;
-import ar.edu.itba.it.paw.domain.repositories.api.*;
+import ar.edu.itba.it.paw.domain.entities.Room;
+import ar.edu.itba.it.paw.domain.entities.User;
+import ar.edu.itba.it.paw.domain.exceptions.NoSuchEntityException;
+import ar.edu.itba.it.paw.domain.repositories.AbstractHibernateRepository;
+import ar.edu.itba.it.paw.domain.repositories.api.PropertyRepository;
+import ar.edu.itba.it.paw.domain.repositories.api.PropertySearch;
 import ar.edu.itba.it.paw.domain.repositories.api.PropertySearch.Order;
-import ar.edu.itba.it.paw.domain.services.*;
+import ar.edu.itba.it.paw.domain.repositories.api.RoomSearch;
+import ar.edu.itba.it.paw.domain.services.MailService;
 
 @Component
 public class HibernatePropertyRepository extends AbstractHibernateRepository
@@ -70,6 +82,10 @@ public class HibernatePropertyRepository extends AbstractHibernateRepository
 
 		if (search.getVisibility() != null) {
 			q.add(Restrictions.eq("visible", search.getVisibility()));
+		}
+
+		if (search.getSold() != null) {
+			q.add(Restrictions.eq("sold", search.getSold()));
 		}
 
 		if (search.getRooms() != null && search.getRooms().size() > 0) {

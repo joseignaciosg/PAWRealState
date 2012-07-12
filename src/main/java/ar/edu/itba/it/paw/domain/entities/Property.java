@@ -1,13 +1,23 @@
 package ar.edu.itba.it.paw.domain.entities;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.List;
 
-import javax.persistence.*;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.*;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CollectionOfElements;
 
 import ar.edu.itba.it.paw.domain.entities.Room.RoomType;
 
@@ -60,6 +70,12 @@ public class Property extends PersistentEntity {
 		}
 	}
 
+	@OneToMany(mappedBy = "property", cascade = { CascadeType.ALL,
+			CascadeType.REMOVE })
+	@Cascade(value = { org.hibernate.annotations.CascadeType.ALL,
+			org.hibernate.annotations.CascadeType.DELETE_ORPHAN })
+	private List<State> states = new ArrayList<State>();
+
 	@Column(nullable = false)
 	@Enumerated(EnumType.STRING)
 	private Currency currency;
@@ -69,6 +85,7 @@ public class Property extends PersistentEntity {
 	@JoinTable(name = "services", joinColumns = @JoinColumn(name = "property_id"))
 	@Enumerated(EnumType.STRING)
 	private List<Service> services = new ArrayList<Service>();
+
 	@Enumerated(EnumType.STRING)
 	private Type type;
 
@@ -118,6 +135,9 @@ public class Property extends PersistentEntity {
 
 	@Column(name = "reserved")
 	private boolean reserved;
+
+	@Column(name = "sold")
+	private boolean sold;
 
 	Property() {
 		this.visitCount = 0;
@@ -243,8 +263,26 @@ public class Property extends PersistentEntity {
 		this.reserved = reserved;
 	}
 
+	public boolean isSold() {
+		return this.sold;
+	}
+
+	public void setSold(final boolean sold) {
+		this.sold = sold;
+	}
+
+	public void toggleSold() {
+		this.addStates("Toggle:" + this.sold, "Toggle:" + !this.sold);
+		this.sold = !this.sold;
+
+	}
+
 	public void setVisitCount(final int visitCount) {
 		this.visitCount = visitCount;
+	}
+
+	public void addVisit() {
+		this.visitCount++;
 	}
 
 	public void setType(final Type type) {
@@ -288,6 +326,7 @@ public class Property extends PersistentEntity {
 	}
 
 	public void toggleVisibility() {
+		this.addStates("visible:" + this.visible, "Reserved:" + !this.visible);
 		this.visible = !this.visible;
 	}
 
@@ -301,6 +340,15 @@ public class Property extends PersistentEntity {
 
 	public List<Service> getServices() {
 		return this.services;
+	}
+
+	public List<State> getStates() {
+		return this.states;
+	}
+
+	public void addStates(final String previous, final String actual) {
+		this.states.add(new State(Calendar.getInstance().getTime(), previous,
+				actual, this));
 	}
 
 	public List<Room> getRooms() {
@@ -329,10 +377,12 @@ public class Property extends PersistentEntity {
 	}
 
 	public void reserve() {
+		this.addStates("Reserved:" + this.reserved, "Reserved:" + true);
 		this.reserved = true;
 	}
 
 	public void unreserve() {
+		this.addStates("Reserved:" + this.reserved, "Reserved:" + false);
 		this.reserved = false;
 	}
 
