@@ -232,10 +232,14 @@ public class PropertyUserPage extends BasePage {
 				columns.add(new PropertyColumn<State>(Model.of(this
 						.getString("state_actual")), "actual"));
 
+				int size = item.getModelObject().getStates().size();
+				if (size == 0) {
+					size = 1;
+				}
+
 				final DefaultDataTable<State> stateTable = new DefaultDataTable<State>(
 						"states", columns, new StateDataProvider(
-								item.getModelObject()), item.getModelObject()
-								.getStates().size());
+								item.getModelObject()), size);
 
 				stateTable.add(new AttributeModifier("class", Model
 						.of("table table-striped properties-table")));
