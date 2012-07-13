@@ -7,6 +7,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import org.apache.commons.lang.*;
 import org.hibernate.annotations.*;
 
 @Entity
@@ -33,6 +34,13 @@ public class User extends PersistentEntity {
 
 	public User(final String name, final String surname, final String mail,
 			final String telephone, final String username, final String password) {
+		Validate.notNull(name);
+		Validate.notNull(surname);
+		Validate.notNull(username);
+		Validate.notNull(telephone);
+		Validate.notNull(mail);
+		Validate.notNull(password);
+
 		this.firstname = name;
 		this.lastname = surname;
 		this.email = mail;

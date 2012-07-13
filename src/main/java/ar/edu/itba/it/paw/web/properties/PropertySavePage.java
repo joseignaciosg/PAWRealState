@@ -143,8 +143,7 @@ public class PropertySavePage extends SecuredPage {
 						.getRooms();
 
 				final User owner = PropertySavePage.this.users
-						.getByName(((RealStateSession) this.getSession())
-								.getUsername());
+						.getByName(RealStateSession.get().getUsername());
 
 				if (PropertySavePage.this.model.getObject() == null) {
 					toPersist = new Property(

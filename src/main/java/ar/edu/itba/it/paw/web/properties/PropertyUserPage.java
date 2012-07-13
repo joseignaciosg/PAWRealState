@@ -31,7 +31,7 @@ public class PropertyUserPage extends SecuredPage {
 	PropertyRepository properties;
 
 	public PropertyUserPage() {
-		final RealStateSession session = (RealStateSession) this.getSession();
+		final RealStateSession session = RealStateSession.get();
 
 		final String username = session.getUsername();
 
@@ -51,14 +51,14 @@ public class PropertyUserPage extends SecuredPage {
 		final AccordionWebMarkupContainer a1 = new AccordionWebMarkupContainer(
 				"properties_accordion");
 
+		final IModel<User> userModel = new EntityModel<User>(User.class,
+				user.getId());
+
 		final RefreshingView<Property> accordionView = new RefreshingView<Property>(
 				"propertyModel") {
 
-			IModel<User> userModel = new EntityModel<User>(User.class,
-					user.getId());
-
 			PropertyDetachableModel model = new PropertyDetachableModel(
-					this.userModel);
+					userModel);
 
 			List<IModel<Property>> result;
 
@@ -259,7 +259,7 @@ public class PropertyUserPage extends SecuredPage {
 
 		final Label l = new Label("no_properties_message");
 
-		final int propertiesSize = user.getProperties().size();
+		final int propertiesSize = userModel.getObject().getProperties().size();
 
 		accordionView.setVisible(propertiesSize > 0);
 		l.setVisible(!accordionView.isVisible());

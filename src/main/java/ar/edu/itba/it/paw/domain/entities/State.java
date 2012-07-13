@@ -1,15 +1,11 @@
 package ar.edu.itba.it.paw.domain.entities;
 
-import java.util.Calendar;
-import java.util.Date;
+import java.util.*;
 
-import javax.persistence.Column;
+import javax.persistence.*;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+
+import org.apache.commons.lang.*;
 
 @Entity
 @Table(name = "states")
@@ -53,6 +49,8 @@ public class State extends PersistentEntity {
 	}
 
 	State(final StateType previous, final StateType actual) {
+		Validate.notNull(previous);
+		Validate.notNull(actual);
 		this.date = Calendar.getInstance().getTime();
 		this.previous = previous;
 		this.actual = actual;
@@ -60,6 +58,10 @@ public class State extends PersistentEntity {
 
 	State(final Date date, final StateType previous, final StateType actual,
 			final Property property) {
+		Validate.notNull(date);
+		Validate.notNull(previous);
+		Validate.notNull(actual);
+		Validate.notNull(property);
 		this.date = date;
 		this.previous = previous;
 		this.actual = actual;

@@ -23,10 +23,15 @@ public class RealStateSession extends WebSession {
 		return (RealStateSession) Session.get();
 	}
 
-	public RealStateSession(final Request request, final Response response) {
-		super(request);
+	public void updateSessionReqResp(final Request request,
+			final Response response) {
 		this.response = response;
 		this.request = ((WebRequest) request);
+	}
+
+	public RealStateSession(final Request request, final Response response) {
+		super(request);
+		this.updateSessionReqResp(request, response);
 	}
 
 	public String getUsername() {

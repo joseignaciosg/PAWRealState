@@ -1,9 +1,9 @@
 package ar.edu.itba.it.paw.domain.entities;
 
+import javax.persistence.*;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+
+import org.apache.commons.lang.*;
 
 @Entity
 @Table(name = "contact_requests")
@@ -21,12 +21,12 @@ public class ContactRequest extends PersistentEntity {
 	public ContactRequest(final String name, final String email,
 			final String telephone, final String description,
 			final Property propRefered) {
-		this(null, name, email, telephone, description, propRefered);
-	}
+		Validate.notNull(name);
+		Validate.notNull(email);
+		Validate.notNull(telephone);
+		Validate.notNull(description);
+		Validate.notNull(propRefered);
 
-	public ContactRequest(final Integer iD, final String name,
-			final String email, final String telephone,
-			final String description, final Property propRefered) {
 		this.username = name;
 		this.email = email;
 		this.phone = telephone;

@@ -7,6 +7,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import org.apache.commons.lang.*;
 import org.hibernate.annotations.*;
 
 import ar.edu.itba.it.paw.domain.entities.Room.RoomType;
@@ -149,6 +150,21 @@ public class Property extends PersistentEntity {
 			final Integer age, final List<Service> services,
 			final List<Room> rooms, final String description, final User owner,
 			final Currency currency) {
+		Validate.notNull(type);
+		Validate.notNull(operation);
+		Validate.notNull(neighborhood);
+		Validate.notNull(address);
+		Validate.notNull(price);
+		Validate.notNull(spaces);
+		Validate.notNull(coveredArea);
+		Validate.notNull(age);
+		Validate.notNull(description);
+
+		if (price < 0 || spaces < 0 || coveredArea < 0 || freeArea < 0
+				|| age < 0) {
+			throw new IllegalArgumentException();
+		}
+
 		this.type = type;
 		this.operation = operation;
 		this.neighborhood = neighborhood;
@@ -259,6 +275,140 @@ public class Property extends PersistentEntity {
 
 	public void setSold(final boolean sold) {
 		this.sold = sold;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((this.address == null) ? 0 : this.address.hashCode());
+		result = prime * result
+				+ ((this.age == null) ? 0 : this.age.hashCode());
+		result = prime
+				* result
+				+ ((this.coveredArea == null) ? 0 : this.coveredArea.hashCode());
+		result = prime * result
+				+ ((this.currency == null) ? 0 : this.currency.hashCode());
+		result = prime
+				* result
+				+ ((this.description == null) ? 0 : this.description.hashCode());
+		result = prime * result
+				+ ((this.freeArea == null) ? 0 : this.freeArea.hashCode());
+		result = prime
+				* result
+				+ ((this.neighborhood == null) ? 0 : this.neighborhood
+						.hashCode());
+		result = prime * result
+				+ ((this.operation == null) ? 0 : this.operation.hashCode());
+		result = prime * result
+				+ ((this.owner == null) ? 0 : this.owner.hashCode());
+		result = prime * result
+				+ ((this.price == null) ? 0 : this.price.hashCode());
+		result = prime * result + (this.reserved ? 1231 : 1237);
+		result = prime * result + (this.sold ? 1231 : 1237);
+		result = prime * result
+				+ ((this.type == null) ? 0 : this.type.hashCode());
+		result = prime * result + (this.visible ? 1231 : 1237);
+		result = prime * result
+				+ ((this.visitCount == null) ? 0 : this.visitCount.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (this.getClass() != obj.getClass()) {
+			return false;
+		}
+		final Property other = (Property) obj;
+		if (this.address == null) {
+			if (other.address != null) {
+				return false;
+			}
+		} else if (!this.address.equals(other.address)) {
+			return false;
+		}
+		if (this.age == null) {
+			if (other.age != null) {
+				return false;
+			}
+		} else if (!this.age.equals(other.age)) {
+			return false;
+		}
+		if (this.coveredArea == null) {
+			if (other.coveredArea != null) {
+				return false;
+			}
+		} else if (!this.coveredArea.equals(other.coveredArea)) {
+			return false;
+		}
+		if (this.currency != other.currency) {
+			return false;
+		}
+		if (this.description == null) {
+			if (other.description != null) {
+				return false;
+			}
+		} else if (!this.description.equals(other.description)) {
+			return false;
+		}
+		if (this.freeArea == null) {
+			if (other.freeArea != null) {
+				return false;
+			}
+		} else if (!this.freeArea.equals(other.freeArea)) {
+			return false;
+		}
+		if (this.neighborhood == null) {
+			if (other.neighborhood != null) {
+				return false;
+			}
+		} else if (!this.neighborhood.equals(other.neighborhood)) {
+			return false;
+		}
+		if (this.operation != other.operation) {
+			return false;
+		}
+		if (this.owner == null) {
+			if (other.owner != null) {
+				return false;
+			}
+		} else if (!this.owner.equals(other.owner)) {
+			return false;
+		}
+		if (this.price == null) {
+			if (other.price != null) {
+				return false;
+			}
+		} else if (!this.price.equals(other.price)) {
+			return false;
+		}
+		if (this.reserved != other.reserved) {
+			return false;
+		}
+		if (this.sold != other.sold) {
+			return false;
+		}
+		if (this.type != other.type) {
+			return false;
+		}
+		if (this.visible != other.visible) {
+			return false;
+		}
+		if (this.visitCount == null) {
+			if (other.visitCount != null) {
+				return false;
+			}
+		} else if (!this.visitCount.equals(other.visitCount)) {
+			return false;
+		}
+		return true;
 	}
 
 	public void toggleSold() {
@@ -393,18 +543,6 @@ public class Property extends PersistentEntity {
 
 		this.reserved = !this.reserved;
 	}
-
-	// public void reserve() {
-	// this.addStates(new State(State.StateType.UNRESERVED,
-	// State.StateType.RESERVED));
-	// this.reserved = true;
-	// }
-	//
-	// public void unreserve() {
-	// this.addStates(new State(State.StateType.RESERVED,
-	// State.StateType.UNRESERVED));
-	// this.reserved = false;
-	// }
 
 	public void addRoom(final Room room) {
 		this.rooms.add(room);

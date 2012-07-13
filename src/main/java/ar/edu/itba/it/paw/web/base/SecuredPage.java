@@ -6,7 +6,7 @@ import ar.edu.itba.it.paw.web.registration.*;
 @SuppressWarnings("serial")
 public abstract class SecuredPage extends BasePage {
 	public SecuredPage() {
-		final RealStateSession session = (RealStateSession) this.getSession();
+		final RealStateSession session = RealStateSession.get();
 		if (!session.isSignedIn()) {
 			this.redirectToInterceptPage(new RegistrationPage());
 		}

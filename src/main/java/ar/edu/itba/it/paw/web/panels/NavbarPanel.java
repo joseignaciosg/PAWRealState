@@ -42,7 +42,7 @@ public class NavbarPanel extends Panel {
 			}
 		});
 
-		final RealStateSession session = (RealStateSession) this.getSession();
+		final RealStateSession session = RealStateSession.get();
 
 		this.login_form_username = session.getUsername();
 

@@ -3,6 +3,8 @@ package ar.edu.itba.it.paw.domain.entities;
 import javax.persistence.*;
 import javax.persistence.Entity;
 
+import org.apache.commons.lang.*;
+
 @Entity
 @Table(name = "rooms")
 public class Room extends PersistentEntity {
@@ -40,6 +42,7 @@ public class Room extends PersistentEntity {
 	}
 
 	public Room(final RoomType type, final int width, final int height) {
+		Validate.notNull(type);
 		this.setType(type);
 		this.width = width;
 		this.height = height;
@@ -47,6 +50,8 @@ public class Room extends PersistentEntity {
 
 	public Room(final RoomType type, final int width, final int height,
 			final Property property) {
+		Validate.notNull(type);
+		Validate.notNull(property);
 		this.setType(type);
 		this.setProperty(property);
 		this.width = width;
