@@ -36,5 +36,10 @@ INSERT INTO ads (url, weight) VALUES ('https://dl.dropbox.com/u/1283975/paw/ad6.
 INSERT INTO ads (url, weight) VALUES ('https://dl.dropbox.com/u/1283975/paw/ad7.png', 10);
 INSERT INTO ads (url, weight) VALUES ('https://dl.dropbox.com/u/1283975/paw/ad8.png', 100);
 
+ALTER TABLE ROOMS DROP COLUMN size;
+
+ALTER TABLE ROOMS ADD COLUMN  height INTEGER NOT NULL DEFAULT 1;
+ALTER TABLE ROOMS ADD COLUMN  width INTEGER NOT NULL DEFAULT 1;
+
 ALTER TABLE PROPERTIES ADD COLUMN  sold boolean NOT NULL DEFAULT FALSE;
 

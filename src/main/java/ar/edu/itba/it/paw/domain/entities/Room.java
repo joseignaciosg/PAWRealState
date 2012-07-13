@@ -25,7 +25,11 @@ public class Room extends PersistentEntity {
 	@Enumerated(EnumType.STRING)
 	private RoomType type;
 
-	private int size;
+	@Column(nullable = false)
+	private int height;
+
+	@Column(nullable = false)
+	private int width;
 
 	@ManyToOne
 	@JoinColumn(name = "property_id")
@@ -35,15 +39,18 @@ public class Room extends PersistentEntity {
 
 	}
 
-	public Room(final RoomType type, final int size) {
+	public Room(final RoomType type, final int width, final int height) {
 		this.setType(type);
-		this.setSize(size);
+		this.width = width;
+		this.height = height;
 	}
 
-	public Room(final RoomType type, final int size, final Property property) {
+	public Room(final RoomType type, final int width, final int height,
+			final Property property) {
 		this.setType(type);
-		this.setSize(size);
 		this.setProperty(property);
+		this.width = width;
+		this.height = height;
 	}
 
 	@Override
@@ -79,7 +86,15 @@ public class Room extends PersistentEntity {
 	}
 
 	public int getSize() {
-		return this.size;
+		return this.height * this.width;
+	}
+
+	public int getWidth() {
+		return this.width;
+	}
+
+	public int getHeight() {
+		return this.height;
 	}
 
 	public RoomType getType() {
@@ -98,7 +113,7 @@ public class Room extends PersistentEntity {
 		return result;
 	}
 
-	void setProperty(final Property property) {
+	public void setProperty(final Property property) {
 		this.property = property;
 	}
 
@@ -112,8 +127,13 @@ public class Room extends PersistentEntity {
 		this.type = type;
 	}
 
-	public void setSize(final int size) {
-		this.size = size;
+	public void setWidth(final Integer width) {
+		this.width = width;
+	}
+
+	public void setHeight(final Integer height) {
+		this.height = height;
+
 	}
 
 }
