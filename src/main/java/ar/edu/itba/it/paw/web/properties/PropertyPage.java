@@ -27,6 +27,7 @@ import ar.edu.itba.it.paw.web.base.*;
 import ar.edu.itba.it.paw.web.common.*;
 
 import com.google.code.jqwicket.ui.fancybox.*;
+import com.google.code.jqwicket.ui.gmap.*;
 
 @SuppressWarnings("serial")
 public class PropertyPage extends BasePage {
@@ -39,6 +40,8 @@ public class PropertyPage extends BasePage {
 	private transient String contact_form_email;
 	private transient String contact_form_phone;
 	private transient String contact_form_description;
+
+	private String key = "AIzaSyBUU88FRtPaYJqd6RHpeLKqUEIvbTc5GC4";
 
 	final EntityModel<Property> modelProp;
 
@@ -55,7 +58,23 @@ public class PropertyPage extends BasePage {
 
 		this.renderImageList(this.modelProp);
 
+		this.renderMap(this.modelProp);
+
 		this.renderContactForm(this.modelProp);
+	}
+
+	private void renderMap(final EntityModel<Property> modelProp) {
+		this.add(new GMapWebMarkupContainer("map1", new GMapOptions(this.key)
+				.markers(
+						new GMapMarker().address(
+								modelProp.getObject().getAddress()
+										+ ", "
+										+ modelProp.getObject()
+												.getNeighborhood()).html(
+								modelProp.getObject().getAddress()
+										+ ", "
+										+ modelProp.getObject()
+												.getNeighborhood())).zoom(15)));
 	}
 
 	@Override

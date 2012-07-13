@@ -118,12 +118,7 @@ public class PropertyUserPage extends SecuredPage {
 					public void onClick() {
 						final boolean isReserved = item.getModelObject()
 								.isReserved();
-
-						if (isReserved) {
-							item.getModelObject().unreserve();
-						} else {
-							item.getModelObject().reserve();
-						}
+						item.getModelObject().toggleReserve();
 
 						this.setVisible(isReserved);
 						unreserved_link.setVisible(!isReserved);
@@ -138,11 +133,7 @@ public class PropertyUserPage extends SecuredPage {
 					public void onClick() {
 						final boolean isReserved = item.getModelObject()
 								.isReserved();
-						if (isReserved) {
-							item.getModelObject().unreserve();
-						} else {
-							item.getModelObject().reserve();
-						}
+						item.getModelObject().toggleReserve();
 						reservedLink.setVisible(isReserved);
 						this.setVisible(!isReserved);
 
