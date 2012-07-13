@@ -11,6 +11,7 @@ import org.apache.wicket.markup.html.list.*;
 import org.apache.wicket.markup.html.panel.*;
 import org.apache.wicket.model.*;
 import org.apache.wicket.model.util.*;
+import org.apache.wicket.validation.validator.*;
 
 import ar.edu.itba.it.paw.domain.*;
 import ar.edu.itba.it.paw.domain.entities.*;
@@ -71,9 +72,11 @@ public class AjaxRoomListPanel extends Panel {
 						Arrays.asList(RoomType.values()),
 						new EnumChoiceRenderer<RoomType>()));
 				item.add(new TextField<Integer>("width",
-						new PropertyModel<Integer>(item.getModel(), "width")));
+						new PropertyModel<Integer>(item.getModel(), "width"))
+						.add(new MinimumValidator<Integer>(0)));
 				item.add(new TextField<Integer>("height",
-						new PropertyModel<Integer>(item.getModel(), "height")));
+						new PropertyModel<Integer>(item.getModel(), "height"))
+						.add(new MinimumValidator<Integer>(0)));
 
 				item.add(new AjaxLink<Void>("remove_item") {
 

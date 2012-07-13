@@ -51,7 +51,6 @@ public class HibernateRequestCycleListener extends AbstractRequestCycleListener 
 			if (tx.isActive()) {
 				session.flush();
 				tx.commit();
-				System.out.println("Commit!");
 			}
 		} finally {
 			this.close(session);
@@ -59,15 +58,19 @@ public class HibernateRequestCycleListener extends AbstractRequestCycleListener 
 	}
 
 	private void rollback() {
-		final Session session = this.sessionFactory.getCurrentSession();
-		Assert.state(session.isOpen(), "Can't rollback a closed session!");
 		try {
-			final Transaction tx = session.getTransaction();
-			if (tx.isActive()) {
-				tx.rollback();
+			final Session session = this.sessionFactory.getCurrentSession();
+			Assert.state(session.isOpen(), "Can't rollback a closed session!");
+			try {
+				final Transaction tx = session.getTransaction();
+				if (tx.isActive()) {
+					tx.rollback();
+				}
+			} finally {
+				this.close(session);
 			}
-		} finally {
-			this.close(session);
+		} catch (final HibernateException e) {
+			// No session
 		}
 	}
 

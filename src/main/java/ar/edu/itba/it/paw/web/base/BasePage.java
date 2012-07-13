@@ -17,4 +17,5 @@ public class BasePage extends WebPage {
 		this.add(adpanel);
 		this.add(panel);
 	}
+
 }
