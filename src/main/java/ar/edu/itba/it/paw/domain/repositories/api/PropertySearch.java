@@ -1,13 +1,13 @@
 package ar.edu.itba.it.paw.domain.repositories.api;
 
-import java.io.*;
-import java.util.*;
+import java.io.Serializable;
+import java.util.List;
 
 import ar.edu.itba.it.paw.domain.entities.Property.Currency;
 import ar.edu.itba.it.paw.domain.entities.Property.Operation;
 import ar.edu.itba.it.paw.domain.entities.Property.Service;
 import ar.edu.itba.it.paw.domain.entities.Property.Type;
-import ar.edu.itba.it.paw.domain.entities.*;
+import ar.edu.itba.it.paw.domain.entities.User;
 
 public final class PropertySearch implements Serializable {
 
@@ -25,6 +25,7 @@ public final class PropertySearch implements Serializable {
 	private List<Service> services;
 	private List<RoomSearch> rooms;
 	private Boolean visibility;
+	private Boolean sold;
 	private transient User user;
 	private Currency currency;
 
@@ -32,7 +33,8 @@ public final class PropertySearch implements Serializable {
 			final Integer priceLow, final Integer priceHigh,
 			final Integer page, final Integer quant, final Order order,
 			final List<Service> services, final List<RoomSearch> roomSearch,
-			final boolean visibility, final Currency currency, final User user) {
+			final boolean visibility, final Currency currency, final User user,
+			final Boolean sold) {
 		this.operation = operation;
 		this.type = type;
 		this.priceLow = priceLow;
@@ -45,21 +47,31 @@ public final class PropertySearch implements Serializable {
 		this.visibility = visibility;
 		this.user = user;
 		this.currency = currency;
+		this.sold = sold;
+	}
+
+	public PropertySearch(final Operation operation, final Type type,
+			final Integer priceLow, final Integer priceHigh,
+			final Integer page, final Integer quant, final Order order,
+			final List<Service> services, final List<RoomSearch> roomSearch,
+			final boolean visibility, final Currency currency, final User user) {
+		this(operation, type, priceLow, priceHigh, page, quant, order,
+				services, roomSearch, visibility, currency, user, false);
 	}
 
 	public PropertySearch(final Operation o) {
 		this(o, null, null, null, 0, 2, Order.DESC, null, null, true, null,
-				null);
+				null, false);
 	}
 
 	public PropertySearch() {
 		this(null, null, null, null, 0, 2, Order.DESC, null, null, true, null,
-				null);
+				null, false);
 	}
 
 	public PropertySearch(final User owner) {
 		this(null, null, null, null, 0, 2, Order.DESC, null, null, true, null,
-				owner);
+				owner, false);
 	}
 
 	public Operation getOperation() {
@@ -133,4 +145,13 @@ public final class PropertySearch implements Serializable {
 	public void setPriceLow(final Integer priceLow) {
 		this.priceLow = priceLow;
 	}
+
+	public Boolean getSold() {
+		return this.sold;
+	}
+
+	public void setSold(final Boolean sold) {
+		this.sold = sold;
+	}
+
 }

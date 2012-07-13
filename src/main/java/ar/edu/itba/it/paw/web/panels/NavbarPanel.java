@@ -157,9 +157,7 @@ public class NavbarPanel extends Panel {
 		dropdownMenu.add(new Link("my_properties_link") {
 			@Override
 			public void onClick() {
-				this.setResponsePage(new PropertyUserPage(NavbarPanel.this.repo
-						.getByName(session.getUsername())));
-
+				this.setResponsePage(new PropertyUserPage());
 			}
 		});
 

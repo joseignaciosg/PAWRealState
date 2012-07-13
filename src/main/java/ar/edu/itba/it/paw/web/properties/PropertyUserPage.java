@@ -3,8 +3,8 @@ package ar.edu.itba.it.paw.web.properties;
 import java.util.*;
 
 import org.apache.wicket.*;
-import org.apache.wicket.ajax.*;
-import org.apache.wicket.ajax.markup.html.*;
+import org.apache.wicket.extensions.markup.html.repeater.data.table.*;
+import org.apache.wicket.markup.html.*;
 import org.apache.wicket.markup.html.basic.*;
 import org.apache.wicket.markup.html.image.*;
 import org.apache.wicket.markup.html.link.*;
@@ -22,7 +22,7 @@ import ar.edu.itba.it.paw.web.base.*;
 import com.google.code.jqwicket.ui.accordion.*;
 
 @SuppressWarnings("serial")
-public class PropertyUserPage extends BasePage {
+public class PropertyUserPage extends SecuredPage {
 
 	@SpringBean
 	UserRepository users;
@@ -30,13 +30,29 @@ public class PropertyUserPage extends BasePage {
 	@SpringBean
 	PropertyRepository properties;
 
-	public PropertyUserPage(final User user) {
+	public PropertyUserPage() {
+		final RealStateSession session = (RealStateSession) this.getSession();
 
+		final String username = session.getUsername();
+
+		if (username == null) {
+			this.setResponsePage(InvalidPermissionPage.class);
+		} else {
+			this.loadComponents(this.users.getByName(username));
+		}
+
+	}
+
+	public PropertyUserPage(final User user) {
+		this.loadComponents(user);
+	}
+
+	private void loadComponents(final User user) {
 		final AccordionWebMarkupContainer a1 = new AccordionWebMarkupContainer(
 				"properties_accordion");
 
 		final RefreshingView<Property> accordionView = new RefreshingView<Property>(
-				"property") {
+				"propertyModel") {
 
 			IModel<User> userModel = new EntityModel<User>(User.class,
 					user.getId());
@@ -85,22 +101,85 @@ public class PropertyUserPage extends BasePage {
 				item.add(new Label("property_name_header",
 						new PropertyModel<String>(item.getModel(), "address")));
 
-				final AjaxFallbackLink<Void> toggleLink = new AjaxFallbackLink<Void>(
-						"toggle_link") {
+				final Link<Void> toggleLink = new Link<Void>("toggle_link") {
 
 					@Override
-					public void onClick(final AjaxRequestTarget target) {
-						target.add(this);
+					public void onClick() {
 						item.getModelObject().toggleVisibility();
+					}
+				};
 
+				final MarkupContainer unreserved_link = new WebMarkupContainer(
+						"unreserved_link");
+
+				final Link<Void> reservedLink = new Link<Void>("reserved_link") {
+
+					@Override
+					public void onClick() {
+						final boolean isReserved = item.getModelObject()
+								.isReserved();
+						item.getModelObject().toggleReserve();
+
+						this.setVisible(isReserved);
+						unreserved_link.setVisible(!isReserved);
+
+					}
+				};
+
+				final Link<Void> unreservedLink = new Link<Void>(
+						"unreserved_link") {
+
+					@Override
+					public void onClick() {
+						final boolean isReserved = item.getModelObject()
+								.isReserved();
+						item.getModelObject().toggleReserve();
+						reservedLink.setVisible(isReserved);
+						this.setVisible(!isReserved);
+
+					}
+				};
+
+				final Link<Void> photoLink = new Link<Void>(
+						"property_photo_link") {
+
+					@Override
+					public void onClick() {
+						this.setResponsePage(new PhotoEditPage(item.getModel()));
+					}
+				};
+
+				final MarkupContainer unsold_link = new WebMarkupContainer(
+						"unsold_link");
+
+				final Link<Void> soldLink = new Link<Void>("sold_link") {
+
+					@Override
+					public void onClick() {
+						final boolean isSold = item.getModelObject().isSold();
+						item.getModelObject().toggleSold();
+						this.setVisible(isSold);
+						unsold_link.setVisible(!isSold);
+					}
+
+				};
+
+				final Link<Void> unsoldLink = new Link<Void>("unsold_link") {
+
+					@Override
+					public void onClick() {
+						final boolean isSold = item.getModelObject().isSold();
+						item.getModelObject().toggleSold();
+						this.setVisible(isSold);
+						soldLink.setVisible(!isSold);
 					}
 				};
 
 				final Link<Void> editlink = new Link<Void>("property_edit_link") {
 					@Override
 					public void onClick() {
-						// Mandar a la pagina de edicion.
-
+						this.setResponsePage(new PropertySavePage(item
+								.getModelObject()));
 					}
 				};
 
@@ -111,14 +190,10 @@ public class PropertyUserPage extends BasePage {
 					}
 				};
 
-				final AjaxFallbackLink<Void> deletelink = new AjaxFallbackLink<Void>(
+				final Link<Void> deletelink = new Link<Void>(
 						"property_delete_link") {
 					@Override
-					public void onClick(final AjaxRequestTarget target) {
-						target.add(this);
-
-						target.add(item);
-
+					public void onClick() {
 						final String username = ((RealStateSession) Session
 								.get()).getUsername();
 
@@ -132,22 +207,59 @@ public class PropertyUserPage extends BasePage {
 							item.add(new AttributeModifier("style", Model
 									.of("display:none;")));
 						}
+
 					}
 				};
+
+				final boolean isReserved = item.getModelObject().isReserved();
+				reservedLink.setVisible(isReserved);
+				unreservedLink.setVisible(!isReserved);
+
+				final boolean isSold = item.getModelObject().isSold();
+				soldLink.setVisible(isSold);
+				unsoldLink.setVisible(!isSold);
+
+				final List<IColumn<State>> columns = new ArrayList<IColumn<State>>();
+
+				columns.add(new PropertyColumn<State>(Model.of(this
+						.getString("state_date")), "date"));
+
+				columns.add(new PropertyColumn<State>(Model.of(this
+						.getString("state_previous")), "previous"));
+
+				columns.add(new PropertyColumn<State>(Model.of(this
+						.getString("state_actual")), "actual"));
+
+				int size = item.getModelObject().getStates().size();
+				if (size == 0) {
+					size = 1;
+				}
+
+				final DefaultDataTable<State> stateTable = new DefaultDataTable<State>(
+						"states", columns, new StateDataProvider(
+								item.getModelObject()), size);
+
+				stateTable.add(new AttributeModifier("class", Model
+						.of("table table-striped properties-table")));
 
 				item.add(link);
 				item.add(editlink);
 				item.add(toggleLink);
+				item.add(reservedLink);
+				item.add(unreservedLink);
+				item.add(soldLink);
+				item.add(unsoldLink);
 				item.add(deletelink);
 				item.add(viewlink);
+				item.add(stateTable);
+				item.add(photoLink);
 
 			}
 		};
 
 		final Label l = new Label("no_properties_message");
 
-		final int propertiesSize = PropertyUserPage.this.properties.getAll()
-				.size();
+		final int propertiesSize = user.getProperties().size();
 
 		accordionView.setVisible(propertiesSize > 0);
 		l.setVisible(!accordionView.isVisible());
@@ -155,7 +267,6 @@ public class PropertyUserPage extends BasePage {
 		a1.add(accordionView);
 		this.add(l);
 		this.add(a1);
-
 	}
 
 	private class PropertyDetachableModel extends

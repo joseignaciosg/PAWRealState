@@ -60,6 +60,12 @@ public class Property extends PersistentEntity {
 		}
 	}
 
+	@OneToMany(mappedBy = "property", cascade = { CascadeType.ALL,
+			CascadeType.REMOVE })
+	@Cascade(value = { org.hibernate.annotations.CascadeType.ALL,
+			org.hibernate.annotations.CascadeType.DELETE_ORPHAN })
+	private List<State> states = new ArrayList<State>();
+
 	@Column(nullable = false)
 	@Enumerated(EnumType.STRING)
 	private Currency currency;
@@ -69,6 +75,7 @@ public class Property extends PersistentEntity {
 	@JoinTable(name = "services", joinColumns = @JoinColumn(name = "property_id"))
 	@Enumerated(EnumType.STRING)
 	private List<Service> services = new ArrayList<Service>();
+
 	@Enumerated(EnumType.STRING)
 	private Type type;
 
@@ -116,8 +123,11 @@ public class Property extends PersistentEntity {
 	@Column(name = "visitcount")
 	private Integer visitCount;
 
-	@Column(name = "reserved")
+	@Column(name = "reserved", nullable = false)
 	private boolean reserved;
+
+	@Column(name = "sold")
+	private boolean sold;
 
 	Property() {
 		this.visitCount = 0;
@@ -243,8 +253,31 @@ public class Property extends PersistentEntity {
 		this.reserved = reserved;
 	}
 
+	public boolean isSold() {
+		return this.sold;
+	}
+
+	public void setSold(final boolean sold) {
+		this.sold = sold;
+	}
+
+	public void toggleSold() {
+		if (this.sold == true) {
+			this.addStates(new State(State.StateType.SOLD,
+					State.StateType.ONSALE));
+		} else {
+			this.addStates(new State(State.StateType.ONSALE,
+					State.StateType.SOLD));
+		}
+		this.sold = !this.sold;
+	}
+
 	public void setVisitCount(final int visitCount) {
 		this.visitCount = visitCount;
+	}
+
+	public void addVisit() {
+		this.visitCount++;
 	}
 
 	public void setType(final Type type) {
@@ -288,6 +321,14 @@ public class Property extends PersistentEntity {
 	}
 
 	public void toggleVisibility() {
+		if (this.visible == true) {
+			this.addStates(new State(State.StateType.VISIBLE,
+					State.StateType.UNVISIBLE));
+		} else {
+			this.addStates(new State(State.StateType.UNVISIBLE,
+					State.StateType.VISIBLE));
+		}
+
 		this.visible = !this.visible;
 	}
 
@@ -303,8 +344,21 @@ public class Property extends PersistentEntity {
 		return this.services;
 	}
 
+	public List<State> getStates() {
+		return this.states;
+	}
+
+	public void addStates(final State state) {
+		this.states.add(state);
+		state.setProperty(this);
+	}
+
 	public List<Room> getRooms() {
-		return this.rooms;
+		return new ArrayList<Room>(this.rooms);
+	}
+
+	public void clearRooms() {
+		this.rooms.clear();
 	}
 
 	public List<ContactRequest> getContactRequest() {
@@ -328,13 +382,29 @@ public class Property extends PersistentEntity {
 		this.visitCount++;
 	}
 
-	public void reserve() {
-		this.reserved = true;
+	public void toggleReserve() {
+		if (this.reserved == true) {
+			this.addStates(new State(State.StateType.RESERVED,
+					State.StateType.UNRESERVED));
+		} else {
+			this.addStates(new State(State.StateType.UNRESERVED,
+					State.StateType.RESERVED));
+		}
+
+		this.reserved = !this.reserved;
 	}
 
-	public void unreserve() {
-		this.reserved = false;
-	}
+	// public void reserve() {
+	// this.addStates(new State(State.StateType.UNRESERVED,
+	// State.StateType.RESERVED));
+	// this.reserved = true;
+	// }
+	//
+	// public void unreserve() {
+	// this.addStates(new State(State.StateType.RESERVED,
+	// State.StateType.UNRESERVED));
+	// this.reserved = false;
+	// }
 
 	public void addRoom(final Room room) {
 		this.rooms.add(room);

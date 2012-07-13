@@ -5,6 +5,7 @@ import java.util.*;
 import org.apache.wicket.*;
 import org.apache.wicket.behavior.*;
 import org.apache.wicket.feedback.*;
+import org.apache.wicket.markup.html.*;
 import org.apache.wicket.markup.html.basic.*;
 import org.apache.wicket.markup.html.form.*;
 import org.apache.wicket.markup.html.image.*;
@@ -26,6 +27,7 @@ import ar.edu.itba.it.paw.web.base.*;
 import ar.edu.itba.it.paw.web.common.*;
 
 import com.google.code.jqwicket.ui.fancybox.*;
+import com.google.code.jqwicket.ui.gmap.*;
 
 @SuppressWarnings("serial")
 public class PropertyPage extends BasePage {
@@ -39,22 +41,47 @@ public class PropertyPage extends BasePage {
 	private transient String contact_form_phone;
 	private transient String contact_form_description;
 
+	private String key = "AIzaSyBUU88FRtPaYJqd6RHpeLKqUEIvbTc5GC4";
+
+	final EntityModel<Property> modelProp;
+
 	public PropertyPage(final Property prop) {
 
-		final EntityModel<Property> modelProp = new EntityModel<Property>(
-				Property.class, prop);
+		this.modelProp = new EntityModel<Property>(Property.class, prop);
+		this.basicLabels(this.modelProp);
 
-		this.basicLabels(modelProp);
+		this.agencyLabel(this.modelProp);
 
-		this.agencyLabel(modelProp);
+		this.basicInfoLabels(this.modelProp);
 
-		this.basicInfoLabels(modelProp);
+		this.renderLists(this.modelProp);
 
-		this.renderLists(modelProp);
+		this.renderImageList(this.modelProp);
 
-		this.renderImageList(modelProp);
+		this.renderMap(this.modelProp);
 
-		this.renderContactForm(modelProp);
+		this.renderContactForm(this.modelProp);
+	}
+
+	private void renderMap(final EntityModel<Property> modelProp) {
+		this.add(new GMapWebMarkupContainer("map1", new GMapOptions(this.key)
+				.markers(
+						new GMapMarker().address(
+								modelProp.getObject().getAddress()
+										+ ", "
+										+ modelProp.getObject()
+												.getNeighborhood()).html(
+								modelProp.getObject().getAddress()
+										+ ", "
+										+ modelProp.getObject()
+												.getNeighborhood())).zoom(15)));
+	}
+
+	@Override
+	protected void onBeforeRender() {
+		super.onBeforeRender();
+		this.addCount(this.modelProp);
+
 	}
 
 	private void renderContactForm(final EntityModel<Property> modelProp) {
@@ -99,6 +126,11 @@ public class PropertyPage extends BasePage {
 		f.add(contact);
 
 		this.add(f);
+	}
+
+	private void addCount(final EntityModel<Property> modelProp) {
+		modelProp.getObject().addVisit();
+
 	}
 
 	private void renderImageList(final EntityModel<Property> modelProp) {
@@ -200,6 +232,13 @@ public class PropertyPage extends BasePage {
 	}
 
 	private void basicLabels(final EntityModel<Property> modelProp) {
+
+		final WebMarkupContainer reservedLabel = new WebMarkupContainer(
+				"property_reserved");
+
+		reservedLabel.setVisible(!modelProp.getObject().isReserved());
+
+		this.add(reservedLabel);
 
 		this.add(new Label("property_address", new PropertyModel<Property>(
 				modelProp, "address")));

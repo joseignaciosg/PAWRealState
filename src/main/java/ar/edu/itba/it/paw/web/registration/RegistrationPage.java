@@ -5,15 +5,18 @@ import java.util.Arrays;
 
 import org.apache.wicket.*;
 import org.apache.wicket.ajax.*;
+import org.apache.wicket.extensions.markup.html.captcha.*;
 import org.apache.wicket.feedback.*;
 import org.apache.wicket.markup.html.*;
 import org.apache.wicket.markup.html.form.*;
 import org.apache.wicket.markup.html.form.upload.*;
 import org.apache.wicket.markup.html.form.validation.*;
+import org.apache.wicket.markup.html.image.*;
 import org.apache.wicket.markup.html.panel.*;
 import org.apache.wicket.model.*;
 import org.apache.wicket.spring.injection.annot.*;
 import org.apache.wicket.util.lang.*;
+import org.apache.wicket.util.value.*;
 import org.apache.wicket.validation.validator.*;
 
 import ar.edu.itba.it.paw.domain.entities.*;
@@ -31,6 +34,9 @@ public class RegistrationPage extends BasePage {
 	@SpringBean
 	HibernateUserRepository repo;
 
+	final String publickey = "6LeP8NMSAAAAANnUg599Q1W_8v0VVZl22gH7tcSk";
+	final String privatekey = "6LeP8NMSAAAAALf7_cPycstNdrOwUbdH0svUIbBZ";
+
 	private transient String registration_form_username;
 	private transient String registration_form_password;
 	private transient String registration_form_password_repeated;
@@ -41,6 +47,8 @@ public class RegistrationPage extends BasePage {
 	private transient UserType registration_form_user_type;
 	private transient String registration_form_agency_name;
 	private transient List<FileUpload> registration_form_logo;
+
+	private transient String registration_form_code;
 
 	@SuppressWarnings("serial")
 	public RegistrationPage() {
@@ -188,7 +196,45 @@ public class RegistrationPage extends BasePage {
 		registrationForm.add(userTypes.setRequired(true));
 		registrationForm.add(agencyNameDiv);
 		registrationForm.add(agencyLogoDiv);
-
+		this.buildCaptcha(registrationForm);
+		// registrationForm.add(new RecaptchaPanel("recaptcha"));
 		this.add(registrationForm);
+	}
+
+	private void buildCaptcha(final Form<RegistrationPage> registerForm) {
+		this.imagePass = randomString(3, 5);
+		final CaptchaImageResource captchaImageResource = new CaptchaImageResource(
+				this.imagePass, 60, 40);
+		registerForm.add(new NonCachingImage("captchaImage",
+				captchaImageResource));
+		final RequiredTextField<String> code = new RequiredTextField<String>(
+				"registration_form_code", new PropertyModel<String>(this,
+						"registration_form_code"));
+		registerForm
+				.add(code.add(new CaptchaValidator<String>(this.imagePass)));
+	}
+
+	private static final long serialVersionUID = 1L;
+
+	private static int randomInt(final int min, final int max) {
+		return (int) (Math.random() * (max - min) + min);
+	}
+
+	private static String randomString(final int min, final int max) {
+		final int num = randomInt(min, max);
+		final byte b[] = new byte[num];
+		for (int i = 0; i < num; i++) {
+			b[i] = (byte) randomInt('a', 'z');
+		}
+		return new String(b);
+	}
+
+	/** Random captcha password to match against. */
+	private String imagePass = randomString(6, 8);
+
+	private final ValueMap properties = new ValueMap();
+
+	private String getPassword() {
+		return this.properties.getString("password");
 	}
 }

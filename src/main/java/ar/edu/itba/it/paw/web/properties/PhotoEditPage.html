@@ -1,0 +1,27 @@
+<wicket:extend>
+	<h2>
+		<wicket:message key="property_photos"/>
+	</h2>	
+	<ul class="photo_listing">
+		<li wicket:id="photo_item">
+			<img wicket:id="photo" style="width:120px; height:90px"/>
+			
+			<a wicket:id="photo_delete" style="display:block" href="#" class="btn btn-danger">
+				<wicket:message key="photo_delete"/>
+			</a>
+		</li>
+	</ul>
+	<div class="clear"/>
+	<hr/>
+	<form wicket:id="photo_form">
+		<p>
+			<span class="pull-left photo-label">
+				<wicket:message key="photo_label"/>
+			</span>
+			<input type="file" wicket:id="photo_input"/>
+		</p>
+		<p>
+			<input type="submit" class="btn btn-active" wicket:id="submit_button"/>
+		</p>
+	</form>
+</wicket:extend>

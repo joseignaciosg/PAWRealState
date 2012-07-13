@@ -25,7 +25,11 @@ public class Room extends PersistentEntity {
 	@Enumerated(EnumType.STRING)
 	private RoomType type;
 
-	private int size;
+	@Column(nullable = false)
+	private int height;
+
+	@Column(nullable = false)
+	private int width;
 
 	@ManyToOne
 	@JoinColumn(name = "property_id")
@@ -35,15 +39,18 @@ public class Room extends PersistentEntity {
 
 	}
 
-	public Room(final RoomType type, final int size) {
-		this.type = type;
-		this.size = size;
+	public Room(final RoomType type, final int width, final int height) {
+		this.setType(type);
+		this.width = width;
+		this.height = height;
 	}
 
-	public Room(final RoomType type, final int size, final Property property) {
-		this.type = type;
-		this.size = size;
+	public Room(final RoomType type, final int width, final int height,
+			final Property property) {
+		this.setType(type);
 		this.setProperty(property);
+		this.width = width;
+		this.height = height;
 	}
 
 	@Override
@@ -65,10 +72,10 @@ public class Room extends PersistentEntity {
 		} else if (!this.property.equals(other.property)) {
 			return false;
 		}
-		if (this.size != other.size) {
+		if (this.getSize() != other.getSize()) {
 			return false;
 		}
-		if (this.type != other.type) {
+		if (this.getType() != other.getType()) {
 			return false;
 		}
 		return true;
@@ -79,7 +86,15 @@ public class Room extends PersistentEntity {
 	}
 
 	public int getSize() {
-		return this.size;
+		return this.height * this.width;
+	}
+
+	public int getWidth() {
+		return this.width;
+	}
+
+	public int getHeight() {
+		return this.height;
 	}
 
 	public RoomType getType() {
@@ -92,19 +107,33 @@ public class Room extends PersistentEntity {
 		int result = 1;
 		result = prime * result
 				+ ((this.property == null) ? 0 : this.property.hashCode());
-		result = prime * result + this.size;
+		result = prime * result + this.getSize();
 		result = prime * result
-				+ ((this.type == null) ? 0 : this.type.hashCode());
+				+ ((this.getType() == null) ? 0 : this.getType().hashCode());
 		return result;
 	}
 
-	void setProperty(final Property property) {
+	public void setProperty(final Property property) {
 		this.property = property;
 	}
 
 	@Override
 	public String toString() {
-		return "Room [type=" + this.type + ", size=" + this.size + "]";
+		return "Room [type=" + this.getType() + ", size=" + this.getSize()
+				+ "]";
+	}
+
+	public void setType(final RoomType type) {
+		this.type = type;
+	}
+
+	public void setWidth(final Integer width) {
+		this.width = width;
+	}
+
+	public void setHeight(final Integer height) {
+		this.height = height;
+
 	}
 
 }
