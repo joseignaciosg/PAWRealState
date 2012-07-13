@@ -7,6 +7,7 @@ import org.apache.wicket.markup.html.form.*;
 import org.apache.wicket.markup.html.panel.*;
 import org.apache.wicket.model.*;
 import org.apache.wicket.spring.injection.annot.*;
+import org.apache.wicket.validation.validator.*;
 
 import ar.edu.itba.it.paw.domain.*;
 import ar.edu.itba.it.paw.domain.entities.*;
@@ -106,21 +107,21 @@ public class PropertySavePage extends SecuredPage {
 				.setRequired(true));
 		propertyForm.add(new TextField<String>("property_neighborhood")
 				.setRequired(true));
-		propertyForm.add(new TextField<Integer>("property_price")
-				.setRequired(true));
+		propertyForm.add(new TextField<Integer>("property_price").add(
+				new MinimumValidator<Integer>(0)).setRequired(true));
 
 		propertyForm.add(new DropDownChoice<Currency>("property_currency",
 				Arrays.asList(Currency.values()),
 				new EnumChoiceRenderer<Currency>()).setRequired(true));
 
-		propertyForm.add(new TextField<Integer>("property_spaces")
-				.setRequired(true));
-		propertyForm.add(new TextField<Integer>("property_covered_area")
-				.setRequired(true));
-		propertyForm.add(new TextField<Integer>("property_free_area")
-				.setRequired(true));
-		propertyForm.add(new TextField<Integer>("property_age")
-				.setRequired(true));
+		propertyForm.add(new TextField<Integer>("property_spaces").add(
+				new MinimumValidator<Integer>(0)).setRequired(true));
+		propertyForm.add(new TextField<Integer>("property_covered_area").add(
+				new MinimumValidator<Integer>(0)).setRequired(true));
+		propertyForm.add(new TextField<Integer>("property_free_area").add(
+				new MinimumValidator<Integer>(0)).setRequired(true));
+		propertyForm.add(new TextField<Integer>("property_age").add(
+				new MinimumValidator<Integer>(0)).setRequired(true));
 		propertyForm.add(new TextField<String>("property_description")
 				.setRequired(true));
 

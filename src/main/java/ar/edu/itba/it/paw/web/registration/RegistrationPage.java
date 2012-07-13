@@ -197,7 +197,6 @@ public class RegistrationPage extends BasePage {
 		registrationForm.add(agencyNameDiv);
 		registrationForm.add(agencyLogoDiv);
 		this.buildCaptcha(registrationForm);
-		// registrationForm.add(new RecaptchaPanel("recaptcha"));
 		this.add(registrationForm);
 	}
 
